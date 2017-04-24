@@ -10,388 +10,717 @@
 * Version source: https://github.com/classbao/ClassBaoJavascript.git
 ***/
 
-/***** 通用ClassBaoJavascript模拟类库 *****/
-function ClassBaoJavascript() { }
-
 /***** 通用ClassBaoJavascript模拟类库·开始 *****/
-/*根据id获取元素（唯一元素）*/
-ClassBaoJavascript.prototype.GetById = function (id) {
-	if (id && document) return document.getElementById(id) || null;
-	return null;
-}
-/*根据className获取元素（元素数组）*/
-ClassBaoJavascript.prototype.GetByClass = function (className) {
-	var classElements = [], allElements = document.all ? document.all : document.getElementsByTagName('*');
-	for (var i = 0; i < allElements.length; i++) {
-		if (allElements[i].className == className) {
-			classElements.push(allElements[i]);
-		}
-	}
-	return classElements;
-}
+function ClassBaoJavascript() {
+    /*根据id获取元素（唯一元素）*/
+    this.GetById = function (id) {
+        if (id && document) return document.getElementById(id) || null;
+        return null;
+    };
+    /*根据className获取元素（元素数组）*/
+    this.GetByClass = function (className) {
+        var classElements = [], allElements = document.all ? document.all : document.getElementsByTagName('*');
+        for (var i = 0; i < allElements.length; i++) {
+            if (allElements[i].className == className) {
+                classElements.push(allElements[i]);
+            }
+        }
+        return classElements;
+    };
+    /*检测浏览器类型与版本*/
+    this.GetBrowser = function () {
+        /*
+        document.writeln("浏览器代码名称：navigator.appCodeName=" + navigator.appCodeName);
+        document.writeln("浏览器名称：navigator.appName=" + navigator.appName);
+        document.writeln("浏览器版本号：navigator.appVersion=" + navigator.appVersion);
+        document.writeln("对Java的支持：navigator.javaEnabled()=" + navigator.javaEnabled());
+        document.writeln("MIME类型（数组）：navigator.mimeTypes=" + navigator.mimeTypes);
+        document.writeln("系统平台：navigator.platform=" + navigator.platform);
+        document.writeln("插件（数组）：navigator.plugins=" + navigator.plugins);
+        document.writeln("用户代理：navigator.userAgent=" + navigator.userAgent);
+    
+        var browser = GetBrowser();
+        if (browser) {
+            _html += "浏览器：" + browser.name + "，版本：" + browser.version + " <br />";
+            _html += "系统平台：" + browser.platform + " <br />";
+            _html += "语言：" + browser.language + " <br />";
+            _html += "isPC：" + browser.isPC + "，设备：" + browser.hardware + " <br />";
+            _html += "网页可见区域：" + document.body.clientWidth + "*" + document.body.clientHeight + "（" + window.screen.availWidth + "*" + window.screen.availHeight + "） <br />";
+        }
+        */
+        var result = { name: "", version: "", platform: "", language: "", isPC: true, hardware: "", userAgent: null, appVersion: "" };
+        result.userAgent = navigator.userAgent;
+        result.appVersion = navigator.appVersion;
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.indexOf("msie") > -1) { //IE内核
+            result.name = "IE";
+            try {
+                result.version = ua.match(/msie ([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf("trident") > -1) //IE内核
+        {
+            result.name = "Trident";
+            try {
+                result.version = ua.match(/trident ([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf("chrome") > -1) {
+            result.name = "Chrome";
+            try {
+                result.version = ua.match(/chrome\/([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf("firefox") > -1) {
+            result.name = "Firefox";
+            try {
+                result.version = ua.match(/firefox\/([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf("opera") > -1) { //opera内核
+            result.name = "Opera";
+            try {
+                result.version = ua.match(/opera.([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf('presto') > -1) { //opera内核
+            result.name = "Opera";
+            try {
+                result.version = ua.match(/presto.([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf("safari") > -1) {
+            result.name = "Safari";
+            try {
+                result.version = ua.match(/version\/([\d.]+).*safari/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf('gecko') > -1) { //火狐内核
+            result.name = "Gecko";
+            try {
+                result.version = ua.match(/gecko\/([\d.]+)/)[1];
+            }
+            catch (e) { }
+        }
+        else if (ua.indexOf('applewebkit') > -1) { //苹果、谷歌内核
+            result.name = "webKit";
+            try {
+                result.version = ua.match(/version\/([\d.]+).*AppleWebKit/)[1];
+            }
+            catch (e) { }
+        }
+        else if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/ig)) { //ios终端 
+            result.name = "ios";
+            try {
+                result.version = ua.match(/version\/([\d.]+).*AppleWebKit/)[1];
+            }
+            catch (e) { }
+        }
+        else {
+        }
 
-/*检测浏览器类型与版本*/
-ClassBaoJavascript.prototype.GetBrowser = function () {
-	/*
-	document.writeln("浏览器代码名称：navigator.appCodeName=" + navigator.appCodeName);
-	document.writeln("浏览器名称：navigator.appName=" + navigator.appName);
-	document.writeln("浏览器版本号：navigator.appVersion=" + navigator.appVersion);
-	document.writeln("对Java的支持：navigator.javaEnabled()=" + navigator.javaEnabled());
-	document.writeln("MIME类型（数组）：navigator.mimeTypes=" + navigator.mimeTypes);
-	document.writeln("系统平台：navigator.platform=" + navigator.platform);
-	document.writeln("插件（数组）：navigator.plugins=" + navigator.plugins);
-	document.writeln("用户代理：navigator.userAgent=" + navigator.userAgent);
+        result.platform = navigator.platform;
+        result.language = (navigator.browserLanguage || navigator.language);
 
-	var browser = GetBrowser();
-	if (browser) {
-		_html += "浏览器：" + browser.name + "，版本：" + browser.version + " <br />";
-		_html += "系统平台：" + browser.platform + " <br />";
-		_html += "语言：" + browser.language + " <br />";
-		_html += "isPC：" + browser.isPC + "，设备：" + browser.hardware + " <br />";
-		_html += "网页可见区域：" + document.body.clientWidth + "*" + document.body.clientHeight + "（" + window.screen.availWidth + "*" + window.screen.availHeight + "） <br />";
-	}
-	*/
-	var result = { name: "", version: "", platform: "", language: "", isPC: true, hardware: "", userAgent: null, appVersion: "" };
-	result.userAgent = navigator.userAgent;
-	result.appVersion = navigator.appVersion;
-	var ua = navigator.userAgent.toLowerCase();
-	if (ua.indexOf("msie") > -1) { //IE内核
-		result.name = "IE";
-		try {
-			result.version = ua.match(/msie ([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf("trident") > -1) //IE内核
-	{
-		result.name = "Trident";
-		try {
-			result.version = ua.match(/trident ([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf("chrome") > -1) {
-		result.name = "Chrome";
-		try {
-			result.version = ua.match(/chrome\/([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf("firefox") > -1) {
-		result.name = "Firefox";
-		try {
-			result.version = ua.match(/firefox\/([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf("opera") > -1) { //opera内核
-		result.name = "Opera";
-		try {
-			result.version = ua.match(/opera.([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf('presto') > -1) { //opera内核
-		result.name = "Opera";
-		try {
-			result.version = ua.match(/presto.([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf("safari") > -1) {
-		result.name = "Safari";
-		try {
-			result.version = ua.match(/version\/([\d.]+).*safari/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf('gecko') > -1) { //火狐内核
-		result.name = "Gecko";
-		try {
-			result.version = ua.match(/gecko\/([\d.]+)/)[1];
-		}
-		catch (e) { }
-	}
-	else if (ua.indexOf('applewebkit') > -1) { //苹果、谷歌内核
-		result.name = "webKit";
-		try {
-			result.version = ua.match(/version\/([\d.]+).*AppleWebKit/)[1];
-		}
-		catch (e) { }
-	}
-	else if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/ig)) { //ios终端 
-		result.name = "ios";
-		try {
-			result.version = ua.match(/version\/([\d.]+).*AppleWebKit/)[1];
-		}
-		catch (e) { }
-	}
-	else {
-	}
+        //移动端与PC端判断
+        var u = navigator.userAgent;
+        if (u.indexOf('iPhone') > -1) { //是否为iPhone或者QQHD浏览器 
+            result.hardware = "iPhone";
+            result.isPC = false;
+        }
+        else if (u.indexOf('iPad') > -1) { //是否iPad  
+            result.hardware = "iPad";
+            result.isPC = false;
+        }
+        else if (u.indexOf('iPod') > -1) { //是否iPod  
+            result.hardware = "iPod";
+            result.isPC = false;
+        }
+        else if (u.indexOf('Android') > -1) { //android终端或者uc浏览器  
+            result.hardware = "Android";
+            result.isPC = false;
+        }
+        else if (u.indexOf('Linux') > -1) { //Linux终端   
+            result.hardware = "Linux";
+            result.isPC = false;
+        }
+        else if (!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) { //ios终端  
+            result.hardware = "ios";
+            result.isPC = false;
+        }
+        else if (u.indexOf('SymbianOS') > -1) { //SymbianOS终端
+            result.hardware = "SymbianOS";
+            result.isPC = false;
+        }
+        else if (u.indexOf('Windows Phone') > -1) { //Windows Phone终端
+            result.hardware = "Windows Phone";
+            result.isPC = false;
+        }
+        else if (!!u.match(/AppleWebKit.*Mobile.*/)) { //是否为移动终端
+            result.hardware = "mobile";
+            result.isPC = false;
+        }
+        else {
+        }
 
-	result.platform = navigator.platform;
-	result.language = (navigator.browserLanguage || navigator.language);
+        return result;
+    };
+    /*获取当前屏幕；结果：{ top: top, left: left, height: height, width: width }*/
+    this.GetScreen = function () {
+        var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        var left = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
+        var width = Math.max(document.body.clientWidth, document.documentElement.clientWidth);
+        var height = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+        width = Math.max(width, window.document.body.offsetWidth);
+        height = Math.max(height, window.document.body.offsetHeight);
 
-	//移动端与PC端判断
-	var u = navigator.userAgent;
-	if (u.indexOf('iPhone') > -1) { //是否为iPhone或者QQHD浏览器 
-		result.hardware = "iPhone";
-		result.isPC = false;
-	}
-	else if (u.indexOf('iPad') > -1) { //是否iPad  
-		result.hardware = "iPad";
-		result.isPC = false;
-	}
-	else if (u.indexOf('iPod') > -1) { //是否iPod  
-		result.hardware = "iPod";
-		result.isPC = false;
-	}
-	else if (u.indexOf('Android') > -1) { //android终端或者uc浏览器  
-		result.hardware = "Android";
-		result.isPC = false;
-	}
-	else if (u.indexOf('Linux') > -1) { //Linux终端   
-		result.hardware = "Linux";
-		result.isPC = false;
-	}
-	else if (!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) { //ios终端  
-		result.hardware = "ios";
-		result.isPC = false;
-	}
-	else if (u.indexOf('SymbianOS') > -1) { //SymbianOS终端
-		result.hardware = "SymbianOS";
-		result.isPC = false;
-	}
-	else if (u.indexOf('Windows Phone') > -1) { //Windows Phone终端
-		result.hardware = "Windows Phone";
-		result.isPC = false;
-	}
-	else if (!!u.match(/AppleWebKit.*Mobile.*/)) { //是否为移动终端
-		result.hardware = "mobile";
-		result.isPC = false;
-	}
-	else {
-	}
+        if (!width) { width = screen.availWidth; }
+        if (!height) { height = screen.availHeight }
 
-	return result;
-}
-/*获取当前屏幕；结果：{ top: top, left: left, height: height, width: width }*/
-ClassBaoJavascript.prototype.GetScreen = function () {
-	var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-	var left = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
-	var width = Math.max(document.body.clientWidth, document.documentElement.clientWidth);
-	var height = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
-	width = Math.max(width, window.document.body.offsetWidth);
-	height = Math.max(height, window.document.body.offsetHeight);
+        return { top: top, left: left, height: height, width: width };
+    }
+    /*检测是否支持Html5元素Canvas*/
+    this.supportCanvas = function () {
+        return !!document.createElement("canvas").getContext;
+    };
 
-	if (!width) { width = screen.availWidth; }
-	if (!height) { height = screen.availHeight }
+    /*页面及窗体通用功能*/
+    this.Window = {
+        /*跳转到链接*/
+        GoToLocation: function (url) {
+            if (url) { window.location = url; }
+        },
+        /*从最顶层窗口跳转链接*/
+        TopLocation: function (url) {
+            if (url) {
+                if (window.top != window.self) { window.top.location = url; }
+                else { window.location = url; }
+            }
+        },
+        /*从父窗口窗口跳转链接。注：如果窗口本身是顶层窗口，parent属性返回的是对自身的引用。在框架网页中，一般父窗口就是顶层窗口，但如果框架中还有框架，父窗口和顶层窗口就不一定相同了。*/
+        ParentLocation: function (url) {
+            if (url) {
+                if (window.parent != window.self) { window.parent.location = url; }
+                else { window.location = url; }
+            }
+        },
 
-	return { top: top, left: left, height: height, width: width };
-}
-/*检测是否支持Html5元素Canvas*/
-ClassBaoJavascript.prototype.supportCanvas = function () {
-	return !!document.createElement("canvas").getContext;
-}
+        /*强制刷新页面*/
+        Reload: function () {
+            try { window.history.go(0); }
+            catch (e) { window.location.reload(); }
+        },
 
-/***** 通用ClassBaoJavascript模拟类库·Http请求相关 *****/
-/*跳转到链接*/
-ClassBaoJavascript.prototype.GoToLocation = function (url) {
-	if (url) { window.location = url; }
-}
-/*从最顶层窗口跳转链接*/
-ClassBaoJavascript.prototype.TopLocation = function (url) {
-	if (url) {
-		if (window.top != window.self) { window.top.location = url; }
-		else { window.location = url; }
-	}
-}
-/*从父窗口窗口跳转链接。注：如果窗口本身是顶层窗口，parent属性返回的是对自身的引用。在框架网页中，一般父窗口就是顶层窗口，但如果框架中还有框架，父窗口和顶层窗口就不一定相同了。*/
-ClassBaoJavascript.prototype.ParentLocation = function (url) {
-	if (url) {
-		if (window.parent != window.self) { window.parent.location = url; }
-		else { window.location = url; }
-	}
-}
+        /*** 前进 ***/
+        /*frame窗体“前进”（name是frame窗体名称）*/
+        GoToForward: function (name) {
+            if (name && window.frames[name]) {
+                if (window.frames[name].history) {
+                    //window.frames[name].history.go(1);
+                    window.frames[name].history.forward();
+                }
+                else if (window.frames[name].contentWindow.history) {
+                    //window.frames[name].contentWindow.history.go(1);
+                    window.frames[name].contentWindow.history.forward();
+                }
+            }
+        },
+        /*当前窗体前进页面*/
+        GoToForward: function () {
+            try { window.history.go(1); }
+            catch (e) { window.history.forward(); }
+        },
+        /*** 后退 ***/
+        /*frame窗体“后退”（name是frame窗体名称）*/
+        GoToBack: function (name) {
+            if (name && window.frames[name]) {
+                if (window.frames[name].history) {
+                    //window.frames[name].history.go(-1);
+                    window.frames[name].history.back();
+                }
+                else if (window.frames[name].contentWindow.history) {
+                    //window.frames[name].contentWindow.history.go(-1);
+                    window.frames[name].contentWindow.history.back();
+                }
+            }
+        },
+        /*当前窗体后退页面*/
+        GoToBack: function () {
+            try {
+                window.history.go(-1);
+            }
+            catch (e) {
+                window.history.back();
+                //history.go(-1);
+                //window.history.back(-1);
+            }
+        },
 
-/*强制刷新页面*/
-ClassBaoJavascript.prototype.Reload = function () {
-	try { history.go(0); }
-	catch (e) { location.reload(); }
-}
+        /*** 刷新 ***/
+        /*frame窗体“刷新”（name是frame窗体名称）*/
+        Reload: function (name) {
+            if (name && window.frames[name]) {
+                if (window.frames[name].location) {
+                    window.frames[name].location.reload();
+                }
+                else if (window.frames[name].contentWindow.location) {
+                    window.frames[name].contentWindow.location.reload();
+                }
+            }
+        },
+        /*当前窗体强制刷新页面*/
+        Reload: function () {
+            try { window.history.go(0); }
+            catch (e) { window.location.reload(); }
+        },
 
-/*** 前进 ***/
-/*frame窗体“前进”（name是frame窗体名称）*/
-ClassBaoJavascript.prototype.GoToForward = function (name) {
-	if (name && window.frames[name]) {
-		if (window.frames[name].history) {
-			//window.frames[name].history.go(1);
-			window.frames[name].history.forward();
-		}
-		else if (window.frames[name].contentWindow.history) {
-			//window.frames[name].contentWindow.history.go(1);
-			window.frames[name].contentWindow.history.forward();
-		}
-	}
-}
-/*当前窗体前进页面*/
-ClassBaoJavascript.prototype.GoToForward = function () {
-	try { history.go(1); }
-	catch (e) { history.forward(); }
-}
-/*** 后退 ***/
-/*frame窗体“后退”（name是frame窗体名称）*/
-ClassBaoJavascript.prototype.GoToBack = function (name) {
-	if (name && window.frames[name]) {
-		if (window.frames[name].history) {
-			//window.frames[name].history.go(-1);
-			window.frames[name].history.back();
-		}
-		else if (window.frames[name].contentWindow.history) {
-			//window.frames[name].contentWindow.history.go(-1);
-			window.frames[name].contentWindow.history.back();
-		}
-	}
-}
-/*当前窗体后退页面*/
-ClassBaoJavascript.prototype.GoToBack = function () {
-	try {
-	    window.history.go(-1);
-	}
-	catch (e) {
-		window.history.back();
-		//history.go(-1);
-		//window.history.back(-1);
-	}
-}
+        /*获取域名URL。（例如：http://www.classbao.com）*/
+        GetDomainUrl: function () {
+            if (window && window.location)
+                return window.location.protocol + "//" + window.location.host; //http://www.classbao.com
+            else
+                return "";
+        }
+    };
+    /*获取参数值（类似URL，Cookie等格式的参数文本）（ParamName是参数名称；PaeramText是完整参数文本（例如：FromUser=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40）；BetweenOfChar是参数间隔符（例如：“&”，“;”））*/
+    this.GetParamValue = function (ParamName, ParamText, BetweenOfChar) {
+        if (!ParamName || !ParamText) return null;
+        var textstring = ParamText.toString();
+        var start = textstring.indexOf(ParamName + "=");
+        if (start == -1) return null;
+        start += ParamName.length + 1;
+        var end = textstring.indexOf(BetweenOfChar, start);
+        if (end == -1) return textstring.substring(start);
+        return textstring.substring(start, end);
+    };
+    /*获取页面GET请求URL参数值*/
+    this.GetUrlParamValue = function (name) {
+        var searchStr = decodeURIComponent(window.location.search);
+        return CBJS.GetParamValue(name, searchStr, "&");
+    };
 
-/*** 刷新 ***/
-/*frame窗体“刷新”（name是frame窗体名称）*/
-ClassBaoJavascript.prototype.Reload = function (name) {
-	if (name && window.frames[name]) {
-		if (window.frames[name].location) {
-			window.frames[name].location.reload();
-		}
-		else if (window.frames[name].contentWindow.location) {
-			window.frames[name].contentWindow.location.reload();
-		}
-	}
-}
-/*当前窗体强制刷新页面*/
-ClassBaoJavascript.prototype.Reload = function () {
-	try { history.go(0); }
-	catch (e) { location.reload(); }
-}
+    /* //示例：
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+    CBJS.RequestState(XMLHttpRequest, textStatus, errorThrown);
+    }
+    */
+    /*ajax请求错误的状态解读*/
+    this.RequestState = function (XMLHttpRequest, textStatus, errorThrown) {
+        if (textStatus != null) {
+            var errorMsg = "";
+            if (textStatus == "timeout") { errorMsg = "对不起，请求超时！"; }
+            else if (textStatus == "parsererror") { errorMsg = "对不起，请求数据发生解析器错误！请检查参数个数或接收数据格式。"; }
+            else { errorMsg = "对不起，请求发生了错误！"; }
+            //alert(errorMsg + "\n 请求状态：\n textStatus= " + textStatus + "\n XMLHttpRequest.status= " + XMLHttpRequest.status + "\n XMLHttpRequest.readyState= " + XMLHttpRequest.readyState);
+            return errorMsg + "<br /> 请求状态：<br /> textStatus= " + textStatus + "<br /> XMLHttpRequest.status= " + XMLHttpRequest.status + "<br /> XMLHttpRequest.readyState= " + XMLHttpRequest.readyState;
+        }
+    }
 
-/*获取域名URL。（例如：http://www.classbao.com）*/
-ClassBaoJavascript.prototype.GetDomainUrl = function () {
-	if (window && window.location)
-		return window.location.protocol + "//" + window.location.host; //http://www.classbao.com
-	else
-		return "";
-}
+    /* Cookie通用功能 */
+    this.Cookie = {
+        /*当前浏览器Cookie是否启用*/
+        CookieEnabled: function () {
+            var result = false;
+            if (navigator.cookieEnabled && document.cookie && typeof (document.cookie) != "undefined") {
+                var date = new Date();
+                date.setTime(date.getTime() + 60 * 1000); //60秒
+                document.cookie = "testcookie=yes; expires=" + date.toGMTString();
+                var _cookie = document.cookie;
+                if (_cookie.indexOf("testcookie=yes") > -1)
+                    result = true;
+            }
+            return result;
+        },
+        /*设置Cookie，返回值类型:Boolean,传入参数:（name是名称；value是值；days是过期时间（天）；path是路径（可以是一个目录，或者是一个路径。path属性设置成“/”，凡是来自同一服务器（或者多级域名之间），URL里有相同路径的所有WEB页面都可以共享cookies。）；domain是域（值是域名，这是对path路径属性的一个延伸。如果我们想让 catalog.mycompany.com 能够访问shoppingcart.mycompany.com设置的cookies，该怎么办? 我们可以把domain属性设置成“mycompany.com”，并把path属性设置成“/”。不能把cookies域属性设置成与设置它的服务器的 所在域不同的值。）；isSecure是传输安全（如果一个cookie标记为secure，那么它与WEB服务器之间就通过HTTPS或者其它安全协议传递数据。把cookie设置为secure，只保证cookie与WEB服务器之间的数据传输过程加密，而保存在本地的 cookie文件并不加密。如果想让本地cookie也加密，得自己加密数据。）；）*/
+        SetCookie: function (name, value, days, path, domain, isSecure) {
+            try {
+                if (!!document.cookie) return false;
+                if (!name) return;
+                value = value || "";
+                days = days || 7;
+                path = path || "/";
+                var exp = new Date;
+                exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+                document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=" + path + (domain ? ";domain=" + domain : "") + (isSecure ? ";secure" : "");
+                /*
+                 document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/; domain=classbao.com; secure";
+                */
+                return true;
+            }
+            catch (e) {
+                throw e;
+            }
+            return false;
+        },
+        /*设置Cookie（name是名称；value是值；days是过期时间（天））*/
+        SetCookie: function (name, value, days) {
+            try {
+                if (!!document.cookie) return false;
+                if (!name) return;
+                value = value || "";
+                days = days || 7;
+                var exp = new Date;
+                exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+                document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/";
+                return true;
+            }
+            catch (e) {
+                throw e;
+            }
+            return false;
+        },
 
-/*获取参数值（类似URL，Cookie等格式的参数文本）（ParamName是参数名称；PaeramText是完整参数文本（例如：FromUser=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40）；BetweenOfChar是参数间隔符（例如：“&”，“;”））*/
-ClassBaoJavascript.prototype.GetParamValue = function (ParamName, ParamText, BetweenOfChar) {
-	/*
-	 FromUserParamName=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40&Scale=&AddressLabel=
-	*/
-	if (!ParamName || !ParamText) return null;
-	var textstring = ParamText.toString();
-	var start = textstring.indexOf(ParamName + "=");
-	if (start == -1) return null;   //   找不到 
-	start += ParamName.length + 1;
-	var end = textstring.indexOf(BetweenOfChar, start);
-	if (end == -1) return textstring.substring(start);
-	return textstring.substring(start, end);
-}
-/*获取页面GET请求URL参数值*/
-ClassBaoJavascript.prototype.GetUrlParamValue = function (name) {
-	var searchStr = decodeURIComponent(location.search);
-	return CBJS.GetParamValue(name, searchStr, "&");
-}
+        /*获取Cookie（name是名称）*/
+        GetCookie: function (name) {
+            if (!!document.cookie) return null;
+            return CBJS.GetParamValue(name, decodeURIComponent(document.cookie), ";");
+        },
+        /*获取垂直线分隔的Cookie（name是名称）*/
+        GetCookieByVerticalLine: function (name) {
+            if (!!document.cookie) return null;
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) return decodeURIComponent(arr[2]); return null;
+        },
 
-/* //示例：
-error: function (XMLHttpRequest, textStatus, errorThrown) {
-CBJS.RequestState(XMLHttpRequest, textStatus, errorThrown);
-}
-*/
-/*ajax请求错误的状态解读*/
-ClassBaoJavascript.prototype.RequestState = function (XMLHttpRequest, textStatus, errorThrown) {
-	if (textStatus != null) {
-		var errorMsg = "";
-		if (textStatus == "timeout") { errorMsg = "对不起，请求超时！"; }
-		else if (textStatus == "parsererror") { errorMsg = "对不起，请求数据发生解析器错误！请检查参数个数或接收数据格式。"; }
-		else { errorMsg = "对不起，请求发生了错误！"; }
-		//alert(errorMsg + "\n 请求状态：\n textStatus= " + textStatus + "\n XMLHttpRequest.status= " + XMLHttpRequest.status + "\n XMLHttpRequest.readyState= " + XMLHttpRequest.readyState);
-		return errorMsg + "<br /> 请求状态：<br /> textStatus= " + textStatus + "<br /> XMLHttpRequest.status= " + XMLHttpRequest.status + "<br /> XMLHttpRequest.readyState= " + XMLHttpRequest.readyState;
-	}
-}
+        /*删除Cookie（name是名称）*/
+        DeleteCookie: function (name) {
+            if (!!document.cookie) return;
+            var exdate = new Date();
+            exdate.setTime(exdate.getTime() - 1000);
+            document.cookie = name + "=; expires=" + exdate.toGMTString();
+        }
+    };
+
+    /*编码Html源代码*/
+    this.EncodingHTML = function (text) {
+        if (!!!text || text.length < 1) return '';
+        var _text = text || '';
+        _text = _text.replace(/&/g, "&amp;");
+        _text = _text.replace(/"/g, "&quot;");
+        _text = _text.replace(/</g, "&lt;");
+        _text = _text.replace(/>/g, "&gt;");
+        _text = _text.replace(/'/g, "&#146;");
+        return _text;
+    };
+    /*解码Html源代码*/
+    this.DecodingHTML = function (text) {
+        if (!!!text || text.length < 1) return '';
+        var _text = text || '';
+        _text = _text.replace(/&amp;/g, "&");
+        _text = _text.replace(/&quot;/g, "\"");
+        _text = _text.replace(/&lt;/g, "<");
+        _text = _text.replace(/&gt;/g, ">");
+        _text = _text.replace(/&#146;/g, "'");
+        return _text;
+    };
+    /*移除字符串中的Html标签*/
+    this.RemoveHtmlTag = function (text) {
+        if (!!!text || text.length < 1) return '';
+        return text.toString().replace(/<[^>]+>|<\/[^>]+>/g, "");
+    };
+
+    /*Unicode（编码）转义(\uXXXX)的编码和解码*/
+    this.EncodingUnicode = function (text) {
+        if (!!!text || text.length < 1) return '';
+        return escape(text).replace(/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm, function ($0, $1, $2) {
+            return $1 && '\\' + $1.toLowerCase() || unescape($2);
+        });
+    };
+    /*Unicode（解码）转义(\uXXXX)的编码和解码*/
+    this.DecodingUnicode = function (text) {
+        if (!!!text || text.length < 1) return '';
+        return unescape(text.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'));
+    };
+
+    /*转义单引号（用于Sql传参数）*/
+    this.EscapeSingleQuotesForSQL = function (text) {
+        if (!!!text || text.length < 1) return '';
+        return text.replace(/'/ig, "''");
+    };
+    /*转义单引号（用于javascript传参数）*/
+    this.EscapeSingleQuotesForJS = function (text) {
+        if (!!!text || text.length < 1) return '';
+        return text.replace(/\'/g, "\\\'");
+    };
+
+    /*字符串长度（字节长度，真实字节长度）*/
+    this.RealLength = function (str) {
+        if (!!!str) { return 0; }
+        var _str = ("string" == typeof (str)) ? str : str.toString();
+        var _str = _str.LRTrim();
+        var len = 0;
+        var i = 0;
+        for (i = 0; i < _str.length; i++) {
+            if (_str.charCodeAt(i) > 255) {
+                len += 2;
+            }
+            else {
+                len++;
+            }
+        }
+        return len;
+    };
+    /*按字节数截取字符串（从位置0开始；str是原始字符串；len是要截取长度（字节数）；suffix是后缀）*/
+    this.SubString = function (str, len, suffix) {
+        if (!!!str || !!!len) return '';
+        var _str = ("string" == typeof (str)) ? str : str.toString();
+        var _str = _str.LRTrim();
+        var a = 0;
+        var i = 0;
+        var temp = '';
+        for (i = 0; i < _str.length; i++) {
+            if (_str.charCodeAt(i) > 255) {
+                a += 2;
+            }
+            else {
+                a++;
+            }
+            if (a > len) { return temp + suffix; }
+            temp += _str.charAt(i);
+        }
+        return _str;
+    };
+
+    /*移除URL末尾的空格、格式符号、“&”、“?”*/
+    this.ClearURLEnd = function (url) {
+        if (!!!url || url.length < 1) return '';
+        return url.toString().replace(/(&|\?|\s)+$/g, "");
+    };
+
+    /*获取值域为[minValue, maxValue]的随机数（可以取到最大值和最小值，均衡分布）*/
+    this.GetRandom = function (minValue, maxValue) {
+        /*
+        * 也就是说，如果要创建一个从x到y的随机数，就可以这样写：
+        * Math.round(Math.random() * (y - x)) + x;
+        * x和y可以是任何的数值，即使是负数也一样。
+        */
+        return Math.round(Math.random() * (maxValue - minValue)) + minValue;
+    }
+
+    /*通用正则表达式*/
+    this.RegEx = {
+        /*匹配空字符串的正则表达式*/
+        Regex_empty: /^\s*$/,
+        /*匹配Email的正则表达式*/
+        Regex_email: /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i, //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+        /*匹配座机号码的正则表达式*/
+        Regex_telephone: /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/, //010-62515008#8002
+        /*匹配移动电话号码的正则表达式*/
+        Regex_mobilephone: /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/, //+86#15311212118
+        /*匹配中国邮政编码*/
+        Regex_postalcode: /^[1-9]{1}(\d+){5}$/, //465513
+        /*匹配中国居民身份证（18位或者15位字符）*/
+        Regex_IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
+        /*匹配汉字的正则表达式*/
+        Regex_chinese: /^[\u4E00-\u9FA5]+$/ig,
+        /*匹配双字节字符串(汉字)的正则表达式*/
+        Regex_chinese: /^[^\x00-\xff]+$/ig,
+
+        /*
+        * 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
+        * 主要用于验证真实姓名，公司名等个人信息修改
+        */
+        Regex_Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
+        /*
+        * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
+        * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
+        */
+        Regex_Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
+        /*
+        * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
+        */
+        Regex_Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
+
+        /*匹配分号间隔字符串的正则表达式*/
+        Regex_splitSemicolon: /\s*(;|；)\s*/ig,
+        /*匹配逗号间隔字符串的正则表达式*/
+        Regex_splitComma: /\s*(,|，)\s*/ig,
+        /*逗号间隔数字格式（例如1,2,3）*/
+        Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
+        /*匹配字符串首尾分号或空格的正则表达式*/
+        Regex_semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
+        /*匹配Guid格式的正则表达式*/
+        Regex_guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
+
+        /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
+        Regex_password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/,
+
+        /*判断一个字符串是否全是空格*/
+        IsEmpty: function (text) { return (!!CBJS.RegEx.Regex_empty.test(text)); },
+        /*检查Email的格式是否正确*/
+        IsEmail: function (email) { return (!!CBJS.RegEx.Regex_email.test(email)); },
+        /*检查固定电话号码的格式是否正确*/
+        IsTelePhone: function (telephone) { return (!!CBJS.RegEx.Regex_telephone.test(telephone)); },
+        /*检查手机号码的格式是否正确*/
+        IsMobilePhone: function (mobilephone) { return (!!CBJS.RegEx.Regex_mobilephone.test(mobilephone)) },
+        /*判断是否为汉字字符串*/
+        IsChinese: function (text) { return (!!CBJS.RegEx.Regex_chinese.test(text)) },
+        /*判断是否为单个汉字*/
+        IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
+    };
+
+    /*正则表达式分割字符串为数组*/
+    this.RegexSplit = function (splitString, regexFormat) {
+        if (!!!splitString) return [];
+        var stringArray = splitString.toString().split(regexFormat);
+        if (!stringArray || stringArray.length < 1) return [];
+        for (var i = 0; i < stringArray.length; i++) {
+            if (regexFormat.test(stringArray[i]))
+                stringArray = stringArray.slice(0, i).concat(stringArray.slice(i + 1, stringArray.length));
+        }
+        return stringArray;
+        /*
+      　　　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
+      　　　　　　　　　这里就是返回this.slice(0,index)/this.slice(index+1,this.length)
+      　　 　　　　　　组成的新数组，这中间，刚好少了第index项。
+      　　　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
+      　*/
+    };
+
+    /*数组操作*/
+    this.Array = {
+        /*根据索引移除数组中指定项（index表示数组下标索引，从0开始）*/
+        RemoveByIndex: function (array, index) {
+            if (index < 0)　/*如果index<0，则不进行任何操作。*/
+                return array;
+            else
+                return array.slice(0, index).concat(array.slice(index + 1, array.length));
+            /*
+          　　　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
+          　　　　　　　　　这里就是返回this.slice(0,index)/this.slice(index+1,this.length)
+          　　 　　　　　　组成的新数组，这中间，刚好少了第index项。
+          　　　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
+          　*/
+        },
+        /*移除数组中指定项*/
+        RemoveByItem: function (array, removeItem) {
+            for (var i = 0 ; i < array.length; i++) {
+                if (array[i] == removeItem) {
+                    array = CBJS.Array.RemoveByIndex(array, i);
+                    i--;
+                }
+            }
+            return array;
+        }
+    };
 
 
-/*** Cookie 开始 ***/
-/*当前浏览器Cookie是否启用*/
-ClassBaoJavascript.prototype.CookieEnabled = function () {
-	var result = false;
-	if (navigator.cookieEnabled && document.cookie && typeof (document.cookie) != "undefined") {
-		var date = new Date();
-		date.setTime(date.getTime() + 60 * 1000); //60秒
-		document.cookie = "testcookie=yes; expires=" + date.toGMTString();
-		var _cookie = document.cookie;
-		if (_cookie.indexOf("testcookie=yes") > -1)
-			result = true;
-	}
-	return result;
-}
-/*设置Cookie（name是名称；value是值；days是过期时间（天）；path是路径（可以是一个目录，或者是一个路径。path属性设置成“/”，凡是来自同一服务器（或者多级域名之间），URL里有相同路径的所有WEB页面都可以共享cookies。）；domain是域（值是域名，这是对path路径属性的一个延伸。如果我们想让 catalog.mycompany.com 能够访问shoppingcart.mycompany.com设置的cookies，该怎么办? 我们可以把domain属性设置成“mycompany.com”，并把path属性设置成“/”。不能把cookies域属性设置成与设置它的服务器的 所在域不同的值。）；isSecure是传输安全（如果一个cookie标记为secure，那么它与WEB服务器之间就通过HTTPS或者其它安全协议传递数据。把cookie设置为secure，只保证cookie与WEB服务器之间的数据传输过程加密，而保存在本地的 cookie文件并不加密。如果想让本地cookie也加密，得自己加密数据。）；）*/
-ClassBaoJavascript.prototype.SetCookie = function (name, value, days, path, domain, isSecure) {
-	if (!CBJS.CookieEnabled()) return;
-	if (!name) return;
-	value = value || "";
-	days = days || 7;
-	path = path || "/";
-	var exp = new Date;
-	exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-	document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=" + path + (domain ? ";domain=" + domain : "") + (isSecure ? ";secure" : "");
-	/*
-	 document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/; domain=classbao.com; secure";
-	*/
-}
-/*设置Cookie（name是名称；value是值；days是过期时间（天））*/
-ClassBaoJavascript.prototype.SetCookie = function (name, value, days) {
-	if (!CBJS.CookieEnabled()) return;
-	if (!name) return;
-	value = value || "";
-	days = days || 7;
-	var exp = new Date;
-	exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-	document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/";
-}
+    //var a1 = PasswordComplexity("111111"); /* 12 */
+    //var b1 = PasswordComplexity("123456"); /* 16 */
+    //var c1 = PasswordComplexity("123456789123456789"); /* 28 */
+    //var a2 = PasswordComplexity("111abc"); /* 25 */
+    //var b2 = PasswordComplexity("123abc"); /* 26 */
+    //var c2 = PasswordComplexity("123456789abcdefghj"); /* 38 */
+    //var a3 = PasswordComplexity("111abC"); /* 35 */
+    //var b3 = PasswordComplexity("123abC"); /* 36 */
+    //var c3 = PasswordComplexity("123456789abCDEfghj"); /* 48 */
+    //var a4 = PasswordComplexity("111aB_"); /* 45 */
+    //var b4 = PasswordComplexity("123aB_"); /* 46 */
+    //var c4 = PasswordComplexity("123456789abCDE_$@;"); /* 58 */
 
-/*获取Cookie（name是名称）*/
-ClassBaoJavascript.prototype.GetCookie = function (name) {
-	if (!CBJS.CookieEnabled()) return null;
-	return CBJS.GetParamValue(name, decodeURIComponent(document.cookie), ";");
-}
-/*获取Cookie（name是名称）*/
-ClassBaoJavascript.prototype.GetCookie2 = function (name) {
-	if (!CBJS.CookieEnabled()) return null;
-	var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
-	if (arr != null) return decodeURIComponent(arr[2]); return null;
-}
+    /*密码复杂度。密码长度权重是1，密码连续3个相同元素权重是-1，密码物种权重是10。对于6-18位密码来说：12-28为低级，28-38为中低级，38-48为中高级，48以上为高级*/
+    this.PasswordComplexity = function (password) {
+        if (!!!password || password.length < 1) return 0;
+        var complexity = 0;
 
-/*删除Cookie（name是名称）*/
-ClassBaoJavascript.prototype.DeleteCookie = function (name) {
-	if (!CBJS.CookieEnabled()) return;
+        var reg_empty = /^\s*$/;
+        var reg_digital = /([0-9])+/;
+        var reg_lowercase = /([a-z])+/;
+        var reg_capitalletters = /([A-Z])+/;
+        var reg_punctuation = /([~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/])+/;
 
-	var exdate = new Date();
-	exdate.setTime(exdate.getTime() - 1000);
-	document.cookie = name + "=; expires=" + exdate.toGMTString();
-}
-/*** Cookie 结束 ***/
+        if (password.toString().match(reg_empty)) return complexity; /* 密码不能为空 */
+        if (password.toString().length < 6) return complexity; /* 密码长度必须是6位（含）以上 */
+
+        var passwordArray = password.toString().split("");
+        for (var i = 0; i < passwordArray.length; i++) {
+            if (passwordArray[i].match(reg_digital)) {
+                complexity++;
+                species
+                continue;
+            }
+            else if (passwordArray[i].match(reg_lowercase)) {
+                complexity++;
+                continue;
+            }
+            else if (passwordArray[i].match(reg_capitalletters)) {
+                complexity++;
+                continue;
+            }
+            else if (passwordArray[i].match(reg_punctuation)) {
+                complexity++;
+                continue;
+            }
+        }
+        for (var i = 0; i < passwordArray.length; i++) { /* 连续相同的3个字符 */
+            if (i < passwordArray.length - 2) {
+                if (passwordArray[i] == passwordArray[i + 1] && passwordArray[i] == passwordArray[i + 2]) {
+                    if (complexity > 1)
+                        complexity--;
+                    continue;
+                }
+            }
+        }
+        var species = 0; /* 密码物种数量 */
+        if (password.toString().match(reg_digital))
+            species++;
+        if (password.toString().match(reg_lowercase))
+            species++;
+        if (password.toString().match(reg_capitalletters))
+            species++;
+        if (password.toString().match(reg_punctuation))
+            species++;
+
+        if (species > 0)
+            complexity += (species * 10); /* 密码物种权重是10 */
+
+        return complexity;
+    };
+
+    /*中国身份证号码常用方法*/
+    this.ChinaIDCard = {
+        /*中华人民共和国居民身份证组成格式“省/直辖市/自治区/特别行政区{2}+市/自治州{2}+县/区{2}+出生日期{8}+出生地派出所代码{2}+性别(第17位数字表示性别：奇数表示男性，偶数表示女性){1}+校验码{1}”*/
+        GetBirthdayByIDCard: function (cardID) {
+            var sBirthday = cardID.substr(6, 4) + "-" + Number(cardID.substr(10, 2)) + "-" + Number(cardID.substr(12, 2));
+            var d = new Date(sBirthday.replace(/-/g, "/"));
+            if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return null;
+            else return sBirthday;
+        },
+        GetSexByIDCard: function (cardID) {
+            return cardID.substr(16, 1) % 2 ? "男" : "女";
+        },
+        IsIDCard: function (cardID) {
+            if (!!!cardID || cardID.length < 15) return false;
+            if (!/^\d{17}(\d|x)$/i.test(cardID)) return false;
+
+            var _cardID = cardID.replace(/x$/i, "a");
+            //if (aCity[parseInt(_cardID.substr(0, 2))] == null) return "您的身份证地区非法";
+            var sBirthday = _cardID.substr(6, 4) + "-" + Number(_cardID.substr(10, 2)) + "-" + Number(_cardID.substr(12, 2));
+            var d = new Date(sBirthday.replace(/-/g, "/"));
+            if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return false;
+
+            var iSum = 0;
+            for (var i = 17; i >= 0; i--) iSum += (Math.pow(2, i) % 11) * parseInt(_cardID.charAt(17 - i), 11);
+            if (iSum % 11 != 1) return false;
+            return true;
+        }
+    };
 
 
-/***** 常用实例方法扩展·字符串 *****/
+
+
+
+};
+
+
+/***** String对象常用方法扩展 *****/
 /*JS移除字符串首尾空格*/
 String.prototype.LRTrim = function () { return this.replace(/(^\s+)|(\s+$)/g, ""); }
 /*JS移除字符串左边空格*/
@@ -400,289 +729,11 @@ String.prototype.LTrim = function () { return this.replace(/(^\s+)/g, ""); }
 String.prototype.RTrim = function () { return this.replace(/(\s+$)/g, ""); }
 /*换行转义字符转换成HTML换行标签*/
 String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r|\\r\\n|\\n|\\f|\\r)/g, "<br />"); } //换行,换页,回车
-/*编码Html源代码*/
-ClassBaoJavascript.prototype.EncodingHTML = function (text) {
-	text = text.replace(/&/g, "&amp;");
-	text = text.replace(/"/g, "&quot;");
-	text = text.replace(/</g, "&lt;");
-	text = text.replace(/>/g, "&gt;");
-	text = text.replace(/'/g, "&#146;");
-	return text;
-}
-/*解码Html源代码*/
-ClassBaoJavascript.prototype.DecodingHTML = function (text) {
-	text = text.replace(/&amp;/g, "&");
-	text = text.replace(/&quot;/g, "\"");
-	text = text.replace(/&lt;/g, "<");
-	text = text.replace(/&gt;/g, ">");
-	text = text.replace(/&#146;/g, "'");
-	return text;
-}
-
-/*移除字符串中的Html标签*/
-ClassBaoJavascript.prototype.RemoveHtmlTag = function (text) {
-	if (text)
-		return text.toString().replace(/<[^>]+>|<\/[^>]+>/g, "");
-	return text;
-}
-
-/*Unicode（编码）转义(\uXXXX)的编码和解码*/
-ClassBaoJavascript.prototype.EncodingUnicode = function (text) {
-	return escape(text).replace(/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm, function ($0, $1, $2) {
-		return $1 && '\\' + $1.toLowerCase() || unescape($2);
-	});
-}
-/*Unicode（解码）转义(\uXXXX)的编码和解码*/
-ClassBaoJavascript.prototype.DecodingUnicode = function (text) {
-	return unescape(text.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'));
-}
-
-/*移除URL末尾的空格、格式符号、“&”、“?”*/
-ClassBaoJavascript.prototype.ClearURLEnd = function (url) {
-	if (url)
-		return url.toString().replace(/(&|\?|\s)+$/g, "");
-	return url;
-}
-
-/***** 常用实例方法扩展·字符串·常用的正则表达式 *****/
-/*匹配空字符串的正则表达式*/
-ClassBaoJavascript.prototype.Regex_empty = /^\s*$/;
-/*匹配Email的正则表达式*/
-ClassBaoJavascript.prototype.Regex_email = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i; //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-/*匹配座机号码的正则表达式*/
-ClassBaoJavascript.prototype.Regex_telephone = /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/; //010-62515008#8002
-/*匹配移动电话号码的正则表达式*/
-ClassBaoJavascript.prototype.Regex_mobilephone = /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/; //+86#15311212118
-/*匹配中国邮政编码*/
-ClassBaoJavascript.prototype.Regex_postalcode = /^[1-9]{1}(\d+){5}$/; //465513
-/*匹配中国居民身份证（18位或者15位字符）*/
-ClassBaoJavascript.prototype.Regex_IDCard = /^\d{17}(\d|X)|\d{14}(\d|X)$/;
-/*匹配汉字的正则表达式*/
-ClassBaoJavascript.prototype.Regex_chinese = /^[\u4E00-\u9FA5]+$/ig;
-/*匹配双字节字符串(汉字)的正则表达式*/
-ClassBaoJavascript.prototype.Regex_chinese = /^[^\x00-\xff]+$/ig;
-
-/*
-* 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
-* 主要用于验证真实姓名，公司名等个人信息修改
-*/
-ClassBaoJavascript.prototype.Regex_Name = /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i;
-/*
-* 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
-* 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
-*/
-ClassBaoJavascript.prototype.Regex_Address = /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i;
-/*
-* 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
-*/
-ClassBaoJavascript.prototype.Regex_Special = /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi;
-
-/*匹配分号间隔字符串的正则表达式*/
-ClassBaoJavascript.prototype.Regex_splitSemicolon = /\s*(;|；)\s*/ig;
-/*匹配逗号间隔字符串的正则表达式*/
-ClassBaoJavascript.prototype.Regex_splitComma = /\s*(,|，)\s*/ig;
-/*逗号间隔数字格式（例如1,2,3）*/
-ClassBaoJavascript.prototype.Reg_CommasBetweenDigital = /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig;
-/*匹配字符串首尾分号或空格的正则表达式*/
-ClassBaoJavascript.prototype.Regex_semicolonByHeadAndTail = /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig;
-/*匹配Guid格式的正则表达式*/
-ClassBaoJavascript.prototype.Regex_guid = /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/;
-
-/*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
-ClassBaoJavascript.prototype.Regex_password = /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/;
-
-/*判断一个字符串是否全是空格*/
-ClassBaoJavascript.prototype.IsEmpty = function (text) { return (!!CBJS.Regex_empty.test(text)); }
-/*检查Email的格式是否正确*/
-ClassBaoJavascript.prototype.IsEmail = function (email) { return (!!CBJS.Regex_email.test(email)); }
-/*检查固定电话号码的格式是否正确*/
-ClassBaoJavascript.prototype.IsTelePhone = function (telephone) { return (!!CBJS.Regex_telephone.test(telephone)); }
-/*检查手机号码的格式是否正确*/
-ClassBaoJavascript.prototype.IsMobilePhone = function (mobilephone) { return (!!CBJS.Regex_mobilephone.test(mobilephone)) }
-/*判断是否为汉字字符串*/
-ClassBaoJavascript.prototype.IsChinese = function (text) { return (!!CBJS.Regex_chinese.test(text)) }
-/*判断是否为单个汉字*/
-ClassBaoJavascript.prototype.IsChineseByChar = function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; }
-
 /*JS移除字符串首尾中文/英文逗号*/
 String.prototype.LRTrimComma = function () { return this.replace(/(^(,|，|\s)*)|((,|，|\s)*$)/ig, ""); }
 /*JS移除字符串首尾中文/英文分号*/
 String.prototype.LRTrimSemicolon = function () { return this.replace(/(^(;|；|\s)*)|((;|；|\s)*$)/ig, ""); }
 
-/*根据索引移除数组中指定项（index表示数组下标索引，从0开始）*/
-ClassBaoJavascript.prototype.RemoveByIndex = function (array, index) {
-	/*prototype为对象原型，注意这里为对象增加自定义方法的方法。*/
-	if (index < 0)　/*如果index<0，则不进行任何操作。*/
-		return array;
-	else
-		return array.slice(0, index).concat(array.slice(index + 1, array.length));
-	/*
-  　　　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
-  　　　　　　　　　这里就是返回this.slice(0,index)/this.slice(index+1,this.length)
-  　　 　　　　　　组成的新数组，这中间，刚好少了第index项。
-  　　　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
-  　*/
-}
-/*移除数组中指定项*/
-ClassBaoJavascript.prototype.RemoveByItem = function (array, removeItem) {
-	for (var i = 0 ; i < array.length; i++) {
-		if (array[i] == removeItem) {
-			array = CBJS.RemoveByIndex(array, i);
-			i--;
-		}
-	}
-	return array;
-}
-/*正则表达式分割字符串为数组*/
-ClassBaoJavascript.prototype.RegexSplit = function (splitString, regexFormat) {
-	if (!splitString) return [];
-	var stringArray = splitString.toString().split(regexFormat);
-	if (!stringArray || stringArray.length < 1) return [];
-	for (var i = 0; i < stringArray.length; i++) {
-		if (regexFormat.test(stringArray[i]))
-			stringArray = stringArray.slice(0, i).concat(stringArray.slice(i + 1, stringArray.length));
-	}
-	return stringArray;
-	/*
-  　　　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
-  　　　　　　　　　这里就是返回this.slice(0,index)/this.slice(index+1,this.length)
-  　　 　　　　　　组成的新数组，这中间，刚好少了第index项。
-  　　　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
-  　*/
-}
-
-/*密码复杂度。密码长度权重是1，密码连续3个相同元素权重是-1，密码物种权重是10。对于6-18位密码来说：12-28为低级，28-38为中低级，38-48为中高级，48以上为高级*/
-ClassBaoJavascript.prototype.PasswordComplexity = function (password) {
-	var complexity = 0; /* 密码复杂度。密码长度权重是1，密码连续3个相同元素权重是-1，密码物种权重是10。对于6-18位密码来说：12-28为低级，28-38为中低级，38-48为中高级，48以上为高级（熊学浩） */
-	if (!!password) {
-		/* 空 */
-		var reg_empty = /^\s*$/;
-		/* 数字 */
-		var reg_digital = /([0-9])+/;
-		/* 小写英文字母 */
-		var reg_lowercase = /([a-z])+/;
-		/* 大写英文字母 */
-		var reg_capitalletters = /([A-Z])+/;
-		/* 符号 */
-		var reg_punctuation = /([~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/])+/;
-
-		if (password.toString().match(reg_empty)) return complexity; /* 密码不能为空 */
-		if (password.toString().length < 6) return complexity; /* 密码长度必须是6位（含）以上 */
-
-		var passwordArray = password.toString().split("");
-		for (var i = 0; i < passwordArray.length; i++) {
-			if (passwordArray[i].match(reg_digital)) {
-				complexity++;
-				species
-				continue;
-			}
-			else if (passwordArray[i].match(reg_lowercase)) {
-				complexity++;
-				continue;
-			}
-			else if (passwordArray[i].match(reg_capitalletters)) {
-				complexity++;
-				continue;
-			}
-			else if (passwordArray[i].match(reg_punctuation)) {
-				complexity++;
-				continue;
-			}
-		}
-		for (var i = 0; i < passwordArray.length; i++) { /* 连续相同的3个字符 */
-			if (i < passwordArray.length - 2) {
-				if (passwordArray[i] == passwordArray[i + 1] && passwordArray[i] == passwordArray[i + 2]) {
-					if (complexity > 1)
-						complexity--;
-					continue;
-				}
-			}
-		}
-		var species = 0; /* 密码物种数量 */
-		if (password.toString().match(reg_digital))
-			species++;
-		if (password.toString().match(reg_lowercase))
-			species++;
-		if (password.toString().match(reg_capitalletters))
-			species++;
-		if (password.toString().match(reg_punctuation))
-			species++;
-
-		if (species > 0)
-			complexity += (species * 10); /* 密码物种权重是10 */
-	}
-	return complexity;
-	//var a1 = PasswordComplexity("111111"); /* 12 */
-	//var b1 = PasswordComplexity("123456"); /* 16 */
-	//var c1 = PasswordComplexity("123456789123456789"); /* 28 */
-	//var a2 = PasswordComplexity("111abc"); /* 25 */
-	//var b2 = PasswordComplexity("123abc"); /* 26 */
-	//var c2 = PasswordComplexity("123456789abcdefghj"); /* 38 */
-	//var a3 = PasswordComplexity("111abC"); /* 35 */
-	//var b3 = PasswordComplexity("123abC"); /* 36 */
-	//var c3 = PasswordComplexity("123456789abCDEfghj"); /* 48 */
-	//var a4 = PasswordComplexity("111aB_"); /* 45 */
-	//var b4 = PasswordComplexity("123aB_"); /* 46 */
-	//var c4 = PasswordComplexity("123456789abCDE_$@;"); /* 58 */
-}
-
-/*转义单引号（用于Sql传参数）*/
-ClassBaoJavascript.prototype.escapeSingleQuotesForSQL = function (text) {
-	if (text) {
-		if (Reg_Sql.test(text)) {
-			return text.replace(/'/ig, "''");
-		}
-		else
-			return text;
-	}
-	else
-		return "";
-}
-/*转义单引号（用于javascript传参数）*/
-ClassBaoJavascript.prototype.escapeSingleQuotesForJS = function (text) {
-	if (text) {
-		return text.replace(/\'/g, "\\\'");
-	}
-	else
-		return "";
-}
-
-/*字符串长度（字节长度，真实字节长度）*/
-ClassBaoJavascript.prototype.RealLength = function (str) {
-	if (!str) { return 0; }
-	var _str = str.LRTrim();
-	var len = 0;
-	var i = 0;
-	for (i = 0; i < _str.length; i++) {
-		if (_str.charCodeAt(i) > 255) {
-			len += 2;
-		}
-		else {
-			len++;
-		}
-	}
-	return len;
-}
-
-/*按字节数截取字符串（从位置0开始；str是原始字符串；len是要截取长度（字节数）；suffix是后缀）*/
-ClassBaoJavascript.prototype.SubString = function (str, len, suffix) {
-	if (!str || !len) { return ''; }
-	var _str = str.LRTrim();
-	var a = 0;
-	var i = 0;
-	var temp = '';
-	for (i = 0; i < _str.length; i++) {
-		if (_str.charCodeAt(i) > 255) {
-			a += 2;
-		}
-		else {
-			a++;
-		}
-		if (a > len) { return temp + suffix; }
-		temp += _str.charAt(i);
-	}
-	return _str;
-}
 
 /***** 常用实例方法扩展·日期与时间 *****/
 /*获得Unix Timestamp时间戳*/
@@ -701,7 +752,7 @@ ClassBaoJavascript.prototype.GetDate = function (_UnixTimestamp) {
 	}
 }
 /*时间格式化扩展*/
-Date.prototype.format = function (fmt) {
+Date.prototype.Format = function (fmt) {
 	var o = {
 		"M+": this.getMonth() + 1, //月份       
 		"d+": this.getDate(), //日      
@@ -759,15 +810,7 @@ ClassBaoJavascript.prototype.isDateTime = function (str) {
 	return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4] && d.getHours() == r[5] && d.getMinutes() == r[6] && d.getSeconds() == r[7]);
 }
 
-/*获取值域为[minValue, maxValue]的随机数（可以取到最大值和最小值，均衡分布）*/
-ClassBaoJavascript.prototype.GetRandom = function (minValue, maxValue) {
-	/*
-	* 也就是说，如果要创建一个从x到y的随机数，就可以这样写：
-	* Math.round(Math.random() * (y - x)) + x;
-	* x和y可以是任何的数值，即使是负数也一样。
-	*/
-	return Math.round(Math.random() * (maxValue - minValue)) + minValue;
-}
+
 
 /* //调用示例：
 document.onkeydown = function (e) {
@@ -1300,30 +1343,7 @@ ClassBaoJavascript.prototype.regexEnum =
 	ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$" //中文、字母、数字 _
 };
 
-/*中华人民共和国居民身份证组成格式“省/直辖市/自治区/特别行政区{2}+市/自治州{2}+县/区{2}+出生日期{8}+出生地派出所代码{2}+性别(第17位数字表示性别：奇数表示男性，偶数表示女性){1}+校验码{1}”*/
-ClassBaoJavascript.prototype.GetBirthdayByIdCard = function (cardID) {
-	var sBirthday = cardID.substr(6, 4) + "-" + Number(cardID.substr(10, 2)) + "-" + Number(cardID.substr(12, 2));
-	var d = new Date(sBirthday.replace(/-/g, "/"));
-	if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return "身份证上的出生日期非法";
-	else return sBirthday;
-}
-ClassBaoJavascript.prototype.GetSexByIdCard = function (cardID) {
-	return cardID.substr(16, 1) % 2 ? "男" : "女";
-}
-ClassBaoJavascript.prototype.isCardID = function (cardID) {
-	var iSum = 0;
-	var info = "";
-	if (!/^\d{17}(\d|x)$/i.test(cardID)) return "您输入的身份证长度或格式错误";
-	cardID = cardID.replace(/x$/i, "a");
-	//if (aCity[parseInt(cardID.substr(0, 2))] == null) return "您的身份证地区非法";
-	var sBirthday = cardID.substr(6, 4) + "-" + Number(cardID.substr(10, 2)) + "-" + Number(cardID.substr(12, 2));
-	var d = new Date(sBirthday.replace(/-/g, "/"));
-	if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return "身份证上的出生日期非法";
 
-	for (var i = 17; i >= 0; i--) iSum += (Math.pow(2, i) % 11) * parseInt(cardID.charAt(17 - i), 11);
-	if (iSum % 11 != 1) return "您输入的身份证号非法";
-	return true;//aCity[parseInt(cardID.substr(0,2))]+","+sBirthday+","+(cardID.substr(16,1)%2?"男":"女") 
-}
 
 
 
