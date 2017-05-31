@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>ClassBaoJavascript测试页面</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in April 24, 2017" />
+
+    <link href="./common.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!--CBJS.Cookie.CookieEnabled-->
+        <p>1,当前环境是否支持/浏览器是否启用Cookie：</p>
+        <pre>
+        <code>
+var cookieEnabled = CBJS.Cookie.CookieEnabled();
+console.log(cookieEnabled);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>是否启用Cookie</td><td id="CookieEnabled"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--CBJS.Cookie.setCookie-->
+        <p>2,设置Cookie：</p>
+        <pre>
+        <code>
+var mySetCookie = CBJS.Cookie.setCookie("myCookie", "我爱中国", 1);
+console.log("setCookie", mySetCookie);
+            </code>
+        </pre>
+        <p>参数解析：CBJS.Cookie.setCookie(name, value, days)
+            <p>&gt; name:名称（键）</p>
+            <p>&gt; value:存储内容（值）</p>
+            <p>&gt; days:过期天数（存储天数）</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>设置Cookie</td><td id="setCookie"></td></tr>
+            </tbody>
+        </table>
+        
+        <hr />
+
+
+
+
+
+        <!--CBJS.Cookie.setCookie-->
+        <p>3,设置Cookie：</p>
+        <pre>
+        <code>
+var mySetCookie2 = CBJS.Cookie.setCookie("myCookie", "我爱世界和平", 1, "/", "classbao.com", false);
+console.log("setCookie", mySetCookie2);
+            </code>
+        </pre>
+        <p>参数解析：CBJS.Cookie.setCookie(name, value, days, path, domain, isSecure)
+        <p>&gt; name:名称（键）</p>
+        <p>&gt; value:存储内容（值）</p>
+        <p>&gt; days:过期天数（存储天数）</p>
+        <p>&gt; path:路径（可以是一个目录，或者是一个路径。path属性设置成“/”，凡是来自同一服务器（或者多级域名之间），URL里有相同路径的所有WEB页面都可以共享cookies。）</p>
+        <p>&gt; domain:域（值是域名，这是对path路径属性的一个延伸。如果我们想让 catalog.mycompany.com 能够访问shoppingcart.mycompany.com设置的cookies，该怎么办? 我们可以把domain属性设置成“mycompany.com”，并把path属性设置成“/”。不能把cookies域属性设置成与设置它的服务器的 所在域不同的值。）</p>
+        <p>&gt; isSecure:传输安全（如果一个cookie标记为secure，那么它与WEB服务器之间就通过HTTPS或者其它安全协议传递数据。把cookie设置为secure，只保证cookie与WEB服务器之间的数据传输过程加密，而保存在本地的 cookie文件并不加密。如果想让本地cookie也加密，得自己加密数据。）</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>设置Cookie</td><td id="SetCookie2"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--CBJS.Cookie.getCookie-->
+        <p>4,获取Cookie：</p>
+        <pre>
+        <code>
+var myCookie = CBJS.Cookie.getCookie("myCookie");
+console.log("getCookie", myCookie);
+            </code>
+        </pre>
+        <p>参数解析：CBJS.Cookie.getCookie(name)
+        <p>&gt; name:名称（键）</p>
+        <p>&gt; 返回值:存储内容（值）</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>获取Cookie</td><td id="getCookie"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--CBJS.Cookie.getCookieByVerticalLine-->
+        <p>5,获取竖线分隔的指定Cookie：</p>
+        <pre>
+        <code>
+var myCookie2 = CBJS.Cookie.getCookieByVerticalLine("myCookie2");
+console.log("getCookieByVerticalLine", myCookie2);
+            </code>
+        </pre>
+        <p>参数解析：CBJS.Cookie.getCookieByVerticalLine(name)
+        <p>&gt; name:名称（键）</p>
+        <p>&gt; 返回值:存储内容（值）</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>获取Cookie</td><td id="getCookieByVerticalLine"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--CBJS.Cookie.deleteCookie-->
+        <p>6,删除指定Cookie：</p>
+        <pre>
+        <code>
+CBJS.Cookie.deleteCookie("myCookie");
+            </code>
+        </pre>
+        <p>参数解析：CBJS.Cookie.deleteCookie(name)
+        <p>&gt; name:名称（键）</p>
+        </p>
+
+        <hr />
+
+    </div>
+
+    <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
+    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+
+    <!--CBJS.Cookie.CookieEnabled-->
+    <script>
+        var cookieEnabled = CBJS.Cookie.CookieEnabled();
+        console.log("CookieEnabled", cookieEnabled);
+        CBJS.getById("CookieEnabled").innerText = cookieEnabled;
+    </script>
+
+    <!--CBJS.Cookie.setCookie-->
+    <script>
+        var mySetCookie = CBJS.Cookie.setCookie("myCookie", "我爱中国", 1);
+        console.log("setCookie", mySetCookie);
+        CBJS.getById("setCookie").innerText = mySetCookie;
+    </script>
+
+    <!--CBJS.Cookie.setCookie-->
+    <script>
+        var mySetCookie2 = CBJS.Cookie.setCookie("myCookie2", "我爱世界和平", 1, "/", "classbao.com", false);
+        console.log("setCookie", mySetCookie2);
+        CBJS.getById("SetCookie2").innerText = mySetCookie2;
+    </script>
+
+    <!--CBJS.Cookie.getCookie-->
+    <script>
+        var myCookie = CBJS.Cookie.getCookie("myCookie");
+        console.log("getCookie", myCookie);
+        CBJS.getById("getCookie").innerText = myCookie;
+    </script>
+
+    <!--CBJS.Cookie.getCookieByVerticalLine-->
+    <script>
+        var myCookie2 = CBJS.Cookie.getCookieByVerticalLine("myCookie2");
+        console.log("getCookieByVerticalLine", myCookie2);
+        CBJS.getById("getCookieByVerticalLine").innerText = myCookie2;
+    </script>
+
+    <!--CBJS.Cookie.deleteCookie-->
+    <script>
+        CBJS.Cookie.deleteCookie("myCookie");
+    </script>
+
+</body>
+</html>

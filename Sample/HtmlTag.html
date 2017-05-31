@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>ClassBaoJavascript测试页面</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in April 24, 2017" />
+
+    <link href="./common.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!--encodingHTML-->
+        <p>1，编码Html源代码：</p>
+        <pre>
+        <code>
+var htmlStr = "&lt;p&gt;&lt;a href=&quot;./HtmlTag.html&quot;&gt;HTML标签&lt;/a&gt;&lt;/p&gt;";
+var encodingHTML = CBJS.encodingHTML(htmlStr);
+console.log("encodingHTML", encodingHTML);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>编码Html源代码</td><td id="encodingHTML"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--decodingHTML-->
+        <p>2，解码Html源代码：</p>
+        <pre>
+        <code>
+var decodingHTML = CBJS.decodingHTML(encodingHTML);
+console.log("decodingHTML", decodingHTML);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>解码Html源代码</td><td id="decodingHTML"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--removeHtmlTag-->
+        <p>3，移除字符串中的Html标签：</p>
+        <pre>
+        <code>
+var removeHtmlTag = CBJS.removeHtmlTag(htmlStr);
+console.log("removeHtmlTag", removeHtmlTag);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>移除字符串中的Html标签</td><td id="removeHtmlTag"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+        <!--encodingUnicode-->
+        <p>4，Unicode编码字符串：</p>
+        <pre>
+        <code>
+var encodingUnicode = CBJS.encodingUnicode("我爱中国");
+console.log("encodingUnicode", encodingUnicode);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>Unicode编码字符串</td><td id="encodingUnicode"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--decodingUnicode-->
+        <p>5，Unicode解码字符串：</p>
+        <pre>
+        <code>
+var decodingUnicode = CBJS.decodingUnicode("\u6211\u7231\u4e2d\u56fd");
+console.log("decodingUnicode", decodingUnicode);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>Unicode解码字符串</td><td id="decodingUnicode"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+
+        <!--escapeSingleQuotesForSQL-->
+        <p>6，转义单引号（基于Sql规范）：</p>
+        <pre>
+        <code>
+var escapeSingleQuotesForSQL = CBJS.escapeSingleQuotesForSQL("我是一个单引号'结束");
+console.log("escapeSingleQuotesForSQL", escapeSingleQuotesForSQL);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>转义单引号（基于Sql规范）</td><td id="escapeSingleQuotesForSQL"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--escapeSingleQuotesForJS-->
+        <p>7，转义单引号（基于JavaScript规范）：</p>
+        <pre>
+        <code>
+var escapeSingleQuotesForJS = CBJS.escapeSingleQuotesForJS("我是一个单引号'结束");
+console.log("escapeSingleQuotesForJS", escapeSingleQuotesForJS);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>转义单引号（基于Sql规范）</td><td id="escapeSingleQuotesForJS"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--realLength-->
+        <p>8，字符串长度（字节长度，真实字节长度）：</p>
+        <pre>
+        <code>
+var realLength = CBJS.realLength("中国China");
+console.log("realLength", realLength);
+//output: 9
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>字符串长度（字节长度，真实字节长度）</td><td id="realLength"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--subString-->
+        <p>9，按字节数截取字符串：</p>
+        <pre>
+        <code>
+var subString = CBJS.subString("中国China", 6, "...");
+console.log("subString", subString);
+//output: 中国Ch...
+            </code>
+        </pre>
+        <p>参数解析：CBJS.subString(str, len, suffix)
+        <p>&gt; str:原字符串</p>
+        <p>&gt; len:要截取长度（字节数，从0开始）</p>
+        <p>&gt; suffix:超出长度被截掉的字符串显示后缀</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>按字节数截取字符串</td><td id="subString"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--clearURLEnd-->
+        <p>10，移除URL末尾的空格、格式符号、“&”、“?”：</p>
+        <pre>
+        <code>
+var clearURLEnd = CBJS.clearURLEnd("./HtmlTag.html \n?& ");
+console.log("clearURLEnd", clearURLEnd);
+//output: ./HtmlTag.html
+            </code>
+        </pre>
+        
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>移除URL末尾的空格、格式符号、“&”、“?”</td><td id="clearURLEnd"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+
+
+
+        <!--getRandom-->
+        <p>11，获取区间内随机数：</p>
+        <pre>
+        <code>
+var getRandom = CBJS.getRandom(1, 9);
+console.log("getRandom", getRandom);
+            </code>
+        </pre>
+        <p>参数解析：CBJS.getRandom(minValue, maxValue)
+        <p>&gt; minValue:最小值(可以随机到该值)</p>
+        <p>&gt; maxValue:最大值(可以随机到该值)</p>
+        <p>&gt; 返回值:获取区间内随机数（可以取到最大值和最小值，均衡分布）</p>
+        </p>
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>获取区间内随机数</td><td id="getRandom"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+    </div>
+
+    <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
+    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+
+    <!--encodingHTML-->
+    <script>
+        var htmlStr = "<p><a href=\"./HtmlTag.html\">HTML标签</a></p>";
+        var encodingHTML = CBJS.encodingHTML(htmlStr);
+        console.log("encodingHTML", encodingHTML);
+        CBJS.getById("encodingHTML").innerText = encodingHTML;
+    </script>
+
+    <!--decodingHTML-->
+    <script>
+        var decodingHTML = CBJS.decodingHTML(encodingHTML);
+        console.log("decodingHTML", decodingHTML);
+        CBJS.getById("decodingHTML").innerText = decodingHTML;
+    </script>
+
+    <!--removeHtmlTag-->
+    <script>
+        var removeHtmlTag = CBJS.removeHtmlTag(htmlStr);
+        console.log("removeHtmlTag", removeHtmlTag);
+        CBJS.getById("removeHtmlTag").innerText = removeHtmlTag;
+    </script>
+
+    <!--encodingUnicode-->
+    <script>
+        var encodingUnicode = CBJS.encodingUnicode("我爱中国");
+        console.log("encodingUnicode", encodingUnicode);
+        CBJS.getById("encodingUnicode").innerText = encodingUnicode;
+    </script>
+
+    <!--decodingUnicode-->
+    <script>
+        var decodingUnicode = CBJS.decodingUnicode("\u6211\u7231\u4e2d\u56fd");
+        console.log("decodingUnicode", decodingUnicode);
+        CBJS.getById("decodingUnicode").innerText = decodingUnicode;
+    </script>
+
+    <!--escapeSingleQuotesForSQL-->
+    <script>
+        var escapeSingleQuotesForSQL = CBJS.escapeSingleQuotesForSQL("我是一个单引号'结束");
+        console.log("escapeSingleQuotesForSQL", escapeSingleQuotesForSQL);
+        CBJS.getById("escapeSingleQuotesForSQL").innerText = escapeSingleQuotesForSQL;
+    </script>
+
+    <!--escapeSingleQuotesForJS-->
+    <script>
+        var escapeSingleQuotesForJS = CBJS.escapeSingleQuotesForJS("我是一个单引号'结束");
+        console.log("escapeSingleQuotesForJS", escapeSingleQuotesForJS);
+        CBJS.getById("escapeSingleQuotesForJS").innerText = escapeSingleQuotesForJS;
+    </script>
+
+    <!--realLength-->
+    <script>
+        var realLength = CBJS.realLength("中国China");
+        console.log("realLength", realLength);
+        CBJS.getById("realLength").innerText = realLength;
+    </script>
+
+    <!--subString-->
+    <script>
+        var subString = CBJS.subString("中国China", 6, "...");
+        console.log("subString", subString);
+        CBJS.getById("subString").innerText = subString;
+    </script>
+
+    <!--clearURLEnd-->
+    <script>
+        var clearURLEnd = CBJS.clearURLEnd("./HtmlTag.html \n?& ");
+        console.log("clearURLEnd", clearURLEnd);
+        CBJS.getById("clearURLEnd").innerText = clearURLEnd;
+    </script>
+
+    <!--getRandom-->
+    <script>
+        var getRandom = CBJS.getRandom(1, 9);
+        console.log("getRandom", getRandom);
+        CBJS.getById("getRandom").innerText = getRandom;
+    </script>
+
+
+
+</body>
+</html>

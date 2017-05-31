@@ -1,24 +1,24 @@
 ﻿/***
 * explain: Common JavaScript extension library,Completely free of charge.Development and maintenance by ClassBao team.
-* version: V1.0
+* version: V1.0.0
 * Copyright: classbao.com
 * Author: xiongzaiqiren
 * Blog: http://xiongzaiqiren.blog.163.com/
 * E-mail: xiongzaiqiren@163.com
 * Last modified: xiongzaiqiren
 * Last modified time: 2016-11-29 10:21
-* Version source: https://github.com/classbao/ClassBaoJavascript.git
+* Version source: https://github.com/classbao/ClassBaoJavascript
 ***/
 
 /***** 通用ClassBaoJavascript模拟类库·开始 *****/
 function ClassBaoJavascript() {
     /*根据id获取元素（唯一元素）*/
-    this.GetById = function (id) {
+    this.getById = function (id) {
         if (id && document) return document.getElementById(id) || null;
         return null;
     };
     /*根据className获取元素（元素数组）*/
-    this.GetByClass = function (className) {
+    this.getByClass = function (className) {
         var classElements = [], allElements = document.all ? document.all : document.getElementsByTagName('*');
         for (var i = 0; i < allElements.length; i++) {
             if (allElements[i].className == className) {
@@ -28,7 +28,7 @@ function ClassBaoJavascript() {
         return classElements;
     };
     /*检测浏览器类型与版本*/
-    this.GetBrowser = function () {
+    this.getBrowser = function () {
         /*
         document.writeln("浏览器代码名称：navigator.appCodeName=" + navigator.appCodeName);
         document.writeln("浏览器名称：navigator.appName=" + navigator.appName);
@@ -59,8 +59,7 @@ function ClassBaoJavascript() {
             }
             catch (e) { }
         }
-        else if (ua.indexOf("trident") > -1) //IE内核
-        {
+        else if (ua.indexOf("trident") > -1) { //IE内核
             result.name = "Trident";
             try {
                 result.version = ua.match(/trident ([\d.]+)/)[1];
@@ -167,13 +166,21 @@ function ClassBaoJavascript() {
             result.hardware = "mobile";
             result.isPC = false;
         }
+        else if (!!u.match(/Windows NT ([\d.]+)/ig)) {
+            result.hardware = u.match(/Windows NT ([\d.]+)/ig)[0];
+            var _WOW = u.match(/(WOW\d+)/ig);
+            if (!!_WOW) {
+                result.WOW = u.match(/(WOW\d+)/ig)[0];
+            }
+            result.isPC = true;
+        }
         else {
         }
 
         return result;
     };
     /*获取当前屏幕；结果：{ top: top, left: left, height: height, width: width }*/
-    this.GetScreen = function () {
+    this.getScreen = function () {
         var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
         var left = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
         var width = Math.max(document.body.clientWidth, document.documentElement.clientWidth);
@@ -191,10 +198,63 @@ function ClassBaoJavascript() {
         return !!document.createElement("canvas").getContext;
     };
 
+    /*隐藏（element是HTML元素）*/
+    this.hidden = function (id) {
+        var element = null;
+        if ("string" == typeof (id)) {
+            element = CBJS.GetById(id);
+        }
+        else if ("object" == typeof (id)) {
+            element = id;
+        }
+        if (!!element)
+            element.style.display = "none";
+    };
+    /*显示（element是HTML元素）*/
+    this.show = function (id) {
+        var element = null;
+        if ("string" == typeof (id)) {
+            element = CBJS.GetById(id);
+        }
+        else if ("object" == typeof (id)) {
+            element = id;
+        }
+        if (!!element)
+            element.style.display = "block";/* display="inline" */
+    };
+
+    /*创建元素*/
+    this.createElement = function (type) { return document.createElement(type); }
+    /*删除指定节点*/
+    this.removeChild = function (element) {
+        try {
+            if (element) {
+                element.parentNode.removeChild(element);
+            }
+        }
+        catch (e) {
+        }
+    }
+    /*删除指定元素所有子节点*/
+    this.removeChildNodes = function (element) {
+        var parentNode = element;
+        if (parentNode == null) {
+            return;
+        }
+        if (parentNode.hasChildNodes()) {
+            var length = parentNode.childNodes.length;
+            for (var k = 0; k < length; k++) {
+                parentNode.removeChild(parentNode.childNodes[0]);
+            }
+        }
+    }
+
+
+
     /*页面及窗体通用功能*/
     this.Window = {
         /*跳转到链接*/
-        GoToLocation: function (url) {
+        goToLocation: function (url) {
             if (url) { window.location = url; }
         },
         /*从最顶层窗口跳转链接*/
@@ -213,14 +273,14 @@ function ClassBaoJavascript() {
         },
 
         /*强制刷新页面*/
-        Reload: function () {
+        reload: function () {
             try { window.history.go(0); }
             catch (e) { window.location.reload(); }
         },
 
         /*** 前进 ***/
         /*frame窗体“前进”（name是frame窗体名称）*/
-        GoToForward: function (name) {
+        goToForward: function (name) {
             if (name && window.frames[name]) {
                 if (window.frames[name].history) {
                     //window.frames[name].history.go(1);
@@ -233,13 +293,13 @@ function ClassBaoJavascript() {
             }
         },
         /*当前窗体前进页面*/
-        GoToForward: function () {
+        goToForward: function () {
             try { window.history.go(1); }
             catch (e) { window.history.forward(); }
         },
         /*** 后退 ***/
         /*frame窗体“后退”（name是frame窗体名称）*/
-        GoToBack: function (name) {
+        goToBack: function (name) {
             if (name && window.frames[name]) {
                 if (window.frames[name].history) {
                     //window.frames[name].history.go(-1);
@@ -252,7 +312,7 @@ function ClassBaoJavascript() {
             }
         },
         /*当前窗体后退页面*/
-        GoToBack: function () {
+        goToBack: function () {
             try {
                 window.history.go(-1);
             }
@@ -265,7 +325,7 @@ function ClassBaoJavascript() {
 
         /*** 刷新 ***/
         /*frame窗体“刷新”（name是frame窗体名称）*/
-        Reload: function (name) {
+        reload: function (name) {
             if (name && window.frames[name]) {
                 if (window.frames[name].location) {
                     window.frames[name].location.reload();
@@ -276,13 +336,13 @@ function ClassBaoJavascript() {
             }
         },
         /*当前窗体强制刷新页面*/
-        Reload: function () {
+        reload: function () {
             try { window.history.go(0); }
             catch (e) { window.location.reload(); }
         },
 
         /*获取域名URL。（例如：http://www.classbao.com）*/
-        GetDomainUrl: function () {
+        getDomainUrl: function () {
             if (window && window.location)
                 return window.location.protocol + "//" + window.location.host; //http://www.classbao.com
             else
@@ -290,7 +350,7 @@ function ClassBaoJavascript() {
         }
     };
     /*获取参数值（类似URL，Cookie等格式的参数文本）（ParamName是参数名称；PaeramText是完整参数文本（例如：FromUser=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40）；BetweenOfChar是参数间隔符（例如：“&”，“;”））*/
-    this.GetParamValue = function (ParamName, ParamText, BetweenOfChar) {
+    this.getParamValue = function (ParamName, ParamText, BetweenOfChar) {
         if (!ParamName || !ParamText) return null;
         var textstring = ParamText.toString();
         var start = textstring.indexOf(ParamName + "=");
@@ -301,9 +361,9 @@ function ClassBaoJavascript() {
         return textstring.substring(start, end);
     };
     /*获取页面GET请求URL参数值*/
-    this.GetUrlParamValue = function (name) {
+    this.getUrlParamValue = function (name) {
         var searchStr = decodeURIComponent(window.location.search);
-        return CBJS.GetParamValue(name, searchStr, "&");
+        return CBJS.getParamValue(name, searchStr, "&");
     };
 
     /* //示例：
@@ -328,9 +388,9 @@ function ClassBaoJavascript() {
         /*当前浏览器Cookie是否启用*/
         CookieEnabled: function () {
             var result = false;
-            if (navigator.cookieEnabled && document.cookie && typeof (document.cookie) != "undefined") {
+            if (navigator.cookieEnabled && typeof (document.cookie) != "undefined") {
                 var date = new Date();
-                date.setTime(date.getTime() + 60 * 1000); //60秒
+                date.setTime(date.getTime() + 10 * 1000); //10秒
                 document.cookie = "testcookie=yes; expires=" + date.toGMTString();
                 var _cookie = document.cookie;
                 if (_cookie.indexOf("testcookie=yes") > -1)
@@ -339,7 +399,7 @@ function ClassBaoJavascript() {
             return result;
         },
         /*设置Cookie，返回值类型:Boolean,传入参数:（name是名称；value是值；days是过期时间（天）；path是路径（可以是一个目录，或者是一个路径。path属性设置成“/”，凡是来自同一服务器（或者多级域名之间），URL里有相同路径的所有WEB页面都可以共享cookies。）；domain是域（值是域名，这是对path路径属性的一个延伸。如果我们想让 catalog.mycompany.com 能够访问shoppingcart.mycompany.com设置的cookies，该怎么办? 我们可以把domain属性设置成“mycompany.com”，并把path属性设置成“/”。不能把cookies域属性设置成与设置它的服务器的 所在域不同的值。）；isSecure是传输安全（如果一个cookie标记为secure，那么它与WEB服务器之间就通过HTTPS或者其它安全协议传递数据。把cookie设置为secure，只保证cookie与WEB服务器之间的数据传输过程加密，而保存在本地的 cookie文件并不加密。如果想让本地cookie也加密，得自己加密数据。）；）*/
-        SetCookie: function (name, value, days, path, domain, isSecure) {
+        setCookie: function (name, value, days, path, domain, isSecure) {
             try {
                 if (!!document.cookie) return false;
                 if (!name) return;
@@ -360,7 +420,7 @@ function ClassBaoJavascript() {
             return false;
         },
         /*设置Cookie（name是名称；value是值；days是过期时间（天））*/
-        SetCookie: function (name, value, days) {
+        setCookie: function (name, value, days) {
             try {
                 if (!!document.cookie) return false;
                 if (!name) return;
@@ -378,19 +438,19 @@ function ClassBaoJavascript() {
         },
 
         /*获取Cookie（name是名称）*/
-        GetCookie: function (name) {
+        getCookie: function (name) {
             if (!!document.cookie) return null;
-            return CBJS.GetParamValue(name, decodeURIComponent(document.cookie), ";");
+            return CBJS.getParamValue(name, decodeURIComponent(document.cookie), ";");
         },
         /*获取垂直线分隔的Cookie（name是名称）*/
-        GetCookieByVerticalLine: function (name) {
+        getCookieByVerticalLine: function (name) {
             if (!!document.cookie) return null;
             var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
             if (arr != null) return decodeURIComponent(arr[2]); return null;
         },
 
         /*删除Cookie（name是名称）*/
-        DeleteCookie: function (name) {
+        deleteCookie: function (name) {
             if (!!document.cookie) return;
             var exdate = new Date();
             exdate.setTime(exdate.getTime() - 1000);
@@ -399,7 +459,7 @@ function ClassBaoJavascript() {
     };
 
     /*编码Html源代码*/
-    this.EncodingHTML = function (text) {
+    this.encodingHTML = function (text) {
         if (!!!text || text.length < 1) return '';
         var _text = text || '';
         _text = _text.replace(/&/g, "&amp;");
@@ -410,7 +470,7 @@ function ClassBaoJavascript() {
         return _text;
     };
     /*解码Html源代码*/
-    this.DecodingHTML = function (text) {
+    this.decodingHTML = function (text) {
         if (!!!text || text.length < 1) return '';
         var _text = text || '';
         _text = _text.replace(/&amp;/g, "&");
@@ -421,37 +481,37 @@ function ClassBaoJavascript() {
         return _text;
     };
     /*移除字符串中的Html标签*/
-    this.RemoveHtmlTag = function (text) {
+    this.removeHtmlTag = function (text) {
         if (!!!text || text.length < 1) return '';
         return text.toString().replace(/<[^>]+>|<\/[^>]+>/g, "");
     };
 
     /*Unicode（编码）转义(\uXXXX)的编码和解码*/
-    this.EncodingUnicode = function (text) {
+    this.encodingUnicode = function (text) {
         if (!!!text || text.length < 1) return '';
         return escape(text).replace(/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm, function ($0, $1, $2) {
             return $1 && '\\' + $1.toLowerCase() || unescape($2);
         });
     };
     /*Unicode（解码）转义(\uXXXX)的编码和解码*/
-    this.DecodingUnicode = function (text) {
+    this.decodingUnicode = function (text) {
         if (!!!text || text.length < 1) return '';
         return unescape(text.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'));
     };
 
-    /*转义单引号（用于Sql传参数）*/
-    this.EscapeSingleQuotesForSQL = function (text) {
+    /*转义单引号（基于Sql规范）*/
+    this.escapeSingleQuotesForSQL = function (text) {
         if (!!!text || text.length < 1) return '';
         return text.replace(/'/ig, "''");
     };
-    /*转义单引号（用于javascript传参数）*/
-    this.EscapeSingleQuotesForJS = function (text) {
+    /*转义单引号（基于JavaScript规范）*/
+    this.escapeSingleQuotesForJS = function (text) {
         if (!!!text || text.length < 1) return '';
         return text.replace(/\'/g, "\\\'");
     };
 
     /*字符串长度（字节长度，真实字节长度）*/
-    this.RealLength = function (str) {
+    this.realLength = function (str) {
         if (!!!str) { return 0; }
         var _str = ("string" == typeof (str)) ? str : str.toString();
         var _str = _str.LRTrim();
@@ -468,7 +528,7 @@ function ClassBaoJavascript() {
         return len;
     };
     /*按字节数截取字符串（从位置0开始；str是原始字符串；len是要截取长度（字节数）；suffix是后缀）*/
-    this.SubString = function (str, len, suffix) {
+    this.subString = function (str, len, suffix) {
         if (!!!str || !!!len) return '';
         var _str = ("string" == typeof (str)) ? str : str.toString();
         var _str = _str.LRTrim();
@@ -489,13 +549,13 @@ function ClassBaoJavascript() {
     };
 
     /*移除URL末尾的空格、格式符号、“&”、“?”*/
-    this.ClearURLEnd = function (url) {
+    this.clearURLEnd = function (url) {
         if (!!!url || url.length < 1) return '';
         return url.toString().replace(/(&|\?|\s)+$/g, "");
     };
 
     /*获取值域为[minValue, maxValue]的随机数（可以取到最大值和最小值，均衡分布）*/
-    this.GetRandom = function (minValue, maxValue) {
+    this.getRandom = function (minValue, maxValue) {
         /*
         * 也就是说，如果要创建一个从x到y的随机数，就可以这样写：
         * Math.round(Math.random() * (y - x)) + x;
@@ -571,23 +631,19 @@ function ClassBaoJavascript() {
         if (!!!splitString) return [];
         var stringArray = splitString.toString().split(regexFormat);
         if (!stringArray || stringArray.length < 1) return [];
-        for (var i = 0; i < stringArray.length; i++) {
-            if (regexFormat.test(stringArray[i]))
-                stringArray = stringArray.slice(0, i).concat(stringArray.slice(i + 1, stringArray.length));
+        var length = stringArray.length;
+        var arr = new Array();
+        for (var i = 0; i < length ; i++) {
+            if (!!!stringArray[i] || regexFormat.test(stringArray[i])) continue;
+            arr.push(stringArray[i]);
         }
-        return stringArray;
-        /*
-      　　　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
-      　　　　　　　　　这里就是返回this.slice(0,index)/this.slice(index+1,this.length)
-      　　 　　　　　　组成的新数组，这中间，刚好少了第index项。
-      　　　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
-      　*/
+        return arr;
     };
 
     /*数组操作*/
     this.Array = {
         /*根据索引移除数组中指定项（index表示数组下标索引，从0开始）*/
-        RemoveByIndex: function (array, index) {
+        removeByIndex: function (array, index) {
             if (index < 0)　/*如果index<0，则不进行任何操作。*/
                 return array;
             else
@@ -600,10 +656,10 @@ function ClassBaoJavascript() {
           　*/
         },
         /*移除数组中指定项*/
-        RemoveByItem: function (array, removeItem) {
+        removeByItem: function (array, removeItem) {
             for (var i = 0 ; i < array.length; i++) {
                 if (array[i] == removeItem) {
-                    array = CBJS.Array.RemoveByIndex(array, i);
+                    array = CBJS.Array.removeByIndex(array, i);
                     i--;
                 }
             }
@@ -713,7 +769,33 @@ function ClassBaoJavascript() {
         }
     };
 
-
+    /* 调用示例：
+        document.onkeydown = function (e) {
+            if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; }
+        }
+    */
+    /*获取键盘按键代码（event是按键事件）兼容IE，FireFox，Chrome，Opera等*/
+    this.GetKeyCode = function (event) {
+        var theEvent = event || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        return code;
+    };
+    /*添加事件（target是载体，type是事件类型，func是事件函数）*/
+    this.AddEventHandler = function (target, type, func) {
+        if (target.addEventListener)
+            target.addEventListener(type, func, false);
+        else if (target.attachEvent)
+            target.attachEvent("on" + type, func);
+        else target["on" + type] = func;
+    };
+    /*移除事件（target是载体，type是事件类型，func是事件函数）*/
+    this.RemoveEventHandler = function (target, type, func) {
+        if (target.removeEventListener)
+            target.removeEventListener(type, func, false);
+        else if (target.detachEvent)
+            target.detachEvent("on" + type, func);
+        else delete target["on" + type];
+    };
 
 
 
@@ -738,18 +820,18 @@ String.prototype.LRTrimSemicolon = function () { return this.replace(/(^(;|；|\
 /***** 常用实例方法扩展·日期与时间 *****/
 /*获得Unix Timestamp时间戳*/
 ClassBaoJavascript.prototype.UnixTimestamp = function (time) {
-	if (time)
+	if (!!time)
 		return Math.round(new Date(time).getTime() / 1000);
 	else
 		return Math.round(new Date().getTime() / 1000);
 }
 /*获得Unix Timestamp时间戳转换得普通时间对象*/
 ClassBaoJavascript.prototype.GetDate = function (_UnixTimestamp) {
-	if (_UnixTimestamp) {
-		if (/^[1-9]\d{12}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp));
-		else if (/^[1-9]\d{9}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp * 1000));
-		else return null;
-	}
+    if (!!_UnixTimestamp) {
+        if (/^[1-9]\d{12}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp));
+        else if (/^[1-9]\d{9}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp * 1000));
+    }
+    return null;
 }
 /*时间格式化扩展*/
 Date.prototype.Format = function (fmt) {
@@ -785,63 +867,34 @@ Date.prototype.Format = function (fmt) {
 	}
 	return fmt;
 }
-//短时间，形如 (13:04:06)
+/*短时间，形如 (13:04:06)*/
 ClassBaoJavascript.prototype.isTime = function (str) {
-	var a = str.match(/^(\d{1,2})(:)?(\d{1,2})\2(\d{1,2})$/);
-	if (a == null) { return false }
-	if (a[1] > 24 || a[3] > 60 || a[4] > 60) {
+	var m = str.match(/^(\d{1,2})(:)?(\d{1,2})\2(\d{1,2})$/);
+	if (m == null) { return false }
+	if (m[1] > 24 || m[3] > 60 || m[4] > 60) {
 		return false;
 	}
 	return true;
 }
-//短日期，形如 (2003-12-05)
+/*短日期，形如 (2003-12-05)*/
 ClassBaoJavascript.prototype.isDate = function (str) {
-	var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-	if (r == null) return false;
-	var d = new Date(r[1], r[3] - 1, r[4]);
-	return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]);
+	var m = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+	if (m == null) return false;
+	var d = new Date(m[1], m[3] - 1, m[4]);
+	return (d.getFullYear() == m[1] && (d.getMonth() + 1) == m[3] && d.getDate() == m[4]);
 }
-//长时间，形如 (2003-12-05 13:04:06)
+/*长时间，形如 (2003-12-05 13:04:06)*/
 ClassBaoJavascript.prototype.isDateTime = function (str) {
 	var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
-	var r = str.match(reg);
-	if (r == null) return false;
-	var d = new Date(r[1], r[3] - 1, r[4], r[5], r[6], r[7]);
-	return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4] && d.getHours() == r[5] && d.getMinutes() == r[6] && d.getSeconds() == r[7]);
+	var m = str.match(reg);
+	if (m == null) return false;
+	var d = new Date(m[1], m[3] - 1, m[4], m[5], m[6], m[7]);
+	return (d.getFullYear() == m[1] && (d.getMonth() + 1) == m[3] && d.getDate() == m[4] && d.getHours() == m[5] && d.getMinutes() == m[6] && d.getSeconds() == m[7]);
 }
 
 
 
-/* //调用示例：
-document.onkeydown = function (e) {
-    if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; }
-}
-*/
-/*获取键盘按键代码（event是按键事件）*/
-ClassBaoJavascript.prototype.GetKeyCode = function (event) {
-	// 兼容IE，FireFox，Chrome，Opera等
-	var theEvent = event || window.event;
-	var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-	return code; //13=回车键
-}
 
-
-/*添加事件（target是载体，type是事件类型，func是事件函数）*/
-ClassBaoJavascript.prototype.AddEventHandler = function (target, type, func) {
-    if (target.addEventListener)
-        target.addEventListener(type, func, false);
-    else if (target.attachEvent)
-        target.attachEvent("on" + type, func);
-    else target["on" + type] = func;
-}
-/*移除事件（target是载体，type是事件类型，func是事件函数）*/
-ClassBaoJavascript.prototype.RemoveEventHandler = function (target, type, func) {
-    if (target.removeEventListener)
-        target.removeEventListener(type, func, false);
-    else if (target.detachEvent)
-        target.detachEvent("on" + type, func);
-    else delete target["on" + type];
-}
 
 /***** 通用ClassBaoJavascript模拟类库·Dom *****/
 /*** 全选/全不选/反选 ***/
@@ -1059,50 +1112,6 @@ ClassBaoJavascript.prototype.FollowCursor = function (element) {
 	catch (e) { console.log(e.message); }
 }
 
-/*隐藏（element是HTML元素）*/
-ClassBaoJavascript.prototype.Hidden = function (element) {
-	try {
-		with (element.style) {
-			display = "none";
-		}
-	}
-	catch (e) { console.log(e.message); }
-}
-/*显示（element是HTML元素）*/
-ClassBaoJavascript.prototype.Show = function (element) {
-	try {
-		with (element.style) {
-			display = "block";
-		}
-	}
-	catch (e) { console.log(e.message); }
-}
-
-/*创建元素*/
-ClassBaoJavascript.prototype.createElement = function (type) { return document.createElement(type); }
-/*删除指定节点*/
-ClassBaoJavascript.prototype.removeChild = function (element) {
-    try {
-        if (element) {
-            element.parentNode.removeChild(element);
-        }
-    }
-    catch (e) {
-    }
-}
-/*删除指定元素所有子节点*/
-ClassBaoJavascript.prototype.removeChildNodes = function (element) {
-    var parentNode = element;
-    if (parentNode == null) {
-        return;
-    }
-    if (parentNode.hasChildNodes()) {
-        var length = parentNode.childNodes.length;
-        for (var k = 0; k < length; k++) {
-            parentNode.removeChild(parentNode.childNodes[0]);
-        }
-    }
-}
 
 
 /***** 浮层与遮罩 *****/
@@ -1305,42 +1314,73 @@ ClassBaoJavascript.prototype.ScrollingLayer = function (layerPosition, layerWidt
 	document.body.appendChild(baseDiv);
 }
 
-//常用正则表达式，借鉴formvalidatorregex.js源代码
-ClassBaoJavascript.prototype.regexEnum =
-{
-	intege: "^-?[1-9]\\d*$",					//整数
-	intege1: "^[1-9]\\d*$",					//正整数
-	intege2: "^-[1-9]\\d*$",					//负整数
-	num: "^([+-]?)\\d*\\.?\\d+$",			//数字
-	num1: "^[1-9]\\d*|0$",					//正数（正整数 + 0）
-	num2: "^-[1-9]\\d*|0$",					//负数（负整数 + 0）
-	decmal: "^([+-]?)\\d*\\.\\d+$",			//浮点数
-	decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",　　	//正浮点数
-	decmal2: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",　 //负浮点数
-	decmal3: "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$",　 //浮点数
-	decmal4: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$",　　 //非负浮点数（正浮点数 + 0）
-	decmal5: "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$",　　//非正浮点数（负浮点数 + 0）
+/*常用正则表达式，借鉴formvalidatorregex.js源代码*/
+ClassBaoJavascript.prototype.regexEnum = {
+    //整数
+    intege: "^-?[1-9]\\d*$",
+    //正整数
+    intege1: "^[1-9]\\d*$",
+    //负整数
+    intege2: "^-[1-9]\\d*$",
+    //数字
+    num: "^([+-]?)\\d*\\.?\\d+$",
+    //正数（正整数 + 0）
+    num1: "^[1-9]\\d*|0$",
+    //负数（负整数 + 0）
+    num2: "^-[1-9]\\d*|0$",
+    //浮点数
+    decmal: "^([+-]?)\\d*\\.\\d+$",
+    //正浮点数
+    decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",
+    //负浮点数
+    decmal2: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",
+    //浮点数
+    decmal3: "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$",
+    //非负浮点数（正浮点数 + 0）
+    decmal4: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$",
+    //非正浮点数（负浮点数 + 0）
+    decmal5: "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$",
 
-	email: "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$", //邮件
-	color: "^[a-fA-F0-9]{6}$",				//颜色
-	url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",	//url
-	chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$",					//仅中文
-	ascii: "^[\\x00-\\xFF]+$",				//仅ACSII字符
-	zipcode: "^\\d{6}$",						//邮编
-	mobile: "^(13|15|17|18)[0-9]{9}$",				//手机
-	ip4: "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$",	//ip地址
-	notempty: "^\\S+$",						//非空
-	picture: "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$",	//图片
-	rar: "(.*)\\.(rar|zip|7zip|tgz)$",								//压缩文件
-	date: "^\\d{4}(\\-|\\/|\.)\\d{1,2}\\1\\d{1,2}$",					//日期
-	qq: "^[1-9]*[1-9][0-9]*$",				//QQ号码
-	tel: "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$",	//电话号码的函数(包括验证国内区号,国际区号,分机号)
-	username: "^\\w+$",						//用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
-	letter: "^[A-Za-z]+$",					//字母
-	letter_u: "^[A-Z]+$",					//大写字母
-	letter_l: "^[a-z]+$",					//小写字母
-	idcard: "^[1-9]([0-9]{14}|[0-9]{17})$",	//身份证
-	ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$" //中文、字母、数字 _
+    //邮件
+    email: "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$",
+    //颜色（6位十六进制表示法）
+    color: "^[a-fA-F0-9]{6}$",
+    //url
+    url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",
+    //仅中文
+    chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$",
+    //仅ACSII字符
+    ascii: "^[\\x00-\\xFF]+$",
+    //邮编
+    zipcode: "^\\d{6}$",
+    //手机
+    mobile: "^(13|15|17|18)[0-9]{9}$",
+    //ip(ip4)地址
+    ip4: "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$",
+    //非空
+    notempty: "^\\S+$",
+    //图片
+    picture: "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$",
+    //压缩文件
+    rar: "(.*)\\.(rar|zip|7zip|tgz)$",
+    //日期
+    date: "^\\d{4}(\\-|\\/|\.)\\d{1,2}\\1\\d{1,2}$",
+    //QQ号码
+    qq: "^[1-9]*[1-9][0-9]*$",
+    //电话号码的函数(包括验证国内区号,国际区号,分机号)
+    tel: "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$",
+    //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
+    username: "^\\w+$",
+    //字母
+    letter: "^[A-Za-z]+$",
+    //大写字母
+    letter_u: "^[A-Z]+$",
+    //小写字母
+    letter_l: "^[a-z]+$",
+    //身份证
+    idcard: "^[1-9]([0-9]{14}|[0-9]{17})$",
+    //中文、字母、数字 _
+    ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$"
 };
 
 
@@ -1350,7 +1390,7 @@ ClassBaoJavascript.prototype.regexEnum =
 /***** 通用ClassBaoJavascript模拟类库·结束 *****/
 /*模拟类的实例*/
 var CBJS = new ClassBaoJavascript();
-if (!CBJS || typeof (CBJS) == "undefined") {
-    var CBJS = new ClassBaoJavascript();
-}
+if (!CBJS || typeof (CBJS) != "object") {
+    CBJS = new ClassBaoJavascript();
+};
 /***** End *****/

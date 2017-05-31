@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>ClassBaoJavascript测试页面</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in April 24, 2017" />
+
+    <link href="./common.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!--getParamValue-->
+        <p>获取url形式的参数：</p>
+        <pre>
+        <code>
+//示例参数化字符串
+var str = "FromUser=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40";
+
+//获取参数名为"FromUser"的值
+var v = CBJS.getParamValue("FromUser", str, "&");
+console.log(v);
+...
+
+//直接获取当前页面url参数值(示例参数名为"id")
+var urlParam = CBJS.getUrlParamValue("id");
+console.log(urlParam);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>FromUser</td><td id="FromUser"></td></tr>
+                <tr><td>Latitude</td><td id="Latitude"></td></tr>
+                <tr><td>Longitude</td><td id="Longitude"></td></tr>
+                <tr><td>Precision</td><td id="Precision"></td></tr>
+            </tbody>
+        </table>
+        <p>url参数名字：<input type="text" id="urlParamName" /><button onclick="GetValue();">点击获取参数值</button><textarea id="urlParamValue" disabled="disabled" rows="1"></textarea></p>
+
+        <hr />
+
+    </div>
+
+    <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
+    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+
+    <!--getUrlParamValue-->
+    <script>
+        var str = "FromUser=o--NRtx58MS4JX9ilO_BV-VjBAGU&Latitude=39.972054&Longitude=116.312386&Precision=40";
+        var _FromUser = CBJS.getParamValue("FromUser", str, "&");
+        CBJS.getById("FromUser").innerText = _FromUser;
+        var _Latitude = CBJS.getParamValue("Latitude", str, "&");
+        CBJS.getById("Latitude").innerText = _Latitude;
+        var _Longitude = CBJS.getParamValue("Longitude", str, "&");
+        CBJS.getById("Longitude").innerText = _Longitude;
+        var _Precision = CBJS.getParamValue("Precision", str, "&");
+        CBJS.getById("Precision").innerText = _Precision;
+        
+        var urlParam = CBJS.getUrlParamValue("id");
+        console.log("id", urlParam);
+
+
+        function GetValue() {
+            var urlParamName = CBJS.getById("urlParamName").value;
+            var v = CBJS.getUrlParamValue(urlParamName);
+            CBJS.getById("urlParamValue").value = v;
+            console.log(urlParamName + "=" + v);
+        };
+    </script>
+</body>
+</html>

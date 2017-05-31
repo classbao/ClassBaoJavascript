@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>ClassBaoJavascript测试页面</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in April 24, 2017" />
+
+    <link href="./common.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!--getBrowser-->
+        <p>当前浏览器及系统信息：</p>
+        <pre>
+        <code>
+var myBrowser = CBJS.getBrowser();
+console.log(myBrowser);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>客户端</td><td id="isPC"></td></tr>
+                <tr><td>浏览器</td><td id="name"></td></tr>
+                <tr><td>浏览器版本</td><td id="version"></td></tr>
+                <tr><td>语言</td><td id="language"></td></tr>
+                <tr><td>硬件</td><td id="hardware"></td></tr>
+                <tr><td>系统平台</td><td id="platform"></td></tr>
+                <tr><td>CPU运算</td><td id="WOW"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+
+        <!--getScreen-->
+        <p>当前屏幕信息：</p>
+        <pre>
+        <code>
+var myScreen = CBJS.getScreen();
+console.log(myScreen);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <tbody>
+                <tr><td>top</td><td id="top"></td></tr>
+                <tr><td>left</td><td id="left"></td></tr>
+                <tr><td>height</td><td id="height"></td></tr>
+                <tr><td>width</td><td id="width"></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+    </div>
+
+    <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
+    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+
+    <!--getBrowser-->
+    <script>
+        var myBrowser = CBJS.getBrowser();
+        console.log("getBrowser", myBrowser);
+        CBJS.getById("isPC").innerText = myBrowser.isPC ? "PC端" : "移动端";
+        CBJS.getById("name").innerText = myBrowser.name;
+        CBJS.getById("version").innerText = myBrowser.version;
+        CBJS.getById("language").innerText = myBrowser.language;
+        CBJS.getById("hardware").innerText = myBrowser.hardware;
+        CBJS.getById("platform").innerText = myBrowser.platform;
+        CBJS.getById("WOW").innerText = myBrowser.WOW.indexOf(64) > 0 ? "64位" : "32位";
+    </script>
+
+    <!--getScreen-->
+    <script>
+        var myScreen = CBJS.getScreen();
+        console.log("getScreen", myScreen);
+        CBJS.getById("top").innerText = myScreen.top;
+        CBJS.getById("left").innerText = myScreen.left;
+        CBJS.getById("height").innerText = myScreen.height;
+        CBJS.getById("width").innerText = myScreen.width;
+    </script>
+</body>
+</html>
