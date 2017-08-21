@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>理财产品均价计算器</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            line-height: 18px;
+        }
+
+        .author {
+            text-align: center;
+        }
+
+        hr {
+            border: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #a9a9a9;
+        }
+
+        pre {
+            padding: 3px;
+            border: 1px dashed #a9a9a9;
+        }
+
+        .table {
+            background-color: #eee;
+            border: 1px solid #a9a9a9;
+            width: 320px;
+            padding: 3px;
+            font-size: 12px;
+        }
+
+        .title {
+            background-color: #b6dbf9;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .main {
+        }
+
+        p {
+            margin: 0;
+            padding: 0 0 3px 0;
+        }
+
+        .main p input {
+            width: 50px;
+        }
+
+        .result {
+        }
+
+            .result p.tool {
+                text-align: center;
+            }
+
+            .result p.tip {
+                text-align: center;
+            }
+
+        span.red {
+            color: #E91E63;
+            font: bold 16px arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>理财产品均价计算器</h1>
+    <p class="author">熊仔其人</p>
+    <hr />
+    <p style="text-indent:2em;">
+        <strong>成交价格</strong>：一般指某一笔交易的成交价格。<strong>成交均价</strong>:一般只某时段的成交均价。
+    </p>
+    <pre>成交均价 = (成交总价 - 总手续费) &divide; 总成交量</pre>
+    <p style="text-indent:2em;">成交价格就是你实时买入股票/基金/黄金/国债/债权/证券等理财产品的成交的价格，不包含手续费在内的。成交均价是每次买入股票/基金/黄金/国债/债权/证券等理财产品的平均价格，是一定时间内实际成交价格的平均值。均价（平均价格）是针对理财产品的某段时间或某几笔投资的质量水平的提现，是投资人衡量规划投资活动的最重要依据之一。通常成交均价高于当前产品的成交价格或净值时投资处于盈利状态，成交均价低于当前产品的成交价格或净值时投资处于亏损状态，成交均价等于当前产品的成交价格或净值时由于买入时手续费所以投资也是处于亏损状态。处于亏损状态的投资建议考虑再净值较低时继续买入以拉低均价。</p>
+
+
+    <div class="table title">理财产品均价计算器</div>
+    <div class="table main" id="main">
+        <p>交易额:<input type="number" />确认份额:<input type="number" />手续费:<input type="number" /></p>
+    </div>
+    <div class="table result">
+        <p class="tool"><input type="button" name="addRecord" value="增加记录" onclick="$.addRecord();" /> <input type="button" name="calculate" value="计算均价" onclick="$.showCalculateResult();" /></p>
+        <p class="tip" id="tip">
+            <!--总投入额:<span class="red">1233</span>&nbsp;总手续费:<span class="red">1233</span><br />
+            总份额:<span class="red">1233</span>&nbsp;均价:<span class="red">1233</span><br />-->
+        </p>
+    </div>
+
+    <p style="text-indent:2em;">
+        <strong>拉低均价追加投资额</strong>：投资人已经对某理财产品进行投资，当某段时间或某几笔投资的平均价格低于或等于当前产品的净值时处于亏损状态，为了拉低投资平均价格使投资向有利的趋势发展，投资者需要规划等待产品净值走低时再次以一定的交易额买入。买入低净值的产品以拉低平均价格是投资人扭转投资逆势的重要手段之一。
+    </p>
+    <pre>目标成交均价 = [(成交总价 + 追加交易额) - (总手续费 + (追加交易额 &times; 费率))] &divide; [总成交量 + ((追加交易额 - (追加交易额 &times; 费率)) &divide; 当前净值)]</pre>
+
+    <div class="table title">拉低均价计算器</div>
+    <div class="table main" id="mainAve">
+        <p>当前净值:<input type="number" id="UnitValue" />费率:<input type="number" id="FeeRate" />目标均价:<input type="number" id="TargetAverage" /></p>
+    </div>
+    <div class="table result">
+        <p class="tool"><input type="button" name="calculate" value="规划投资" onclick="$.showCalculateAveResult();" /></p>
+        <p class="tip" id="tipAve">
+            <!--规划投资:<span class="red">1233</span>&nbsp;其中包含手续费:<span class="red">1233</span>&nbsp;预计增加份额:<span class="red">1233</span><br /><hr />
+            预计总投入额:<span class="red">1233</span>&nbsp;预计总手续费:<span class="red">1233</span><br />
+            预计总份额:<span class="red">1233</span>&nbsp;预计均价:<span class="red">1233</span><br />-->
+        </p>
+    </div>
+
+    <script type="text/javascript">
+        var $ = {
+            dataList: [],
+            initdataList: function () {
+                this.dataList = [];
+                var lis = document.getElementById("main").childNodes;
+                for (var i = 0; i < lis.length; i++) {
+                    if (!!lis.item(i) && lis.item(i).nodeName == "P") {
+                        var lis2 = lis.item(i).childNodes;
+                        var data = { money: 0, number: 0, fee: 0 };
+                        for (var j = 0; j < lis2.length; j++) {
+                            if (!!lis2.item(j) && lis2.item(j).nodeName == "INPUT") {
+                                if (j === 1) data.money = parseFloat(lis2.item(j).value);
+                                if (j === 3) data.number = parseFloat(lis2.item(j).value);
+                                if (j === 5) data.fee = parseFloat(lis2.item(j).value || '0');
+                            }
+                        }
+                        this.dataList.push(data);
+                    }
+                }
+            },
+
+            addRecord: function () {
+                var p = document.createElement("P");
+                p.innerHTML = "交易额:<input type=\"number\" />确认份额:<input type=\"number\" />手续费:<input type=\"number\" />";
+                document.getElementById("main").appendChild(p);
+            },
+            calculateResult: { TotalMoney: 0, TotalFee: 0, TotalNumber: 0, AverageValue: 0 },
+            calculate: function () {
+                this.initdataList();
+                this.calculateResult.TotalMoney = 0;
+                this.calculateResult.TotalFee = 0;
+                this.calculateResult.TotalNumber = 0;
+                this.calculateResult.AverageValue = 0;
+
+                for (i = 0; i < this.dataList.length; i++) {
+                    this.calculateResult.TotalMoney += parseFloat(this.dataList[i].money);
+                    this.calculateResult.TotalNumber += parseFloat(this.dataList[i].number);
+                    this.calculateResult.TotalFee += parseFloat(this.dataList[i].fee);
+                }
+                this.calculateResult.TotalMoney = parseFloat(this.calculateResult.TotalMoney.toFixed(2));
+                this.calculateResult.TotalNumber = parseFloat(this.calculateResult.TotalNumber.toFixed(2));
+                this.calculateResult.TotalFee = parseFloat(this.calculateResult.TotalFee.toFixed(2));
+
+                this.calculateResult.AverageValue = (this.calculateResult.TotalMoney - this.calculateResult.TotalFee) / this.calculateResult.TotalNumber;
+                this.calculateResult.AverageValue = parseFloat(this.calculateResult.AverageValue.toFixed(4));
+            },
+            showCalculateResult: function () {
+                this.calculate();
+                document.getElementById("tip").innerHTML = "总投入额:<span class=\"red\">" + this.calculateResult.TotalMoney + "</span>&nbsp;总手续费:<span class=\"red\">" + this.calculateResult.TotalFee + "</span><br />总份额:<span class=\"red\">" + this.calculateResult.TotalNumber + "</span>&nbsp;均价:<span class=\"red\">" + this.calculateResult.AverageValue + "</span><br />";
+            }
+
+            , showCalculateAveResult: function () {
+                if (!this.calculateResult) {
+                    alert("请先计算均价");
+                    return false;
+                }
+                if (!this.calculateResult.TotalMoney || !this.calculateResult.TotalNumber || !this.calculateResult.AverageValue) {
+                    alert("请先计算均价");
+                    return false;
+                }
+
+                var UnitValue = document.getElementById("UnitValue").value;
+                var FeeRate = document.getElementById("FeeRate").value;
+                var TargetAverage = document.getElementById("TargetAverage").value;
+                if (!UnitValue || !TargetAverage) {
+                    alert("请输入当前净值，费率，目标均价");
+                    return false;
+                }
+                UnitValue = parseFloat(UnitValue);
+                FeeRate = parseFloat(FeeRate || '0');
+                TargetAverage = parseFloat(TargetAverage);
+
+                var data = { money: 0, number: 0, fee: 0 };
+                data.money = (((TargetAverage * this.calculateResult.TotalNumber) + this.calculateResult.TotalFee - this.calculateResult.TotalMoney) * UnitValue) / ((FeeRate - 1) * (TargetAverage - UnitValue));
+                data.money = parseFloat(data.money.toFixed(2));
+
+                data.fee = data.money * FeeRate;
+                data.fee = parseFloat(data.fee.toFixed(2));
+
+                data.number = (data.money - (data.money * FeeRate)) / UnitValue;
+                data.number = parseFloat(data.number.toFixed(2));
+
+                var TotalMoney = 0, TotalFee = 0, TotalNumber = 0;
+                TotalMoney = parseFloat((this.calculateResult.TotalMoney + data.money).toFixed(2));
+                TotalFee = parseFloat((this.calculateResult.TotalFee + data.fee).toFixed(2));
+                TotalNumber = parseFloat((this.calculateResult.TotalNumber + data.number).toFixed(2));
+
+                document.getElementById("tipAve").innerHTML = "规划投资:<span class=\"red\">" + data.money + "</span>&nbsp;其中包含手续费:<span class=\"red\">" + data.fee + "</span>&nbsp;预计增加份额:<span class=\"red\">" + data.number + "</span><br /><hr />" +
+                "预计总投入额:<span class=\"red\">" + TotalMoney + "</span>&nbsp;预计总手续费:<span class=\"red\">" + TotalFee + "</span><br />" +
+                    "预计总份额:<span class=\"red\">" + TotalNumber + "</span>&nbsp;预计均价:<span class=\"red\">" + TargetAverage + "</span><br />";
+            }
+
+        };
+    </script>
+</body>
+</html>
