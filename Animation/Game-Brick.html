@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>HTML5-canvas实现打砖块游戏</title>
+    <meta name="author" content="熊仔其人" />
+    <style type="text/css">
+        canvas {
+            background-color: #e6e5e5;
+            border: 1px solid #a2a2a2;
+        }
+
+        .InfoPanel {
+            width: 400px;
+            height: 50px;
+            background-color: #e6e5e5;
+            border: 1px solid #a2a2a2;
+            font-weight: bold;
+            color: #f53b65;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="200">Your browser does not support the canvas element.</canvas>
+    <div id="InfoPanel" class="InfoPanel"> </div>
+    <div>空格键：开始/暂停 <br />方向键：控制左右</div>
+    <input onclick="Start()" value="开始" type="button" />
+    <input onclick="Pause()" value="停止" type="button" />
+
+    <script type="text/javascript">
+        /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
+        var EventUtil = {
+            /*添加事件处理程序*/
+            addHandler: function (element, type, handler) {
+                if (element.addEventListener) {
+                    addEventListener(type, handler, false);
+                } else if (element.attachEvent) {
+                    attachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = handler;
+                }
+            },
+            /*移除事件处理程序*/
+            removeHandler: function (element, type, handler) {
+                if (element.removeEventListener) {
+                    removeEventListener(type, handler, false);
+                } else if (element.detachEvent) {
+                    detachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = null;
+                }
+            },
+            /*获得事件对象*/
+            getEvent: function (event) {
+                return event ? event : window.event;
+            },
+            /*获得按键值*/
+            getKeyCode: function (event) {
+                var theEvent = event || window.event;
+                var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+                return code;
+            },
+            /*获得事件的目标*/
+            getTarget: function (event) {
+                return event.target || event.scrElement;
+            },
+            /*取消事件的默认行为*/
+            preventDefault: function (event) {
+                if (event.preventDefault) {
+                    event.preventDefault;
+                } else {
+                    event.returValue = false;
+                }
+            },
+            /*阻止事件进一步冒泡*/
+            stopPropagation: function (event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation;
+                } else {
+                    event.cancelBubble = true;
+                }
+            }
+        };
+    </script>
+
+    <script type="text/javascript">
+        /*石头对象*/
+        var stone = {
+            x: 0, y: 0, r: 10, /*位置及半径*/
+            /*绘画方法*/
+            Draw: function (ctx) {
+                var ctx = ctx;
+                ctx.beginPath(); //从新开始画，防止冲突重叠
+                ctx.arc(this.x + this.r, this.y + this.r, this.r, 0, Math.PI * 2, 1); //x坐标，y坐标，半径，Math.PI是圆周率
+                ctx.fillStyle = "red"; //定义颜色
+                ctx.closePath(); //结束画布，防止冲突重叠
+                ctx.fill(); //结束渲染
+            },
+            Init: function () {
+                this.x = racket.x + Math.floor(racket.width / 2);
+                this.y = globalConfig.height - racket.height - (this.r * 2);
+            },
+            /*每次移动像素大小*/
+            step: { x: 3, y: 1 },
+            /*前进*/
+            Move: function () {
+                this.x += this.step.x;
+                this.y += this.step.y;
+                if (this.x <= 0 || this.x >= globalConfig.width - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
+                    this.step.x *= -1; /*乘以负一用来调整线路方向*/
+                }
+                if (this.y <= 0 || this.y >= globalConfig.height - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
+                    this.step.y *= -1; /*乘以负一用来调整线路方向*/
+                }
+
+                if ((Date.now() - this.timestamp) < (Math.floor(1000 / 72) * 5)) return;
+
+                /*石头右下角*/
+                var _x = this.x + (this.r * 2);
+                var _y = this.y + (this.r * 2);
+
+                /*挡板右下角的位置*/
+                var _X = racket.x + racket.width;
+                var _Y = racket.y + racket.height;
+                if (((this.x >= racket.x && this.x <= _X) || (_x >= racket.x && _x <= _X)) && ((this.y >= racket.y && this.y <= _Y) || (_y >= racket.y && _y <= _Y))) {
+                    if (this.x < racket.x || this.x > _X)
+                        this.step.x *= -1;
+                    else
+                        this.step.y *= -1;
+
+                    this.timestamp = Date.now();
+                }
+
+                /*石头与砖块碰撞问题*/
+                for (var i = 0; i < wall.bricks.length; i++) {
+                    if (!!wall.bricks[i] && wall.bricks[i].isOk) {
+                        if (
+                            ((this.x >= wall.bricks[i].x && this.x <= (wall.bricks[i].x + wall.brick.width)) || (_x >= wall.bricks[i].x && _x <= (wall.bricks[i].x + wall.brick.width)))
+                            &&
+                            ((this.y >= wall.bricks[i].y && this.y <= (wall.bricks[i].y + wall.brick.height)) || (_y >= wall.bricks[i].y && _y <= (wall.bricks[i].y + wall.brick.height)))
+                            ) {
+
+                            wall.bricks[i].isOk = false;
+
+                            if (_y < wall.bricks[i].y || this.y > wall.bricks[i].y + wall.brick.height)
+                                this.step.y *= -1;
+                            else
+                                this.step.x *= -1;
+
+                            this.timestamp = Date.now();
+                        }
+                    }
+                }
+
+            },
+            timestamp: 0
+        };
+
+        /*球拍*/
+        var racket = {
+            width: 60,
+            height: 10,
+            x: 160,
+            y: 190,
+            /*每次移动像素大小*/
+            step: { x: 10, y: 0 },
+            /*方向：0:静止；1:左；2右；*/
+            direction: 0,
+            /*移动*/
+            Move: function () {
+                switch (this.direction) {
+                    case 1: //左
+                        if (this.x < 0 || this.x - this.step.x < 0) break;
+                        this.x -= this.step.x;
+                        break;
+                    case 2: //右
+                        if (this.x + this.width + this.step.x > globalConfig.width) break;
+                        this.x += this.step.x;
+                        break;
+                    case 3: //上
+                        if (this.y < 0 || this.y - this.step.y < 0) break;
+                        this.y -= this.step.y;
+                        break;
+                    case 4: //下
+                        if (this.y + this.height + this.step.y > globalConfig.height) break;
+                        this.y += this.step.y;
+                        break;
+                    default:
+                        break;
+                }
+            },
+            Draw: function (ctx) {
+                var ctx = ctx;
+                ctx.beginPath();
+                ctx.fillStyle = "#993333";
+                ctx.closePath();
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        };
+
+        /*墙*/
+        var wall = {
+            /*砖块对象*/
+            brick: {
+                width: 38,
+                height: 20,
+                x_span: 2,
+                y_span: 2
+            },
+            row: 3,
+            column: 10,
+            bricks: [],
+            InitBricks: function () {
+                this.brick.x_span = Math.floor((400 - (this.brick.width * this.column)) / (this.column - 1));
+                for (var i = 0; i < this.row; i++) {
+                    for (var j = 0; j < this.column; j++) {
+                        this.bricks.push({
+                            x: (this.brick.width + this.brick.x_span) * j,
+                            y: (this.brick.height + this.brick.y_span) * i,
+                            width: this.brick.width,
+                            height: this.brick.height,
+                            isOk: true
+                        });
+                    }
+                }
+            },
+            DrawBricks: function (ctx) {
+                var index = 0;
+                for (var i = 0; i < this.row; i++) {
+                    for (var j = 0; j < this.column; j++) {
+                        var brick = this.bricks[index];
+                        if (!!brick && !!brick.isOk) {
+                            var ctx = ctx;
+                            ctx.beginPath();
+                            ctx.fillStyle = "blue";
+                            ctx.closePath();
+                            ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+                        }
+
+                        index++;
+                    }
+                }
+            },
+            Finished: function () {
+                for (var i = 0; i < wall.bricks.length; i++) {
+                    if (!!wall.bricks[i] && wall.bricks[i].isOk) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+        };
+
+        function GameMain() {
+            globalConfig.usedtime++;
+            globalConfig.ShowInfo();
+            /*游戏结束*/
+            if (wall.Finished()) {
+                Pause();
+                globalConfig.GameOver();
+            }
+
+            globalConfig.canvas.style.display = "none";
+            var ctx = globalConfig.ctx;
+            /*保存canvas的设置，将transform初始化，并清除整个画图区域*/
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, globalConfig.width, globalConfig.height); // 擦除画布一个区域x，y，width, height
+
+            /*画砖块*/
+            wall.DrawBricks(ctx);
+            /*画球拍*/
+            racket.Draw(ctx);
+            /*画石头*/
+            stone.Draw(ctx);
+            stone.Move();
+
+            //还原canvas设置
+            ctx.restore();
+            //在手机上，需加上这步，先隐藏再显示，类似刷新。
+            globalConfig.canvas.style.display = "";
+        };
+
+
+
+        function Start() {
+            if (!!globalConfig.interval) return false;
+            if (globalConfig.isRuning) return false;
+
+            globalConfig.isRuning = true;
+            globalConfig.interval = setInterval(GameMain, Math.floor(1000 / 72));
+        };
+        function Pause() {
+            if (!!globalConfig.interval) {
+                globalConfig.interval = clearInterval(globalConfig.interval);
+            }
+            if (globalConfig.isRuning) {
+                globalConfig.isRuning = false;
+            }
+        };
+
+        /*全局配置*/
+        var globalConfig = {
+            canvas: null,
+            ctx: null,
+            width: 0,
+            height: 0,
+            usedtime: 0, //用时
+            isRuning: false, //正在运行
+            interval: null, //计时器
+            ShowInfo: function () {
+                document.getElementById('InfoPanel').innerHTML = "您用时：" + this.usedtime;
+            },
+            GameOver: function (ctx) {
+                document.getElementById('InfoPanel').style.backgroundColor = "#99EE99";
+            },
+
+            //事件处理
+            handleEvent: function (e) {
+                var type = e.type, keycode = EventUtil.getKeyCode(e);
+                //console.log("keycode=" + keycode + "，type=" + type + "---" + JSON.stringify(e));
+                /* 37:左；39:右；32:空格 */
+                if (keycode === 37 || keycode === 39) {
+                    switch (type) {
+                        case 'keydown':
+                            if (keycode === 37) racket.direction = 1;
+                            else if (keycode === 39) racket.direction = 2;
+                            break;
+                        case 'keyup':
+                            if (keycode === 37) racket.direction = 0;
+                            else if (keycode === 39) racket.direction = 0;
+                            break;
+                    }
+                    racket.Move();
+                }
+                else if (keycode === 32) {
+                    /*空格键暂停 / 开始*/
+                    if (type == 'keyup')
+                        if (globalConfig.isRuning) {
+                            Pause();
+                        }
+                        else {
+                            Start();
+                        }
+                }
+            },
+            listenerEvent: function (e) {
+                EventUtil.addHandler(globalConfig.canvas, "keydown", globalConfig.handleEvent);
+                EventUtil.addHandler(globalConfig.canvas, "keyup", globalConfig.handleEvent);
+            },
+
+            /*面板初始化*/
+            Init: function () {
+                this.canvas = document.getElementById('myCanvas');
+                this.ctx = this.canvas.getContext("2d");
+
+                this.width = this.canvas.width;
+                this.height = this.canvas.height;
+
+                this.listenerEvent();
+
+                wall.InitBricks();
+                wall.DrawBricks(this.ctx);
+
+                racket.Draw(this.ctx);
+
+                stone.Init();
+                stone.Draw(this.ctx);
+            }
+        };
+        globalConfig.Init();
+    </script>
+
+</body>
+</html>
