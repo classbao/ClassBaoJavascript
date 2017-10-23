@@ -833,6 +833,16 @@ ClassBaoJavascript.prototype.GetDate = function (_UnixTimestamp) {
     }
     return null;
 }
+/*获得json时间"/Date(1507617025040)/"转换得普通时间对象*/
+ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
+    if (!datetime) return null;
+    if (typeof (datetime) == "string") {
+        /* "/Date(1507617025040)/" */
+        if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", "").replace(")/", ""), 10)); }
+        else { return datetime };
+    }
+    else { return JSCL.GetDateByJson(datetime.toString()); }
+}
 /*时间格式化扩展*/
 Date.prototype.Format = function (fmt) {
 	var o = {
@@ -866,6 +876,12 @@ Date.prototype.Format = function (fmt) {
 		}
 	}
 	return fmt;
+}
+ClassBaoJavascript.prototype.DateFormat = function (date, format) {
+    if (!date) return '';
+    if (!format) format = 'yyyy/MM/dd HH:mm:ss';
+    if ("object" == typeof (date)) return date.Format(format);
+    else { return (new Date(date)).Format(format); }
 }
 /*短时间，形如 (13:04:06)*/
 ClassBaoJavascript.prototype.isTime = function (str) {
