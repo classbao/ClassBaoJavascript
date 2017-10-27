@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>网页加密及解密</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in July 10, 2017" />
+
+</head>
+
+<body>
+    <p><textarea id="text1" name="textfield" cols="50" rows="5">钱庄王员外这个人怎么样?</textarea></p>
+    <input type="button" name="Button1" value="加密" onClick="text1.value = MySign.Encrypt(text1.value);">
+    <input type="button" name="Button2" value="解密" onClick="text1.value = MySign.UnEncrypt(text1.value);">
+
+    <script language="JavaScript">
+        var MySign = {
+            //加密/解密次数
+            num: 0,
+            //加密
+            Encrypt: function (Text) {
+                this.num = this.num + 1;
+                output = new String;
+                alterText = new Array();
+                varCost = new Array();
+                TextSize = Text.length;
+                for (i = 0; i < TextSize; i++) {
+                    idea = Math.round(Math.random() * 111) + 77;
+                    alterText[i] = Text.charCodeAt(i) + idea;
+                    varCost[i] = idea;
+                }
+                for (i = 0; i < TextSize; i++) {
+                    output += String.fromCharCode(alterText[i], varCost[i]);
+                }
+                //text1.value = output;
+                return output;
+            },
+
+            //解密
+            UnEncrypt: function (Text2) {
+                if (this.num > 0) {
+                    this.num = this.num - 1;
+                    output = new String;
+                    alterText1 = new Array();
+                    varCost1 = new Array();
+                    TextSize = Text.length;
+                    for (i = 0; i < TextSize; i++) {
+                        alterText[i] = Text.charCodeAt(i);
+                        varCost[i] = Text.charCodeAt(i + 1);
+                    }
+                    for (i = 0; i < TextSize; i = i + 2) {
+                        output += String.fromCharCode(alterText[i] - varCost[i]);
+                    }
+                    //text1.value = output;
+                    return output;
+                }
+            }
+        };
+
+
+        //测试代码
+        var testString = "光头强，还不去砍树？";
+        console.log(testString);
+
+        var sign = MySign.Encrypt(testString); //凑妣o忕ｧ[還¬什³呯´硠S桲aﾁb
+        var sign2 = MySign.UnEncrypt(sign); //光头强，还不去砍树？
+
+        console.log(sign);
+        console.log(sign2);
+
+    </script>
+
+    <script>
+        window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
+            //把错误打印在客户端
+            console.log("错误信息：", errorMessage);
+            console.log("出错文件：", scriptURI);
+            console.log("出错行号：", lineNumber);
+            console.log("出错列号：", columnNumber);
+            console.log("错误详情：", errorObj);
+
+            //把错误返回服务器
+
+            /*
+            
+            var msg = 'msg=' + encodeURIComponent([errorMsg, url, lineNumber, navigator.userAgent].join("|_|"));
+            
+            var src = 'http://localhost/test.php?'+ msg;
+            
+            //采用预加载的方式借加载图片之名吧错误信息提交回去
+            
+            var errorTransport = new Image;
+            
+            //提交错误信息
+            
+            errorTransport.src = src;
+            
+            */
+
+        };
+    </script>
+
+</body>
+</html>
