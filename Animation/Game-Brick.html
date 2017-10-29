@@ -108,10 +108,10 @@
             Move: function () {
                 this.x += this.step.x;
                 this.y += this.step.y;
-                if (this.x <= 0 || this.x >= globalConfig.width - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
+                if (this.x < 0 || this.x > globalConfig.width - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
                     this.step.x *= -1; /*乘以负一用来调整线路方向*/
                 }
-                if (this.y <= 0 || this.y >= globalConfig.height - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
+                if (this.y < 0 || this.y > globalConfig.height - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
                     this.step.y *= -1; /*乘以负一用来调整线路方向*/
                 }
 
@@ -124,7 +124,7 @@
                 /*挡板右下角的位置*/
                 var _X = racket.x + racket.width;
                 var _Y = racket.y + racket.height;
-                if (((this.x >= racket.x && this.x <= _X) || (_x >= racket.x && _x <= _X)) && ((this.y >= racket.y && this.y <= _Y) || (_y >= racket.y && _y <= _Y))) {
+                if (((this.x > racket.x && this.x < _X) || (_x > racket.x && _x < _X)) && ((this.y > racket.y && this.y < _Y) || (_y > racket.y && _y < _Y))) {
                     if (this.x < racket.x || this.x > _X)
                         this.step.x *= -1;
                     else
@@ -137,9 +137,9 @@
                 for (var i = 0; i < wall.bricks.length; i++) {
                     if (!!wall.bricks[i] && wall.bricks[i].isOk) {
                         if (
-                            ((this.x >= wall.bricks[i].x && this.x <= (wall.bricks[i].x + wall.brick.width)) || (_x >= wall.bricks[i].x && _x <= (wall.bricks[i].x + wall.brick.width)))
+                            ((this.x > wall.bricks[i].x && this.x < (wall.bricks[i].x + wall.brick.width)) || (_x >= wall.bricks[i].x && _x < (wall.bricks[i].x + wall.brick.width)))
                             &&
-                            ((this.y >= wall.bricks[i].y && this.y <= (wall.bricks[i].y + wall.brick.height)) || (_y >= wall.bricks[i].y && _y <= (wall.bricks[i].y + wall.brick.height)))
+                            ((this.y > wall.bricks[i].y && this.y < (wall.bricks[i].y + wall.brick.height)) || (_y > wall.bricks[i].y && _y < (wall.bricks[i].y + wall.brick.height)))
                             ) {
 
                             wall.bricks[i].isOk = false;
@@ -312,7 +312,7 @@
             isRuning: false, //正在运行
             interval: null, //计时器
             ShowInfo: function () {
-                document.getElementById('InfoPanel').innerHTML = "您用时：" + this.usedtime;
+                document.getElementById('InfoPanel').innerHTML = "您用时：" + (this.usedtime/72).toFixed(2);
             },
             GameOver: function (ctx) {
                 document.getElementById('InfoPanel').style.backgroundColor = "#99EE99";

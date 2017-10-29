@@ -202,7 +202,7 @@ function ClassBaoJavascript() {
     this.hidden = function (id) {
         var element = null;
         if ("string" == typeof (id)) {
-            element = CBJS.GetById(id);
+            element = CBJS.getById(id);
         }
         else if ("object" == typeof (id)) {
             element = id;
@@ -214,7 +214,7 @@ function ClassBaoJavascript() {
     this.show = function (id) {
         var element = null;
         if ("string" == typeof (id)) {
-            element = CBJS.GetById(id);
+            element = CBJS.getById(id);
         }
         else if ("object" == typeof (id)) {
             element = id;
@@ -564,82 +564,6 @@ function ClassBaoJavascript() {
         return Math.round(Math.random() * (maxValue - minValue)) + minValue;
     }
 
-    /*通用正则表达式*/
-    this.RegEx = {
-        /*匹配空字符串的正则表达式*/
-        Regex_empty: /^\s*$/,
-        /*匹配Email的正则表达式*/
-        Regex_email: /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i, //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
-        /*匹配座机号码的正则表达式*/
-        Regex_telephone: /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/, //010-62515008#8002
-        /*匹配移动电话号码的正则表达式*/
-        Regex_mobilephone: /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/, //+86#15311212118
-        /*匹配中国邮政编码*/
-        Regex_postalcode: /^[1-9]{1}(\d+){5}$/, //465513
-        /*匹配中国居民身份证（18位或者15位字符）*/
-        Regex_IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
-        /*匹配汉字的正则表达式*/
-        Regex_chinese: /^[\u4E00-\u9FA5]+$/ig,
-        /*匹配双字节字符串(汉字)的正则表达式*/
-        Regex_chinese: /^[^\x00-\xff]+$/ig,
-
-        /*
-        * 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
-        * 主要用于验证真实姓名，公司名等个人信息修改
-        */
-        Regex_Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
-        /*
-        * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
-        * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
-        */
-        Regex_Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
-        /*
-        * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
-        */
-        Regex_Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
-
-        /*匹配分号间隔字符串的正则表达式*/
-        Regex_splitSemicolon: /\s*(;|；)\s*/ig,
-        /*匹配逗号间隔字符串的正则表达式*/
-        Regex_splitComma: /\s*(,|，)\s*/ig,
-        /*逗号间隔数字格式（例如1,2,3）*/
-        Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
-        /*匹配字符串首尾分号或空格的正则表达式*/
-        Regex_semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
-        /*匹配Guid格式的正则表达式*/
-        Regex_guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
-
-        /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
-        Regex_password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/,
-
-        /*判断一个字符串是否全是空格*/
-        IsEmpty: function (text) { return (!!CBJS.RegEx.Regex_empty.test(text)); },
-        /*检查Email的格式是否正确*/
-        IsEmail: function (email) { return (!!CBJS.RegEx.Regex_email.test(email)); },
-        /*检查固定电话号码的格式是否正确*/
-        IsTelePhone: function (telephone) { return (!!CBJS.RegEx.Regex_telephone.test(telephone)); },
-        /*检查手机号码的格式是否正确*/
-        IsMobilePhone: function (mobilephone) { return (!!CBJS.RegEx.Regex_mobilephone.test(mobilephone)) },
-        /*判断是否为汉字字符串*/
-        IsChinese: function (text) { return (!!CBJS.RegEx.Regex_chinese.test(text)) },
-        /*判断是否为单个汉字*/
-        IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
-    };
-
-    /*正则表达式分割字符串为数组*/
-    this.RegexSplit = function (splitString, regexFormat) {
-        if (!!!splitString) return [];
-        var stringArray = splitString.toString().split(regexFormat);
-        if (!stringArray || stringArray.length < 1) return [];
-        var length = stringArray.length;
-        var arr = new Array();
-        for (var i = 0; i < length ; i++) {
-            if (!!!stringArray[i] || regexFormat.test(stringArray[i])) continue;
-            arr.push(stringArray[i]);
-        }
-        return arr;
-    };
-
     /*数组操作*/
     this.Array = {
         /*根据索引移除数组中指定项（index表示数组下标索引，从0开始）*/
@@ -797,8 +721,6 @@ function ClassBaoJavascript() {
         else delete target["on" + type];
     };
 
-
-
 };
 
 
@@ -910,8 +832,6 @@ ClassBaoJavascript.prototype.isDateTime = function (str) {
 
 
 
-
-
 /***** 通用ClassBaoJavascript模拟类库·Dom *****/
 /*** 全选/全不选/反选 ***/
 /*选项组（checkbox组或者radio组）全选/全不选/反选（name是checkbox组名称或者radio组名称；flage是0：全不选；1：全选；2：反选；（默认全不选））*/
@@ -970,7 +890,7 @@ ClassBaoJavascript.prototype.GetSelectedBoxes = function (boxname) {
 /*获取下拉列表框（单选）选中项*/
 ClassBaoJavascript.prototype.GetSelectedItem = function (id) {
 	var result = { index: 0, value: "", text: "" };
-	var dom = CBJS.GetById(id);
+	var dom = CBJS.getById(id);
 	if (dom && dom.tagName == "SELECT" && dom.options) {
 		//单选
 		var item = dom.options[dom.selectedIndex];
@@ -984,7 +904,7 @@ ClassBaoJavascript.prototype.GetSelectedItem = function (id) {
 ClassBaoJavascript.prototype.GetSelectedItems = function (id) {
 	var results = [];
 	var result = { index: 0, value: "", text: "" };
-	var dom = CBJS.GetById(id);
+	var dom = CBJS.getById(id);
 	if (dom && dom.tagName == "SELECT" && dom.options) {
 		//多选
 		if (dom.multiple && dom.selectedOptions) {
@@ -999,7 +919,7 @@ ClassBaoJavascript.prototype.GetSelectedItems = function (id) {
 /*设置下拉列表框（单选）选中项（id是下拉列表框ID；value是下拉列表框值或文本）*/
 ClassBaoJavascript.prototype.SetSelectedItem = function (id, value) {
 	//document.getElementById("classcode").value = classcode; //可以解决下拉框的“返回”页面定位
-	var dom = CBJS.GetById(id);
+	var dom = CBJS.getById(id);
 	if (dom && dom.options) {
 		for (var i = 0; i < dom.options.length; i++) {
 			if (dom.options[i].value == value || dom.options[i].text == value) {
@@ -1011,7 +931,7 @@ ClassBaoJavascript.prototype.SetSelectedItem = function (id, value) {
 }
 /*设置下拉列表框（多选）选中项集合（id是下拉列表框ID；value是下拉列表框值或文本集合）*/
 ClassBaoJavascript.prototype.SetSelectedItems = function (id, items) {
-	var dom = CBJS.GetById(id);
+	var dom = CBJS.getById(id);
 	if (dom && dom.options) {
 		//var item={ index:0, value: "", text: "" };
 		for (var i = 0; i < items.length; i++) {
@@ -1100,7 +1020,7 @@ ClassBaoJavascript.prototype.PositionByAbsolute = function (element) {
 /*控件跟随鼠标移动（element是HTML元素；结果：{x:0,y:0}）
 //调用示例：
 document.onmousemove = function (e) {
-    CBJS.FollowCursorHandler(e, CBJS.GetById("moveId"));
+    CBJS.FollowCursorHandler(e, CBJS.getById("moveId"));
 }
 */
 ClassBaoJavascript.prototype.FollowCursorHandler = function (e, element) {
@@ -1116,7 +1036,7 @@ ClassBaoJavascript.prototype.FollowCursorHandler = function (e, element) {
 }
 /*控件跟随光标移动
 //调用示例：
-CBJS.FollowCursor(CBJS.GetById("moveId"));
+CBJS.FollowCursor(CBJS.getById("moveId"));
 */
 ClassBaoJavascript.prototype.FollowCursor = function (element) {
 	try {
@@ -1330,77 +1250,149 @@ ClassBaoJavascript.prototype.ScrollingLayer = function (layerPosition, layerWidt
 	document.body.appendChild(baseDiv);
 }
 
-/*常用正则表达式，借鉴formvalidatorregex.js源代码*/
-ClassBaoJavascript.prototype.regexEnum = {
-    //整数
-    intege: "^-?[1-9]\\d*$",
-    //正整数
-    intege1: "^[1-9]\\d*$",
-    //负整数
-    intege2: "^-[1-9]\\d*$",
-    //数字
-    num: "^([+-]?)\\d*\\.?\\d+$",
-    //正数（正整数 + 0）
-    num1: "^[1-9]\\d*|0$",
-    //负数（负整数 + 0）
-    num2: "^-[1-9]\\d*|0$",
-    //浮点数
-    decmal: "^([+-]?)\\d*\\.\\d+$",
-    //正浮点数
-    decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",
-    //负浮点数
-    decmal2: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",
-    //浮点数
-    decmal3: "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$",
-    //非负浮点数（正浮点数 + 0）
-    decmal4: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$",
-    //非正浮点数（负浮点数 + 0）
-    decmal5: "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$",
+ClassBaoJavascript.prototype.Regex = {
+    /*常用正则表达式，借鉴formvalidatorregex.js源代码*/
+    Enum : {
+        //整数
+        intege: "^-?[1-9]\\d*$",
+        //正整数
+        intege1: "^[1-9]\\d*$",
+        //负整数
+        intege2: "^-[1-9]\\d*$",
+        //数字
+        num: "^([+-]?)\\d*\\.?\\d+$",
+        //正数（正整数 + 0）
+        num1: "^[1-9]\\d*|0$",
+        //负数（负整数 + 0）
+        num2: "^-[1-9]\\d*|0$",
+        //浮点数
+        decmal: "^([+-]?)\\d*\\.\\d+$",
+        //正浮点数
+        decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",
+        //负浮点数
+        decmal2: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",
+        //浮点数
+        decmal3: "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$",
+        //非负浮点数（正浮点数 + 0）
+        decmal4: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$",
+        //非正浮点数（负浮点数 + 0）
+        decmal5: "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$",
 
-    //邮件
-    email: "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$",
-    //颜色（6位十六进制表示法）
-    color: "^[a-fA-F0-9]{6}$",
-    //url
-    url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",
-    //仅中文
-    chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$",
-    //仅ACSII字符
-    ascii: "^[\\x00-\\xFF]+$",
-    //邮编
-    zipcode: "^\\d{6}$",
-    //手机
-    mobile: "^(13|15|17|18)[0-9]{9}$",
-    //ip(ip4)地址
-    ip4: "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$",
-    //非空
-    notempty: "^\\S+$",
-    //图片
-    picture: "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$",
-    //压缩文件
-    rar: "(.*)\\.(rar|zip|7zip|tgz)$",
-    //日期
-    date: "^\\d{4}(\\-|\\/|\.)\\d{1,2}\\1\\d{1,2}$",
-    //QQ号码
-    qq: "^[1-9]*[1-9][0-9]*$",
-    //电话号码的函数(包括验证国内区号,国际区号,分机号)
-    tel: "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$",
-    //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
-    username: "^\\w+$",
-    //字母
-    letter: "^[A-Za-z]+$",
-    //大写字母
-    letter_u: "^[A-Z]+$",
-    //小写字母
-    letter_l: "^[a-z]+$",
-    //身份证
-    idcard: "^[1-9]([0-9]{14}|[0-9]{17})$",
-    //中文、字母、数字 _
-    ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$"
+        //邮件
+        email: "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$",
+        //颜色（6位十六进制表示法）
+        color: "^[a-fA-F0-9]{6}$",
+        //url
+        url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",
+        //仅中文
+        chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$",
+        //仅ACSII字符
+        ascii: "^[\\x00-\\xFF]+$",
+        //邮编
+        zipcode: "^\\d{6}$",
+        //手机
+        mobile: "^(13|15|17|18)[0-9]{9}$",
+        //ip(ip4)地址
+        ip4: "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$",
+        //非空
+        notempty: "^\\S+$",
+        //图片
+        picture: "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$",
+        //压缩文件
+        rar: "(.*)\\.(rar|zip|7zip|tgz)$",
+        //日期
+        date: "^\\d{4}(\\-|\\/|\.)\\d{1,2}\\1\\d{1,2}$",
+        //QQ号码
+        qq: "^[1-9]*[1-9][0-9]*$",
+        //电话号码的函数(包括验证国内区号,国际区号,分机号)
+        tel: "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$",
+        //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
+        username: "^\\w+$",
+        //字母
+        letter: "^[A-Za-z]+$",
+        //大写字母
+        letter_u: "^[A-Z]+$",
+        //小写字母
+        letter_l: "^[a-z]+$",
+        //身份证
+        idcard: "^[1-9]([0-9]{14}|[0-9]{17})$",
+        //中文、字母、数字 _
+        ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$"
+    },
+    ExtendEnum: {
+        /*匹配空字符串的正则表达式*/
+        empty: /^\s*$/,
+        /*匹配Email的正则表达式*/
+        email: /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i, //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+        /*匹配座机号码的正则表达式*/
+        telephone: /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/, //010-62515008#8002
+        /*匹配移动电话号码的正则表达式*/
+        mobilephone: /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/, //+86#15311212118
+        /*匹配中国邮政编码*/
+        postalcode: /^[1-9]{1}(\d+){5}$/, //465513
+        /*匹配中国居民身份证（18位或者15位字符）*/
+        IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
+        /*匹配汉字的正则表达式*/
+        chinese: /^[\u4E00-\u9FA5]+$/ig,
+        /*匹配双字节字符串(汉字)的正则表达式*/
+        chinese: /^[^\x00-\xff]+$/ig,
+
+        /*
+        * 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
+        * 主要用于验证真实姓名，公司名等个人信息修改
+        */
+        Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
+        /*
+        * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
+        * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
+        */
+        Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
+        /*
+        * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
+        */
+        Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
+
+        /*匹配分号间隔字符串的正则表达式*/
+        splitSemicolon: /\s*(;|；)\s*/ig,
+        /*匹配逗号间隔字符串的正则表达式*/
+        splitComma: /\s*(,|，)\s*/ig,
+        /*逗号间隔数字格式（例如1,2,3）*/
+        Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
+        /*匹配字符串首尾分号或空格的正则表达式*/
+        semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
+        /*匹配Guid格式的正则表达式*/
+        guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
+
+        /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
+        password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/
+    },
+    /*判断一个字符串是否全是空格*/
+    IsEmpty: function (text) { return (!!CBJS.Regex.ExtendEnum.empty.test(text)); },
+    /*检查Email的格式是否正确*/
+    IsEmail: function (email) { return (!!CBJS.Regex.ExtendEnum.email.test(email)); },
+    /*检查固定电话号码的格式是否正确*/
+    IsTelePhone: function (telephone) { return (!!CBJS.Regex.ExtendEnum.telephone.test(telephone)); },
+    /*检查手机号码的格式是否正确*/
+    IsMobilePhone: function (mobilephone) { return (!!CBJS.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
+    /*判断是否为汉字字符串*/
+    IsChinese: function (text) { return (!!CBJS.Regex.ExtendEnum.chinese.test(text)) },
+    /*判断是否为单个汉字*/
+    IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
+
+    /*正则表达式分割字符串为数组*/
+    Split : function (splitString, regexFormat) {
+        if (!!!splitString) return [];
+        var stringArray = splitString.toString().split(regexFormat);
+        if (!stringArray || stringArray.length < 1) return [];
+        var length = stringArray.length;
+        var arr = new Array();
+        for (var i = 0; i < length ; i++) {
+            if (!!!stringArray[i] || regexFormat.test(stringArray[i])) continue;
+            arr.push(stringArray[i]);
+        }
+        return arr;
+    }
 };
-
-
-
 
 
 /***** 通用ClassBaoJavascript模拟类库·结束 *****/

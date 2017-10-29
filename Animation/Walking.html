@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>人物走动效果</title>
+        <meta name="author" content="熊仔其人">
+        <style type="text/css">
+            canvas {
+                background-color: #e6e5e5;
+                border: 1px solid #a2a2a2;
+            }
+    </style>
+    </head>
+    <body>
+
+<canvas id="myCanvas" width="400" height="200">Your browser does not support the canvas element.</canvas>
+
+<script type="text/javascript">
+    var canvas=document.getElementById('myCanvas');
+    var ctx= canvas.getContext("2d");
+
+    var interval=0;
+    var sx=0,sy=0,BG_sx=0,BG_sy=200;
+    var Walking={
+        Step:function(_sx, _sy, _BG_sx, _BG_sy){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(imgBG, _BG_sx, _BG_sy, 426, 426, 0, 0, 400, 200);
+            ctx.drawImage(imgPeople, _sx, _sy, 85, 113, 130, 82, 85, 113);
+
+            BG_sx+=4;
+            if(BG_sx>=(626-426))
+            {
+                BG_sx=0;
+            }
+            /*BG_sy+=4;
+            if(BG_sy>=(626-426))
+            {
+                BG_sy=0;
+            }*/
+
+            sx+=85;
+            if(sx>=340)
+            {
+                sx=0;
+            }
+            /*sy+=113;
+            if(sy>=454)
+            {
+                sy=0;
+            }*/
+        },
+        Down:function(){
+            //向下走
+            sy=0;
+            Walking.Step(sx,sy,BG_sx,BG_sy);
+        },
+         Up:function(){
+            //向上走
+            sy=340;
+            Walking.Step(sx,sy,BG_sx,BG_sy);
+        },
+         Left:function(){
+            //向左走
+            sy=114;
+            Walking.Step(sx,sy,BG_sx,BG_sy);
+        },
+         Right:function(){
+            //向右走
+            sy=228;
+            Walking.Step(sx,sy,BG_sx,BG_sy);
+        }
+    };
+        
+    var imgPeople= new Image(),imgBG= new Image();
+    imgBG.src="images/center.jpg";
+    imgPeople.src="images/Fox.png";
+    
+    imgPeople.onload=function(){
+        interval=window.setInterval(Walking.Right, 300);
+    };
+
+</script>
+
+
+    </body>
+</html>
