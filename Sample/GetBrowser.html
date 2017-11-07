@@ -71,15 +71,18 @@ console.log(myScreen);
 
     <!--getBrowser-->
     <script>
+        console.log(CBJS.getQueryString("name", "Sample/GetBrowser.html?t=123&name=xiong&"));
         var myBrowser = CBJS.getBrowser();
-        console.log("getBrowser", myBrowser);
+        console.log("getBrowser");
+        console.dir(myBrowser);
+        console.log("JavascriptVersion：" + CBJS.JavascriptVersion());
         CBJS.getById("isPC").innerText = myBrowser.isPC ? "PC端" : "移动端";
         CBJS.getById("name").innerText = myBrowser.name;
         CBJS.getById("version").innerText = myBrowser.version;
         CBJS.getById("language").innerText = myBrowser.language;
         CBJS.getById("hardware").innerText = myBrowser.hardware;
         CBJS.getById("platform").innerText = myBrowser.platform;
-        CBJS.getById("WOW").innerText = myBrowser.WOW.indexOf(64) > 0 ? "64位" : "32位";
+        CBJS.getById("WOW").innerText = !!myBrowser.WOW ? (myBrowser.WOW.indexOf(64) > 0 ? "64位" : "32位") : "";
     </script>
 
     <!--getScreen-->

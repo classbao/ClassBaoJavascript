@@ -6,7 +6,7 @@
 * Blog: http://xiongzaiqiren.blog.163.com/
 * E-mail: xiongzaiqiren@163.com
 * Last modified: xiongzaiqiren
-* Last modified time: 2016-11-29 10:21
+* Last modified time: 2017-11-7 18:01
 * Version source: https://github.com/classbao/ClassBaoJavascript
 ***/
 
@@ -130,23 +130,23 @@ function ClassBaoJavascript() {
 
         //移动端与PC端判断
         var u = navigator.userAgent;
-        if (u.indexOf('iPhone') > -1) { //是否为iPhone或者QQHD浏览器 
+        if (/iphone/ig.test(u)) {
             result.hardware = "iPhone";
             result.isPC = false;
         }
-        else if (u.indexOf('iPad') > -1) { //是否iPad  
+        else if (/ipad/ig.test(u)) {
             result.hardware = "iPad";
             result.isPC = false;
         }
-        else if (u.indexOf('iPod') > -1) { //是否iPod  
+        else if (/ipod/ig.test(u)) {
             result.hardware = "iPod";
             result.isPC = false;
         }
-        else if (u.indexOf('Android') > -1) { //android终端或者uc浏览器  
+        else if (/android/ig.test(u)) {
             result.hardware = "Android";
             result.isPC = false;
         }
-        else if (u.indexOf('Linux') > -1) { //Linux终端   
+        else if (/linux/ig.test(u)) {
             result.hardware = "Linux";
             result.isPC = false;
         }
@@ -177,7 +177,55 @@ function ClassBaoJavascript() {
         else {
         }
 
+        result.isWeixin = /MicroMessenger/ig.test(u);
+
         return result;
+    };
+    /* 获得当前浏览器JS的版本 */
+    this.JavascriptVersion = function () {
+        var n = navigator;
+        var u = n.userAgent;
+        var apn = n.appName;
+        var v = n.appVersion;
+        var ie = v.indexOf('MSIE ');
+        if (ie > 0) {
+            apv = parseInt(i = v.substring(ie + 5));
+            if (apv > 3) {
+                apv = parseFloat(i);
+            }
+        } else {
+            apv = parseFloat(v);
+        }
+        var isie = (apn == 'Microsoft Internet Explorer');
+        var ismac = (u.indexOf('Mac') >= 0);
+        var javascriptVersion = "1.0";
+        if (String && String.prototype) {
+            javascriptVersion = '1.1';
+            if (javascriptVersion.match) {
+                javascriptVersion = '1.2';
+                var tm = new Date;
+                if (tm.setUTCDate) {
+                    javascriptVersion = '1.3';
+                    if (isie && ismac && apv >= 5) javascriptVersion = '1.4';
+                    var pn = 0;
+                    if (pn.toPrecision) {
+                        javascriptVersion = '1.5';
+                        a = new Array;
+                        if (a.forEach) {
+                            javascriptVersion = '1.6';
+                            i = 0;
+                            o = new Object;
+                            tcf = new Function('o', 'var e,i=0;try{i=new Iterator(o)}catch(e){}return i');
+                            i = tcf(o);
+                            if (i && i.next) {
+                                javascriptVersion = '1.7';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return javascriptVersion;
     };
     /*获取当前屏幕；结果：{ top: top, left: left, height: height, width: width }*/
     this.getScreen = function () {
@@ -192,7 +240,7 @@ function ClassBaoJavascript() {
         if (!height) { height = screen.availHeight }
 
         return { top: top, left: left, height: height, width: width };
-    }
+    };
     /*检测是否支持Html5元素Canvas*/
     this.supportCanvas = function () {
         return !!document.createElement("canvas").getContext;
@@ -224,7 +272,7 @@ function ClassBaoJavascript() {
     };
 
     /*创建元素*/
-    this.createElement = function (type) { return document.createElement(type); }
+    this.createElement = function (type) { return document.createElement(type); };
     /*删除指定节点*/
     this.removeChild = function (element) {
         try {
@@ -234,7 +282,7 @@ function ClassBaoJavascript() {
         }
         catch (e) {
         }
-    }
+    };
     /*删除指定元素所有子节点*/
     this.removeChildNodes = function (element) {
         var parentNode = element;
@@ -247,7 +295,7 @@ function ClassBaoJavascript() {
                 parentNode.removeChild(parentNode.childNodes[0]);
             }
         }
-    }
+    };
 
 
 
@@ -365,7 +413,73 @@ function ClassBaoJavascript() {
         var searchStr = decodeURIComponent(window.location.search);
         return CBJS.getParamValue(name, searchStr, "&");
     };
+    this.getQueryString = function (name, url) {
+        if (!name) return null;
+        url = url || window.location.search
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = url.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    };
 
+    /* Ajax 请求 */
+    this.ajax = function (args) {
+        var self = this;
+        this.options = {
+            type: 'GET',
+            async: true,
+            contentType: 'application/x-www-form-urlencoded',
+            url: 'about:blank',
+            data: null,
+            success: {},
+            error: {}
+        };
+        this.getXmlHttp = function () {
+            var xmlHttp;
+            try {
+                xmlhttp = new XMLHttpRequest();
+            }
+            catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (e) {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            }
+            if (!xmlhttp) {
+                alert('您的浏览器不支持AJAX');
+                return false;
+            }
+            return xmlhttp;
+        };
+        this.send = function () {
+            for (var i in self.options) {
+                self.options[i] = (args[i] == null) ? val : args[i];
+            }
+            var xmlHttp = new self.getXmlHttp();
+            if (self.options.type.toUpperCase() == 'GET') {
+                xmlHttp.open(self.options.type, self.options.url + (self.options.data == null ? "" : ((/[?]$/.test(self.options.url) ? '&' : '?') + self.options.data)), self.options.async);
+            }
+            else {
+                xmlHttp.open(self.options.type, self.options.url, self.options.async);
+                xmlHttp.setRequestHeader('Content-Length', self.options.data.length);
+            }
+            xmlHttp.setRequestHeader('Content-Type', self.options.contentType);
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4) {
+                    if (xmlHttp.status == 200 || xmlHttp.status == 0) {
+                        if (typeof self.options.success == 'function') self.options.success(xmlHttp.responseText);
+                        xmlHttp = null;
+                    }
+                    else {
+                        if (typeof self.options.error == 'function') self.options.error('Server Status: ' + xmlHttp.status);
+                    }
+                }
+            };
+            xmlHttp.send(self.options.type.toUpperCase() == 'POST' ? self.options.data.toString() : null);
+        };
+        this.send();
+    };
     /* //示例：
     error: function (XMLHttpRequest, textStatus, errorThrown) {
     CBJS.RequestState(XMLHttpRequest, textStatus, errorThrown);
@@ -381,7 +495,7 @@ function ClassBaoJavascript() {
             //alert(errorMsg + "\n 请求状态：\n textStatus= " + textStatus + "\n XMLHttpRequest.status= " + XMLHttpRequest.status + "\n XMLHttpRequest.readyState= " + XMLHttpRequest.readyState);
             return errorMsg + "<br /> 请求状态：<br /> textStatus= " + textStatus + "<br /> XMLHttpRequest.status= " + XMLHttpRequest.status + "<br /> XMLHttpRequest.readyState= " + XMLHttpRequest.readyState;
         }
-    }
+    };
 
     /* Cookie通用功能 */
     this.Cookie = {
@@ -514,10 +628,8 @@ function ClassBaoJavascript() {
     this.realLength = function (str) {
         if (!!!str) { return 0; }
         var _str = ("string" == typeof (str)) ? str : str.toString();
-        var _str = _str.LRTrim();
         var len = 0;
-        var i = 0;
-        for (i = 0; i < _str.length; i++) {
+        for (var i = 0; i < _str.length; i++) {
             if (_str.charCodeAt(i) > 255) {
                 len += 2;
             }
@@ -531,7 +643,6 @@ function ClassBaoJavascript() {
     this.subString = function (str, len, suffix) {
         if (!!!str || !!!len) return '';
         var _str = ("string" == typeof (str)) ? str : str.toString();
-        var _str = _str.LRTrim();
         var a = 0;
         var i = 0;
         var temp = '';
@@ -562,7 +673,7 @@ function ClassBaoJavascript() {
         * x和y可以是任何的数值，即使是负数也一样。
         */
         return Math.round(Math.random() * (maxValue - minValue)) + minValue;
-    }
+    };
 
     /*数组操作*/
     this.Array = {
@@ -704,21 +815,77 @@ function ClassBaoJavascript() {
         var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
         return code;
     };
-    /*添加事件（target是载体，type是事件类型，func是事件函数）*/
-    this.AddEventHandler = function (target, type, func) {
-        if (target.addEventListener)
-            target.addEventListener(type, func, false);
-        else if (target.attachEvent)
-            target.attachEvent("on" + type, func);
-        else target["on" + type] = func;
-    };
-    /*移除事件（target是载体，type是事件类型，func是事件函数）*/
-    this.RemoveEventHandler = function (target, type, func) {
-        if (target.removeEventListener)
-            target.removeEventListener(type, func, false);
-        else if (target.detachEvent)
-            target.detachEvent("on" + type, func);
-        else delete target["on" + type];
+    /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
+    this.EventUtil = {
+        /*添加事件处理程序*/
+        /*示例：CBJS.EventUtil.addHandler(document, "keydown", function (e) { if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; } } );*/
+        addHandler: function (element, type, handler) {
+            if (element.addEventListener) {
+                addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        /*移除事件处理程序*/
+        removeHandler: function (element, type, handler) {
+            if (element.removeEventListener) {
+                removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                detachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = null;
+            }
+        },
+        /*获得事件对象*/
+        getEvent: function (event) {
+            return event ? event : window.event;
+        },
+        /*获得事件对象*/
+        getEvent: function () {
+            if (document.all) {
+                return window.event; //如果是ie
+            }
+            var func = this.getEvent.caller;
+            while (func != null) {
+                var arg0 = func.arguments[0];
+                if (arg0) {
+                    if ((arg0.constructor == Event || arg0.constructor == MouseEvent)
+                    || (typeof (arg0) == "object" && arg0.preventDefault && arg0.stopPropagation)) {
+                        return arg0;
+                    }
+                }
+                func = func.caller;
+            }
+            return null;
+        },
+        /*获得按键值*/
+        getKeyCode: function (event) {
+            var theEvent = event || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            return code;
+        },
+        /*获得事件的目标*/
+        getTarget: function (event) {
+            return event.target || event.scrElement;
+        },
+        /*取消事件的默认行为*/
+        preventDefault: function (event) {
+            if (event.preventDefault) {
+                event.preventDefault;
+            } else {
+                event.returValue = false;
+            }
+        },
+        /*阻止事件进一步冒泡*/
+        stopPropagation: function (event) {
+            if (event.stopPropagation) {
+                event.stopPropagation;
+            } else {
+                event.cancelBubble = true;
+            }
+        }
     };
 
 };
@@ -726,17 +893,23 @@ function ClassBaoJavascript() {
 
 /***** String对象常用方法扩展 *****/
 /*JS移除字符串首尾空格*/
-String.prototype.LRTrim = function () { return this.replace(/(^\s+)|(\s+$)/g, ""); }
+String.prototype.Trim = function () { return this.replace(/(^s*)|(s*$)/g, ""); }
 /*JS移除字符串左边空格*/
-String.prototype.LTrim = function () { return this.replace(/(^\s+)/g, ""); }
+String.prototype.LTrim = function () { return this.replace(/(^s*)/g, ""); }
 /*JS移除字符串右边空格*/
-String.prototype.RTrim = function () { return this.replace(/(\s+$)/g, ""); }
+String.prototype.RTrim = function () { return this.replace(/(s*$)/g, ""); }
+
 /*换行转义字符转换成HTML换行标签*/
-String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r|\\r\\n|\\n|\\f|\\r)/g, "<br />"); } //换行,换页,回车
+String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r|\\r\\n|\\n|\\f|\\r)/g, "<br />"); }
 /*JS移除字符串首尾中文/英文逗号*/
 String.prototype.LRTrimComma = function () { return this.replace(/(^(,|，|\s)*)|((,|，|\s)*$)/ig, ""); }
 /*JS移除字符串首尾中文/英文分号*/
 String.prototype.LRTrimSemicolon = function () { return this.replace(/(^(;|；|\s)*)|((;|；|\s)*$)/ig, ""); }
+
+/* JS StringBuilder 用法 */
+function StringBuilder() { this.strings = new Array; };
+StringBuilder.prototype.append = function (str) { this.strings.push(str); };
+StringBuilder.prototype.toString = function () { return this.strings.join(''); };
 
 
 /***** 常用实例方法扩展·日期与时间 *****/
