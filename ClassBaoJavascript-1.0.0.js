@@ -271,6 +271,25 @@ function ClassBaoJavascript() {
             element.style.display = "block";/* display="inline" */
     };
 
+    /*创建新的Guid*/
+    this.NewGuid = function () {
+        function S4() {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    };
+    /*转换成Boolean*/
+    this.ToBoolean = function (obj) {
+        if (!obj) return false;
+        if ("boolean" == typeof obj) return obj;
+        if ("string" == typeof obj) {
+            var _s = obj.toLowerCase();
+            if ("true" == _s || "1" == _s) return true;
+            if ("false" == _s || "0" == _s) return false;
+        }
+        return Boolean(obj);
+    };
+
     /*创建元素*/
     this.createElement = function (type) { return document.createElement(type); };
     /*删除指定节点*/
@@ -1003,6 +1022,48 @@ ClassBaoJavascript.prototype.isDateTime = function (str) {
 	return (d.getFullYear() == m[1] && (d.getMonth() + 1) == m[3] && d.getDate() == m[4] && d.getHours() == m[5] && d.getMinutes() == m[6] && d.getSeconds() == m[7]);
 }
 
+//var VersionNumber = {
+//    Enum: {
+//        V1_2: { value: 1.2, text: "V1.2" },
+//        V1_1: { value: 1.1, text: "V1.1" }
+//    },
+//    getText: function (obj) {
+//        if (!obj) return '';
+//        var _obj = parseFloat(obj);
+//        return CBJS.getEnumTextByValue(this.Enum, _obj);
+//    },
+//    initSelectOption: function () {
+//        return CBJS.getSelectOptionByEnum(this.Enum);
+//    }
+//};
+/*枚举对象根据value获取text*/
+ClassBaoJavascript.prototype.getEnumTextByValue = function (obj, value) {
+    if (!obj) return '';
+    if (undefined == value || null == value || NaN == value) return '';
+    for (var i in obj) {
+        if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
+            if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
+                if (value == obj[i].value) {
+                    return obj[i].text;
+                }
+            }
+        }
+    }
+    return '';
+};
+/*枚举对象根据value，text生成option标签*/
+ClassBaoJavascript.prototype.getSelectOptionByEnum = function (obj) {
+    if (!obj) return '';
+    var option = '';
+    for (var i in obj) {
+        if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
+            if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
+                option += "<option value='" + obj[i].value + "'>" + obj[i].text + "</option>";
+            }
+        }
+    }
+    return option;
+};
 
 
 /***** 通用ClassBaoJavascript模拟类库·Dom *****/
