@@ -952,11 +952,11 @@ ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
     if (!datetime) return null;
     if (typeof (datetime) == "string") {
         /* "/Date(1507617025040)/" */
-        if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", "").replace(")/", ""), 10)); }
-        else { return datetime };
+        if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", '').replace(")/", ''), 10)); }
+        else { return new Date(datetime.replace(/T/ig, ' ').replace(/Z/ig, '').replace(/\-/ig, '/')); };
     }
     else { return JSCL.GetDateByJson(datetime.toString()); }
-}
+};
 /*时间格式化扩展*/
 Date.prototype.Format = function (fmt) {
 	var o = {
