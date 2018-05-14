@@ -1022,6 +1022,21 @@ ClassBaoJavascript.prototype.isDateTime = function (str) {
 	return (d.getFullYear() == m[1] && (d.getMonth() + 1) == m[3] && d.getDate() == m[4] && d.getHours() == m[5] && d.getMinutes() == m[6] && d.getSeconds() == m[7]);
 }
 
+/*百分数转化为小数*/
+String.prototype.toPoint = function () {
+    var str = this.replace("%", "");
+    str = str / 100;
+    return str;
+}
+/*小数转化为百分数*/
+Number.prototype.toPercent = function (fractionDigits) {
+    fractionDigits = fractionDigits || 1;
+    var str = Number(this * 100).toFixed(fractionDigits);
+    str += "%";
+    return str;
+}
+
+
 //var VersionNumber = {
 //    Enum: {
 //        V1_2: { value: 1.2, text: "V1.2" },
