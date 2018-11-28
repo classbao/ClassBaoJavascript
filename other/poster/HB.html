@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../../ClassBaoJavascript-1.0.0.js"></script>
+</head>
+<body>
+
+    <p style="display:none;">要使用的图像：</p>
+    <img id="tulip" src="./background.jpg" alt="The Tulip" style="display:none;" />
+
+
+    <p>画布：</p>
+    <canvas id="myCanvas" width="640" height="1138" style="border:1px solid #d3d3d3;background:#ffffff;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <p><button id="btnSave1">保 存 Canvas</button> </p>
+    <p><button id="btnSave2">保 存 Img</button> </p>
+
+    <script>
+        var Poster = {
+            Name: '海报名称'
+            , UserName: '熊仔其人'
+            , Images: [
+                { name: "背景图", src: "./background.jpg", offsetX: 0, offsetY: 0, width: 640, height: 1138, canvasOffsetX: 0, canvasOffsetY: 0, canvasImageWidth: 640, canvasImageHeight: 1138, style: "" }
+                , { name: "头像", src: "./head.jpg", offsetX: 0, offsetY: 0, width: 640, height: 640, canvasOffsetX: 10, canvasOffsetY: 3, canvasImageWidth: 136, canvasImageHeight: 130, style: "" }
+            ]
+            , ImageIndex: -1
+            //CanvasRenderingContext2D
+            , context: null
+            //CanvasRenderingContext2D
+            , getContext: function (canvasId) {
+                if (!!this.context && "CanvasRenderingContext2D" === this.context.constructor.name) {
+                    return this.context;
+                }
+
+                var c = document.getElementById(canvasId || "myCanvas");
+                this.context = c.getContext("2d");
+                return this.context;
+            }
+            //canvas把正方形图片绘制成圆形。ctx是CanvasRenderingContext2D，img是Image对象、或http/https图片，x，y是左上角坐标，r是圆半径
+            , circleImg: function (ctx, img, x, y, r) {
+                ctx.save();
+                var d = 2 * r;
+                var cx = x + r;
+                var cy = y + r;
+                ctx.beginPath(); //开始绘制
+                //先画个圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
+                ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+                //画好了圆 剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内 这也是我们要save上下文的原因
+                ctx.clip();
+                // 推进去图片，必须是http/https图片
+                ctx.drawImage(img, x, y, d, d);
+                //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 还可以继续绘制
+                ctx.restore();
+                //可将之前在绘图上下文中的描述（路径、变形、样式）画到 canvas 中
+                //ctx.draw();
+            }
+            , initImages: function (index) {
+                this.ImageIndex = index || this.ImageIndex;
+                if (this.ImageIndex >= this.Images.length - 1) {
+                    this.drawName();
+                    return false;
+                }
+                else {
+                    this.ImageIndex++;
+                }
+                var img = this.Images[this.ImageIndex];
+                if (!!!img) {
+                    return false;
+                }
+
+                var image = new Image();
+                // 解决跨域 Canvas 污染问题
+                image.setAttribute('crossOrigin', 'anonymous');
+                image.onload = function () {
+                    console.log("src：" + img.src + "complete : " + image.complete + "\nreadyState : " + image.readyState);
+                    if (Poster.ImageIndex === 1) {
+                        var ctx = Poster.getContext();
+                        Poster.circleImg(ctx, image, img.canvasOffsetX, img.canvasOffsetY, img.canvasImageWidth / 2);
+                        //Poster.getContext().drawImage(image, img.offsetX, img.offsetY, img.width, img.height, img.canvasOffsetX, img.canvasOffsetY, img.canvasImageWidth, img.canvasImageHeight);
+                    }
+                    else {
+                        Poster.getContext().drawImage(image, img.offsetX, img.offsetY, img.width, img.height, img.canvasOffsetX, img.canvasOffsetY, img.canvasImageWidth, img.canvasImageHeight);
+                    }
+                    if (image.complete) {
+                        Poster.initImages();
+                    }
+                };
+                image.onerror = function () { alert(img.src + " error!"); };
+                image.src = img.src;
+            }
+            , drawName: function () {
+                var ctx = this.getContext();
+                //设置文本大小 + 字体
+                ctx.font = "40px bold Georgia";
+                //设置文本颜色
+                ctx.fillStyle = "#fff";
+                ctx.fillText(this.UserName, 175, 70);
+            }
+
+        };
+
+        Poster.initImages();
+
+        document.getElementById('btnSave1').onclick = function () {
+            var fileName = Poster.Name + new Date().toLocaleDateString();
+            CBJS.canvas.downloadCanvas(document.getElementById('myCanvas'), 'png', fileName);
+            //CBJS.canvas.downloadIamge(document.getElementById('tulip').src, '111');
+        }
+        document.getElementById('btnSave2').onclick = function () {
+            var fileName = Poster.Name + new Date().toLocaleDateString();
+            //CBJS.canvas.downloadCanvas(document.getElementById('myCanvas'), 'png', fileName);
+            CBJS.canvas.downloadIamge(document.getElementById('tulip').src, fileName);
+        }
+    </script>
+
+</body>
+</html>

@@ -5,3 +5,7 @@ https://segmentfault.com/q/1010000005816241
 https://stackoverflow.com/questions/923885/capture-html-canvas-as-gif-jpg-png-pdf
 
 https://www.cnblogs.com/zhangkaiqiang/p/8183926.html
+
+///////////////////////////////////////////////////////////
+https://blog.csdn.net/zhihui1017/article/details/80298967
+
