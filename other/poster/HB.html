@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src=”http://html5shiv.googlecode.com/svn/trunk/html5.js”></script>
     <script src="../../ClassBaoJavascript-1.0.0.js"></script>
 </head>
 <body>
 
-    <p style="display:none;">要使用的图像：</p>
-    <img id="tulip" src="./background.jpg" alt="The Tulip" style="display:none;" />
-
+    <p>要使用的图像：</p>
+    <img id="tulip" src="http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg" alt="The Tulip" />
+	<hr />
+	<hr />
+	
+	<a  href="http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg" download="background.jpg">
+            <img src="http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg" />
+        </a>
+	<a href="http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg" download="background.jpg" >下载</a>
+	<hr />
+	<hr />
 
     <p>画布：</p>
     <canvas id="myCanvas" width="640" height="1138" style="border:1px solid #d3d3d3;background:#ffffff;">
         Your browser does not support the HTML5 canvas tag.
     </canvas>
+	<hr />
+	<hr />
 
-    <p><button id="btnSave1">保 存 Canvas</button> </p>
-    <p><button id="btnSave2">保 存 Img</button> </p>
+    <p><button id="btnSave1" value="保 存 Canvas">保 存 Canvas</button> </p>
+    <p><button id="btnSave2" value="保 存 Img">保 存 Img</button> </p>
+	<p><button id="btnSave3" value="保 存 Img" onclick="downloadImage('http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg');" >保 存 Img333</button> </p>
+	
+	<hr />
+	<hr />
 
     <script>
         var Poster = {
             Name: '海报名称'
             , UserName: '熊仔其人'
             , Images: [
-                { name: "背景图", src: "./background.jpg", offsetX: 0, offsetY: 0, width: 640, height: 1138, canvasOffsetX: 0, canvasOffsetY: 0, canvasImageWidth: 640, canvasImageHeight: 1138, style: "" }
-                , { name: "头像", src: "./head.jpg", offsetX: 0, offsetY: 0, width: 640, height: 640, canvasOffsetX: 10, canvasOffsetY: 3, canvasImageWidth: 136, canvasImageHeight: 130, style: "" }
+                { name: "背景图", src: "http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/background.jpg", offsetX: 0, offsetY: 0, width: 640, height: 1138, canvasOffsetX: 0, canvasOffsetY: 0, canvasImageWidth: 640, canvasImageHeight: 1138, style: "" }
+                , { name: "头像", src: "http://wx.94lss.com/ClassBaoJavascript/trunk/other/poster/head.jpg", offsetX: 0, offsetY: 0, width: 640, height: 640, canvasOffsetX: 10, canvasOffsetY: 3, canvasImageWidth: 136, canvasImageHeight: 130, style: "" }
             ]
             , ImageIndex: -1
             //CanvasRenderingContext2D
@@ -107,12 +123,24 @@
             var fileName = Poster.Name + new Date().toLocaleDateString();
             CBJS.canvas.downloadCanvas(document.getElementById('myCanvas'), 'png', fileName);
             //CBJS.canvas.downloadIamge(document.getElementById('tulip').src, '111');
+            alert('btnSave1');
         }
         document.getElementById('btnSave2').onclick = function () {
             var fileName = Poster.Name + new Date().toLocaleDateString();
             //CBJS.canvas.downloadCanvas(document.getElementById('myCanvas'), 'png', fileName);
             CBJS.canvas.downloadIamge(document.getElementById('tulip').src, fileName);
+            alert('btnSave2');
         }
+		
+		
+		//点击保存图片
+function downloadImage(imgurl) { 
+	//imgurl 图片地址
+    var a = $("<a></a>").attr("href", imgurl).attr("download", "img.png").appendTo("body"); 
+    a[0].click(); 
+    a.remove(); 
+}
+
     </script>
 
 </body>
