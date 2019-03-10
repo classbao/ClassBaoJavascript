@@ -241,6 +241,31 @@ function ClassBaoJavascript() {
 
         return { top: top, left: left, height: height, width: width };
     };
+    /* 获取窗口可视范围的高度 */
+    this.getClientHeight = function () {
+        var clientHeight = 0;
+        if (document.body.clientHeight && document.documentElement.clientHeight) {
+            var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+        } else {
+            var clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+        }
+        return clientHeight;
+    };
+    /* 获取窗口滚动条高度 */
+    this.getScrollTop = function () {
+        var scrollTop = 0;
+        if (document.documentElement && document.documentElement.scrollTop) {
+            scrollTop = document.documentElement.scrollTop;
+        } else if (document.body) {
+            scrollTop = document.body.scrollTop;
+        }
+        return scrollTop;
+    };
+    /* 获取文档内容实际高度 */
+    this.getScrollHeight = function () {
+        return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    };
+
     /*检测是否支持Html5元素Canvas*/
     this.supportCanvas = function () {
         return !!document.createElement("canvas").getContext;
@@ -1194,6 +1219,36 @@ Number.prototype.toPercent = function (fractionDigits) {
     return str;
 }
 
+/*获取小数点后的位数*/
+ClassBaoJavascript.prototype.getDecimalPointLength = function (value) {
+    if (!value || value.length < 1)
+        return -1;
+    var y = String(value).indexOf(".") + 1; //获取小数点的位置
+    var count = String(value).length - y; //获取小数点后的个数
+    if (y > 0) {
+        //alert("这个数字是小数，有" + count + "位小数");
+        return count;
+    } else {
+        //alert("不是小数");
+        return -1;
+    }
+}
+/*保留N位小数*/
+ClassBaoJavascript.prototype.toFixed = function (value, pointLength) {
+    var oldPointLength = this.getDecimalPointLength(value);
+    if (oldPointLength < 1 || oldPointLength < pointLength) {
+        return value;
+    }
+
+    if (typeof (value) === "number") {
+        return value.toFixed(pointLength);
+    }
+    else {
+        return parseFloat(value).toFixed(pointLength);
+    }
+
+}
+
 
 //var VersionNumber = {
 //    Enum: {
@@ -1846,4 +1901,19 @@ if (!window.requestAnimationFrame) {
   );
 };
 
+/*// 解决iPhone，iPad软键盘引起的底部空白问题
+var oldScrollTop = CBJS.getScrollTop() || 0; //软键盘弹起之前的位置
+document.body.addEventListener('focusin', () => {  //软键盘弹起事件
+    console.log("键盘弹起 " + CBJS.getScrollTop());
+});
+document.body.addEventListener('focusout', () => { //软键盘关闭事件
+    console.log("键盘收起 " + CBJS.getScrollTop());
+
+    var ua = window.navigator.userAgent;
+    if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0) { //键盘收起页面空白问题
+        document.body.scrollTop = oldScrollTop || 0;
+        document.documentElement.scrollTop = oldScrollTop || 0;
+    }
+});
+*/
 /***** Other End *****/
