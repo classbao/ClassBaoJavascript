@@ -1079,10 +1079,16 @@ StringBuilder.prototype.toString = function () { return this.strings.join(''); }
 /***** 常用实例方法扩展·日期与时间 *****/
 /*获得Unix Timestamp时间戳*/
 ClassBaoJavascript.prototype.UnixTimestamp = function (time) {
-	if (!!time)
-		return Math.round(new Date(time).getTime() / 1000);
-	else
-		return Math.round(new Date().getTime() / 1000);
+    if (!!time) {
+        if (typeof (time) == 'string') {
+            return Math.round(new Date(time).getTime() / 1000);
+        }
+        else {
+            return Math.round(time.getTime() / 1000);
+        }
+    }
+    else
+        return Math.round(new Date().getTime() / 1000);
 }
 /*获得Unix Timestamp时间戳转换得普通时间对象*/
 ClassBaoJavascript.prototype.GetDate = function (_UnixTimestamp) {
