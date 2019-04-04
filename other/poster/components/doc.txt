@@ -1,0 +1,11 @@
+canvas2image£º
+https://github.com/classbao/canvas2image
+
+html2canvas£º
+https://github.com/classbao/html2canvas
+https://html2canvas.hertzen.com/
+
+jquery-qrcode£º
+https://github.com/classbao/jquery-qrcode
+http://blog.jetienne.com/blog/2011/04/07/jquery-qrcode/
+https://kazuhikoarase.github.io/qrcode-generator/js/demo/

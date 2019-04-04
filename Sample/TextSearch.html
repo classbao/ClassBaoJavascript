@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>文本搜索-ClassBaoJavascript测试页面</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in April 24, 2017" />
+
+    <link href="./common.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        #TextSearchContainer p {
+            text-indent: 2em;
+            margin: 8px 0 0 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!--TextSearch-->
+        <p>请输入搜索词：
+            <input type="text" id="txtTextSearch" placeholder="支持空格分隔搜索词" /> 
+            <button id="btnTextSearch" onclick="TextSearch();">搜索</button>
+        </p>
+        <div id="TextSearchContainer">
+            <p>《义勇军进行曲》是由田汉作词，聂耳作曲的歌曲，是电影《风云儿女》的主题歌，被称为中华民族解放的号角，自1935年在民族危亡的关头诞生以来，对激励中国人民的爱国主义精神起了巨大的作用，后成为中华人民共和国国歌。</p>
+
+            <p>电影《风云儿女》前期拍摄完成以后，田汉的主题歌歌词并没有确定歌名，而聂耳从日本寄回来的歌词谱曲的名称只写了3个字“进行曲”。作为电影《风云儿女》投资人的朱庆澜将军，在“进行曲”3个字前面加上了“义勇军”，从而把该曲命名为“义勇军进行曲”。</p>
+
+            <p>2004年3月14日，第十届全国人民代表大会第二次会议通过宪法修正案，正式规定中华人民共和国国歌为《义勇军进行曲》。2017年9月1日，《中华人民共和国国歌法》在第十二届全国人大常委会第二十九次会议表决通过，于10月1日起正式实施。</p>
+        </div>
+        
+
+        <hr />
+
+
+        
+
+    </div>
+
+    <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
+    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+
+    <!--TextSearch-->
+    <script>
+        function TextSearch() {
+            var word = CBJS.getById("txtTextSearch").value;
+            var sourceStr = CBJS.getById("TextSearchContainer").innerHTML;
+
+            //sourceStr = CBJS.TextSearch(sourceStr, word);
+            sourceStr = sourceStr.TextSearch(word);
+
+            CBJS.getById("TextSearchContainer").innerHTML = sourceStr;
+        }
+    </script>
+
+</body>
+</html>

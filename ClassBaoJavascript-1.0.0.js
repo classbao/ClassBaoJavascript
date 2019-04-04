@@ -818,6 +818,19 @@ function ClassBaoJavascript() {
 
         return complexity;
     };
+    /*文本搜索。参数：sourceString是源字符串，searchWords是搜索词或空格隔开的词组，HandleFunction自定义对已匹配的单个词组处理方法。*/
+    this.TextSearch = function (sourceString, searchWords, HandleFunction) {
+        var searchWords = searchWords.Trim().replace(/\s+/ig, ' ');
+        var wordArray = CBJS.Regex.Split(searchWords, /\s+/ig);
+        wordArray.forEach(function (value, index, array) {
+            var reg = new RegExp(value, "ig"); //动态创建一个正则表达式
+            sourceString = sourceString.replace(reg, function (a) {
+                return !!HandleFunction ? HandleFunction(a) : a.fontcolor('red');
+            });
+        }, sourceString);
+
+        return sourceString;
+    };
 
     /*中国身份证号码常用方法*/
     this.ChinaIDCard = {
@@ -1049,6 +1062,18 @@ function ClassBaoJavascript() {
             filename = fileName || ('下载图片名称' + new Date().toLocaleDateString());
             saveFile(imgdata, filename + '.' + type);
         }
+
+        /*生成IMG标签*/
+        , genImage: function (strData) {
+            var img = document.createElement('img');
+            img.src = strData;
+            return img;
+        }
+        /*canvas生成IMG标签*/
+        , convertToImage: function (canvas, type, fileName) {
+            var strData = canvas.toDataURL(type);
+            return CBJ.canvas.genImage(strData);
+        }
         ////////////////////////////////////////
     };
 
@@ -1069,6 +1094,8 @@ String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r
 String.prototype.LRTrimComma = function () { return this.replace(/(^(,|，|\s)*)|((,|，|\s)*$)/ig, ""); }
 /*JS移除字符串首尾中文/英文分号*/
 String.prototype.LRTrimSemicolon = function () { return this.replace(/(^(;|；|\s)*)|((;|；|\s)*$)/ig, ""); }
+/*文本搜索。参数：sourceString是源字符串，searchWords是搜索词或空格隔开的词组，HandleFunction自定义对已匹配的单个词组处理方法。*/
+String.prototype.TextSearch = function (searchWords, HandleFunction) { return CBJS.TextSearch(this, searchWords, HandleFunction); }
 
 /* JS StringBuilder 用法 */
 function StringBuilder() { this.strings = new Array; };
@@ -1432,7 +1459,7 @@ ClassBaoJavascript.prototype.GetRadioValue = function (name) {
 	var radioes = document.getElementsByName(name);
 	for (var i = 0; i < radioes.length; i++) {
 		if (radioes[i].checked) {
-			return radioes[i].value.LRTrim();
+			return radioes[i].value.Trim();
 		}
 	}
 	return null;
@@ -1443,7 +1470,7 @@ ClassBaoJavascript.prototype.SetRadioValue = function (name, sRadioValue) {
 	var oRadio = document.getElementsByName(name);
 	for (var i = 0; i < oRadio.length; i++) //循环
 	{
-		if (oRadio[i].value.LRTrim() == sRadioValue) //比较值
+		if (oRadio[i].value.Trim() == sRadioValue) //比较值
 		{
 			oRadio[i].checked = true; //修改选中状态
 			return true;
