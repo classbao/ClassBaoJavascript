@@ -1137,6 +1137,7 @@ ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
 };
 /*时间格式化扩展*/
 Date.prototype.Format = function (fmt) {
+    if (!this || this.getFullYear() <= 1) return '';
 	var o = {
 		"M+": this.getMonth() + 1, //月份       
 		"d+": this.getDate(), //日      
