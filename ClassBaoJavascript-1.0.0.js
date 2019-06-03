@@ -1275,10 +1275,10 @@ ClassBaoJavascript.prototype.toFixed = function (value, pointLength) {
     }
 
     if (typeof (value) === "number") {
-        return value.toFixed(pointLength);
+        return parseFloat(value.toFixed(pointLength));
     }
     else {
-        return parseFloat(value).toFixed(pointLength);
+        return parseFloat(parseFloat(value).toFixed(pointLength));
     }
 
 }
