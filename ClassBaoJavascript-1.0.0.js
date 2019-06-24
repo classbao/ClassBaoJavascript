@@ -254,9 +254,15 @@ function ClassBaoJavascript() {
     /* 获取窗口滚动条高度 */
     this.getScrollTop = function () {
         var scrollTop = 0;
-        if (document.documentElement && document.documentElement.scrollTop) {
+        if (window.pageYOffset) {
+            //window.pageYOffset 被所有浏览器支持除了 IE 6, IE 7, IE 8, 不关doctype的事， 注IE9 开始支持此属性。
+            scrollTop = window.pageYOffset;
+        }
+        else if (document.documentElement && document.documentElement.scrollTop) {
+            //IE678 的非quirk模式
             scrollTop = document.documentElement.scrollTop;
         } else if (document.body) {
+            //IE678 的quirk模式
             scrollTop = document.body.scrollTop;
         }
         return scrollTop;
@@ -1949,5 +1955,11 @@ document.body.addEventListener('focusout', () => { //软键盘关闭事件
         document.documentElement.scrollTop = oldScrollTop || 0;
     }
 });
+
+$("input,textarea,select").focus(function () {
+    oldScrollTop = CBJS.getScrollTop() || 0;
+    //alert("oldScrollTop=" + oldScrollTop);
+});
+
 */
 /***** Other End *****/
