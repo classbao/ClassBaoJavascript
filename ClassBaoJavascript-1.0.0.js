@@ -1941,25 +1941,40 @@ if (!window.requestAnimationFrame) {
   );
 };
 
-/*// 解决iPhone，iPad软键盘引起的底部空白问题
-var oldScrollTop = CBJS.getScrollTop() || 0; //软键盘弹起之前的位置
+/***
+// 移动端(ios)键盘收起页面空白问题·开始
+var oldScrollTop = CBJS.getScrollTop() || 0;
 document.body.addEventListener('focusin', () => {  //软键盘弹起事件
-    console.log("键盘弹起 " + CBJS.getScrollTop());
+    //console.log("键盘弹起");
+    //alert("oldScrollTop=" + oldScrollTop);
+    //document.title = "键盘弹起" + $(".weui-dialog").css("position") + CBJS.getScrollTop() + $(".weui-dialog").css("top");
 });
 document.body.addEventListener('focusout', () => { //软键盘关闭事件
-    console.log("键盘收起 " + CBJS.getScrollTop());
+    //console.log("键盘收起");
+    //alert("oldScrollTop=" + oldScrollTop);
+    //document.title = "键盘收起" + $(".weui-dialog").css("position") + CBJS.getScrollTop() + $(".weui-dialog").css("top");
+    setFocusOut();
+});
 
+//一些特殊的事件延迟到焦点失去之后才触发
+function setFocusOut() {
     var ua = window.navigator.userAgent;
     if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0) { //键盘收起页面空白问题
-        document.body.scrollTop = oldScrollTop || 0;
-        document.documentElement.scrollTop = oldScrollTop || 0;
+        document.body.scrollTop = oldScrollTop;
+        document.documentElement.scrollTop = oldScrollTop;
     }
-});
+};
 
-$("input,textarea,select").focus(function () {
+//js动态生成的html设置行级 onfocus=\"javascript:getScrollTop();\"
+function getScrollTop() {
     oldScrollTop = CBJS.getScrollTop() || 0;
+};
+$("input,textarea,select").on('focus', function () {
+    getScrollTop();
     //alert("oldScrollTop=" + oldScrollTop);
 });
+// 移动端(ios)键盘收起页面空白问题·结束
+***/
 
-*/
+
 /***** Other End *****/
