@@ -1976,5 +1976,10 @@ $("input,textarea,select").on('focus', function () {
 // 移动端(ios)键盘收起页面空白问题·结束
 ***/
 
-
+/*
+//监听变化事假（兼容append动态添加元素）
+$("#parentNode").on("input propertychange","#myNode",function(){
+    console.info("原来这样才有用"+ $(this).attr("name"));
+});
+*/
 /***** Other End *****/
