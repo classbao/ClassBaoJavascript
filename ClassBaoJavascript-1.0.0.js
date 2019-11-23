@@ -1601,7 +1601,7 @@ function closeDlg(infoId, bgId) {
 
 /*弹出遮罩浮层（dialogWidth是弹出内容的宽度；dialogHeight是弹出内容的高度；dialogHtml是弹出内容的Html字符串）*/
 ClassBaoJavascript.prototype.FloatingLayer = function (dialogWidth, dialogHeight, dialogHtml) {
-	var _screen = CBJS.GetScreen();
+	var _screen = CBJS.getScreen();
 	//背景遮罩
 	var baseDiv = document.createElement("div");
 	with (baseDiv.style) {
@@ -1654,7 +1654,7 @@ ClassBaoJavascript.prototype.FloatingLayer = function (dialogWidth, dialogHeight
 }
 /*跟随滚动条的层，始终固定在网页某个位置可见的层*/
 ClassBaoJavascript.prototype.ScrollingLayer = function (layerPosition, layerWidth, layerHeight, layerHtml) {
-	var _screen = CBJS.GetScreen();
+	var _screen = CBJS.getScreen();
 	//背景遮罩
 	var baseDiv = document.createElement("div");
 	with (baseDiv.style) {
