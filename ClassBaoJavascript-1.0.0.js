@@ -1093,6 +1093,10 @@ String.prototype.Trim = function () { return this.replace(/(^s*)|(s*$)/g, ""); }
 String.prototype.LTrim = function () { return this.replace(/(^s*)/g, ""); }
 /*JS移除字符串右边空格*/
 String.prototype.RTrim = function () { return this.replace(/(s*$)/g, ""); }
+/*JS移除字符串首尾&符号*/
+String.prototype.TrimLRbyAnd = function () { return this.replace(/(^&*)|(&*$)/g, ""); }
+/*JS移除字符串首尾?问号*/
+String.prototype.TrimLRbyQuestion = function () { return this.replace(/(^\?*)|(\?*$)/g, ""); }
 
 /*换行转义字符转换成HTML换行标签*/
 String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r|\\r\\n|\\n|\\f|\\r)/g, "<br />"); }
@@ -1139,7 +1143,7 @@ ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
         if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", '').replace(")/", ''), 10)); }
         else { return new Date(datetime.replace(/T/ig, ' ').replace(/Z/ig, '').replace(/\-/ig, '/')); };
     }
-    else { return JSCL.GetDateByJson(datetime.toString()); }
+    else { return CBJS.GetDateByJson(datetime.toString()); }
 };
 /*时间格式化扩展*/
 Date.prototype.Format = function (fmt) {
@@ -1775,70 +1779,70 @@ ClassBaoJavascript.prototype.Regex = {
     /*常用正则表达式，借鉴formvalidatorregex.js源代码*/
     Enum : {
         //整数
-        intege: "^-?[1-9]\\d*$",
+        intege : /^-?[1-9]\d*$/,
         //正整数
-        intege1: "^[1-9]\\d*$",
+        intege1 : /^[1-9]\d*$/,
         //负整数
-        intege2: "^-[1-9]\\d*$",
+        intege2 : /^-[1-9]\d*$/,
         //数字
-        num: "^([+-]?)\\d*\\.?\\d+$",
+        num : /^([+-]?)\d*\.?\d+$/,
         //正数（正整数 + 0）
-        num1: "^[1-9]\\d*|0$",
+        num1 : /^[1-9]\d*|0$/,
         //负数（负整数 + 0）
-        num2: "^-[1-9]\\d*|0$",
+        num2 : /^-[1-9]\d*|0$/,
         //浮点数
-        decmal: "^([+-]?)\\d*\\.\\d+$",
+        decmal : /^([+-]?)\d*\.\d+$/,
         //正浮点数
-        decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",
+        decmal1 : /^[1-9]\d*.\d*|0.\d*[1-9]\d*$/,
         //负浮点数
-        decmal2: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",
+        decmal2 : /^-([1-9]\d*.\d*|0.\d*[1-9]\d*)$/,
         //浮点数
-        decmal3: "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$",
+        decmal3 : /^-?([1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0)$/,
         //非负浮点数（正浮点数 + 0）
-        decmal4: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$",
+        decmal4 : /^[1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0$/,
         //非正浮点数（负浮点数 + 0）
-        decmal5: "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$",
+        decmal5 : /^(-([1-9]\d*.\d*|0.\d*[1-9]\d*))|0?.0+|0$/,
 
         //邮件
-        email: "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$",
+        email : /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
         //颜色（6位十六进制表示法）
-        color: "^[a-fA-F0-9]{6}$",
+        color : /^[a-fA-F0-9]{6}$/,
         //url
-        url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",
+        url : /^http[s]?:\/\/([\w-]+\.)+[\w-]+([\w-./?%&=]*)?$/,
         //仅中文
-        chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$",
+        chinese : /^[\u4E00-\u9FA5\uF900-\uFA2D]+$/,
         //仅ACSII字符
-        ascii: "^[\\x00-\\xFF]+$",
+        ascii : /^[\x00-\xFF]+$/,
         //邮编
-        zipcode: "^\\d{6}$",
+        zipcode : /^\d{6}$/,
         //手机
-        mobile: "^(13|15|17|18)[0-9]{9}$",
+        mobile : /^(13|15|17|18)[0-9]{9}$/,
         //ip(ip4)地址
-        ip4: "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$",
+        ip4 : /^(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)$/,
         //非空
-        notempty: "^\\S+$",
+        notempty : /^\S+$/,
         //图片
-        picture: "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$",
+        picture : /(.*)\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/,
         //压缩文件
-        rar: "(.*)\\.(rar|zip|7zip|tgz)$",
+        rar : /(.*)\.(rar|zip|7zip|tgz)$/,
         //日期
-        date: "^\\d{4}(\\-|\\/|\.)\\d{1,2}\\1\\d{1,2}$",
+        date : /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/,
         //QQ号码
-        qq: "^[1-9]*[1-9][0-9]*$",
+        qq : /^[1-9]*[1-9][0-9]*$/,
         //电话号码的函数(包括验证国内区号,国际区号,分机号)
-        tel: "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$",
+        tel : /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/,
         //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
-        username: "^\\w+$",
+        username : /^\w+$/,
         //字母
-        letter: "^[A-Za-z]+$",
+        letter : /^[A-Za-z]+$/,
         //大写字母
-        letter_u: "^[A-Z]+$",
+        letter_u : /^[A-Z]+$/,
         //小写字母
-        letter_l: "^[a-z]+$",
+        letter_l : /^[a-z]+$/,
         //身份证
-        idcard: "^[1-9]([0-9]{14}|[0-9]{17})$",
+        idcard : /^[1-9]([0-9]{14}|[0-9]{17})$/,
         //中文、字母、数字 _
-        ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$"
+        ps_username : /^[\u4E00-\u9FA5\uF900-\uFA2D_\w]+$/
     },
     ExtendEnum: {
         /*匹配空字符串的正则表达式*/
@@ -1863,6 +1867,8 @@ ClassBaoJavascript.prototype.Regex = {
         * 主要用于验证真实姓名，公司名等个人信息修改
         */
         Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
+        /* 在上面基础上增加了允许数字 */
+        Name1: /^[·\s\-/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
         /*
         * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
         * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
@@ -1885,7 +1891,10 @@ ClassBaoJavascript.prototype.Regex = {
         guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
 
         /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
-        password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/
+        password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/,
+        
+        /*验证码（由数字字母组成，4-6位字符）*/
+        ValidateCode: /^[A-Za-z0-9]{4,6}$/
     },
     /*判断一个字符串是否全是空格*/
     IsEmpty: function (text) { return (!!CBJS.Regex.ExtendEnum.empty.test(text)); },
@@ -1897,6 +1906,8 @@ ClassBaoJavascript.prototype.Regex = {
     IsMobilePhone: function (mobilephone) { return (!!CBJS.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
     /*判断是否为汉字字符串*/
     IsChinese: function (text) { return (!!CBJS.Regex.ExtendEnum.chinese.test(text)) },
+    /* 判断是否为用户名格式（中文、字母、数字 _）*/
+    IsPs_Username: function (text) { return (!!CBJS.Regex.Enum.ps_username.test(text)) },
     /*判断是否为单个汉字*/
     IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
 
