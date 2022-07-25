@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>javascript中使用RSA加密解密</title>
+    <meta name="author" content="xiongzaiqiren" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="generator" content="ClassBao team coding in July 10, 2017" />
+
+    <!-- 引入jsencrypt.js文件 -->
+    <!-- <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script> -->
+    <script src="./jsencrypt.js"></script>
+
+    <style>
+        div>pre{border: solid 1px #3f51b5;background: #d7d9e3;}
+        div>pre>code{display: block;padding: 3px 3px;}
+    </style>
+</head>
+
+<body>
+    <p><textarea id="txtContent" cols="50" rows="5" placeholder="加密/解密内容">钱庄王员外这个人怎么样？Xxh1991</textarea></p>
+    <input type="button" id="btnEncrypt" value="加密" onClick="txtResult.innerText = rsaEncrypt(txtContent.value);">
+    <input type="button" id="btnDecrypt" value="解密" onClick="txtResult.innerText = rsaDecrypt(txtContent.value);">
+    <hr />
+    <p>结果：</p>
+	<div><pre><code id="txtResult">将在这里显示结果</code></pre></div>
+
+    <script>
+        //公钥（用于加密）PKCS#1格式1024位
+        var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDws/6HnJz/fUF+5zLpj2QFg1Js+JcCwZZS2/4lMTUFsiP/tg0Mo+Z0S2/Xs62Aoj8l177K69FDFQqWVRNrZ6ZFk2vSEhhvi8hOW34z3HFLd/GJu4lLxzXe4ZwCnuNzgGTr/Kn3D06y0wQuTOlnyU5est0bo8cUoodbbSBwhovufQIDAQAB';
+        //私钥（用于解密）PKCS#1格式1024位
+        var PRIVATE_KEY = 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAPCz/oecnP99QX7nMumPZAWDUmz4lwLBllLb/iUxNQWyI/+2DQyj5nRLb9ezrYCiPyXXvsrr0UMVCpZVE2tnpkWTa9ISGG+LyE5bfjPccUt38Ym7iUvHNd7hnAKe43OAZOv8qfcPTrLTBC5M6WfJTl6y3RujxxSih1ttIHCGi+59AgMBAAECgYAs+hU3leYoP2l7owv6ZJbWCOHgBtuA4leKiB0HKhi0RcNARu5NTFsFpAr0DVkATlDqa1P1avchR89ApAkK6sVAoi88NmZ+b72QFR801BCl0BBKdhSZuRWbctj523mq1tdP54QVcKxdUP3e28TNTUWjVF1JzPj/V25dd4LQLdKN6QJBAP14IzZkfzj+/X+uinbrjIsCU8BWQ7QQAdR66Bm/IReGGhyw3ayKWF90eZpHN9mkG7tHnHTnSZ9wqCRZnsmP0YsCQQDzGzoCEb3wHaZC4vqQbhWKQvx8PkhNBr77Dwbxmxio9heYkAMAeg7U09EYEhbOnaoRySDQPhEo2U4bkxt6HbEXAkACtBRUETBWMEoN4ZOyfwKpvOWdyI3CTuVmGcV9+M7mjFSc97n1jCgzJG/jmFzdImX1Umc1y/26CJ6SfK434iPPAkEAtHBZ7t1CUC2BkRWtinPa0wODKaiEu38tU2TE76EBfa8itl71i24NAhSxlp8ehH7rk0XocAgRbnNUEQ1wEIRnQwJASvRWMY7FMqp7XlxnN89TKO7vpeKiNLXlrsVPFY+UGrKyuerhZP9FvtAWbgM1Ih0LzfSuBGirwwjuGtWceY7n+g==';
+        
+        function rsaEncrypt(content){
+			// 使用公钥加密
+			var encrypt = new JSEncrypt();
+			encrypt.setPublicKey('-----BEGIN PUBLIC KEY-----' + PUBLIC_KEY + '-----END PUBLIC KEY-----');
+			var encrypted = encrypt.encrypt(content);
+
+			console.log('加密后数据:%o', encrypted);
+            return encrypted;
+        }
+        
+        function rsaDecrypt(content){
+			// 使用私钥解密
+			var decrypt = new JSEncrypt();
+			decrypt.setPrivateKey('-----BEGIN RSA PRIVATE KEY-----' + PRIVATE_KEY + '-----END RSA PRIVATE KEY-----');
+			var uncrypted = decrypt.decrypt(content); 
+
+			console.log('解密后数据:%o', uncrypted); // 张三
+            return uncrypted;
+        }
+        
+		function demo(){
+            // 使用私钥解密
+			var decrypt = new JSEncrypt();
+			decrypt.setPrivateKey('-----BEGIN RSA PRIVATE KEY-----' + PRIVATE_KEY + '-----END RSA PRIVATE KEY-----');
+
+			// 下面这段密文就是后端传过来的json
+			var uncrypted1 = decrypt.decrypt("evHC57KB+RRQdSZmFWoAR7KcViMW+P0GGjhIvOociFS7QWJwE63A+8XqGJuVs+WOVNO/NTuYEd78QJu8gHcVJvt3QumYqt7EPVNekQ2OTRuyi+bTSF8Xy9tj+GXs8wF+3jbJYDdOwgEciXVFxbWEXwH6/pu44FIQEjL376RetZg=");
+			console.log('demo解密后数据:%o', JSON.parse(uncrypted1)); // 安杰
+			// 如果没转成字符串的话
+			console.log('demo解密后数据:%o', uncrypted1); // \\u5b89\\u6770\
+        }
+		demo();
+    </script> 
+    
+</body>
+</html>
