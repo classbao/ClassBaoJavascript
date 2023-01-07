@@ -125,9 +125,6 @@ function ClassBaoJavascript() {
         else {
         }
 
-        result.platform = navigator.platform;
-        result.language = (navigator.browserLanguage || navigator.language);
-
         //移动端与PC端判断
         var u = navigator.userAgent;
         if (/iphone/ig.test(u)) {
@@ -175,6 +172,24 @@ function ClassBaoJavascript() {
             result.isPC = true;
         }
         else {
+        }
+
+        result.language = (navigator.browserLanguage || navigator.language);
+        result.platform = navigator.platform;
+        if(!!navigator.platform)
+        {
+            var system ={};  
+            var p = navigator.platform;       
+            system.win = p.indexOf("Win") == 0;  
+            system.mac = p.indexOf("Mac") == 0;  
+            system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);     
+            if(system.win||system.mac||system.xll){ 
+                /* 电脑端 */
+                result.isPC = true;
+            }else{  
+                /* 手机端 */
+                result.isPC = false;
+            }
         }
 
         result.isWeixin = /MicroMessenger/ig.test(u);
@@ -1248,6 +1263,33 @@ ClassBaoJavascript.prototype.isDateTime = function (str) {
 	var d = new Date(m[1], m[3] - 1, m[4], m[5], m[6], m[7]);
 	return (d.getFullYear() == m[1] && (d.getMonth() + 1) == m[3] && d.getDate() == m[4] && d.getHours() == m[5] && d.getMinutes() == m[6] && d.getSeconds() == m[7]);
 }
+
+ClassBaoJavascript.prototype.handleLocalStorage={
+    check:function (){
+        if(!window.localStorage){
+            console.log("This browser does not support localStorage.");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    ,setItem:function(name,value){
+        if('string'==typeof(value)){localStorage.setItem(name,value);}
+        else {localStorage.setItem(name,JSON.stringify(value));}
+    }
+    ,getItem:function(name){
+        var value=localStorage.getItem(name);
+        if('string'==typeof(value)){ return JSON.parse(value); }
+        else {return value;}
+    }
+    ,removeItem:function(name){
+        return localStorage.removeItem(name);
+    }
+    ,clearAll:function(){
+        return localStorage.clear();
+    }
+};
 
 /*百分数转化为小数*/
 String.prototype.toPoint = function () {
