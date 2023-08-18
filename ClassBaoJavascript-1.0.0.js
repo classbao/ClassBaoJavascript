@@ -1671,7 +1671,7 @@ ClassBaoJavascript.prototype.popup = {
 };
 /**** window CSS 样式 ***/
 /*
-.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=15);-moz-opacity:0.15;-khtml-opacity:0.15;opacity:0.15;}
+.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;
 .window{ position:fixed; z-index:1000;top:26%; left:5%; width:90%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
 @media screen and (max-width: 767px) {
     .window {left:5%; width:90%;}
@@ -1692,7 +1692,7 @@ ClassBaoJavascript.prototype.popup = {
 /***
 *** window CSS 样式 ***
 第一种：
-.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=15);-moz-opacity:0.15;-khtml-opacity:0.15;opacity:0.15;}
+.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
 .window{ position:fixed; z-index:1000;top:26%; left:50%; width:30%; margin-left:-15%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
 @media screen and (max-width: 767px) {
     移动端CSS样式 
@@ -1718,7 +1718,7 @@ ClassBaoJavascript.prototype.popup = {
     </div>
 
 第二种：
-.mask{ position:absolute;top:0px; left:0px; z-index:100;height:100%; width:100%; background:rgba(0,0,0,0.3); display:block; background-color:#000; opacity: 0.3;}
+.mask{ position:absolute;top:0px; left:0px; z-index:100;height:100%; width:100%; background:rgba(0,0,0,0.3); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
 .window{position:fixed; _position:absolute;_top:expression(eval(document.documentElement.scrollTop+200));z-index:999;top:26%; left:50%; width:280px; margin-left:-140px; background-color:#eee;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 20px;}
 .window a.btn_window,.window a.btn_window2,.window a.btn_window3{ color:#ffffff;}
 .window a:hover{ color:#FFF; text-decoration:none;}
