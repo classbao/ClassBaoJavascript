@@ -3,11 +3,11 @@
 * version: V1.0.0
 * Copyright: classbao.com
 * Author: xiongzaiqiren
-* Blog: http://xiongzaiqiren.blog.163.com/
-* E-mail: xiongzaiqiren@163.com
-* Last modified: xiongzaiqiren
-* Last modified time: 2018-11-28 15:54
 * Version source: https://github.com/classbao/ClassBaoJavascript
+* First modified: xiongzaiqiren
+* First modified time: 2018-11-28 15:54
+* Last modified: xiongzaiqiren
+* Last modified time: 2023-08-18 23:54
 ***/
 
 /***** 通用ClassBaoJavascript模拟类库·开始 *****/
@@ -1596,6 +1596,96 @@ ClassBaoJavascript.prototype.FollowCursor = function (element) {
 	catch (e) { console.log(e.message); }
 }
 
+/*** 自定义弹出框提示·开始 ***/
+ClassBaoJavascript.prototype.popup = {
+    init: function () {
+        this.box = {
+            id: "",
+            title: "",
+            content: "",
+            btn: [
+                {
+                    title: "确定",
+                    click: function () { },
+                    isEnabled: true,
+                },
+                {
+                    title: "取消",
+                    click: function () { },
+                    isEnabled: true,
+                }
+            ],
+        };
+    },
+    box: {},
+    openBase: function () {
+        this.box.id = !!this.box.id || new Date().getTime();
+        var mask = document.createElement("div");
+        mask.id = "mask" + this.box.id;
+        mask.className = "mask";
+        //mask.style = "display:none;";
+
+        var window = document.createElement("div");
+        window.id = "window" + this.box.id;
+        window.className = "window";
+        //window.style = "display:none;";
+
+        var htmlWindow = "";
+        htmlWindow += "<h2>" + (this.box.title || "提示消息") + "</h2>";
+        htmlWindow += "<p class=\"content\">" + (this.box.content || "自定义内容") + "</p>";
+        htmlWindow += "<div>";
+        if (!!this.box.btn[0].isEnabled) {
+            htmlWindow += "<a class=\"btn\" onclick=\"CBJS.popup.box.btn[0].click();CBJS.popup.close();\">" + (this.box.btn[0].title || "确定") + "</a>";
+        }
+        if (!!this.box.btn[1].isEnabled) {
+            htmlWindow += "<a class=\"btn btn_g\" onclick=\"CBJS.popup.box.btn[1].click();CBJS.popup.close();\">" + (this.box.btn[1].title || "取消") + "</a>";
+        }
+        htmlWindow += "</div>";
+
+        window.innerHTML = htmlWindow;
+
+        document.body.appendChild(mask);
+        document.body.appendChild(window);
+    },
+    open: function (box) {
+        this.box = box; this.openBase();
+    },
+    openAlert: function (msg, callback) {
+        this.init();
+        this.box.content = msg;
+        this.box.btn[0].click = function () { if (!!callback) { callback(); } }
+        this.box.btn[1].isEnabled = false;
+        this.openBase();
+    },
+    openConfirm: function (msg, callbackOk, callbackCancel) {
+        this.init();
+        this.box.content = msg;
+        this.box.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
+        this.box.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
+        this.openBase();
+    },
+    close: function () {
+        document.body.removeChild(document.getElementById("mask" + this.box.id));
+        document.body.removeChild(document.getElementById("window" + this.box.id));
+    }
+};
+/**** window CSS 样式 ***/
+/*
+.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=15);-moz-opacity:0.15;-khtml-opacity:0.15;opacity:0.15;}
+.window{ position:fixed; z-index:1000;top:26%; left:5%; width:90%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
+@media screen and (max-width: 767px) {
+    .window {left:5%; width:90%;}
+}
+@media screen and (min-width: 768px) {
+    .window {left:30%; width:30%;}
+}
+.window h2{ color:#143157; font-size:18px; margin-top:10px}
+.window p{ color:#5d5d5d;font-size:16px; padding:12px }
+.window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
+.window .btn_g{ background-color:#efefef; border-color:#efefef; color:#999999;}
+*/
+
+/*** 自定义弹出框提示·结束 ***/
 
 
 /***** 浮层与遮罩 *****/
@@ -1604,10 +1694,29 @@ ClassBaoJavascript.prototype.FollowCursor = function (element) {
 第一种：
 .mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=15);-moz-opacity:0.15;-khtml-opacity:0.15;opacity:0.15;}
 .window{ position:fixed; z-index:1000;top:26%; left:50%; width:30%; margin-left:-15%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
-.window h2{ color:#f66260; font-size:18px; margin-top:10px}
+@media screen and (max-width: 767px) {
+    移动端CSS样式 
+    .window {left:5%; width:90%;}
+}
+@media screen and (min-width: 768px) {
+     PC端CSS样式 
+    .window {left:30%; width:30%;}
+}
+.window h2{ color:#143157; font-size:18px; margin-top:10px}
 .window p{ color:#5d5d5d;font-size:16px; padding:12px }
 .window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
 .window .btn_g{ background-color:#efefef; border:2px solid #efefef; color:#999999; padding:4px 0;font-family: 'Microsoft YaHei';}
+<!-- 第一种的HTML示例：-->
+    <div id="mask" class="mask" style="display:none;"></div>
+    <div id="window" class="window" style="display:none;">
+        <h2>提示消息</h2>
+        <p class="content">内容啊</p>
+        <div>
+            <a class="btn">确定</a>
+            <a class="btn btn_g">取消</a>
+        </div>
+    </div>
+
 第二种：
 .mask{ position:absolute;top:0px; left:0px; z-index:100;height:100%; width:100%; background:rgba(0,0,0,0.3); display:block; background-color:#000; opacity: 0.3;}
 .window{position:fixed; _position:absolute;_top:expression(eval(document.documentElement.scrollTop+200));z-index:999;top:26%; left:50%; width:280px; margin-left:-140px; background-color:#eee;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 20px;}
@@ -1623,6 +1732,18 @@ ClassBaoJavascript.prototype.FollowCursor = function (element) {
 .btn_window,.btn_window2,.btn_window3{cursor:pointer;color:#FFF;border:0px none; background-color:#143157; font-size:16px; text-align:center;  margin:8px auto; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; display:block; width:110px; height:32px; line-height:32px;}
 .btn_window2{ display:inline-block;}
 .btn_window3{ display:inline-block; background-color:#a0a0a0;}
+<!-- 第二种的HTML示例：-->
+<div id="mask" class="mask"></div>
+<div id="window" class="window">
+    <span class="close"><a></a></span>
+    <h3>提示消息</h3>
+    <p class="content">内容啊</p>
+    <p class="tex_c">
+        <a class="btn_window2">确定</a>
+        <a class="btn_window3">取消</a>
+    </p>
+</div>
+
 
 *** window javascript 显示与隐藏 ***
 function showDlg(infoId, bgId) {
@@ -1899,9 +2020,9 @@ ClassBaoJavascript.prototype.Regex = {
         postalcode: /^[1-9]{1}(\d+){5}$/, //465513
         /*匹配中国居民身份证（18位或者15位字符）*/
         IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
-        /*匹配汉字的正则表达式*/
+        /*匹配汉字的正则表达式  Special.lastIndex = 0; */
         chinese: /^[\u4E00-\u9FA5]+$/ig,
-        /*匹配双字节字符串(汉字)的正则表达式*/
+        /*匹配双字节字符串(汉字)的正则表达式   Special.lastIndex = 0; */
         chinese: /^[^\x00-\xff]+$/ig,
 
         /*
@@ -1918,16 +2039,17 @@ ClassBaoJavascript.prototype.Regex = {
         Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
         /*
         * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
+        * Special.lastIndex = 0;
         */
         Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
 
-        /*匹配分号间隔字符串的正则表达式*/
+        /*匹配分号间隔字符串的正则表达式  Special.lastIndex = 0; */
         splitSemicolon: /\s*(;|；)\s*/ig,
-        /*匹配逗号间隔字符串的正则表达式*/
+        /*匹配逗号间隔字符串的正则表达式  Special.lastIndex = 0; */
         splitComma: /\s*(,|，)\s*/ig,
-        /*逗号间隔数字格式（例如1,2,3）*/
+        /*逗号间隔数字格式（例如1,2,3）  Special.lastIndex = 0; */
         Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
-        /*匹配字符串首尾分号或空格的正则表达式*/
+        /*匹配字符串首尾分号或空格的正则表达式  Special.lastIndex = 0; */
         semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
         /*匹配Guid格式的正则表达式*/
         guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
