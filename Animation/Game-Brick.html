@@ -1,7 +1,17 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset=utf-8>
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+
     <title>HTML5-canvas实现打砖块游戏</title>
     <meta name="author" content="熊仔其人" />
     <style type="text/css">
@@ -20,14 +30,23 @@
             line-height: 50px;
             text-align: center;
         }
+
+        table{border-collapse: collapse; border: none;}
+        .tb_GamePad td{ border: none;}
+        .tb_GamePad td input{width: 8rem;height: 3rem;margin: 0 auto;}
     </style>
 </head>
 <body>
     <canvas id="myCanvas" width="400" height="200">Your browser does not support the canvas element.</canvas>
     <div id="InfoPanel" class="InfoPanel"> </div>
     <div>空格键：开始/暂停 <br />方向键：控制左右</div>
-    <input onclick="Start()" value="开始" type="button" />
-    <input onclick="Pause()" value="停止" type="button" />
+    <table class="tb_GamePad">
+        <tr><td> </td><td><input onclick="Start()" value="开始" type="button" /></td><td> </td></tr>
+        <tr><td><input onclick="ToLeft()" value="← 往左" type="button" /></td><td><input onclick="location.reload();" value="重新开始" type="button" /></td><td><input onclick="ToRight()" value="往右 →" type="button" /></td></tr>
+        <tr><td> </td><td><input onclick="Pause()" value="停止" type="button" /></td><td> </td></tr>
+    </table>
+
+    
 
     <script type="text/javascript">
         /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
@@ -107,7 +126,7 @@
             /*前进*/
             Move: function () {
                 this.x += this.step.x;
-                this.y += this.step.y;
+                this.y -= this.step.y;
                 if (this.x < 0 || this.x > globalConfig.width - (this.r * 2)) { /*判断当前线的位置，控制在区域内*/
                     this.step.x *= -1; /*乘以负一用来调整线路方向*/
                 }
@@ -244,12 +263,30 @@
                 }
             },
             Finished: function () {
+                let isFinished=false;
+
+                let num=0;
+                // 砖块打完了，结束游戏
                 for (var i = 0; i < wall.bricks.length; i++) {
                     if (!!wall.bricks[i] && wall.bricks[i].isOk) {
-                        return false;
+                        num++;   
                     }
                 }
-                return true;
+                
+                if(num<1)
+                {
+                    globalConfig.referee=0;
+                    isFinished = true;
+                }
+
+                // 球拍没接住球，结束游戏
+                if((stone.y+stone.r*2 > racket.y) && (stone.x+stone.r*2 < racket.x||stone.x > racket.x+racket.width ))
+                {
+                    globalConfig.referee=0;
+                    isFinished = true;
+                }
+
+                return isFinished;
             }
 
         };
@@ -301,6 +338,20 @@
                 globalConfig.isRuning = false;
             }
         };
+        function ToLeft() {
+            if (!globalConfig.isRuning) return false;
+            racket.direction = 1;
+            racket.Move();
+
+            EventUtil.preventDefault(this.event);
+        };
+        function ToRight() {
+            if (!globalConfig.isRuning) return false;
+            racket.direction = 2;
+            racket.Move();
+            
+            EventUtil.preventDefault(this.event);
+        };
 
         /*全局配置*/
         var globalConfig = {
@@ -311,10 +362,12 @@
             usedtime: 0, //用时
             isRuning: false, //正在运行
             interval: null, //计时器
+            referee: 0, //裁判结果0输；1赢
             ShowInfo: function () {
                 document.getElementById('InfoPanel').innerHTML = "您用时：" + (this.usedtime/72).toFixed(2);
             },
             GameOver: function (ctx) {
+                document.getElementById('InfoPanel').innerHTML += (1==globalConfig.referee?'，您赢了':'，您输了');
                 document.getElementById('InfoPanel').style.backgroundColor = "#99EE99";
             },
 
@@ -334,6 +387,7 @@
                             else if (keycode === 39) racket.direction = 0;
                             break;
                     }
+
                     racket.Move();
                 }
                 else if (keycode === 32) {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>帧-requestAnimationFrame演示</title>
+    <meta name="author" content="熊仔其人">
+    <style type="text/css">
+        #demo1{
+            font-size: 24px;
+            font-weight: bold;
+            margin: 100px;
+        }
+    </style>
+    <script src="../Animation/ClassBaoAnimationFramework-1.0.0.js"></script>
+</head>
+<body>
+<div id="demo1"></div>
+<script type="text/javascript">
+    function demo1Fun(){
+        document.getElementById("demo1").innerText= (new Date().toLocaleString()+'.'+new Date().getMilliseconds());
+    };
+
+    // demo1Fun();
+
+    let timer;
+    let done = false;
+    // cancelAnimationFrame(timer);
+    timer=requestAnimationFrame(function fn(){
+        if(2030 < new Date().getFullYear())
+        {
+            done = true;
+        }
+
+        if (!done) {
+            requestAnimationFrame(fn);
+        }
+        else{
+            cancelAnimationFrame(timer);
+        }
+
+        // console.log('timer='+timer);
+        demo1Fun();
+    });
+
+</script>
+
+</body>
+</html>
+
+
