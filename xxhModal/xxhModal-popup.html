@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="MobileOptimized" content="240">
+  <meta name="applicable-device" content="mobile">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+  <!-- <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"> -->
+  <!-- <link href="/favicon.ico" type="image/x-icon" rel="icon"> -->
+  <link href="xxhModal-v1.20240601.css?=202308082222" rel="stylesheet" type="text/css">
+
+  <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+  <title>测试</title>
+  <meta name="keywords" content="测试">
+  <meta name="Description"
+    content="在这个例子中，弹窗默认是隐藏的，当触发某个事件（例如点击一个按钮）时，会给.popup添加.active类，这将会应用动画并显示弹窗。关闭按钮会移除.active类，隐藏弹窗。这个例子使用了CSS3的transform属性来实现位置变换，以及animation属性来应用动画。">
+  <meta name="author" content="文学资料">
+
+  <!-- CSS样式 -->
+  <style type="text/css">
+
+  </style>
+
+  <!-- JS脚本 -->
+  <script>
+    window.onload = function () {
+      /*
+          if(document.querySelector('#xxhModal1718717098780.xxhModal .close')){
+                  document.querySelector('.xxhModal .close').addEventListener('click', function () {
+                      console.log('.close addEventListener> click');
+                      document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
+                      document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'none';
+                  });
+          }
+        	
+          if(document.querySelector('#xxhModal1718717098780.xxhModal .No'))
+          {
+                  document.querySelector('.xxhModal .No').addEventListener('click', function () {
+                      console.log('.close addEventListener> click');
+                      document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
+                      document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'none';
+                  });
+          }
+      */
+
+      // 某个条件满足时，添加弹窗
+      // 例如: 按钮点击触发 
+      document.querySelector('button#SlideUp-in-Alert').addEventListener('click', function () {
+        console.log('button#SlideUp-in addEventListener> click');
+        // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
+        // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
+
+        CBJS.xxhModal.Alert("测试提醒消息啊", "知道了", myBtnCallback);
+        // 也可以自定义弹出框
+      });
+
+      document.querySelector('button#SlideUp-in').addEventListener('click', function () {
+        console.log('button#SlideUp-in addEventListener> click');
+        // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
+        // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
+
+        CBJS.xxhModal.Confirm("测试提醒消息啊", "确定", myBtnCallback, "取消", myBtnCallback2);
+        // 也可以自定义弹出框
+      });
+
+
+      document.querySelector('button#slideUp-in-out').addEventListener('click', function () {
+        console.log('button#slideUp-in-out addEventListener> click');
+        // document.querySelector('#xxhModal1718717098782.xxhModal').classList.add('SlideUp-in-out');
+
+        CBJS.xxhModal.Popup("测试提醒消息啊", "red");
+      });
+
+
+      document.querySelector('button#slideUp-all').addEventListener('click', function () {
+        console.log('button#slideUp-all addEventListener> click');
+        CBJS.xxhModal.Open({
+          id: new Date().getTime(),
+          className: "gold",
+          head: {
+            isEnabled: true,
+            title: "友情提示",
+            btnClose: true, // 是否显示关闭按钮
+          },
+          content: "<p>这是一个弹窗完整示例！<br>阿拉加斯加的企鹅想去北极看白熊，在冰天雪地走了十天十夜发现还没到</p>",
+          foot: {
+            isEnabled: true,
+            // 按钮项，顺序是从左到右
+            btn: [
+              {
+                icon: "&radic;",
+                title: "确定",
+                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+              },
+              {
+                icon: "&#9938;",
+                title: "中间按钮1",
+                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+              },
+              {
+                icon: "&#9888;",
+                title: "中间按钮2",
+                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+              },
+              {
+                icon: "&#10005;",
+                title: "取消",
+                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+              }
+            ]
+          },
+          maskIsEnabled: true
+        });
+
+        // 也可以自定义弹出框
+      });
+
+    }
+
+
+    function myBtnCallback() {
+      console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f"));
+    }
+    function myBtnCallback2() {
+      console.log('Custom callback function 2 EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f"));
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <div id="xxhMask1718717098780" class="xxhMask" style="display:none;"></div>
+  <div id="xxhModal1718717098780" class="xxhModal" style="display:none;">
+    <div class="head"><span class="l title">系统信息</span><span class="r icon close">&times;</span></div>
+    <div class="content">
+      <p>
+      <table style="width: 500px;">
+        <th>
+          <tr>
+            <td>序号</td>
+            <td>姓名</td>
+          </tr>
+        </th>
+        <tbody>
+          <tr>
+            <td>111</td>
+            <td>刘备</td>
+          </tr>
+          <tr>
+            <td>222</td>
+            <td>关羽</td>
+          </tr>
+          <tr>
+            <td>333</td>
+            <td>张飞</td>
+          </tr>
+          <tr>
+            <td>444</td>
+            <td>马超</td>
+          </tr>
+          <tr>
+            <td>555</td>
+            <td>赵云</td>
+          </tr>
+          <tr>
+            <td>666</td>
+            <td>黄忠</td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+    </div>
+    <div class="foot">
+      <div class="l btn btnL Ok"><span class="icon" style="color: #02cf02;">&radic;</span>确定</div>
+      <div class="l btn btnMiddle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>中间</div>
+      <div class="r btn btnR No"><span class="icon" style="color: orangered;">&#10005;</span>取消</div>
+    </div>
+    <!-- <div class="foot"><div class="l btn btnSingle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>单个按钮</div></div> -->
+
+  </div>
+
+  <!-- 气泡 -->
+  <div id="xxhModal1718717098782" class="xxhModal">
+    <div class="content">
+      <p>这是一个气泡示例！</p>
+    </div>
+    <!-- 动画结束后移除元素 -->
+    <script>document.getElementById('xxhModal1718717098782').addEventListener('animationend', function () { this.remove(); });</script>
+
+  </div>
+
+
+
+  <button id="SlideUp-in-Alert">滑入Alert</button>
+  <button id="SlideUp-in">滑入Confirm</button>
+  <button id="slideUp-in-out">滑入滑出Popup</button>
+  <button id="slideUp-all">弹出完整弹窗Open</button>
+
+  <!-- JS脚本 -->
+  <script>
+
+  </script>
+
+
+  <script src="../ClassBaoJavascript-1.0.0.js"></script>
+  <script src="xxhModal-v1.20240601.js"></script>
+</body>
+
+</html>

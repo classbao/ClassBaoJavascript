@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"> -->
+    <!-- <link href="/favicon.ico" type="image/x-icon" rel="icon"> -->
+	<!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>测试</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="在这个例子中，弹窗默认是隐藏的，当触发某个事件（例如点击一个按钮）时，会给.popup添加.active类，这将会应用动画并显示弹窗。关闭按钮会移除.active类，隐藏弹窗。这个例子使用了CSS3的transform属性来实现位置变换，以及animation属性来应用动画。">
+    <meta name="author" content="文学资料">
+
+	<!-- CSS样式 -->
+    <style type="text/css">
+/* 弹窗容器 */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+  
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+ 
+/* 显示弹窗 */
+.popup.active {
+  visibility: visible;
+  opacity: 1;
+}
+.popup .icon {
+	vertical-align: middle;
+	overflow: hidden;
+    font-weight: bold;
+    min-width: 1rem;
+    padding: 0 0.2rem;
+}
+.popup .l {
+float:left;
+}
+.popup .r {
+float:right;
+}
+.popup .head {
+    display: list-item;
+    list-style: none;
+    min-height: 32px;
+	border-bottom: 1px solid #ccc;
+}
+.title {
+    line-height: 32px;
+    color: #666;
+    font-size: 20px;
+    padding-left: 3px;
+}
+/* 关闭按钮 */
+.close {
+    cursor: pointer;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+	max-height: 31.8px;
+    background-color: palevioletred;
+    border-radius: 0 9px 0 0;
+}
+.close:hover,.close:active {
+	background-color: orangered;
+}
+.popup .foot {
+    display: list-item;
+    list-style: none;
+    min-height: 5px;
+}
+
+/* 内容区域 */
+.content {
+    width: 300px;
+    padding: 3px;
+    text-align: center;
+}
+ 
+/* 弹窗动画 */
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 50%);
+  }
+  to {
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+  }
+}
+ 
+/* 应用动画 */
+.popup.active {
+  animation: slideDown 0.5s ease-out;
+}
+    </style>
+	
+	<!-- <script src="/Content/mobile/js/xxx.js"></script> -->
+	<!-- JS脚本 -->
+    <script>
+	window.onload=function(){
+	
+		document.querySelector('.popup .close').addEventListener('click', function() {
+			console.log('.close addEventListener> click');
+		  document.querySelector('.popup').classList.remove('active');
+		});
+		 
+		// 某个条件满足时，添加弹窗
+		// 例如: 按钮点击触发
+		document.querySelector('button').addEventListener('click', function() {
+			console.log('button addEventListener> click');
+		  document.querySelector('.popup').classList.add('active');
+		});
+	
+	}
+
+    </script>
+	
+</head>
+
+<body>
+
+<div class="popup">
+  <div class="head"><span class="l title">提示</span><span class="r icon close">&times;</span></div>
+  <div class="content">
+    <p>这是一个弹窗示例！</p>
+  </div>
+  <div class="foot"></div>
+</div>
+
+
+<button>弹 窗</button>
+
+    <!-- JS脚本 -->
+<script>
+
+</script>
+
+
+
+</body>
+
+</html>
+
+

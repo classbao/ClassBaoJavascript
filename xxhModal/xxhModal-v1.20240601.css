@@ -1,0 +1,448 @@
+/* 弹窗背景遮罩 */
+.xxhMask {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 999;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.15);
+	display: block;
+	background-color: #000;
+	filter: alpha(opacity=15);
+	-moz-opacity: 0.15;
+	-khtml-opacity: 0.15;
+	opacity: 0.15;
+}
+
+/* 弹窗容器 */
+.xxhModal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1000;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.5s linear;
+
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.xxhModal .icon {
+	text-align: center;
+	vertical-align: top;
+	overflow: hidden;
+	font-size: 28px;
+	min-width: 1rem;
+	width: 2rem;
+	max-width: 3rem;
+	line-height: 32px;
+}
+
+.xxhModal .l {
+	float: left;
+}
+
+.xxhModal .r {
+	float: right;
+}
+
+.xxhModal .head {
+	display: list-item;
+	list-style: none;
+	min-height: 32px;
+	border-bottom: 1px solid #ccc;
+}
+
+.xxhModal .title {
+	line-height: 32px;
+	color: #666;
+	font-size: 20px;
+	padding-left: 3px;
+}
+
+/* 关闭按钮 */
+.xxhModal .close {
+	align-content: center;
+	cursor: pointer;
+	color: #fff;
+	font-size: 28px;
+	font-weight: bold;
+	/*max-height: 31.8px;*/
+	background-color: palevioletred;
+	border-radius: 0 9px 0 0;
+}
+
+.xxhModal .close:hover,
+.xxhModal .close:active {
+	background-color: orangered;
+}
+
+.xxhModal .foot {
+	display: flex;
+	flex-wrap: wrap;
+	min-height: 5px;
+}
+
+.xxhModal .btn {
+	flex: 1;
+	box-sizing: border-box;
+	width: auto;
+	text-align: center;
+	cursor: pointer;
+	color: #666;
+	background-color: whitesmoke;
+	font-size: 20px;
+	line-height: 32px;
+}
+
+.xxhModal .btn:hover,
+.xxhModal .btn:active {
+	background-color: ghostwhite;
+}
+
+.xxhModal .btnL {
+	border-radius: 0 0 0 9px;
+	border: 1px solid #ccc;
+	border-left: none;
+	border-bottom: none;
+}
+
+.xxhModal .btnMiddle {
+	border: 1px solid #ccc;
+	border-bottom: none;
+	border-left: none;
+}
+
+.xxhModal .btnR {
+	border-radius: 0 0 9px 0;
+	border: 1px solid #ccc;
+	border-right: none;
+	border-bottom: none;
+	border-left: none;
+}
+
+.xxhModal .btnSingle {
+	width: auto;
+	float: none;
+	border-radius: 0 0 9px 9px;
+	border-top: 1px solid #ccc;
+	border-right: none;
+	border-bottom: none;
+	border-left: none;
+}
+
+.xxhModal .Ok {}
+
+.xxhModal .Ok:hover,
+.xxhModal .Ok:active {}
+
+.xxhModal .No {}
+
+.xxhModal .No:hover,
+.xxhModal .No:active {}
+
+/* 内容区域 */
+.xxhModal .content {
+	min-width: 10rem;
+	line-height: 1.5rem;
+	padding: 3px;
+	text-align: center;
+}
+
+/* 弹窗动画 */
+@keyframes slideUp {
+	from {
+		transform: translate(-50%, 50%);
+		-webkit-transform: translate(-50%, 50%);
+	}
+
+	to {
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+	}
+}
+
+/* 应用动画 */
+.xxhModal.SlideUp-in {
+	visibility: visible;
+	opacity: 1;
+	animation: slideUp 0.5s ease-out;
+}
+
+/* 滑入滑出动画 */
+@keyframes slideUp-in-out {
+	0% {
+		transform: translate(-50%, 50%);
+		-webkit-transform: translate(-50%, 100%);
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	24% {
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, 0%);
+		visibility: visible;
+		opacity: 1;
+	}
+
+	70% {
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, 0%);
+		visibility: visible;
+		opacity: 1;
+	}
+
+	100% {
+		transform: translate(-50%, -100%);
+		-webkit-transform: translate(-50%, -100%);
+		visibility: hidden;
+		opacity: 0;
+	}
+}
+
+/* 应用动画 */
+.xxhModal.SlideUp-in-out {
+	visibility: visible;
+	opacity: 1;
+	animation: slideUp-in-out 3s forwards;
+	/* forwards是停在动画最后的的那个画面。即只演示一次。*/
+	/* infinite是动画播放次数为无限次。*/
+}
+
+/* 色彩主题皮肤，参考：https://www.cnblogs.com/guyu-/p/13967772.html */
+.xxhModal.default,
+.xxhModal.popup_default {
+	background-color: #fff;
+	border-color: #ccc;
+	color: #565656;
+}
+
+.xxhModal.red,
+.xxhModal.popup_red {
+	background-color: #f56c6c;
+	border-color: red;
+	color: #f0f0f0;
+}
+
+.xxhModal.red .title {
+	color: #fff;
+}
+
+.xxhModal.red .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.orange,
+.xxhModal.popup_orange {
+	background-color: #fddfa7;
+	border-color: orange;
+	color: #303030;
+}
+
+.xxhModal.orange .title {
+	color: #565656;
+}
+
+.xxhModal.orange .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.yellow,
+.xxhModal.popup_yellow {
+	background-color: #e7e79b;
+	border-color: yellow;
+	color: #2c2c2c;
+}
+
+.xxhModal.yellow .title {
+	color: #565656;
+}
+
+.xxhModal.yellow .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.green,
+.xxhModal.popup_green {
+	background-color: #3dbb3d;
+	border-color: green;
+	color: #fff;
+}
+
+.xxhModal.green .title {
+	color: #fff;
+}
+
+.xxhModal.green .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.cyan,
+.xxhModal.popup_cyan {
+	background-color: #21c7c7;
+	border-color: cyan;
+	color: #fff;
+}
+
+.xxhModal.cyan .title {
+	color: #fff;
+}
+
+.xxhModal.cyan .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.blue,
+.xxhModal.popup_blue {
+	background-color: #5666f3;
+	border-color: blue;
+	color: #fff;
+}
+
+.xxhModal.blue .title {
+	color: #fff;
+}
+
+.xxhModal.blue .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.indigo,
+.xxhModal.popup_indigo {
+	background-color: #2596c9;
+	border-color: #03A9F4;
+	color: #fff;
+}
+
+.xxhModal.indigo .title {
+	color: #fff;
+}
+
+.xxhModal.indigo .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.purple,
+.xxhModal.popup_purple {
+	background-color: #af49af;
+	border-color: purple;
+	color: #fff;
+}
+
+.xxhModal.purple .title {
+	color: #fff;
+}
+
+.xxhModal.purple .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.black,
+.xxhModal.popup_black {
+	background-color: #4e4d4d;
+	border-color: black;
+	color: #fff;
+}
+
+.xxhModal.black .title {
+	color: #fff;
+}
+
+.xxhModal.black .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.deepSpace,
+.xxhModal.popup_deepSpace {
+	background-color: #010d60;
+	border-color: black;
+	color: #fff;
+}
+
+.xxhModal.deepSpace .title {
+	color: #fff;
+}
+
+.xxhModal.deepSpace .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.grey,
+.xxhModal.popup_grey {
+	background-color: #cdcccc;
+	border-color: grey;
+	color: #040404;
+}
+
+.xxhModal.grey .title {
+	color: #040404;
+}
+
+.xxhModal.grey .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.brown,
+.xxhModal.popup_brown {
+	background-color: #c36c6c;
+	border-color: brown;
+	color: #fff;
+}
+
+.xxhModal.brown .title {
+	color: #fff;
+}
+
+.xxhModal.brown .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.gold,
+.xxhModal.popup_gold {
+	background-color: #cdad00;
+	border-color: gold;
+	color: #fff;
+}
+
+.xxhModal.gold .title {
+	color: #fff;
+}
+
+.xxhModal.gold .content {
+	background-color: #fff;
+	color: #565656;
+}
+
+/* 其他色彩主题皮肤·自定义 */
+.xxhModal.other,
+.xxhModal.popup_other {
+	background-color: #fff;
+	border-color: #666;
+	color: #565656;
+}
+
+.xxhModal.other .title {
+	color: #565656;
+}
+
+.xxhModal.other .content {
+	background-color: #fff;
+	color: #565656;
+}
