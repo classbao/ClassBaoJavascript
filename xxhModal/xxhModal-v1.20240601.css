@@ -35,6 +35,7 @@
 .xxhModal .icon {
 	text-align: center;
 	vertical-align: top;
+	/* vertical-align:sub; */
 	overflow: hidden;
 	font-size: 28px;
 	min-width: 1rem;

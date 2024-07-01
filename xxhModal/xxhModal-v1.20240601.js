@@ -188,6 +188,7 @@
 			this.box.foot.btn = []; // 清空全部按钮
 			this.openBase();
 			// CSS动画：滑入停留再滑出消失
+			// document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in-out');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').addEventListener('animationend', function () {
 				var _modal = document.getElementsByClassName("SlideUp-in-out");
@@ -196,6 +197,15 @@
 			);
 
 			console.log('EventListener Triggered > CBJS.xxhModal.Popup(); box.id=' + this.box.id);
+		},
+		PopupInfo: function (msg) {
+			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #565656;\">&#9888;</span> " + msg, "default");
+		},
+		PopupSuccess: function (msg) {
+			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #fff;\">&radic;</span> " + msg, "green");
+		},
+		PopupError: function (msg) {
+			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #f0f0f0;\">&#9938;</span> " + msg, "red");
 		},
 		close: function (id) {
 			console.log('EventListener Triggered > CBJS.xxhModal.close(); box.id=' + id);

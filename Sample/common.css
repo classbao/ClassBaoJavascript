@@ -30,7 +30,9 @@ a, a:link, a:visited {
 }
     a:hover, a:active {
         text-decoration: underline;
+        cursor: pointer;
     }
+button{ cursor: pointer;}
 
 .container table {
     border: 1px solid #d3d3d3;

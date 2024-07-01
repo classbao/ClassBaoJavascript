@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
 
@@ -28,17 +29,93 @@ console.log(myBrowser);
         </pre>
 
         <table cellspacing="0" cellpadding="0" style="">
-            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>值</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td>客户端</td><td id="isPC"></td></tr>
-                <tr><td>浏览器</td><td id="name"></td></tr>
-                <tr><td>浏览器版本</td><td id="version"></td></tr>
-                <tr><td>语言</td><td id="language"></td></tr>
-                <tr><td>硬件</td><td id="hardware"></td></tr>
-                <tr><td>系统平台</td><td id="platform"></td></tr>
-                <tr><td>CPU运算</td><td id="WOW"></td></tr>
+                <tr>
+                    <td>客户端</td>
+                    <td id="isPC"></td>
+                </tr>
+                <tr>
+                    <td>浏览器</td>
+                    <td id="name"></td>
+                </tr>
+                <tr>
+                    <td>浏览器版本</td>
+                    <td id="version"></td>
+                </tr>
+                <tr>
+                    <td>语言</td>
+                    <td id="language"></td>
+                </tr>
+                <tr>
+                    <td>硬件</td>
+                    <td id="hardware"></td>
+                </tr>
+                <tr>
+                    <td>系统平台</td>
+                    <td id="platform"></td>
+                </tr>
+                <tr>
+                    <td>CPU运算</td>
+                    <td id="WOW"></td>
+                </tr>
             </tbody>
         </table>
+
+        <hr />
+
+        <!--Geolocation-->
+        <p>地理定位：</p>
+        <pre>
+        <code>
+var geolocation = CBJS.Geolocation();
+console.log(geolocation);
+            </code>
+        </pre>
+
+        <table cellspacing="0" cellpadding="0" style="">
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>事件</td>
+                    <td><button onclick="Geolocation();">点击获取地理定位</button> </td>
+                </tr>
+                <tr>
+                    <td>经度</td>
+                    <td id="longitude"></td>
+                </tr>
+                <tr>
+                    <td>纬度</td>
+                    <td id="latitude"></td>
+                </tr>
+                <tr>
+                    <td>精度</td>
+                    <td id="accuracy"></td>
+                </tr>
+                <tr>
+                    <td>信息</td>
+                    <td id="geolocation-msg"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--Geolocation-->
+        <script>
+            function Geolocation() {
+                var geolocation = CBJS.Geolocation();
+                console.log(geolocation);
+            }
+        </script>
 
         <hr />
 
@@ -53,12 +130,29 @@ console.log(myScreen);
         </pre>
 
         <table cellspacing="0" cellpadding="0" style="">
-            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>值</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td>top</td><td id="top"></td></tr>
-                <tr><td>left</td><td id="left"></td></tr>
-                <tr><td>height</td><td id="height"></td></tr>
-                <tr><td>width</td><td id="width"></td></tr>
+                <tr>
+                    <td>top</td>
+                    <td id="top"></td>
+                </tr>
+                <tr>
+                    <td>left</td>
+                    <td id="left"></td>
+                </tr>
+                <tr>
+                    <td>height</td>
+                    <td id="height"></td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td id="width"></td>
+                </tr>
             </tbody>
         </table>
 
@@ -67,7 +161,7 @@ console.log(myScreen);
     </div>
 
     <!-- 最新的 ClassBaoJavascript 核心 JavaScript 文件 -->
-    <script src="../ClassBaoJavascript-1.0.0.js"></script>
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
 
     <!--getBrowser-->
     <script>
@@ -94,5 +188,7 @@ console.log(myScreen);
         CBJS.getById("height").innerText = myScreen.height;
         CBJS.getById("width").innerText = myScreen.width;
     </script>
+    
 </body>
+
 </html>

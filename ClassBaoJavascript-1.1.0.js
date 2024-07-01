@@ -196,6 +196,48 @@
 
             return result;
         };
+        /*地理定位*/
+        this.Geolocation = function () {
+            var result = { longitude: "", latitude: "", accuracy: "" };
+            if ("geolocation" in navigator) {
+                // geolocation is available
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log("Latitude is :", position.coords.latitude);
+                    console.log("Longitude is :", position.coords.longitude);
+                    console.log("Accuracy is :", position.coords.accuracy);
+                    result.longitude = position.coords.longitude;
+                    result.latitude = position.coords.latitude;
+                    result.accuracy = position.coords.accuracy;
+                    return result;
+                }, function (error) {
+                    // 获取位置失败
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("用户拒绝对地理位置信息的请求。");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("位置信息是不可用的。");
+                            break;
+                        case error.TIMEOUT:
+                            alert("请求用户地理位置超时。");
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            alert("未知错误。");
+                            break;
+                        default:
+                            console.error("Error code :", error.code);
+                            console.error("Error message :", error.message);
+                            break;
+                    }
+                    return result;
+                });
+            } else {
+                // geolocation is not supported
+                console.log("Geolocation is not supported by this browser.");
+                return result;
+            }
+
+        };
         /* 获得当前浏览器JS的版本 */
         this.JavascriptVersion = function () {
             var n = navigator;
@@ -318,11 +360,17 @@
         };
 
         /*创建新的Guid*/
-        this.NewGuid = function () {
+        this.NewGuid = function (mode) {
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
             }
-            return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+
+            if (!!mode && "N" === mode.toUpperCase().Trim()) {
+                return (S4() + S4() + "" + S4() + "" + S4() + "" + S4() + "" + S4() + S4() + S4());
+            }
+            else {
+                return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+            }
         };
         /*转换成Boolean*/
         this.ToBoolean = function (obj) {
@@ -737,7 +785,8 @@
             * Math.round(Math.random() * (y - x)) + x;
             * x和y可以是任何的数值，即使是负数也一样。
             */
-            return Math.round(Math.random() * (maxValue - minValue)) + minValue;
+            // return Math.round(Math.random() * (maxValue - minValue)) + minValue;
+            return Math.trunc(Math.random() * (max - min + 1)) + min;
         };
 
         /*数组操作*/
@@ -1269,815 +1318,815 @@
     /***** 常用实例方法扩展·LocalStorage·结束 *****/
 
     /***** 常用实例方法扩展·百分数/小数处理·开始 *****/
-/*百分数转化为小数*/
-String.prototype.toPoint = function () {
-    var str = this.replace("%", "");
-    str = str / 100;
-    return str;
-}
-/*小数转化为百分数*/
-Number.prototype.toPercent = function (fractionDigits) {
-    fractionDigits = fractionDigits || 1;
-    var str = Number(this * 100).toFixed(fractionDigits);
-    str += "%";
-    return str;
-}
-
-/*获取小数点后的位数*/
-ClassBaoJavascript.prototype.getDecimalPointLength = function (value) {
-    if (!value || value.length < 1)
-        return -1;
-    var y = String(value).indexOf(".") + 1; //获取小数点的位置
-    var count = String(value).length - y; //获取小数点后的个数
-    if (y > 0) {
-        //alert("这个数字是小数，有" + count + "位小数");
-        return count;
-    } else {
-        //alert("不是小数");
-        return -1;
+    /*百分数转化为小数*/
+    String.prototype.toPoint = function () {
+        var str = this.replace("%", "");
+        str = str / 100;
+        return str;
     }
-}
-/*保留N位小数*/
-ClassBaoJavascript.prototype.toFixed = function (value, pointLength) {
-    var oldPointLength = this.getDecimalPointLength(value);
-    if (oldPointLength < 1 || oldPointLength < pointLength) {
-        return value;
+    /*小数转化为百分数*/
+    Number.prototype.toPercent = function (fractionDigits) {
+        fractionDigits = fractionDigits || 1;
+        var str = Number(this * 100).toFixed(fractionDigits);
+        str += "%";
+        return str;
     }
 
-    if (typeof (value) === "number") {
-        return parseFloat(value.toFixed(pointLength));
+    /*获取小数点后的位数*/
+    ClassBaoJavascript.prototype.getDecimalPointLength = function (value) {
+        if (!value || value.length < 1)
+            return -1;
+        var y = String(value).indexOf(".") + 1; //获取小数点的位置
+        var count = String(value).length - y; //获取小数点后的个数
+        if (y > 0) {
+            //alert("这个数字是小数，有" + count + "位小数");
+            return count;
+        } else {
+            //alert("不是小数");
+            return -1;
+        }
     }
-    else {
-        return parseFloat(parseFloat(value).toFixed(pointLength));
+    /*保留N位小数*/
+    ClassBaoJavascript.prototype.toFixed = function (value, pointLength) {
+        var oldPointLength = this.getDecimalPointLength(value);
+        if (oldPointLength < 1 || oldPointLength < pointLength) {
+            return value;
+        }
+
+        if (typeof (value) === "number") {
+            return parseFloat(value.toFixed(pointLength));
+        }
+        else {
+            return parseFloat(parseFloat(value).toFixed(pointLength));
+        }
+
     }
-
-}
-/***** 常用实例方法扩展·百分数/小数处理·结束 *****/
+    /***** 常用实例方法扩展·百分数/小数处理·结束 *****/
 
 
-/***** 常用实例方法扩展·枚举/对象/下拉框option标签·开始 *****/
-//var VersionNumber = {
-//    Enum: {
-//        V1_2: { value: 1.2, text: "V1.2" },
-//        V1_1: { value: 1.1, text: "V1.1" }
-//    },
-//    getText: function (obj) {
-//        if (!obj) return '';
-//        var _obj = parseFloat(obj);
-//        return CBJS.getEnumTextByValue(this.Enum, _obj);
-//    },
-//    initSelectOption: function () {
-//        return CBJS.getSelectOptionByEnum(this.Enum);
-//    }
-//};
-/*枚举对象根据value获取text*/
-ClassBaoJavascript.prototype.getEnumTextByValue = function (obj, value) {
-    if (!obj) return '';
-    if (undefined == value || null == value || NaN == value) return '';
-    for (var i in obj) {
-        if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
-            if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
-                if (value == obj[i].value) {
-                    return obj[i].text;
+    /***** 常用实例方法扩展·枚举/对象/下拉框option标签·开始 *****/
+    //var VersionNumber = {
+    //    Enum: {
+    //        V1_2: { value: 1.2, text: "V1.2" },
+    //        V1_1: { value: 1.1, text: "V1.1" }
+    //    },
+    //    getText: function (obj) {
+    //        if (!obj) return '';
+    //        var _obj = parseFloat(obj);
+    //        return CBJS.getEnumTextByValue(this.Enum, _obj);
+    //    },
+    //    initSelectOption: function () {
+    //        return CBJS.getSelectOptionByEnum(this.Enum);
+    //    }
+    //};
+    /*枚举对象根据value获取text*/
+    ClassBaoJavascript.prototype.getEnumTextByValue = function (obj, value) {
+        if (!obj) return '';
+        if (undefined == value || null == value || NaN == value) return '';
+        for (var i in obj) {
+            if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
+                if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
+                    if (value == obj[i].value) {
+                        return obj[i].text;
+                    }
                 }
             }
         }
-    }
-    return '';
-};
-/*枚举对象根据value，text生成option标签*/
-ClassBaoJavascript.prototype.getSelectOptionByEnum = function (obj) {
-    if (!obj) return '';
-    var option = '';
-    for (var i in obj) {
-        if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
-            if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
-                option += "<option value='" + obj[i].value + "'>" + obj[i].text + "</option>";
+        return '';
+    };
+    /*枚举对象根据value，text生成option标签*/
+    ClassBaoJavascript.prototype.getSelectOptionByEnum = function (obj) {
+        if (!obj) return '';
+        var option = '';
+        for (var i in obj) {
+            if (!!obj[i] && "object" == typeof obj[i] && {} != obj[i] && [] != obj[i]) {
+                if (obj[i].hasOwnProperty("value") && obj[i].hasOwnProperty("text")) {
+                    option += "<option value='" + obj[i].value + "'>" + obj[i].text + "</option>";
+                }
             }
         }
-    }
-    return option;
-};
-/***** 常用实例方法扩展·枚举/对象/下拉框option标签·结束 *****/
+        return option;
+    };
+    /***** 常用实例方法扩展·枚举/对象/下拉框option标签·结束 *****/
 
 
-/***** 常用实例方法扩展·DOM常用操作·开始 *****/
-/*** 全选/全不选/反选 ***/
-/*选项组（checkbox组或者radio组）全选/全不选/反选（name是checkbox组名称或者radio组名称；flage是0：全不选；1：全选；2：反选；（默认全不选））*/
-ClassBaoJavascript.prototype.cbSelect = function (name, flage) {
-    if (name) {
-        var cbList = document.getElementsByName(name);
-        if (cbList && cbList.length > 0) {
-            for (var i = 0; i < cbList.length; i++) {
-                if (cbList[i] && (cbList[i].type == "checkbox" || cbList[i].type == "radio")) {
-                    switch (flage) {
-                        case 0: cbList[i].checked = false; break; //全不选
-                        case 1: cbList[i].checked = true; break; //全选
-                        case 2: cbList[i].checked = !cbList[i].checked; break; //反选
-                        default: cbList[i].checked = false; break; //全不选
+    /***** 常用实例方法扩展·DOM常用操作·开始 *****/
+    /*** 全选/全不选/反选 ***/
+    /*选项组（checkbox组或者radio组）全选/全不选/反选（name是checkbox组名称或者radio组名称；flage是0：全不选；1：全选；2：反选；（默认全不选））*/
+    ClassBaoJavascript.prototype.cbSelect = function (name, flage) {
+        if (name) {
+            var cbList = document.getElementsByName(name);
+            if (cbList && cbList.length > 0) {
+                for (var i = 0; i < cbList.length; i++) {
+                    if (cbList[i] && (cbList[i].type == "checkbox" || cbList[i].type == "radio")) {
+                        switch (flage) {
+                            case 0: cbList[i].checked = false; break; //全不选
+                            case 1: cbList[i].checked = true; break; //全选
+                            case 2: cbList[i].checked = !cbList[i].checked; break; //反选
+                            default: cbList[i].checked = false; break; //全不选
+                        }
                     }
                 }
             }
         }
     }
-}
-/*获取checkbox中被选中的项，checkbox以前缀("checkbox_")+关键字命名ID号(如"checkbox_002")，boxname:checkbox名称，idpre:checkbox的ID号前缀，返回被选中项ID号中关键字，以";"分隔*/
-ClassBaoJavascript.prototype.GetSelectedBoxes = function (boxname, idpre) {
-    var boxes = document.getElementsByName(boxname);
-    var keys = "";
-    for (var i = 0; i < boxes.length; i++) {
-        var boxElem = boxes[i];
-        if (boxElem.checked) {
-            var key = idpre == null ? boxElem.id : boxElem.id.substring(idpre.length);
-            keys += key + ";";
+    /*获取checkbox中被选中的项，checkbox以前缀("checkbox_")+关键字命名ID号(如"checkbox_002")，boxname:checkbox名称，idpre:checkbox的ID号前缀，返回被选中项ID号中关键字，以";"分隔*/
+    ClassBaoJavascript.prototype.GetSelectedBoxes = function (boxname, idpre) {
+        var boxes = document.getElementsByName(boxname);
+        var keys = "";
+        for (var i = 0; i < boxes.length; i++) {
+            var boxElem = boxes[i];
+            if (boxElem.checked) {
+                var key = idpre == null ? boxElem.id : boxElem.id.substring(idpre.length);
+                keys += key + ";";
+            }
         }
-    }
-    //去掉最后一个“;”符
-    if (keys.indexOf(";") != -1) {
-        keys = keys.substring(0, keys.length - 1);
-    }
-    return keys;
-}
-/*获取checkbox中被选中的项的值，boxname:checkbox名称，以";"分隔*/
-ClassBaoJavascript.prototype.GetSelectedBoxes = function (boxname) {
-    var boxes = document.getElementsByName(boxname);
-    var keys = "";
-    for (var i = 0; i < boxes.length; i++) {
-        var boxElem = boxes[i];
-        if (boxElem.checked) {
-            var key = boxElem.value;
-            keys += key + ";";
+        //去掉最后一个“;”符
+        if (keys.indexOf(";") != -1) {
+            keys = keys.substring(0, keys.length - 1);
         }
+        return keys;
     }
-    //去掉最后一个“;”符
-    if (keys.indexOf(";") != -1) {
-        keys = keys.substring(0, keys.length - 1);
+    /*获取checkbox中被选中的项的值，boxname:checkbox名称，以";"分隔*/
+    ClassBaoJavascript.prototype.GetSelectedBoxes = function (boxname) {
+        var boxes = document.getElementsByName(boxname);
+        var keys = "";
+        for (var i = 0; i < boxes.length; i++) {
+            var boxElem = boxes[i];
+            if (boxElem.checked) {
+                var key = boxElem.value;
+                keys += key + ";";
+            }
+        }
+        //去掉最后一个“;”符
+        if (keys.indexOf(";") != -1) {
+            keys = keys.substring(0, keys.length - 1);
+        }
+        return keys;
     }
-    return keys;
-}
 
-/*获取下拉列表框（单选）选中项*/
-ClassBaoJavascript.prototype.GetSelectedItem = function (id) {
-    var result = { index: 0, value: "", text: "" };
-    var dom = CBJS.getById(id);
-    if (dom && dom.tagName == "SELECT" && dom.options) {
-        //单选
-        var item = dom.options[dom.selectedIndex];
-        result.index = dom.selectedIndex;
-        result.value = item.value;
-        result.text = item.text;
+    /*获取下拉列表框（单选）选中项*/
+    ClassBaoJavascript.prototype.GetSelectedItem = function (id) {
+        var result = { index: 0, value: "", text: "" };
+        var dom = CBJS.getById(id);
+        if (dom && dom.tagName == "SELECT" && dom.options) {
+            //单选
+            var item = dom.options[dom.selectedIndex];
+            result.index = dom.selectedIndex;
+            result.value = item.value;
+            result.text = item.text;
+        }
+        return result;
     }
-    return result;
-}
-/*获取下拉列表框（多选）选中项集合*/
-ClassBaoJavascript.prototype.GetSelectedItems = function (id) {
-    var results = [];
-    var result = { index: 0, value: "", text: "" };
-    var dom = CBJS.getById(id);
-    if (dom && dom.tagName == "SELECT" && dom.options) {
-        //多选
-        if (dom.multiple && dom.selectedOptions) {
-            for (var i = 0; i < dom.selectedOptions.length; i++) {
-                var item = dom.selectedOptions[i];
-                results.push({ index: i, value: item.value, text: item.text });
+    /*获取下拉列表框（多选）选中项集合*/
+    ClassBaoJavascript.prototype.GetSelectedItems = function (id) {
+        var results = [];
+        var result = { index: 0, value: "", text: "" };
+        var dom = CBJS.getById(id);
+        if (dom && dom.tagName == "SELECT" && dom.options) {
+            //多选
+            if (dom.multiple && dom.selectedOptions) {
+                for (var i = 0; i < dom.selectedOptions.length; i++) {
+                    var item = dom.selectedOptions[i];
+                    results.push({ index: i, value: item.value, text: item.text });
+                }
             }
         }
+        return results;
     }
-    return results;
-}
-/*设置下拉列表框（单选）选中项（id是下拉列表框ID；value是下拉列表框值或文本）*/
-ClassBaoJavascript.prototype.SetSelectedItem = function (id, value) {
-    //document.getElementById("classcode").value = classcode; //可以解决下拉框的“返回”页面定位
-    var dom = CBJS.getById(id);
-    if (dom && dom.options) {
-        for (var i = 0; i < dom.options.length; i++) {
-            if (dom.options[i].value == value || dom.options[i].text == value) {
-                dom.options[i].defaultSelected = true;
-                dom.options[i].selected = true;
-            }
-        }
-    }
-}
-/*设置下拉列表框（多选）选中项集合（id是下拉列表框ID；value是下拉列表框值或文本集合）*/
-ClassBaoJavascript.prototype.SetSelectedItems = function (id, items) {
-    var dom = CBJS.getById(id);
-    if (dom && dom.options) {
-        //var item={ index:0, value: "", text: "" };
-        for (var i = 0; i < items.length; i++) {
-            var value = items[i].value || items[i].text || items[i];
-            for (var j = 0; i < dom.options.length; j++) {
-                if (dom.options[j].value == value || dom.options[j].text == value) {
-                    dom.options[j].defaultSelected = true;
-                    dom.options[j].selected = true;
+    /*设置下拉列表框（单选）选中项（id是下拉列表框ID；value是下拉列表框值或文本）*/
+    ClassBaoJavascript.prototype.SetSelectedItem = function (id, value) {
+        //document.getElementById("classcode").value = classcode; //可以解决下拉框的“返回”页面定位
+        var dom = CBJS.getById(id);
+        if (dom && dom.options) {
+            for (var i = 0; i < dom.options.length; i++) {
+                if (dom.options[i].value == value || dom.options[i].text == value) {
+                    dom.options[i].defaultSelected = true;
+                    dom.options[i].selected = true;
                 }
             }
         }
     }
-}
-
-/*获取单选按钮组选中项（name是radio组名称）*/
-ClassBaoJavascript.prototype.GetRadioItem = function (name) {
-    var result = { index: 0, value: "", text: "" };
-    var elementsList = document.getElementsByName(name);
-    for (var i = 0; i < elementsList.length; i++) {
-        if (elementsList[i].checked) {
-            result.index = i;
-            result.value = elementsList[i].value;
-            result.text = elementsList[i].nextSibling.nodeValue;
+    /*设置下拉列表框（多选）选中项集合（id是下拉列表框ID；value是下拉列表框值或文本集合）*/
+    ClassBaoJavascript.prototype.SetSelectedItems = function (id, items) {
+        var dom = CBJS.getById(id);
+        if (dom && dom.options) {
+            //var item={ index:0, value: "", text: "" };
+            for (var i = 0; i < items.length; i++) {
+                var value = items[i].value || items[i].text || items[i];
+                for (var j = 0; i < dom.options.length; j++) {
+                    if (dom.options[j].value == value || dom.options[j].text == value) {
+                        dom.options[j].defaultSelected = true;
+                        dom.options[j].selected = true;
+                    }
+                }
+            }
         }
     }
-    return result;
-}
-/*获取单选按纽(组)的值（name是radio组名称；结果：未选返回null；有选择项，返回选项值）*/
-ClassBaoJavascript.prototype.GetRadioValue = function (name) {
-    var radioes = document.getElementsByName(name);
-    for (var i = 0; i < radioes.length; i++) {
-        if (radioes[i].checked) {
-            return radioes[i].value.Trim();
-        }
-    }
-    return null;
-}
 
-/*通过值修改单选按钮(组)的选中状态（name是radio组名称；sRadioValue是选中项的值；结果：设置成功返回true，否则返回false）*/
-ClassBaoJavascript.prototype.SetRadioValue = function (name, sRadioValue) {
-    var oRadio = document.getElementsByName(name);
-    for (var i = 0; i < oRadio.length; i++) //循环
-    {
-        if (oRadio[i].value.Trim() == sRadioValue) //比较值
+    /*获取单选按钮组选中项（name是radio组名称）*/
+    ClassBaoJavascript.prototype.GetRadioItem = function (name) {
+        var result = { index: 0, value: "", text: "" };
+        var elementsList = document.getElementsByName(name);
+        for (var i = 0; i < elementsList.length; i++) {
+            if (elementsList[i].checked) {
+                result.index = i;
+                result.value = elementsList[i].value;
+                result.text = elementsList[i].nextSibling.nodeValue;
+            }
+        }
+        return result;
+    }
+    /*获取单选按纽(组)的值（name是radio组名称；结果：未选返回null；有选择项，返回选项值）*/
+    ClassBaoJavascript.prototype.GetRadioValue = function (name) {
+        var radioes = document.getElementsByName(name);
+        for (var i = 0; i < radioes.length; i++) {
+            if (radioes[i].checked) {
+                return radioes[i].value.Trim();
+            }
+        }
+        return null;
+    }
+
+    /*通过值修改单选按钮(组)的选中状态（name是radio组名称；sRadioValue是选中项的值；结果：设置成功返回true，否则返回false）*/
+    ClassBaoJavascript.prototype.SetRadioValue = function (name, sRadioValue) {
+        var oRadio = document.getElementsByName(name);
+        for (var i = 0; i < oRadio.length; i++) //循环
         {
-            oRadio[i].checked = true; //修改选中状态
-            return true;
-        }
-    }
-    return false;
-}
-
-/*显示文本或弹出提示框（label是label控件或者div，span等HTML元素；value是要显示的内容）*/
-ClassBaoJavascript.prototype.LabelAlert = function (label, value) {
-    if (label && (typeof label == "object")) {
-        if (label.jquery != undefined) {
-            if (label.text() != undefined) { label.text(value); } //Jquery获取的 html控件 label
-            if (label.val() != undefined) { label.val(value); } //Jquery获取的 html控件 text
-            if (label.attr("value", "")) { label.attr("value", value); } //填充内容
-        }
-        else {
-            if (label.value == undefined) { //html控件 text,label等input
-                if (label.innerHTML == undefined) { //html控件 div,span等
-                    alert(value);
-                }
-                else label.innerHTML = value;
+            if (oRadio[i].value.Trim() == sRadioValue) //比较值
+            {
+                oRadio[i].checked = true; //修改选中状态
+                return true;
             }
-            else label.value = value;
         }
+        return false;
     }
-    else alert(value);
-}
-/***** 常用实例方法扩展·DOM常用操作·结束 *****/
 
-
-/***** 常用实例方法扩展·界面坐标/定位·开始 *****/
-/*获得元素的绝对坐标（element是HTML元素；结果：{x:0,y:0}）*/
-ClassBaoJavascript.prototype.PositionByAbsolute = function (element) {
-    var result = { x: element.offsetLeft, y: element.offsetTop };
-    element = element.offsetParent;
-    while (element) {
-        result.x += element.offsetLeft;
-        result.y += element.offsetTop;
-        element = element.offsetParent;
-    }
-    return result;
-}
-
-/*控件跟随鼠标移动（element是HTML元素；结果：{x:0,y:0}）
-//调用示例：
-document.onmousemove = function (e) {
-    CBJS.FollowCursorHandler(e, CBJS.getById("moveId"));
-}
-*/
-ClassBaoJavascript.prototype.FollowCursorHandler = function (e, element) {
-    if (!e || !element) return;
-    try {
-        with (element.style) {
-            position = "absolute";
-            left = ((document.layers) ? e.pageX : document.body.scrollLeft + event.clientX) + "px";
-            top = ((document.layers) ? e.pageY : document.body.scrollTop + event.clientY) + "px";
-        }
-    }
-    catch (e) { console.log(e.message); }
-}
-/*控件跟随光标移动
-//调用示例：
-CBJS.FollowCursor(CBJS.getById("moveId"));
-*/
-ClassBaoJavascript.prototype.FollowCursor = function (element) {
-    try {
-        ClassBaoJavascript.AddEventHandler(document, "mousemove", function (e) {
-            e = e || window.event;
-            ClassBaoJavascript.FollowCursorHandler(e, element);
-        });
-    }
-    catch (e) { console.log(e.message); }
-}
-/***** 常用实例方法扩展·界面坐标/定位·结束 *****/
-
-
-/*** 自定义弹出框提示·开始 ***/
-ClassBaoJavascript.prototype.popup = {
-    init: function () {
-        this.box = {
-            id: "",
-            title: "",
-            content: "",
-            btn: [
-                {
-                    title: "确定",
-                    click: function () { },
-                    isEnabled: true,
-                },
-                {
-                    title: "取消",
-                    click: function () { },
-                    isEnabled: true,
+    /*显示文本或弹出提示框（label是label控件或者div，span等HTML元素；value是要显示的内容）*/
+    ClassBaoJavascript.prototype.LabelAlert = function (label, value) {
+        if (label && (typeof label == "object")) {
+            if (label.jquery != undefined) {
+                if (label.text() != undefined) { label.text(value); } //Jquery获取的 html控件 label
+                if (label.val() != undefined) { label.val(value); } //Jquery获取的 html控件 text
+                if (label.attr("value", "")) { label.attr("value", value); } //填充内容
+            }
+            else {
+                if (label.value == undefined) { //html控件 text,label等input
+                    if (label.innerHTML == undefined) { //html控件 div,span等
+                        alert(value);
+                    }
+                    else label.innerHTML = value;
                 }
-            ],
-        };
-    },
-    box: {},
-    openBase: function () {
-        this.box.id = !!this.box.id || new Date().getTime();
-        var mask = document.createElement("div");
-        mask.id = "mask" + this.box.id;
-        mask.className = "mask";
-        //mask.style = "display:none;";
-
-        var window = document.createElement("div");
-        window.id = "window" + this.box.id;
-        window.className = "window";
-        //window.style = "display:none;";
-
-        var htmlWindow = "";
-        htmlWindow += "<h2>" + (this.box.title || "提示消息") + "</h2>";
-        htmlWindow += "<p class=\"content\">" + (this.box.content || "自定义内容") + "</p>";
-        htmlWindow += "<div>";
-        if (!!this.box.btn[0].isEnabled) {
-            htmlWindow += "<a class=\"btn\" onclick=\"CBJS.popup.box.btn[0].click();CBJS.popup.close();\">" + (this.box.btn[0].title || "确定") + "</a>";
+                else label.value = value;
+            }
         }
-        if (!!this.box.btn[1].isEnabled) {
-            htmlWindow += "<a class=\"btn btn_g\" onclick=\"CBJS.popup.box.btn[1].click();CBJS.popup.close();\">" + (this.box.btn[1].title || "取消") + "</a>";
-        }
-        htmlWindow += "</div>";
-
-        window.innerHTML = htmlWindow;
-
-        document.body.appendChild(mask);
-        document.body.appendChild(window);
-    },
-    open: function (box) {
-        this.box = box; this.openBase();
-    },
-    openAlert: function (msg, callback) {
-        this.init();
-        this.box.content = msg;
-        this.box.btn[0].click = function () { if (!!callback) { callback(); } }
-        this.box.btn[1].isEnabled = false;
-        this.openBase();
-    },
-    openConfirm: function (msg, callbackOk, callbackCancel) {
-        this.init();
-        this.box.content = msg;
-        this.box.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
-        this.box.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
-        this.openBase();
-    },
-    close: function () {
-        document.body.removeChild(document.getElementById("mask" + this.box.id));
-        document.body.removeChild(document.getElementById("window" + this.box.id));
+        else alert(value);
     }
-};
-/**** window CSS 样式 ***/
-/*
-.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;
-.window{ position:fixed; z-index:1000;top:26%; left:5%; width:90%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
-@media screen and (max-width: 767px) {
-    .window {left:5%; width:90%;}
-}
-@media screen and (min-width: 768px) {
-    .window {left:30%; width:30%;}
-}
-.window h2{ color:#143157; font-size:18px; margin-top:10px}
-.window p{ color:#5d5d5d;font-size:16px; padding:12px }
-.window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
-.window .btn_g{ background-color:#efefef; border-color:#efefef; color:#999999;}
-*/
-
-/*** 自定义弹出框提示·结束 ***/
+    /***** 常用实例方法扩展·DOM常用操作·结束 *****/
 
 
-/***** 浮层与遮罩 *****/
-/***
-*** window CSS 样式 ***
-第一种：
-.mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
-.window{ position:fixed; z-index:1000;top:26%; left:50%; width:30%; margin-left:-15%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
-@media screen and (max-width: 767px) {
-    移动端CSS样式 
-    .window {left:5%; width:90%;}
-}
-@media screen and (min-width: 768px) {
-     PC端CSS样式 
-    .window {left:30%; width:30%;}
-}
-.window h2{ color:#143157; font-size:18px; margin-top:10px}
-.window p{ color:#5d5d5d;font-size:16px; padding:12px }
-.window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
-.window .btn_g{ background-color:#efefef; border:2px solid #efefef; color:#999999; padding:4px 0;font-family: 'Microsoft YaHei';}
-<!-- 第一种的HTML示例：-->
-    <div id="mask" class="mask" style="display:none;"></div>
-    <div id="window" class="window" style="display:none;">
-        <h2>提示消息</h2>
-        <p class="content">内容啊</p>
-        <div>
-            <a class="btn">确定</a>
-            <a class="btn btn_g">取消</a>
+    /***** 常用实例方法扩展·界面坐标/定位·开始 *****/
+    /*获得元素的绝对坐标（element是HTML元素；结果：{x:0,y:0}）*/
+    ClassBaoJavascript.prototype.PositionByAbsolute = function (element) {
+        var result = { x: element.offsetLeft, y: element.offsetTop };
+        element = element.offsetParent;
+        while (element) {
+            result.x += element.offsetLeft;
+            result.y += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return result;
+    }
+
+    /*控件跟随鼠标移动（element是HTML元素；结果：{x:0,y:0}）
+    //调用示例：
+    document.onmousemove = function (e) {
+        CBJS.FollowCursorHandler(e, CBJS.getById("moveId"));
+    }
+    */
+    ClassBaoJavascript.prototype.FollowCursorHandler = function (e, element) {
+        if (!e || !element) return;
+        try {
+            with (element.style) {
+                position = "absolute";
+                left = ((document.layers) ? e.pageX : document.body.scrollLeft + event.clientX) + "px";
+                top = ((document.layers) ? e.pageY : document.body.scrollTop + event.clientY) + "px";
+            }
+        }
+        catch (e) { console.log(e.message); }
+    }
+    /*控件跟随光标移动
+    //调用示例：
+    CBJS.FollowCursor(CBJS.getById("moveId"));
+    */
+    ClassBaoJavascript.prototype.FollowCursor = function (element) {
+        try {
+            ClassBaoJavascript.AddEventHandler(document, "mousemove", function (e) {
+                e = e || window.event;
+                ClassBaoJavascript.FollowCursorHandler(e, element);
+            });
+        }
+        catch (e) { console.log(e.message); }
+    }
+    /***** 常用实例方法扩展·界面坐标/定位·结束 *****/
+
+
+    /*** 自定义弹出框提示·开始 ***/
+    ClassBaoJavascript.prototype.popup = {
+        init: function () {
+            this.box = {
+                id: "",
+                title: "",
+                content: "",
+                btn: [
+                    {
+                        title: "确定",
+                        click: function () { },
+                        isEnabled: true,
+                    },
+                    {
+                        title: "取消",
+                        click: function () { },
+                        isEnabled: true,
+                    }
+                ],
+            };
+        },
+        box: {},
+        openBase: function () {
+            this.box.id = !!this.box.id || new Date().getTime();
+            var mask = document.createElement("div");
+            mask.id = "mask" + this.box.id;
+            mask.className = "mask";
+            //mask.style = "display:none;";
+
+            var window = document.createElement("div");
+            window.id = "window" + this.box.id;
+            window.className = "window";
+            //window.style = "display:none;";
+
+            var htmlWindow = "";
+            htmlWindow += "<h2>" + (this.box.title || "提示消息") + "</h2>";
+            htmlWindow += "<p class=\"content\">" + (this.box.content || "自定义内容") + "</p>";
+            htmlWindow += "<div>";
+            if (!!this.box.btn[0].isEnabled) {
+                htmlWindow += "<a class=\"btn\" onclick=\"CBJS.popup.box.btn[0].click();CBJS.popup.close();\">" + (this.box.btn[0].title || "确定") + "</a>";
+            }
+            if (!!this.box.btn[1].isEnabled) {
+                htmlWindow += "<a class=\"btn btn_g\" onclick=\"CBJS.popup.box.btn[1].click();CBJS.popup.close();\">" + (this.box.btn[1].title || "取消") + "</a>";
+            }
+            htmlWindow += "</div>";
+
+            window.innerHTML = htmlWindow;
+
+            document.body.appendChild(mask);
+            document.body.appendChild(window);
+        },
+        open: function (box) {
+            this.box = box; this.openBase();
+        },
+        openAlert: function (msg, callback) {
+            this.init();
+            this.box.content = msg;
+            this.box.btn[0].click = function () { if (!!callback) { callback(); } }
+            this.box.btn[1].isEnabled = false;
+            this.openBase();
+        },
+        openConfirm: function (msg, callbackOk, callbackCancel) {
+            this.init();
+            this.box.content = msg;
+            this.box.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
+            this.box.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
+            this.openBase();
+        },
+        close: function () {
+            document.body.removeChild(document.getElementById("mask" + this.box.id));
+            document.body.removeChild(document.getElementById("window" + this.box.id));
+        }
+    };
+    /**** window CSS 样式 ***/
+    /*
+    .mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;
+    .window{ position:fixed; z-index:1000;top:26%; left:5%; width:90%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
+    @media screen and (max-width: 767px) {
+        .window {left:5%; width:90%;}
+    }
+    @media screen and (min-width: 768px) {
+        .window {left:30%; width:30%;}
+    }
+    .window h2{ color:#143157; font-size:18px; margin-top:10px}
+    .window p{ color:#5d5d5d;font-size:16px; padding:12px }
+    .window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
+    .window .btn_g{ background-color:#efefef; border-color:#efefef; color:#999999;}
+    */
+
+    /*** 自定义弹出框提示·结束 ***/
+
+
+    /***** 浮层与遮罩 *****/
+    /***
+    *** window CSS 样式 ***
+    第一种：
+    .mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
+    .window{ position:fixed; z-index:1000;top:26%; left:50%; width:30%; margin-left:-15%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
+    @media screen and (max-width: 767px) {
+        移动端CSS样式 
+        .window {left:5%; width:90%;}
+    }
+    @media screen and (min-width: 768px) {
+         PC端CSS样式 
+        .window {left:30%; width:30%;}
+    }
+    .window h2{ color:#143157; font-size:18px; margin-top:10px}
+    .window p{ color:#5d5d5d;font-size:16px; padding:12px }
+    .window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
+    .window .btn_g{ background-color:#efefef; border:2px solid #efefef; color:#999999; padding:4px 0;font-family: 'Microsoft YaHei';}
+    <!-- 第一种的HTML示例：-->
+        <div id="mask" class="mask" style="display:none;"></div>
+        <div id="window" class="window" style="display:none;">
+            <h2>提示消息</h2>
+            <p class="content">内容啊</p>
+            <div>
+                <a class="btn">确定</a>
+                <a class="btn btn_g">取消</a>
+            </div>
         </div>
+    
+    第二种：
+    .mask{ position:absolute;top:0px; left:0px; z-index:100;height:100%; width:100%; background:rgba(0,0,0,0.3); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
+    .window{position:fixed; _position:absolute;_top:expression(eval(document.documentElement.scrollTop+200));z-index:999;top:26%; left:50%; width:280px; margin-left:-140px; background-color:#eee;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 20px;}
+    .window a.btn_window,.window a.btn_window2,.window a.btn_window3{ color:#ffffff;}
+    .window a:hover{ color:#FFF; text-decoration:none;}
+    .window .close{ width:280px; height:30px;}
+    .window .close a{ text-align:right; background:url(../images/close.jpg) no-repeat right; float:right;color:#ff0000; font-size:18px; width:30px; height:30px;}
+    .window h3{color:#143157; font-size:16px; line-height:28px;margin-bottom:20px;}
+    .window p.tex_l{ text-align:left}
+    .window p{margin-bottom:20px;}
+    .window p.tex_c{ color:#143157; font-size:16px; line-height:28px;}
+    .window p.tex_r{ text-align:right}
+    .btn_window,.btn_window2,.btn_window3{cursor:pointer;color:#FFF;border:0px none; background-color:#143157; font-size:16px; text-align:center;  margin:8px auto; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; display:block; width:110px; height:32px; line-height:32px;}
+    .btn_window2{ display:inline-block;}
+    .btn_window3{ display:inline-block; background-color:#a0a0a0;}
+    <!-- 第二种的HTML示例：-->
+    <div id="mask" class="mask"></div>
+    <div id="window" class="window">
+        <span class="close"><a></a></span>
+        <h3>提示消息</h3>
+        <p class="content">内容啊</p>
+        <p class="tex_c">
+            <a class="btn_window2">确定</a>
+            <a class="btn_window3">取消</a>
+        </p>
     </div>
-
-第二种：
-.mask{ position:absolute;top:0px; left:0px; z-index:100;height:100%; width:100%; background:rgba(0,0,0,0.3); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;}
-.window{position:fixed; _position:absolute;_top:expression(eval(document.documentElement.scrollTop+200));z-index:999;top:26%; left:50%; width:280px; margin-left:-140px; background-color:#eee;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 20px;}
-.window a.btn_window,.window a.btn_window2,.window a.btn_window3{ color:#ffffff;}
-.window a:hover{ color:#FFF; text-decoration:none;}
-.window .close{ width:280px; height:30px;}
-.window .close a{ text-align:right; background:url(../images/close.jpg) no-repeat right; float:right;color:#ff0000; font-size:18px; width:30px; height:30px;}
-.window h3{color:#143157; font-size:16px; line-height:28px;margin-bottom:20px;}
-.window p.tex_l{ text-align:left}
-.window p{margin-bottom:20px;}
-.window p.tex_c{ color:#143157; font-size:16px; line-height:28px;}
-.window p.tex_r{ text-align:right}
-.btn_window,.btn_window2,.btn_window3{cursor:pointer;color:#FFF;border:0px none; background-color:#143157; font-size:16px; text-align:center;  margin:8px auto; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; display:block; width:110px; height:32px; line-height:32px;}
-.btn_window2{ display:inline-block;}
-.btn_window3{ display:inline-block; background-color:#a0a0a0;}
-<!-- 第二种的HTML示例：-->
-<div id="mask" class="mask"></div>
-<div id="window" class="window">
-    <span class="close"><a></a></span>
-    <h3>提示消息</h3>
-    <p class="content">内容啊</p>
-    <p class="tex_c">
-        <a class="btn_window2">确定</a>
-        <a class="btn_window3">取消</a>
-    </p>
-</div>
-
-
-*** window javascript 显示与隐藏 ***
-function showDlg(infoId, bgId) {
-    if (!infoId) infoId = "window";
-    if (!bgId) bgId = "mask";
-    document.getElementById(bgId).style.filter = "alpha(opacity=30)";
-    document.getElementById(bgId).style.opacity = "40/100";
-    document.getElementById(bgId).style.MozOpacity = "40/100";
-    document.getElementById(bgId).style.width = window.document.body.offsetWidth + "px";
-    document.getElementById(bgId).style.height = window.document.body.offsetHeight + "px";
-    document.getElementById(bgId).style.display = 'block';
-    document.getElementById(infoId).style.display = 'block';
-}
-function closeDlg(infoId, bgId) {
-    if (!infoId) infoId = "window";
-    if (!bgId) bgId = "mask";
-    document.getElementById(bgId).style.display = 'none';
-    document.getElementById(infoId).style.display = 'none';
-}
-***/
-
-
-/*弹出遮罩浮层（dialogWidth是弹出内容的宽度；dialogHeight是弹出内容的高度；dialogHtml是弹出内容的Html字符串）*/
-ClassBaoJavascript.prototype.FloatingLayer = function (dialogWidth, dialogHeight, dialogHtml) {
-    var _screen = ClassBaoJavascript.getScreen();
-    //背景遮罩
-    var baseDiv = document.createElement("div");
-    with (baseDiv.style) {
-        zIndex = "1000";
-        position = "absolute";
-        margin = "0px";
-        padding = "0px";
-        top = "0px";
-        left = "0px";
-        width = _screen.width + "px";
-        height = _screen.height + "px";
-        //可见与隐藏
-        display = "block"; //block此元素将显示为块级元素，此元素前后会带有换行符。none 此元素不会被显示。inherit规定应该从父元素继承 display 属性的值。
-        //visibility = ""; //visible默认值,元素是可见的。hidden	元素是不可见的。inherit	规定应该从父元素继承 visibility 属性的值。
-        overflow = "hidden";
-        //透明度
-        filter = "alpha(opacity=30)";
-        //-moz-opacity="0.3";
-        MozOpacity = "0.3";
-        opacity = "0.3";
-        //其它样式
-        backgroundColor = "#CECECE";
-        border = "0px";
+    
+    
+    *** window javascript 显示与隐藏 ***
+    function showDlg(infoId, bgId) {
+        if (!infoId) infoId = "window";
+        if (!bgId) bgId = "mask";
+        document.getElementById(bgId).style.filter = "alpha(opacity=30)";
+        document.getElementById(bgId).style.opacity = "40/100";
+        document.getElementById(bgId).style.MozOpacity = "40/100";
+        document.getElementById(bgId).style.width = window.document.body.offsetWidth + "px";
+        document.getElementById(bgId).style.height = window.document.body.offsetHeight + "px";
+        document.getElementById(bgId).style.display = 'block';
+        document.getElementById(infoId).style.display = 'block';
     }
-    //弹出内容层
-    var dialogDiv = document.createElement("div");
-    with (dialogDiv.style) {
-        zIndex = "1001";
-        position = "absolute";
-        width = ((dialogWidth && dialogWidth > 0) ? (dialogWidth + "px") : "50%");
-        height = ((dialogHeight && dialogHeight > 0) ? (dialogHeight + "px") : "50%");
-        top = ((dialogHeight && dialogHeight > 0) ? ((_screen.height - dialogHeight) / 2 + "px") : "25%");
-        left = ((dialogWidth && dialogWidth > 0) ? ((_screen.width - dialogWidth) / 2 + "px") : "25%");
-        display = "block";
-        //visibility = "";
-        //透明度
-        filter = "alpha(opacity=100)";
-        //-moz-opacity="0.3";
-        MozOpacity = "1";
-        opacity = "1";
-        //其它样式
-        backgroundColor = "#FFFFFF";
-        border = "solid 15px #898989";
-        textAlign = "left";
+    function closeDlg(infoId, bgId) {
+        if (!infoId) infoId = "window";
+        if (!bgId) bgId = "mask";
+        document.getElementById(bgId).style.display = 'none';
+        document.getElementById(infoId).style.display = 'none';
     }
-    dialogDiv.innerHTML = dialogHtml || "";
+    ***/
 
-    document.body.appendChild(baseDiv);
-    document.body.appendChild(dialogDiv);
-}
-/*跟随滚动条的层，始终固定在网页某个位置可见的层*/
-ClassBaoJavascript.prototype.ScrollingLayer = function (layerPosition, layerWidth, layerHeight, layerHtml) {
-    var _screen = ClassBaoJavascript.getScreen();
-    //背景遮罩
-    var baseDiv = document.createElement("div");
-    with (baseDiv.style) {
-        zIndex = "999";
-        ///页面上部居中
-        if (layerPosition == 1) {
-            position = "fixed";
-            top = "0px"; /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = _screen.top + "px";
-            left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) / 2 + "px") : "25%");
-        }
-        ///页面上部右角
-        else if (layerPosition == 2) {
-            position = "fixed";
-            top = "0px"; /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = _screen.top + "px";
-            left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
-        }
-        ///页面右部居中
-        else if (layerPosition == 3) {
-            position = "fixed";
-            top = (_screen.top + 200) + "px"; /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = (_screen.top + 200) + "px";
-            left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
-        }
-        ///页面底部右角
-        else if (layerPosition == 4) {
-            position = "fixed";
-            top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
-            left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
-        }
-        ///页面底部居中
-        else if (layerPosition == 5) {
-            position = "fixed";
-            top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
-            left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) / 2 + "px") : "25%");
-        }
-        ///页面底部左角
-        else if (layerPosition == 6) {
-            position = "fixed";
-            top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
+
+    /*弹出遮罩浮层（dialogWidth是弹出内容的宽度；dialogHeight是弹出内容的高度；dialogHtml是弹出内容的Html字符串）*/
+    ClassBaoJavascript.prototype.FloatingLayer = function (dialogWidth, dialogHeight, dialogHtml) {
+        var _screen = ClassBaoJavascript.getScreen();
+        //背景遮罩
+        var baseDiv = document.createElement("div");
+        with (baseDiv.style) {
+            zIndex = "1000";
+            position = "absolute";
+            margin = "0px";
+            padding = "0px";
+            top = "0px";
             left = "0px";
+            width = _screen.width + "px";
+            height = _screen.height + "px";
+            //可见与隐藏
+            display = "block"; //block此元素将显示为块级元素，此元素前后会带有换行符。none 此元素不会被显示。inherit规定应该从父元素继承 display 属性的值。
+            //visibility = ""; //visible默认值,元素是可见的。hidden	元素是不可见的。inherit	规定应该从父元素继承 visibility 属性的值。
+            overflow = "hidden";
+            //透明度
+            filter = "alpha(opacity=30)";
+            //-moz-opacity="0.3";
+            MozOpacity = "0.3";
+            opacity = "0.3";
+            //其它样式
+            backgroundColor = "#CECECE";
+            border = "0px";
         }
-        ///页面左部居中
-        else if (layerPosition == 7) {
-            position = "fixed";
-            top = (_screen.top + 200) + "px"; /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = (_screen.top + 200) + "px";
-            left = "0px";
+        //弹出内容层
+        var dialogDiv = document.createElement("div");
+        with (dialogDiv.style) {
+            zIndex = "1001";
+            position = "absolute";
+            width = ((dialogWidth && dialogWidth > 0) ? (dialogWidth + "px") : "50%");
+            height = ((dialogHeight && dialogHeight > 0) ? (dialogHeight + "px") : "50%");
+            top = ((dialogHeight && dialogHeight > 0) ? ((_screen.height - dialogHeight) / 2 + "px") : "25%");
+            left = ((dialogWidth && dialogWidth > 0) ? ((_screen.width - dialogWidth) / 2 + "px") : "25%");
+            display = "block";
+            //visibility = "";
+            //透明度
+            filter = "alpha(opacity=100)";
+            //-moz-opacity="0.3";
+            MozOpacity = "1";
+            opacity = "1";
+            //其它样式
+            backgroundColor = "#FFFFFF";
+            border = "solid 15px #898989";
+            textAlign = "left";
         }
-        ///页面上部左角
-        else if (layerPosition == 8) {
-            position = "fixed";
-            top = "0px"; /* position fixed for IE6 */
-            _position = "absolute";
-            /* _top: expression(documentElement.scrollTop + "px"); */
-            _top = _screen.top + "px";
-            left = "0px";
-        }
+        dialogDiv.innerHTML = dialogHtml || "";
 
-        padding = "0px";
-        width = ((layerWidth && layerWidth > 0) ? (layerWidth + "px") : "50%");
-        height = ((layerHeight && layerHeight > 0) ? (layerHeight + "px") : "10%");
-        //可见与隐藏
-        display = "block"; //block此元素将显示为块级元素，此元素前后会带有换行符。none 此元素不会被显示。inherit规定应该从父元素继承 display 属性的值。
-        //visibility = ""; //visible默认值,元素是可见的。hidden	元素是不可见的。inherit	规定应该从父元素继承 visibility 属性的值。
-        overflow = "hidden";
-        //透明度
-        /* filter = "alpha(opacity=30)";
-        //-moz-opacity="0.3";
-        MozOpacity = "0.3";
-        opacity = "0.3"; */
-        //其它样式
-        backgroundColor = "#CECECE";
-        border = "0px";
+        document.body.appendChild(baseDiv);
+        document.body.appendChild(dialogDiv);
     }
-    baseDiv.innerHTML = layerHtml || "";
-    document.body.appendChild(baseDiv);
-}
+    /*跟随滚动条的层，始终固定在网页某个位置可见的层*/
+    ClassBaoJavascript.prototype.ScrollingLayer = function (layerPosition, layerWidth, layerHeight, layerHtml) {
+        var _screen = ClassBaoJavascript.getScreen();
+        //背景遮罩
+        var baseDiv = document.createElement("div");
+        with (baseDiv.style) {
+            zIndex = "999";
+            ///页面上部居中
+            if (layerPosition == 1) {
+                position = "fixed";
+                top = "0px"; /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = _screen.top + "px";
+                left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) / 2 + "px") : "25%");
+            }
+            ///页面上部右角
+            else if (layerPosition == 2) {
+                position = "fixed";
+                top = "0px"; /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = _screen.top + "px";
+                left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
+            }
+            ///页面右部居中
+            else if (layerPosition == 3) {
+                position = "fixed";
+                top = (_screen.top + 200) + "px"; /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = (_screen.top + 200) + "px";
+                left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
+            }
+            ///页面底部右角
+            else if (layerPosition == 4) {
+                position = "fixed";
+                top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
+                left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) + "px") : "80%");
+            }
+            ///页面底部居中
+            else if (layerPosition == 5) {
+                position = "fixed";
+                top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
+                left = ((layerWidth && layerWidth > 0) ? ((_screen.width - layerWidth) / 2 + "px") : "25%");
+            }
+            ///页面底部左角
+            else if (layerPosition == 6) {
+                position = "fixed";
+                top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%"); /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = ((layerHeight && layerHeight > 0) ? ((_screen.height - layerHeight) + "px") : "80%");
+                left = "0px";
+            }
+            ///页面左部居中
+            else if (layerPosition == 7) {
+                position = "fixed";
+                top = (_screen.top + 200) + "px"; /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = (_screen.top + 200) + "px";
+                left = "0px";
+            }
+            ///页面上部左角
+            else if (layerPosition == 8) {
+                position = "fixed";
+                top = "0px"; /* position fixed for IE6 */
+                _position = "absolute";
+                /* _top: expression(documentElement.scrollTop + "px"); */
+                _top = _screen.top + "px";
+                left = "0px";
+            }
 
-/*弹出加载中*/
-ClassBaoJavascript.prototype.LoadingLayer = {
-    Icon: ["data:image/gif;base64,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",
-        "../images/Loading.gif"],
-    lastIndex: '',
-    Open: function () {
-        var index = '0';
-
-        this.lastIndex = index;
-        return index;
-    },
-    Close: function () {
-        this.Close(this.lastIndex);
-    },
-    Close: function (index) {
-        alert(index);
-    }
-};
-/*** 自定义弹出框提示·结束 ***/
-
-/*** 正则表达式·开始 ***/
-ClassBaoJavascript.prototype.Regex = {
-    /*常用正则表达式，借鉴formvalidatorregex.js源代码*/
-    Enum: {
-        //整数
-        intege: /^-?[1-9]\d*$/,
-        //正整数
-        intege1: /^[1-9]\d*$/,
-        //负整数
-        intege2: /^-[1-9]\d*$/,
-        //数字
-        num: /^([+-]?)\d*\.?\d+$/,
-        //正数（正整数 + 0）
-        num1: /^[1-9]\d*|0$/,
-        //负数（负整数 + 0）
-        num2: /^-[1-9]\d*|0$/,
-        //浮点数
-        decmal: /^([+-]?)\d*\.\d+$/,
-        //正浮点数
-        decmal1: /^[1-9]\d*.\d*|0.\d*[1-9]\d*$/,
-        //负浮点数
-        decmal2: /^-([1-9]\d*.\d*|0.\d*[1-9]\d*)$/,
-        //浮点数
-        decmal3: /^-?([1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0)$/,
-        //非负浮点数（正浮点数 + 0）
-        decmal4: /^[1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0$/,
-        //非正浮点数（负浮点数 + 0）
-        decmal5: /^(-([1-9]\d*.\d*|0.\d*[1-9]\d*))|0?.0+|0$/,
-
-        //邮件
-        email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
-        //颜色（6位十六进制表示法）
-        color: /^[a-fA-F0-9]{6}$/,
-        //url
-        url: /^http[s]?:\/\/([\w-]+\.)+[\w-]+([\w-./?%&=]*)?$/,
-        //仅中文
-        chinese: /^[\u4E00-\u9FA5\uF900-\uFA2D]+$/,
-        //仅ACSII字符
-        ascii: /^[\x00-\xFF]+$/,
-        //邮编
-        zipcode: /^\d{6}$/,
-        //手机
-        mobile: /^(13|15|17|18)[0-9]{9}$/,
-        //ip(ip4)地址
-        ip4: /^(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)$/,
-        //非空
-        notempty: /^\S+$/,
-        //图片
-        picture: /(.*)\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/,
-        //压缩文件
-        rar: /(.*)\.(rar|zip|7zip|tgz)$/,
-        //日期
-        date: /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/,
-        //QQ号码
-        qq: /^[1-9]*[1-9][0-9]*$/,
-        //电话号码的函数(包括验证国内区号,国际区号,分机号)
-        tel: /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/,
-        //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
-        username: /^\w+$/,
-        //字母
-        letter: /^[A-Za-z]+$/,
-        //大写字母
-        letter_u: /^[A-Z]+$/,
-        //小写字母
-        letter_l: /^[a-z]+$/,
-        //身份证
-        idcard: /^[1-9]([0-9]{14}|[0-9]{17})$/,
-        //中文、字母、数字 _
-        ps_username: /^[\u4E00-\u9FA5\uF900-\uFA2D_\w]+$/
-    },
-    ExtendEnum: {
-        /*匹配空字符串的正则表达式*/
-        empty: /^\s*$/,
-        /*匹配Email的正则表达式*/
-        email: /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i, //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
-        /*匹配座机号码的正则表达式*/
-        telephone: /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/, //010-62515008#8002
-        /*匹配移动电话号码的正则表达式*/
-        mobilephone: /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/, //+86#15311212118
-        /*匹配中国邮政编码*/
-        postalcode: /^[1-9]{1}(\d+){5}$/, //465513
-        /*匹配中国居民身份证（18位或者15位字符）*/
-        IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
-        /*匹配汉字的正则表达式  Special.lastIndex = 0; */
-        chinese: /^[\u4E00-\u9FA5]+$/ig,
-        /*匹配双字节字符串(汉字)的正则表达式   Special.lastIndex = 0; */
-        chinese: /^[^\x00-\xff]+$/ig,
-
-        /*
-        * 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
-        * 主要用于验证真实姓名，公司名等个人信息修改
-        */
-        Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
-        /* 在上面基础上增加了允许数字 */
-        Name1: /^[·\s\-/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
-        /*
-        * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
-        * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
-        */
-        Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
-        /*
-        * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
-        * Special.lastIndex = 0;
-        */
-        Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
-
-        /*匹配分号间隔字符串的正则表达式  Special.lastIndex = 0; */
-        splitSemicolon: /\s*(;|；)\s*/ig,
-        /*匹配逗号间隔字符串的正则表达式  Special.lastIndex = 0; */
-        splitComma: /\s*(,|，)\s*/ig,
-        /*逗号间隔数字格式（例如1,2,3）  Special.lastIndex = 0; */
-        Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
-        /*匹配字符串首尾分号或空格的正则表达式  Special.lastIndex = 0; */
-        semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
-        /*匹配Guid格式的正则表达式*/
-        guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
-
-        /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
-        password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/,
-
-        /*验证码（由数字字母组成，4-6位字符）*/
-        ValidateCode: /^[A-Za-z0-9]{4,6}$/
-    },
-    /*判断一个字符串是否全是空格*/
-    IsEmpty: function (text) { return (!!CBJS.Regex.ExtendEnum.empty.test(text)); },
-    /*检查Email的格式是否正确*/
-    IsEmail: function (email) { return (!!CBJS.Regex.ExtendEnum.email.test(email)); },
-    /*检查固定电话号码的格式是否正确*/
-    IsTelePhone: function (telephone) { return (!!CBJS.Regex.ExtendEnum.telephone.test(telephone)); },
-    /*检查手机号码的格式是否正确*/
-    IsMobilePhone: function (mobilephone) { return (!!CBJS.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
-    /*判断是否为汉字字符串*/
-    IsChinese: function (text) { return (!!CBJS.Regex.ExtendEnum.chinese.test(text)) },
-    /* 判断是否为用户名格式（中文、字母、数字 _）*/
-    IsPs_Username: function (text) { return (!!CBJS.Regex.Enum.ps_username.test(text)) },
-    /*判断是否为单个汉字*/
-    IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
-
-    /*正则表达式分割字符串为数组*/
-    Split: function (splitString, regexFormat) {
-        if (!!!splitString) return [];
-        var stringArray = splitString.toString().split(regexFormat);
-        if (!stringArray || stringArray.length < 1) return [];
-        var length = stringArray.length;
-        var arr = new Array();
-        for (var i = 0; i < length; i++) {
-            if (!!!stringArray[i] || regexFormat.test(stringArray[i])) continue;
-            arr.push(stringArray[i]);
+            padding = "0px";
+            width = ((layerWidth && layerWidth > 0) ? (layerWidth + "px") : "50%");
+            height = ((layerHeight && layerHeight > 0) ? (layerHeight + "px") : "10%");
+            //可见与隐藏
+            display = "block"; //block此元素将显示为块级元素，此元素前后会带有换行符。none 此元素不会被显示。inherit规定应该从父元素继承 display 属性的值。
+            //visibility = ""; //visible默认值,元素是可见的。hidden	元素是不可见的。inherit	规定应该从父元素继承 visibility 属性的值。
+            overflow = "hidden";
+            //透明度
+            /* filter = "alpha(opacity=30)";
+            //-moz-opacity="0.3";
+            MozOpacity = "0.3";
+            opacity = "0.3"; */
+            //其它样式
+            backgroundColor = "#CECECE";
+            border = "0px";
         }
-        return arr;
+        baseDiv.innerHTML = layerHtml || "";
+        document.body.appendChild(baseDiv);
     }
-};
-/*** 正则表达式·结束 ***/
+
+    /*弹出加载中*/
+    ClassBaoJavascript.prototype.LoadingLayer = {
+        Icon: ["data:image/gif;base64,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",
+            "../images/Loading.gif"],
+        lastIndex: '',
+        Open: function () {
+            var index = '0';
+
+            this.lastIndex = index;
+            return index;
+        },
+        Close: function () {
+            this.Close(this.lastIndex);
+        },
+        Close: function (index) {
+            alert(index);
+        }
+    };
+    /*** 自定义弹出框提示·结束 ***/
+
+    /*** 正则表达式·开始 ***/
+    ClassBaoJavascript.prototype.Regex = {
+        /*常用正则表达式，借鉴formvalidatorregex.js源代码*/
+        Enum: {
+            //整数
+            intege: /^-?[1-9]\d*$/,
+            //正整数
+            intege1: /^[1-9]\d*$/,
+            //负整数
+            intege2: /^-[1-9]\d*$/,
+            //数字
+            num: /^([+-]?)\d*\.?\d+$/,
+            //正数（正整数 + 0）
+            num1: /^[1-9]\d*|0$/,
+            //负数（负整数 + 0）
+            num2: /^-[1-9]\d*|0$/,
+            //浮点数
+            decmal: /^([+-]?)\d*\.\d+$/,
+            //正浮点数
+            decmal1: /^[1-9]\d*.\d*|0.\d*[1-9]\d*$/,
+            //负浮点数
+            decmal2: /^-([1-9]\d*.\d*|0.\d*[1-9]\d*)$/,
+            //浮点数
+            decmal3: /^-?([1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0)$/,
+            //非负浮点数（正浮点数 + 0）
+            decmal4: /^[1-9]\d*.\d*|0.\d*[1-9]\d*|0?.0+|0$/,
+            //非正浮点数（负浮点数 + 0）
+            decmal5: /^(-([1-9]\d*.\d*|0.\d*[1-9]\d*))|0?.0+|0$/,
+
+            //邮件
+            email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
+            //颜色（6位十六进制表示法）
+            color: /^[a-fA-F0-9]{6}$/,
+            //url
+            url: /^http[s]?:\/\/([\w-]+\.)+[\w-]+([\w-./?%&=]*)?$/,
+            //仅中文
+            chinese: /^[\u4E00-\u9FA5\uF900-\uFA2D]+$/,
+            //仅ACSII字符
+            ascii: /^[\x00-\xFF]+$/,
+            //邮编
+            zipcode: /^\d{6}$/,
+            //手机
+            mobile: /^(13|15|17|18)[0-9]{9}$/,
+            //ip(ip4)地址
+            ip4: /^(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)$/,
+            //非空
+            notempty: /^\S+$/,
+            //图片
+            picture: /(.*)\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/,
+            //压缩文件
+            rar: /(.*)\.(rar|zip|7zip|tgz)$/,
+            //日期
+            date: /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/,
+            //QQ号码
+            qq: /^[1-9]*[1-9][0-9]*$/,
+            //电话号码的函数(包括验证国内区号,国际区号,分机号)
+            tel: /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/,
+            //用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
+            username: /^\w+$/,
+            //字母
+            letter: /^[A-Za-z]+$/,
+            //大写字母
+            letter_u: /^[A-Z]+$/,
+            //小写字母
+            letter_l: /^[a-z]+$/,
+            //身份证
+            idcard: /^[1-9]([0-9]{14}|[0-9]{17})$/,
+            //中文、字母、数字 _
+            ps_username: /^[\u4E00-\u9FA5\uF900-\uFA2D_\w]+$/
+        },
+        ExtendEnum: {
+            /*匹配空字符串的正则表达式*/
+            empty: /^\s*$/,
+            /*匹配Email的正则表达式*/
+            email: /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/i, //或者：/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+            /*匹配座机号码的正则表达式*/
+            telephone: /^(([\(（]?\d{3,4}[-#\)）]{1})?\d{7,8}([-#\(（]{1}\d+[\)）]?)?)$/, //010-62515008#8002
+            /*匹配移动电话号码的正则表达式*/
+            mobilephone: /^(([\+\(（]?\d{2,5}[-#\)）]{1})?1[3|5|7|8|9]\d{9})$/, //+86#15311212118
+            /*匹配中国邮政编码*/
+            postalcode: /^[1-9]{1}(\d+){5}$/, //465513
+            /*匹配中国居民身份证（18位或者15位字符）*/
+            IDCard: /^\d{17}(\d|X)|\d{14}(\d|X)$/,
+            /*匹配汉字的正则表达式  Special.lastIndex = 0; */
+            chinese: /^[\u4E00-\u9FA5]+$/ig,
+            /*匹配双字节字符串(汉字)的正则表达式   Special.lastIndex = 0; */
+            chinese: /^[^\x00-\xff]+$/ig,
+
+            /*
+            * 字符串中包含中文，英文字母，链接符横线，链接符点，以及空格，最少一个字符。（例如：贝拉克·侯赛因·奥巴马，Barack·Hussein·Obama）
+            * 主要用于验证真实姓名，公司名等个人信息修改
+            */
+            Name: /^[·\s\-/#a-zA-Z\u4E00-\u9FA5]+$/i,
+            /* 在上面基础上增加了允许数字 */
+            Name1: /^[·\s\-/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
+            /*
+            * 字符串中包含中文，英文字母，中文括号，英文括号，链接符横线，链接符点，以及空格，最少一个字符。
+            * 主要用于验证地址。（例如：北京市/海淀(区)（中关村大街）#44-45号）
+            */
+            Address: /^[()（）·\s\-~/#0-9a-zA-Z\u4E00-\u9FA5]+$/i,
+            /*
+            * 验证字符串包含特殊符号（非中文，英文，中文标点符号，英文标点符号，键盘特殊符号）的正则表达式
+            * Special.lastIndex = 0;
+            */
+            Special: /[^\u4E00-\u9FA5\w·~！@#￥%……&*（）——+\-={}【】\|、：；“”‘《，》。？、\./`\!\$\^\(\)\\\[\]\:;"'<,>\?\s\n\r]/gi,
+
+            /*匹配分号间隔字符串的正则表达式  Special.lastIndex = 0; */
+            splitSemicolon: /\s*(;|；)\s*/ig,
+            /*匹配逗号间隔字符串的正则表达式  Special.lastIndex = 0; */
+            splitComma: /\s*(,|，)\s*/ig,
+            /*逗号间隔数字格式（例如1,2,3）  Special.lastIndex = 0; */
+            Reg_CommasBetweenDigital: /(^\d+$)|(^\d+,\d+$)|(^\d+(,\d+,)+\d+$)/ig,
+            /*匹配字符串首尾分号或空格的正则表达式  Special.lastIndex = 0; */
+            semicolonByHeadAndTail: /(^((\s*(;|；)+\s*)|(\s+)))|(((\s*(;|；)+\s*)|(\s+))$)/ig,
+            /*匹配Guid格式的正则表达式*/
+            guid: /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$/,
+
+            /*密码格式（由数字字母下划线，英文标点符号组成，6-18位字符）*/
+            password: /^[0-9a-zA-Z~`\!@#\$%\^&\*\(\)_\-+={\[}\]\|\:;"'<,>\\\.\?/]{6,18}$/,
+
+            /*验证码（由数字字母组成，4-6位字符）*/
+            ValidateCode: /^[A-Za-z0-9]{4,6}$/
+        },
+        /*判断一个字符串是否全是空格*/
+        IsEmpty: function (text) { return (!!CBJS.Regex.ExtendEnum.empty.test(text)); },
+        /*检查Email的格式是否正确*/
+        IsEmail: function (email) { return (!!CBJS.Regex.ExtendEnum.email.test(email)); },
+        /*检查固定电话号码的格式是否正确*/
+        IsTelePhone: function (telephone) { return (!!CBJS.Regex.ExtendEnum.telephone.test(telephone)); },
+        /*检查手机号码的格式是否正确*/
+        IsMobilePhone: function (mobilephone) { return (!!CBJS.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
+        /*判断是否为汉字字符串*/
+        IsChinese: function (text) { return (!!CBJS.Regex.ExtendEnum.chinese.test(text)) },
+        /* 判断是否为用户名格式（中文、字母、数字 _）*/
+        IsPs_Username: function (text) { return (!!CBJS.Regex.Enum.ps_username.test(text)) },
+        /*判断是否为单个汉字*/
+        IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
+
+        /*正则表达式分割字符串为数组*/
+        Split: function (splitString, regexFormat) {
+            if (!!!splitString) return [];
+            var stringArray = splitString.toString().split(regexFormat);
+            if (!stringArray || stringArray.length < 1) return [];
+            var length = stringArray.length;
+            var arr = new Array();
+            for (var i = 0; i < length; i++) {
+                if (!!!stringArray[i] || regexFormat.test(stringArray[i])) continue;
+                arr.push(stringArray[i]);
+            }
+            return arr;
+        }
+    };
+    /*** 正则表达式·结束 ***/
 
 
 
