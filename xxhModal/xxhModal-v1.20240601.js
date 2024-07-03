@@ -180,7 +180,7 @@
 			this.box.maskIsEnabled = false;
 			this.box.head.isEnabled = false;
 
-			this.box.content = "<br> " + msg + " <br><br>";
+			this.box.content = " " + msg + " ";
 			this.box.content += "<!-- 动画结束后移除元素 -->";
 			this.box.content += "<script>document.querySelector('#xxhModal" + this.box.id + ".xxhModal').addEventListener('animationend', function() {CBJS.xxhModal.remove('" + this.box.id + "');});</script>";
 
@@ -188,7 +188,7 @@
 			this.box.foot.btn = []; // 清空全部按钮
 			this.openBase();
 			// CSS动画：滑入停留再滑出消失
-			// document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
+			 //document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in-out');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').addEventListener('animationend', function () {
 				var _modal = document.getElementsByClassName("SlideUp-in-out");
