@@ -338,7 +338,7 @@
         this.hidden = function (id) {
             var element = null;
             if ("string" == typeof (id)) {
-                element = CBJS.getById(id);
+                element = this.getById(id);
             }
             else if ("object" == typeof (id)) {
                 element = id;
@@ -350,7 +350,7 @@
         this.show = function (id) {
             var element = null;
             if ("string" == typeof (id)) {
-                element = CBJS.getById(id);
+                element = this.getById(id);
             }
             else if ("object" == typeof (id)) {
                 element = id;
@@ -524,7 +524,7 @@
         /*获取页面GET请求URL参数值*/
         this.getUrlParamValue = function (name) {
             var searchStr = decodeURIComponent(window.location.search);
-            return CBJS.getParamValue(name, searchStr, "&");
+            return this.getParamValue(name, searchStr, "&");
         };
         this.getQueryString = function (name, url) {
             if (!name) return null;
@@ -667,7 +667,7 @@
             /*获取Cookie（name是名称）*/
             getCookie: function (name) {
                 if (!!document.cookie) return null;
-                return CBJS.getParamValue(name, decodeURIComponent(document.cookie), ";");
+                return this.getParamValue(name, decodeURIComponent(document.cookie), ";");
             },
             /*获取垂直线分隔的Cookie（name是名称）*/
             getCookieByVerticalLine: function (name) {
@@ -684,6 +684,63 @@
                 document.cookie = name + "=; expires=" + exdate.toGMTString();
             }
         };
+        /***** 常用实例方法扩展·sessionStorage·开始 *****/
+        this.handleSessionStorage = {
+            check: function () {
+                if (!window.sessionStorage) {
+                    console.log("This browser does not support sessionStorage.");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            , setItem: function (name, value) {
+                if ('string' == typeof (value)) { sessionStorage.setItem(name, value); }
+                else { sessionStorage.setItem(name, JSON.stringify(value)); }
+            }
+            , getItem: function (name) {
+                var value = sessionStorage.getItem(name);
+                if ('string' == typeof (value)) { return JSON.parse(value); }
+                else { return value; }
+            }
+            , removeItem: function (name) {
+                return sessionStorage.removeItem(name);
+            }
+            , clearAll: function () {
+                return sessionStorage.clear();
+            }
+        };
+        /***** 常用实例方法扩展·sessionStorage·结束 *****/
+        /***** 常用实例方法扩展·LocalStorage·开始 *****/
+        this.handleLocalStorage = {
+            check: function () {
+                if (!window.localStorage) {
+                    console.log("This browser does not support localStorage.");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            , setItem: function (name, value) {
+                if ('string' == typeof (value)) { localStorage.setItem(name, value); }
+                else { localStorage.setItem(name, JSON.stringify(value)); }
+            }
+            , getItem: function (name) {
+                var value = localStorage.getItem(name);
+                if ('string' == typeof (value)) { return JSON.parse(value); }
+                else { return value; }
+            }
+            , removeItem: function (name) {
+                return localStorage.removeItem(name);
+            }
+            , clearAll: function () {
+                return localStorage.clear();
+            }
+        };
+        /***** 常用实例方法扩展·LocalStorage·结束 *****/
+
 
         /*编码Html源代码*/
         this.encodingHTML = function (text) {
@@ -808,7 +865,7 @@
             removeByItem: function (array, removeItem) {
                 for (var i = 0; i < array.length; i++) {
                     if (array[i] == removeItem) {
-                        array = CBJS.Array.removeByIndex(array, i);
+                        array = this.Array.removeByIndex(array, i);
                         i--;
                     }
                 }
@@ -891,7 +948,7 @@
         /*文本搜索。参数：sourceString是源字符串，searchWords是搜索词或空格隔开的词组，HandleFunction自定义对已匹配的单个词组处理方法。*/
         this.TextSearch = function (sourceString, searchWords, HandleFunction) {
             var searchWords = searchWords.Trim().replace(/\s+/ig, ' ');
-            var wordArray = CBJS.Regex.Split(searchWords, /\s+/ig);
+            var wordArray = this.Regex.Split(searchWords, /\s+/ig);
             wordArray.forEach(function (value, index, array) {
                 var reg = new RegExp(value, "ig"); //动态创建一个正则表达式
                 sourceString = sourceString.replace(reg, function (a) {
@@ -1181,7 +1238,7 @@
             if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", '').replace(")/", ''), 10)); }
             else { return new Date(datetime.replace(/T/ig, ' ').replace(/Z/ig, '').replace(/\-/ig, '/')); };
         }
-        else { return CBJS.GetDateByJson(datetime.toString()); }
+        else { return this.GetDateByJson(datetime.toString()); }
     };
     /*时间格式化扩展*/
     Date.prototype.Format = function (fmt) {
@@ -1288,34 +1345,6 @@
     }
     /***** 常用实例方法扩展·日期与时间·结束 *****/
 
-    /***** 常用实例方法扩展·LocalStorage·开始 *****/
-    ClassBaoJavascript.prototype.handleLocalStorage = {
-        check: function () {
-            if (!window.localStorage) {
-                console.log("This browser does not support localStorage.");
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        , setItem: function (name, value) {
-            if ('string' == typeof (value)) { localStorage.setItem(name, value); }
-            else { localStorage.setItem(name, JSON.stringify(value)); }
-        }
-        , getItem: function (name) {
-            var value = localStorage.getItem(name);
-            if ('string' == typeof (value)) { return JSON.parse(value); }
-            else { return value; }
-        }
-        , removeItem: function (name) {
-            return localStorage.removeItem(name);
-        }
-        , clearAll: function () {
-            return localStorage.clear();
-        }
-    };
-    /***** 常用实例方法扩展·LocalStorage·结束 *****/
 
     /***** 常用实例方法扩展·百分数/小数处理·开始 *****/
     /*百分数转化为小数*/
@@ -1468,7 +1497,7 @@
     /*获取下拉列表框（单选）选中项*/
     ClassBaoJavascript.prototype.GetSelectedItem = function (id) {
         var result = { index: 0, value: "", text: "" };
-        var dom = CBJS.getById(id);
+        var dom = this.getById(id);
         if (dom && dom.tagName == "SELECT" && dom.options) {
             //单选
             var item = dom.options[dom.selectedIndex];
@@ -1482,7 +1511,7 @@
     ClassBaoJavascript.prototype.GetSelectedItems = function (id) {
         var results = [];
         var result = { index: 0, value: "", text: "" };
-        var dom = CBJS.getById(id);
+        var dom = this.getById(id);
         if (dom && dom.tagName == "SELECT" && dom.options) {
             //多选
             if (dom.multiple && dom.selectedOptions) {
@@ -1497,7 +1526,7 @@
     /*设置下拉列表框（单选）选中项（id是下拉列表框ID；value是下拉列表框值或文本）*/
     ClassBaoJavascript.prototype.SetSelectedItem = function (id, value) {
         //document.getElementById("classcode").value = classcode; //可以解决下拉框的“返回”页面定位
-        var dom = CBJS.getById(id);
+        var dom = this.getById(id);
         if (dom && dom.options) {
             for (var i = 0; i < dom.options.length; i++) {
                 if (dom.options[i].value == value || dom.options[i].text == value) {
@@ -1509,7 +1538,7 @@
     }
     /*设置下拉列表框（多选）选中项集合（id是下拉列表框ID；value是下拉列表框值或文本集合）*/
     ClassBaoJavascript.prototype.SetSelectedItems = function (id, items) {
-        var dom = CBJS.getById(id);
+        var dom = this.getById(id);
         if (dom && dom.options) {
             //var item={ index:0, value: "", text: "" };
             for (var i = 0; i < items.length; i++) {
@@ -2098,17 +2127,17 @@
             ValidateCode: /^[A-Za-z0-9]{4,6}$/
         },
         /*判断一个字符串是否全是空格*/
-        IsEmpty: function (text) { return (!!CBJS.Regex.ExtendEnum.empty.test(text)); },
+        IsEmpty: function (text) { return (!!this.Regex.ExtendEnum.empty.test(text)); },
         /*检查Email的格式是否正确*/
-        IsEmail: function (email) { return (!!CBJS.Regex.ExtendEnum.email.test(email)); },
+        IsEmail: function (email) { return (!!this.Regex.ExtendEnum.email.test(email)); },
         /*检查固定电话号码的格式是否正确*/
-        IsTelePhone: function (telephone) { return (!!CBJS.Regex.ExtendEnum.telephone.test(telephone)); },
+        IsTelePhone: function (telephone) { return (!!this.Regex.ExtendEnum.telephone.test(telephone)); },
         /*检查手机号码的格式是否正确*/
-        IsMobilePhone: function (mobilephone) { return (!!CBJS.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
+        IsMobilePhone: function (mobilephone) { return (!!this.Regex.ExtendEnum.mobilephone.test(mobilephone)) },
         /*判断是否为汉字字符串*/
-        IsChinese: function (text) { return (!!CBJS.Regex.ExtendEnum.chinese.test(text)) },
+        IsChinese: function (text) { return (!!this.Regex.ExtendEnum.chinese.test(text)) },
         /* 判断是否为用户名格式（中文、字母、数字 _）*/
-        IsPs_Username: function (text) { return (!!CBJS.Regex.Enum.ps_username.test(text)) },
+        IsPs_Username: function (text) { return (!!this.Regex.Enum.ps_username.test(text)) },
         /*判断是否为单个汉字*/
         IsChineseByChar: function (_char) { return (_char.charCodeAt(0) <= 255) ? false : true; },
 

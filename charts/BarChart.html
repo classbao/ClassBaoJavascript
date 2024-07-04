@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>柱状图</title>
+    <meta name="keywords" content="柱状图">
+    <meta name="Description" content="柱状图">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+    </style>
+
+    <!-- <script src="/Content/mobile/js/xxx.js"></script> -->
+    <!-- JS脚本 -->
+    <script>
+
+    </script>
+
+</head>
+
+<body>
+
+    <canvas id="myCanvas" width="1000" height="800">Your browser does not support the canvas element.</canvas>
+
+    <!-- JS脚本 -->
+    <script>
+		var data = [
+			{
+				title:2011,
+				zg:50,
+				color:'yellow',
+				arr:[
+					.15,
+					.15,
+					.2,
+					.15,
+					.2,
+					.15
+				]
+			},
+			{
+				title:2012,
+				zg:75,
+				color:'black',
+				arr:[
+					.15,
+					.25,
+					.2,
+					.05,
+					.2,
+					.15
+				]
+			},
+			{
+				title:2013,
+				zg:125,
+				color:'pink',
+				arr:[
+					.20,
+					.20,
+					.2,
+					.10,
+					.2,
+					.10
+				]
+					
+			},
+			{
+				title:2014,
+				zg:200,
+				color:'green',
+				arr:[
+					.10,
+					.15,
+					.25,
+					.10,
+					.30,
+					.10
+				]
+			},
+			{
+				title:2015,
+				zg:320,
+				color:'blue',
+				arr:[
+					.15,
+					.15,
+					.25,
+					.10,
+					.25,
+					.10
+				]
+			},
+			{
+				title:2016,
+				zg:475,
+				color:'red',
+				arr:[
+					.30,
+					.30,
+					.30,
+					.05,
+					.03,
+					.02
+				]
+			}
+		];
+
+    const canvas = document.getElementById('myCanvas');
+	var ctx = canvas.getContext('2d');
+		var arr = [0,50,100,150,200,250,300,350,400,450,500];
+		for(var i = 0; i < arr.length; i++){
+			ctx.moveTo(50,500-arr[i]);
+			ctx.lineTo(canvas.width,500-arr[i]);
+			ctx.stroke();
+			ctx.textBaseline = 'middle';
+			ctx.fillText(arr[i],30,500-arr[i])
+		}
+		for(var i = 0; i < data.length; i++){
+			var zg = data[i].zg;
+			for(var j = 0; j < data[i].arr.length; j++){
+				var z = data[i].arr[j] * data[i].zg;
+				console.log(data[i].arr[j])
+				ctx.fillStyle = data[j].color;
+				ctx.fillRect(i*100+100,500-zg,50,z)
+				zg = zg - z;
+			}
+			ctx.textAlign = 'center';
+			ctx.fillText(data[i].title,i*100+100+25,520)
+		}
+
+    </script>
+
+
+
+</body>
+
+</html>
