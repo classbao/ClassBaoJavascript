@@ -1650,18 +1650,21 @@ ClassBaoJavascript.prototype.popup = {
     open: function (box) {
         this.box = box; this.openBase();
     },
-    openAlert: function (msg, callback) {
+    openAlert: function (msg, btnTitle, callback) {
         this.init();
         this.box.content = msg;
         this.box.btn[0].click = function () { if (!!callback) { callback(); } }
+        this.box.btn[0].title = btnTitle;
         this.box.btn[1].isEnabled = false;
         this.openBase();
     },
-    openConfirm: function (msg, callbackOk, callbackCancel) {
+    openConfirm: function (msg, btnOkTitle, callbackOk, btnCancelTitle, callbackCancel) {
         this.init();
         this.box.content = msg;
         this.box.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
+        this.box.btn[0].title = btnOkTitle;
         this.box.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
+        this.box.btn[1].title = btnCancelTitle;
         this.openBase();
     },
     close: function () {
