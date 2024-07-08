@@ -12,7 +12,7 @@
 
 /***** 通用ClassBaoAnimation模拟类库·开始 *****/
 var ClassBaoAnimation = {
-    GlobalConfig : {
+    GlobalConfig: {
         width: 0,
         height: 0,
         usedtime: 0, //用时
@@ -27,17 +27,17 @@ var ClassBaoAnimation = {
             ClassBaoAnimation.canvas.getContext(myCanvasId);
         },
         /*启动引擎*/
-        StartEngine: function(callback){
-            if (!!this.interval) {return false;}
-            if (this.isRuning) {return false;}
+        StartEngine: function (callback) {
+            if (!!this.interval) { return false; }
+            if (this.isRuning) { return false; }
 
             console.log('StartEngine ^_^');
             this.isRuning = true;
-            this.interval = requestAnimationFrame(function fn(){
+            this.interval = requestAnimationFrame(function fn() {
                 if (!!ClassBaoAnimation.GlobalConfig.isRuning) {
                     requestAnimationFrame(fn);
                 }
-                else{
+                else {
                     cancelAnimationFrame(ClassBaoAnimation.GlobalConfig.interval);
                     console.log('Turn off the engine: ClassBaoAnimation.GlobalConfig.interval=' + ClassBaoAnimation.GlobalConfig.interval);
                 }
@@ -49,10 +49,10 @@ var ClassBaoAnimation = {
     },
 
     /* HTML5的canvas相关插件 */
-    canvas : {
-        setCanvas:function(myCanvasId,width,height){
-            document.getElementById(myCanvasId).setAttribute("width",width);
-            document.getElementById(myCanvasId).setAttribute("height",height);
+    canvas: {
+        setCanvas: function (myCanvasId, width, height) {
+            document.getElementById(myCanvasId).setAttribute("width", width);
+            document.getElementById(myCanvasId).setAttribute("height", height);
         }
         , context: null
         /* CanvasRenderingContext2D */
@@ -192,11 +192,11 @@ var ClassBaoAnimation = {
         }
     */
     /*获取键盘按键代码（event是按键事件）兼容IE，FireFox，Chrome，Opera等*/
-    GetKeyCode : function (event) {
+    GetKeyCode: function (event) {
         return this.EventUtil.getKeyCode(event);
     },
     /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
-    EventUtil : {
+    EventUtil: {
         /*添加事件处理程序*/
         /*示例：ClassBaoAnimation.EventUtil.addHandler(document, "keydown", function (e) { if (ClassBaoAnimation.GetKeyCode(e) == 13) { ClassBaoAnimation.LabelAlert(null, '您按下了回车键'); return true; } } );*/
         addHandler: function (element, type, handler) {
@@ -232,7 +232,7 @@ var ClassBaoAnimation = {
                 var arg0 = func.arguments[0];
                 if (arg0) {
                     if ((arg0.constructor == Event || arg0.constructor == MouseEvent)
-                    || (typeof (arg0) == "object" && arg0.preventDefault && arg0.stopPropagation)) {
+                        || (typeof (arg0) == "object" && arg0.preventDefault && arg0.stopPropagation)) {
                         return arg0;
                     }
                 }
@@ -268,97 +268,97 @@ var ClassBaoAnimation = {
         }
     },
     /* */
-    OnTouch:{
+    OnTouch: {
         /* 【Touch事件说明】pc上的web页面鼠 标会产生onmousedown、onmouseup、onmouseout、onmouseover、onmousemove的事件，但是在移动终端如 iphone、ipod  Touch、ipad上的web页面触屏时会产生ontouchstart、ontouchmove、ontouchend、ontouchcancel 事件，分别对应了触屏开始、拖拽及完成触屏事件和取消。*/
         /* 当按下手指时，触发ontouchstart；
         当移动手指时，触发ontouchmove；
         当移走手指时，触发ontouchend。
         当一些更高级别的事件发生的时候（如电话接入或者弹出信息）会取消当前的touch操作，即触发ontouchcancel。一般会在ontouchcancel时暂停游戏、存档等操作。
         */
-        
+
         /* 【Touch事件与Mouse事件的触发关系】：在触屏操作后，手指提起的一刹那（即发生ontouchend后），系统会判断接收到事件的element的内容是否被改变，如果内容被改变，接下来的事件都不会触发；如果没有改变，会按照mousedown，mouseup，click的顺序触发事件。特别需要提到的是，只有再触发一个触屏事件时，才会触发上一个事件的mouseout事件。 */
         // http://www.noobyard.com/article/p-kwcgxtdj-bx.html
         // https://www.cnblogs.com/zourong/p/3913446.html
 
-       /* 目前移动端浏览器均支持这4个触摸事件，包括IE。由于触屏也支持MouseEvent，因此他们的顺序是需要注意的：touchstart → mouseover → mousemove → mousedown → mouseup → click */ 
-       // https://blog.51cto.com/u_14405/6598014
-       // http://www.manongjc.com/detail/64-uoexwxoofmekkbi.html
+        /* 目前移动端浏览器均支持这4个触摸事件，包括IE。由于触屏也支持MouseEvent，因此他们的顺序是需要注意的：touchstart → mouseover → mousemove → mousedown → mouseup → click */
+        // https://blog.51cto.com/u_14405/6598014
+        // http://www.manongjc.com/detail/64-uoexwxoofmekkbi.html
 
-       /* 每个触摸事件被触发后，会生成一个event对象，event对象里额外包括以下三个触摸列表
+        /* 每个触摸事件被触发后，会生成一个event对象，event对象里额外包括以下三个触摸列表
+ 
+ touches:     //当前屏幕上所有手指的列表
+ 
+ targetTouches:      //当前dom元素上手指的列表，尽量使用这个代替touches
+ 
+ changedTouches:     //涉及当前事件的手指的列表，尽量使用这个代替touches
+ 
+ 这些列表里的每次触摸由touch对象组成，touch对象里包含着触摸信息，主要属性如下：
+ 
+ clientX / clientY:      //触摸点相对浏览器窗口的位置
+ 
+ pageX / pageY:       //触摸点相对于页面的位置
+ 
+ screenX  /  screenY:    //触摸点相对于屏幕的位置
+ 
+ identifier:        //touch对象的ID
+ 
+ target:       //当前的DOM元素 */
 
-touches:     //当前屏幕上所有手指的列表
+        /* 注意：
+        
+        手指在滑动整个屏幕时，会影响浏览器的行为，比如滚动和缩放。所以在调用touch事件时，要注意禁止缩放和滚动。
+        
+        1.禁止缩放
+        
+        通过meta元标签来设置。
+        
+        <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+        
+        2.禁止滚动
+        
+        preventDefault是阻止默认行为，touch事件的默认行为就是滚动。
+        
+        event.preventDefault(); */
 
-targetTouches:      //当前dom元素上手指的列表，尽量使用这个代替touches
-
-changedTouches:     //涉及当前事件的手指的列表，尽量使用这个代替touches
-
-这些列表里的每次触摸由touch对象组成，touch对象里包含着触摸信息，主要属性如下：
-
-clientX / clientY:      //触摸点相对浏览器窗口的位置
-
-pageX / pageY:       //触摸点相对于页面的位置
-
-screenX  /  screenY:    //触摸点相对于屏幕的位置
-
-identifier:        //touch对象的ID
-
-target:       //当前的DOM元素 */
-
-/* 注意：
-
-手指在滑动整个屏幕时，会影响浏览器的行为，比如滚动和缩放。所以在调用touch事件时，要注意禁止缩放和滚动。
-
-1.禁止缩放
-
-通过meta元标签来设置。
-
-<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
-
-2.禁止滚动
-
-preventDefault是阻止默认行为，touch事件的默认行为就是滚动。
-
-event.preventDefault(); */
-
-       /*
-       event.screenX
-       event.screenY
-       event.clientX
-       event.clientY
-       event.offsetX
-       event.offsetY
-       event.movementX
-       event.movementY
-       event.x
-       event.y
-       event.currentTarget.type
-       event.timeStamp
-       event.pointerType
-    */
+        /*
+        event.screenX
+        event.screenY
+        event.clientX
+        event.clientY
+        event.offsetX
+        event.offsetY
+        event.movementX
+        event.movementY
+        event.x
+        event.y
+        event.currentTarget.type
+        event.timeStamp
+        event.pointerType
+     */
 
         /*判断设备是否支持touch事件*/
-        SupportTouch : ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
+        SupportTouch: ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
         /* 手指放到屏幕上时触发手指放到屏幕上时触发 */
-        touchStart : function(element, handler){
-            if(!!element&& !! ClassBaoAnimation.OnTouch.SupportTouch){ ClassBaoAnimation.EventUtil.addHandler(element,'touchstart',handler);}
+        touchStart: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchstart', handler); }
         },
         /* 手指在屏幕上滑动式触发 */
-        touchMove : function(element, handler){
-            if(!!element&& !! ClassBaoAnimation.OnTouch.SupportTouch){ ClassBaoAnimation.EventUtil.addHandler(element,'touchmove',handler);}
+        touchMove: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchmove', handler); }
         },
         /* 手指离开屏幕时触发 */
-        touchEnd : function(element, handler){
-            if(!!element&& !! ClassBaoAnimation.OnTouch.SupportTouch){ ClassBaoAnimation.EventUtil.addHandler(element,'touchend',handler);}
+        touchEnd: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchend', handler); }
         },
         /* 系统取消touch事件的时候触发，这个好像比较少用 */
-        touchCancel : function(element, handler){
-            if(!!element&& !! ClassBaoAnimation.OnTouch.SupportTouch){ ClassBaoAnimation.EventUtil.addHandler(element,'touchcancel',handler);}
+        touchCancel: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchcancel', handler); }
         }
 
     },
 
     /*获得元素的绝对坐标（element是HTML元素；结果：{x:0,y:0}）*/
-    PositionByAbsolute : function (element) {
+    PositionByAbsolute: function (element) {
         var result = { x: element.offsetLeft, y: element.offsetTop };
         element = element.offsetParent;
         while (element) {
@@ -375,7 +375,7 @@ event.preventDefault(); */
         ClassBaoAnimation.FollowCursorHandler(e, ClassBaoAnimation.getById("moveId"));
     }
     */
-    FollowCursorHandler : function (e, element) {
+    FollowCursorHandler: function (e, element) {
         if (!e || !element) return;
         try {
             with (element.style) {
@@ -390,7 +390,7 @@ event.preventDefault(); */
     //调用示例：
     ClassBaoAnimation.FollowCursor(ClassBaoAnimation.getById("moveId"));
     */
-    FollowCursor : function (element) {
+    FollowCursor: function (element) {
         try {
             ClassBaoAnimation.AddEventHandler(document, "mousemove", function (e) {
                 e = e || window.event;
@@ -427,24 +427,24 @@ requestAnimationFrame 是由浏览器专门为动画提供的 API，在运行时
 /*window.requestAnimationFrame 的兼容*/
 if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = (
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.msRquestAniamtionFrame ||
-      window.oRequestAnimationFrame ||
-      function (callback) {
-        /* 大多数电脑显示器的刷新频率是 60Hz，大概相当于每秒钟重绘 60 次。大多数浏览器都会对重绘操作加以限制，不超过显示器的重绘频率，因为即使超过那个频率用户体验也不会有提升。因此最平滑动画的最佳循环间隔是1000ms/60，约等于 16.6ms */
-          return setTimeout(callback, Math.floor(1000 / 60));
-      }
-  );
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.msRquestAniamtionFrame ||
+        window.oRequestAnimationFrame ||
+        function (callback) {
+            /* 大多数电脑显示器的刷新频率是 60Hz，大概相当于每秒钟重绘 60 次。大多数浏览器都会对重绘操作加以限制，不超过显示器的重绘频率，因为即使超过那个频率用户体验也不会有提升。因此最平滑动画的最佳循环间隔是1000ms/60，约等于 16.6ms */
+            return setTimeout(callback, Math.floor(1000 / 60));
+        }
+    );
 };
-if (!window.cancelAnimationFrame) {    
-    window.cancelAnimationFrame =(
-        window.webkitCancelAnimationFrame ||window.webkitCancelRequestAnimationFrame ||
-        window.mozCancelAnimationFrame ||window.mozCancelRequestAnimationFrame ||
-        window.msCancelAniamtionFrame ||window.msCancelRequestAniamtionFrame ||
-        window.oCancelAnimationFrame ||window.oCancelRequestAnimationFrame ||
-        function(id) {        
-            clearTimeout(id);    
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = (
+        window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame ||
+        window.mozCancelAnimationFrame || window.mozCancelRequestAnimationFrame ||
+        window.msCancelAniamtionFrame || window.msCancelRequestAniamtionFrame ||
+        window.oCancelAnimationFrame || window.oCancelRequestAnimationFrame ||
+        function (id) {
+            clearTimeout(id);
         }
     );
 };
