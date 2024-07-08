@@ -139,11 +139,13 @@
 
 .xxhModal .Ok {}
 
+.xxhModal .Ok:focus,
 .xxhModal .Ok:hover,
 .xxhModal .Ok:active {}
 
 .xxhModal .No {}
 
+.xxhModal .No:focus,
 .xxhModal .No:hover,
 .xxhModal .No:active {}
 
