@@ -43,15 +43,15 @@
 				maskIsEnabled: true
 			};
 		},
-		buildMask: function () {
+		buildMask: function (id) {
 			if (!this.box.maskIsEnabled) {
 				return "";
 			}
 
 			var mask = document.createElement("div");
-			mask.id = "xxhMask" + this.box.id;
+			mask.id = !!id ? id : ("xxhMask" + this.box.id);
 			mask.className = "xxhMask";
-			mask.setAttribute('data-id', this.box.id);
+			mask.setAttribute('data-id', mask.id);
 			//mask.style = "display:none;";
 			return mask;
 		},
@@ -106,7 +106,7 @@
 
 			var _modal = document.createElement("div");
 			_modal.id = "xxhModal" + this.box.id;
-			_modal.setAttribute('data-id', this.box.id);
+			_modal.setAttribute('data-id', _modal.id);
 			_modal.className = "xxhModal " + (this.box.className || "default");
 			//_modal.style = "display:none;";
 
@@ -118,7 +118,7 @@
 			_modal.innerHTML = html_modal;
 
 			if (!!this.box.maskIsEnabled) {
-				document.body.appendChild(this.buildMask(this.box.id));
+				document.body.appendChild(this.buildMask("xxhMask" + this.box.id));
 			}
 			document.body.appendChild(_modal);
 			console.log('EventListener Triggered > CBJS.xxhModal.openBase(); box.id=' + this.box.id);
@@ -133,9 +133,17 @@
 			}
 			console.log('EventListener Triggered > CBJS.xxhModal.Open(); box.id=' + this.box.id);
 		},
-		CustomOpen: function (domId) {
-
-			console.log('EventListener Triggered > CBJS.xxhModal.CustomOpen(); box.id=' + this.box.id);
+		CustomOpen: function (ModalId,MaskId) {
+			console.log('EventListener Triggered > CBJS.xxhModal.CustomOpen(); ModalId=' + ModalId+'，MaskId='+MaskId);
+			document.querySelector(MaskId).style.display = 'block';
+			document.querySelector(ModalId).style.display = '';
+			document.querySelector(ModalId).classList.add('SlideUp-in');
+		},
+		CustomClose: function (ModalId,MaskId) {
+			console.log('EventListener Triggered > CBJS.xxhModal.CustomOpen(); ModalId=' + ModalId+'，MaskId='+MaskId);
+			document.querySelector(ModalId).style.display = 'none';
+			document.querySelector(ModalId).classList.remove('SlideUp-in');
+			document.querySelector(MaskId).style.display = 'none';
 		},
 		Alert: function (msg, btnTitle, callback) {
 			this.init();
@@ -176,7 +184,7 @@
 		},
 		Popup: function (msg, className) {
 			this.init();
-			this.box.className = className ? ("popup_" + className) : "";
+			this.box.className = !!className ? ("popup_" + className) : "";
 			this.box.maskIsEnabled = false;
 			this.box.head.isEnabled = false;
 
@@ -188,7 +196,7 @@
 			this.box.foot.btn = []; // 清空全部按钮
 			this.openBase();
 			// CSS动画：滑入停留再滑出消失
-			 //document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
+			//document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in-out');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').addEventListener('animationend', function () {
 				var _modal = document.getElementsByClassName("SlideUp-in-out");
