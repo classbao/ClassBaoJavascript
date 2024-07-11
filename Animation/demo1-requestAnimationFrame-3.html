@@ -6,18 +6,58 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="MobileOptimized" content="240">
     <meta name="applicable-device" content="mobile">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no,email=no,adress=no">
 
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
 
     <title>帧-requestAnimationFrame-canvas演示</title>
     <meta name="author" content="熊仔其人">
     <style type="text/css">
-        canvas {
+        canvas,
+        #TouchBoardArea {
             background-color: #e6e5e5;
             border: 1px solid #a2a2a2;
+        }
+
+        #TouchBoardArea {
+            position: relative;
+        }
+
+        #TouchBoard {
+            background-color: #eaf9fb;
+            line-height: 30px;
+            width: 30px;
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            color: #d98203;
+            cursor: move;
+            cursor: pointer;
+
+            position: absolute;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            /* 相对于最近的定位祖先元素向下移动10px */
+            /* top: 10px; */
+            /* 相对于最近的定位祖先元素向右移动20px */
+            /* left: 30px; */
+            /* 如果需要可以进一步调整 */
+            /* transform: translate(0, 0);
+            -webkit-transform: translate(30px, 10px);
+            -moz-transform: translate(30px, 10px);
+            -o-transform: translate(30px, 10px);
+            -ms-transform: translate(30px, 10px); */
         }
     </style>
     <script src="../Animation/ClassBaoAnimationFramework-1.0.0.js"></script>
@@ -25,6 +65,12 @@
 
 <body>
     <canvas id="myCanvas" width="400" height="200">Your browser does not support the canvas element.</canvas>
+    <div id="TouchBoardArea" style="width: 400px; height: 30px;">
+        <div id="TouchBoard">&#9822;</div>
+    </div>
+    <!-- ☹	&#9785;		 	WHITE FROWNING FACE
+    ☺	&#9786;		 	WHITE SMILING FACE
+    ☻	9787	263B	 	BLACK SMILING FACE -->
 
     <!-- canvas动画引擎演示 -->
     <script type="text/javascript">
@@ -70,17 +116,29 @@
             myBrick.Move();
         };
 
-        ClassBaoAnimation.GlobalConfig.Init('myCanvas');
-        ClassBaoAnimation.GlobalConfig.StartEngine(myAnimationMain);
+        // ClassBaoAnimation.GlobalConfig.Init('myCanvas');
+        // ClassBaoAnimation.GlobalConfig.StartEngine(myAnimationMain);
 
     </script>
 
 
     <div>
-        <p id="OnTouchInfo" style="background-color: #e9f9d7;">移动端触屏事件演示：请触摸屏幕并移动手指</p>
+        <p id="OnTouchInfo" style="background-color: #e9f9d7;">移动端触屏事件演示：请 按住笑脸并拖动 移动手指</p>
     </div>
     <!-- 移动端触屏事件演示 -->
     <script>
+        var isDragging = false;
+        function inTouchBoardArea() {
+            var TouchBoardArea = document.querySelector('#TouchBoardArea').getBoundingClientRect();
+            var TouchBoard = document.querySelector('#TouchBoard').getBoundingClientRect();
+            if (((TouchBoardArea.x + 1) <= TouchBoard.x && TouchBoard.x <= (TouchBoardArea.x + TouchBoardArea.width - 1 - TouchBoard.width)) && ((TouchBoardArea.y + 1) <= TouchBoard.y && TouchBoard.y <= (TouchBoardArea.y + TouchBoardArea.height - 1 - TouchBoard.height))) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
         var startPos = { x: 0, y: 0 };
         var endPos = { x: 0, y: 0 };
         function myTouchMove(event) {
@@ -98,30 +156,105 @@
             }
 
             var s = '<br />触发了：touchmove()';
+            s += '页面坐标 pageX= ' + touch.pageX + ' pageY= ' + touch.pageY;
+            s += '页面坐标 X= ' + touch.x + ' Y= ' + touch.y;
             s += '相对位移 X= ' + endPos.x + ' Y= ' + endPos.y;
-            s += '页面坐标 X= ' + touch.pageX + ' Y= ' + touch.pageY;
 
             document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+            var TouchBoardArea = document.querySelector('#TouchBoardArea').getBoundingClientRect();
+            var domTouchBoard = document.querySelector('#TouchBoard');
+            var pointLeft = touch.pageX - Math.abs(domTouchBoard.getBoundingClientRect().width / 2);
+            document.getElementById('OnTouchInfo').innerHTML = "pointLeft=" + pointLeft + "，isDragging=" + isDragging;
+            if (isDragging && (0 <= pointLeft && pointLeft <= (TouchBoardArea.width - 2 - domTouchBoard.getBoundingClientRect().width))) {
+                domTouchBoard.style.left = (pointLeft) + 'px';
+            }
         }
 
         window.document.body.onload = function (e) {
-            ClassBaoAnimation.OnTouch.touchStart(window.document.body, function (e) {
-                startPos = { x: e.targetTouches[0].pageX, y: e.targetTouches[0].pageY };
-                var s = '<br />触发了：touchstart()' + ' 页面坐标 X= ' + startPos.x + ' Y= ' + startPos.y;
-                console.log(s);
-                document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
-            });
-            ClassBaoAnimation.OnTouch.touchMove(window.document.body, myTouchMove);
-            ClassBaoAnimation.OnTouch.touchEnd(window.document.body, function (e) {
-                var s = '<br />触发了：touchend()';
-                console.log(s);
-                document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
-            });
-            ClassBaoAnimation.OnTouch.touchCancel(window.document.body, function (e) {
-                var s = '<br />触发了：touchcancel()';
-                console.log(s);
-                document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
-            });
+            inTouchBoardArea();
+            var TouchBoardArea = document.querySelector('#TouchBoardArea').getBoundingClientRect();
+            var domTouchBoard = document.querySelector('#TouchBoard');
+            if (!!ClassBaoAnimation.OnTouch.SupportTouch) {
+                ClassBaoAnimation.OnTouch.touchStart(domTouchBoard, function (e) {
+                    var s = '<br />触发了：touchstart()';
+                    console.log(s);
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s + ' ' + JSON.stringify(e.targetTouches[0]);
+                    startPos = { x: e.targetTouches[0].pageX, y: e.targetTouches[0].pageY };
+
+                    s +=  ' 页面坐标 X= ' + e.targetTouches[0].pageX + ' Y= ' + e.targetTouches[0].pageY;
+                    console.log(s);
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+                    isDragging = true;
+                });
+                ClassBaoAnimation.OnTouch.touchMove(domTouchBoard, myTouchMove);
+                ClassBaoAnimation.OnTouch.touchEnd(domTouchBoard, function (e) {
+                    var s = '<br />触发了：touchend()，没有 e.targetTouches[0]';
+                    console.log(s);
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s + ' ' + JSON.stringify(e.targetTouches[0]);
+                    
+                    isDragging = false;
+                });
+                ClassBaoAnimation.OnTouch.touchCancel(domTouchBoard, function (e) {
+                    var s = '<br />触发了：touchcancel()，没有 e.targetTouches[0]';
+                    console.log(s);
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s + ' ' + JSON.stringify(e.targetTouches[0]);
+                    
+                });
+            }
+            else if (!!ClassBaoAnimation.OnMouse.SupportMouse) {
+                ClassBaoAnimation.OnMouse.mouseOver(domTouchBoard, function (e) {
+                    var s = '<br />触发了：onmouseover()';
+                    console.log(s);
+                    s += ' 点坐标 X= ' + e.x + ' Y= ' + e.y + ' 页面坐标 X= ' + e.pageX + ' Y= ' + e.pageY + ' 屏幕坐标 X= ' + e.screenX + ' Y= ' + e.screenY;
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+                });
+                ClassBaoAnimation.OnMouse.mouseMove(domTouchBoard, function (e) {
+                    e.preventDefault();
+                    var s = '<br />触发了：onmousemove()';
+                    console.log(s);
+                    s += ' 点坐标 X= ' + e.x + ' Y= ' + e.y + ' 页面坐标 X= ' + e.pageX + ' Y= ' + e.pageY + ' 屏幕坐标 X= ' + e.screenX + ' Y= ' + e.screenY;
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+                    var pointLeft = e.x - Math.abs(domTouchBoard.getBoundingClientRect().width / 2);
+                    document.getElementById('OnTouchInfo').innerHTML = "pointLeft=" + pointLeft + "，isDragging=" + isDragging;
+                    if (isDragging && (0 <= pointLeft && pointLeft <= (TouchBoardArea.width - 2 - domTouchBoard.getBoundingClientRect().width))) {
+                        domTouchBoard.style.left = (pointLeft) + 'px';
+                    }
+
+                });
+                ClassBaoAnimation.OnMouse.mouseDown(domTouchBoard, function (e) {
+                    e.preventDefault();
+                    var s = '<br />触发了：onmousedown()';
+                    console.log(s);
+                    s += ' 点坐标 X= ' + e.x + ' Y= ' + e.y + ' 页面坐标 X= ' + e.pageX + ' Y= ' + e.pageY + ' 屏幕坐标 X= ' + e.screenX + ' Y= ' + e.screenY;
+                    console.log(s);
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+                    isDragging = true;
+                });
+                ClassBaoAnimation.OnMouse.mouseUp(domTouchBoard, function (e) {
+                    var s = '<br />触发了：onmouseup()';
+                    console.log(s);
+                    s += ' 点坐标 X= ' + e.x + ' Y= ' + e.y + ' 页面坐标 X= ' + e.pageX + ' Y= ' + e.pageY + ' 屏幕坐标 X= ' + e.screenX + ' Y= ' + e.screenY;
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+                    isDragging = false;
+                });
+                ClassBaoAnimation.OnMouse.mouseOut(domTouchBoard, function (e) {
+                    var s = '<br />触发了：onmouseout()';
+                    console.log(s);
+                    s += ' 点坐标 X= ' + e.x + ' Y= ' + e.y + ' 页面坐标 X= ' + e.pageX + ' Y= ' + e.pageY + ' 屏幕坐标 X= ' + e.screenX + ' Y= ' + e.screenY;
+                    document.getElementById('OnTouchInfo').innerHTML = document.getElementById('OnTouchInfo').innerHTML + s;
+
+                    isDragging = false;
+                });
+            }
+            else {
+                alert("没有可用的事件");
+            }
+
         }
     </script>
 

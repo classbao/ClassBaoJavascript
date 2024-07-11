@@ -201,9 +201,9 @@ var ClassBaoAnimation = {
         /*示例：ClassBaoAnimation.EventUtil.addHandler(document, "keydown", function (e) { if (ClassBaoAnimation.GetKeyCode(e) == 13) { ClassBaoAnimation.LabelAlert(null, '您按下了回车键'); return true; } } );*/
         addHandler: function (element, type, handler) {
             if (element.addEventListener) {
-                addEventListener(type, handler, false);
+                element.addEventListener(type, handler, false);
             } else if (element.attachEvent) {
-                attachEvent("on" + type, handler);
+                element.attachEvent("on" + type, handler);
             } else {
                 element["on" + type] = handler;
             }
@@ -211,9 +211,9 @@ var ClassBaoAnimation = {
         /*移除事件处理程序*/
         removeHandler: function (element, type, handler) {
             if (element.removeEventListener) {
-                removeEventListener(type, handler, false);
+                element.removeEventListener(type, handler, false);
             } else if (element.detachEvent) {
-                detachEvent("on" + type, handler);
+                element.detachEvent("on" + type, handler);
             } else {
                 element["on" + type] = null;
             }
@@ -267,9 +267,40 @@ var ClassBaoAnimation = {
             }
         }
     },
-    /* */
+    /* Mouse事件（一般是电脑端、鼠标才有） */
+    OnMouse: {
+        /*判断设备是否支持onmousemove事件*/
+        SupportMouse: ('onmousemove' in window || 'onmousemove' in document.documentElement || undefined !== document.body.ontouchstart),
+        /* 手指移动到屏幕/元素上触发（移入：进入对象时触发） */
+        mouseOver: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mouseover', handler); }
+        },
+        /* 手指在屏幕/元素上滑动时触发（在上面移动就触发） */
+        mouseMove: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mousemove', handler); }
+        },
+        /* 手指在屏幕/元素上按下触发（按下触发，不在元素范围内按下不会触发） */
+        mouseDown: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mousedown', handler); }
+        },
+        /* 手指在屏幕/元素上抬起时触发（抬起触发，不在元素范围内抬起不会触发） */
+        mouseUp: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mouseup', handler); }
+        },
+        /* 系统取消mouse事件的时候触发（移出：离开元素） */
+        mouseOut: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mouseout', handler); }
+        }
+    },
+    /* Touch事件（一般是移动端才有） */
     OnTouch: {
-        /* 【Touch事件说明】pc上的web页面鼠 标会产生onmousedown、onmouseup、onmouseout、onmouseover、onmousemove的事件，但是在移动终端如 iphone、ipod  Touch、ipad上的web页面触屏时会产生ontouchstart、ontouchmove、ontouchend、ontouchcancel 事件，分别对应了触屏开始、拖拽及完成触屏事件和取消。*/
+        /* 【Touch事件说明】pc上的web页面鼠标会产生onmousedown、onmouseup、onmouseout、onmouseover、onmousemove的事件。
+        时间上 onmousemove 事件触发后，再触发 onmouseover 事件。
+        动作上 onmouseover 只在刚进入区域时触发。onmousemove 除了刚进入区域触发外，在区域内移动鼠标，也会触发该事件。
+         当鼠标移动很快时，可能不会触发这两个事件。
+          onmouseover与onmousemove的区别是：当鼠标移到当前对象时就产生了onmouseover事件,当鼠标在当前对象上移动时就产生了onmousemove事件，只要是在对象上移动而且没有移出对象的，就是onmousemove事件。 
+
+        但是在移动终端如 iphone、ipod  Touch、ipad上的web页面触屏时会产生ontouchstart、ontouchmove、ontouchend、ontouchcancel 事件，分别对应了触屏开始、拖拽及完成触屏事件和取消。*/
         /* 当按下手指时，触发ontouchstart；
         当移动手指时，触发ontouchmove；
         当移走手指时，触发ontouchend。
@@ -296,7 +327,7 @@ var ClassBaoAnimation = {
  
  clientX / clientY:      //触摸点相对浏览器窗口的位置
  
- pageX / pageY:       //触摸点相对于页面的位置
+ pageX / pageY:       //触摸点相对于页面的位置（常用）
  
  screenX  /  screenY:    //触摸点相对于屏幕的位置
  
@@ -323,10 +354,19 @@ var ClassBaoAnimation = {
         /*
         event.screenX
         event.screenY
+
+        
+
+        clientX 获取鼠标相对于浏览器左上角x轴的坐标；
+        clientY 获取鼠标相对于浏览器左上角y轴的坐标；
         event.clientX
         event.clientY
+
+        offsetX：设置或获取鼠标指针位置相对于触发事件对象的x坐标。
+        offsetY：设置或获取鼠标指针位置相对于触发事件对象的y坐标。
         event.offsetX
         event.offsetY
+
         event.movementX
         event.movementY
         event.x
@@ -334,19 +374,29 @@ var ClassBaoAnimation = {
         event.currentTarget.type
         event.timeStamp
         event.pointerType
+
+        offsetWidth:返回盒子模型的宽度（包括width+左右padding+左右border）
+offsetHeight:
+
+e.currentTarget.offsetWidth
+e.currentTarget.offsetHeight
+e.currentTarget.offsetLeft
+e.currentTarget.offsetTop
+
+
      */
 
         /*判断设备是否支持touch事件*/
-        SupportTouch: ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
-        /* 手指放到屏幕上时触发手指放到屏幕上时触发 */
+        SupportTouch: ('ontouchstart' in window || 'ontouchstart' in document.documentElement) || window.DocumentTouch && document instanceof DocumentTouch,
+        /* 手指放到屏幕/元素上时触发 */
         touchStart: function (element, handler) {
             if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchstart', handler); }
         },
-        /* 手指在屏幕上滑动式触发 */
+        /* 手指在屏幕/元素上滑动时触发 */
         touchMove: function (element, handler) {
             if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchmove', handler); }
         },
-        /* 手指离开屏幕时触发 */
+        /* 手指离开屏幕/元素时触发（此事件监控不到坐标点了） */
         touchEnd: function (element, handler) {
             if (!!element && !!ClassBaoAnimation.OnTouch.SupportTouch) { ClassBaoAnimation.EventUtil.addHandler(element, 'touchend', handler); }
         },
