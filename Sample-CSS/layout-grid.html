@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>grid css 左中右布局</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="测试">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+        body {
+            padding: 0 0;
+            margin: 0 0;
+            text-align: left;
+            border: none;
+            background-color: #fff;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 100px auto 150px;
+        }
+
+        .left {
+            grid-column: 1;
+            /* 左边 */
+        }
+
+        .middle {
+            grid-column: 2;
+            /* 中间 */
+        }
+
+        .right {
+            grid-column: 3;
+            /* 右边 */
+        }
+    </style>
+
+    <!-- <script src="/Content/mobile/js/xxx.js"></script> -->
+    <!-- JS脚本 -->
+    <script>
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container" style="height: 450px;">
+        <div class="left" style="height: 100%; background-color: aquamarine;">左边栏</div>
+        <div class="middle" style="height: 100%; background-color: darkgray;">中间边栏</div>
+        <div class="right" style="height: 100%; background-color: orange;">右边栏</div>
+    </div>
+
+</body>
+
+</html>
