@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>带有多选和突出显示关键字的自定义下拉选择框</title>
+    <meta name="Description" content="带有多选和突出显示关键字的自定义下拉选择框：Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords">
+    <meta name="author" content="熊仔其人">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+        /* 自定义下拉选择框 CSS 开始 */
+        .custom-select {
+            position: relative;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1px;
+        }
+
+        .selected-options {
+            padding: 1px;
+            cursor: pointer;
+            background-color: #fff;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .selected-options .selectedOptions-icon-cross {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1px;
+        }
+
+        .selected-options .selectedOptions-icon-cross::after {
+            /* content: '\2717'; */
+            content: '\2715';
+        }
+
+        .placeholder {
+            color: #999;
+        }
+
+        .options-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            background-color: #fff;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+            /* 默认隐藏选项列表 */
+        }
+
+        .option {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background-color: #f2f2f2;
+        }
+
+        .option.selected {
+            background-color: #e0e0e0;
+        }
+
+        .option.selected::after {
+            /* content: '\221A'; */
+            content: '\2713';
+            color: #007bff;
+            margin-left: 5px;
+        }
+
+        .highlight {
+            color: red;
+            /* 关键词标红 */
+        }
+
+        /* 显示选项列表 */
+        .custom-select.active .options-list {
+            display: block;
+        }
+        /* 自定义下拉选择框 CSS 结束 */
+    </style>
+
+</head>
+
+<body>
+    带有多选和突出显示关键字的自定义下拉选择框：
+    Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords:
+    <hr />
+
+    <!-- 自定义下拉选择框 html 开始 -->
+    <div class="custom-select">
+        <div class="selected-options">
+            <span class="placeholder">请选择...</span>
+        </div>
+        <ul class="options-list">
+            <li class="option" data-value="option1">选项1 <span class="highlight">关键词</span></li>
+            <li class="option" data-value="option2">选项2</li>
+            <li class="option" data-value="option3">这个选项3 也有<span class="highlight">关键词</span></li>
+            <li class="option" data-value="option4">选项4</li>
+        </ul>
+    </div>
+    <!-- 自定义下拉选择框 html 结束 -->
+
+    <!-- 自定义下拉选择框 JS脚本 开始 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function (event) {
+            event.stopPropagation(); // 阻止事件冒泡到外层元素
+            var customSelect = document.querySelector('.custom-select');
+            var optionsList = document.querySelector('.options-list');
+            var selectedOptions = document.querySelector('.selected-options');
+            var options = document.querySelectorAll('.option');
+
+            // 显示/隐藏选项列表  
+            selectedOptions.addEventListener('click', function (event) {
+                event.stopPropagation(); // 阻止事件冒泡到外层元素
+                customSelect.classList.toggle('active');
+            });
+
+            // 选项点击事件  
+            options.forEach(function (option) {
+                option.addEventListener('click', function (event) {
+                    event.stopPropagation(); // 阻止事件冒泡到外层元素
+                    var isSelected = this.classList.contains('selected');
+                    this.classList.toggle('selected', !isSelected);
+
+                    // 更新已选项显示  
+                    updateSelectedDisplay();
+                });
+            });
+
+            // 点击选项以外的地方关闭选项列表  
+            document.addEventListener('click', function (e) {
+                e.stopPropagation(); // 阻止事件冒泡到外层元素
+                if (!customSelect.contains(e.target)) {
+                    customSelect.classList.remove('active');
+                }
+            });
+
+            // 更新已选项的显示  
+            function updateSelectedDisplay() {
+                var selectedItems = [];
+                options.forEach(function (option) {
+                    if (option.classList.contains('selected')) {
+                        selectedItems.push({ value: option.getAttribute('data-value'), text: option.textContent.trim() });
+                    }
+                });
+
+                // 清空并重新填充已选项  
+                selectedOptions.innerHTML = '';
+                if (selectedItems.length === 0) {
+                    selectedOptions.appendChild(document.createTextNode('请选择...'));
+                } else {
+                    selectedItems.forEach(function (item) {
+                        var span = document.createElement('span');
+                        span.setAttribute('class', 'selectedOptions-icon-cross');
+                        span.setAttribute('data-value', item.value);
+                        span.textContent = item.text + ' ';
+                        span.addEventListener('click', function (event) {
+                            event.stopPropagation(); // 阻止事件冒泡到外层元素
+                            var itemValue = this.getAttribute('data-value');
+                            options.forEach(function (option) {
+                                if (option.getAttribute('data-value') == itemValue) {
+                                    option.classList.toggle('selected', false);
+                                }
+                            });
+
+                            // 更新已选项显示  
+                            updateSelectedDisplay();
+                        });
+                        selectedOptions.appendChild(span);
+                    });
+                }
+            }
+        });
+
+        // 获取选中项
+        function getSelectedItems() {
+            var selectedItems = [];
+            var selectedOptions = document.querySelectorAll('.custom-select .selected-options .selectedOptions-icon-cross');
+            selectedOptions.forEach(function (option) {
+                selectedItems.push({ value: option.getAttribute('data-value'), text: option.textContent.trim() });
+            });
+
+            return selectedItems;
+        }
+
+    </script>
+    <!-- 自定义下拉选择框 JS脚本 结束 -->
+
+
+</body>
+
+</html>
