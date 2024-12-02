@@ -22,7 +22,8 @@
     <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
 
     <title>带有多选和突出显示关键字的自定义下拉选择框</title>
-    <meta name="Description" content="带有多选和突出显示关键字的自定义下拉选择框：Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords">
+    <meta name="Description"
+        content="带有多选和突出显示关键字的自定义下拉选择框：Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords">
     <meta name="author" content="熊仔其人">
 
     <!-- CSS样式 -->
@@ -55,6 +56,14 @@
         .selected-options .selectedOptions-icon-cross::after {
             /* content: '\2717'; */
             content: '\2715';
+        }
+
+        .custom-select input[type="text"] {
+            display: inline-flex;
+            width: 196px;
+            min-width: 1rem;
+            max-width: 200px;
+            border: none;
         }
 
         .placeholder {
@@ -106,6 +115,7 @@
         .custom-select.active .options-list {
             display: block;
         }
+
         /* 自定义下拉选择框 CSS 结束 */
     </style>
 
@@ -118,9 +128,8 @@
 
     <!-- 自定义下拉选择框 html 开始 -->
     <div class="custom-select">
-        <div class="selected-options">
-            <span class="placeholder">请选择...</span>
-        </div>
+        <div class="selected-options"></div>
+        <input type="text" placeholder="关键词..." value="">
         <ul class="options-list">
             <li class="option" data-value="option1">选项1 <span class="highlight">关键词</span></li>
             <li class="option" data-value="option2">选项2</li>
@@ -130,24 +139,87 @@
     </div>
     <!-- 自定义下拉选择框 html 结束 -->
 
+
+
+    <!-- 文本中将多个关键词高亮显示为红色字体 开始 -->
+    <script>
+        let text = "这是一段包含多个关键词的文本，例如apple、banana和orange。";
+        let keywords = "apple banana orange";
+        // let keywords = ["apple", "banana", "orange"]; // 关键词列表，或者空格分隔多个关键词
+
+        function highlightKeywords(text, keywords) {
+            // 关键词输入形式多样性兼容
+            if (Array.isArray(keywords)) {
+                // 正常
+            }
+            else if (typeof keywords === 'string') {
+                keywords = keywords.split(/\s+/); // 使用正则表达式来分割字符串，匹配一个或多个空格
+            }
+            else {
+                throw new Error('keywords不是字符串也不是数组！');
+            }
+
+            // 遍历每个关键词
+            keywords.forEach(keyword => {
+                let regex = new RegExp(keyword, "gi");
+                text = text.replace(regex, `<span style='color:red;'>${keyword}</span>`);
+            });
+
+            return text;
+        }
+
+        // document.writeln(highlightKeywords(text, keywords));
+    </script>
+    <!-- 文本中将多个关键词高亮显示为红色字体 结束 -->
+
+    <!-- 模拟动态筛选数据源 JS脚本 开始 -->
+    <script>
+        function filterData(keyword) {
+            // 示例数组  
+            const items = [
+                { value: 1, text: '刘邦' },
+                { value: 2, text: '刘备' },
+                { value: 3, text: '刘秀' },
+                { value: 4, text: '张无忌' },
+                { value: 5, text: '魏无忌' },
+                { value: 6, text: '何无忌' },
+                { value: 7, text: '长孙无忌' }
+            ];
+
+            // 要搜索的关键词  
+            keyword = keyword || 'apple';
+
+            // 使用 filter() 方法查找匹配项  
+            const matchedItems = items.filter(item => item.text.includes(keyword));
+            // 输出匹配项  
+            // console.log(matchedItems);
+            return matchedItems;
+        }
+
+        // filterData('apple'); //调用示例
+    </script>
+    <!-- 模拟动态筛选数据源 JS脚本 结束 -->
+
     <!-- 自定义下拉选择框 JS脚本 开始 -->
     <script>
         document.addEventListener('DOMContentLoaded', function (event) {
             event.stopPropagation(); // 阻止事件冒泡到外层元素
-            var customSelect = document.querySelector('.custom-select');
-            var optionsList = document.querySelector('.options-list');
+            var customSelect ;
+            var optionsList ;
             var selectedOptions = document.querySelector('.selected-options');
-            var options = document.querySelectorAll('.option');
+            var options ;
+            var inputDom = document.querySelector('.custom-select input[type="text"]');
 
-            // 显示/隐藏选项列表  
-            selectedOptions.addEventListener('click', function (event) {
-                event.stopPropagation(); // 阻止事件冒泡到外层元素
-                customSelect.classList.toggle('active');
-            });
+            function getDom() {
+                customSelect = document.querySelector('.custom-select');
+                optionsList = document.querySelector('.options-list');
+                options = document.querySelectorAll('.option');
+            }
+            getDom();
 
-            // 选项点击事件  
-            options.forEach(function (option) {
-                option.addEventListener('click', function (event) {
+            // 动态绑定选项点击事件
+            function bindEventToOption(optionDom) {
+                optionDom.addEventListener('click', function (event) {
                     event.stopPropagation(); // 阻止事件冒泡到外层元素
                     var isSelected = this.classList.contains('selected');
                     this.classList.toggle('selected', !isSelected);
@@ -155,12 +227,50 @@
                     // 更新已选项显示  
                     updateSelectedDisplay();
                 });
+            }
+
+            // 使用addEventListener方法监听input事件。请注意，input事件与change事件不同。change事件在用户完成输入并且元素失去焦点时触发，或者在<select>元素中选择了一个选项时触发。而input事件则会在用户每次输入或修改值时立即触发。
+            // input事件非常适用于需要即时响应用户输入的场景，比如实时搜索、输入验证等
+            inputDom.addEventListener('input', function (event) {
+                event.stopPropagation(); // 阻止事件冒泡到外层元素
+                // event.target指向触发事件的元素，即inputElement  
+                // 通过event.target.value可以获取到当前输入的值  
+                // console.log('输入值已变化:', event.target.value);
+
+                // 即时响应用户输入的场景，比如实时搜索
+                var kwArray = filterData(event.target.value);
+                optionsList.innerHTML = '';
+                kwArray.forEach(function (item) {
+                    var li = document.createElement('li');
+                    li.setAttribute('class', 'option');
+                    li.setAttribute('data-value', item.value);
+                    // li.textContent = item.text + ' ';
+                    li.innerHTML = highlightKeywords(item.text + ' ', event.target.value); //包含关键词高亮红色显示
+
+                    bindEventToOption(li);
+                    optionsList.appendChild(li);
+                });
+                customSelect.classList.add('active');
+                getDom();
+                // ToDo  动态数据加载之后的选项选中之后添加到筛选框里！！！！！！！！！！！！！！！！！！！！！！！
+
+            });
+
+
+            // 显示/隐藏选项列表  
+            selectedOptions.addEventListener('click', function (event) {
+                event.stopPropagation(); // 阻止事件冒泡到外层元素
+                customSelect.classList.toggle('active');
+            });
+
+            options.forEach(function (option) {
+                bindEventToOption(option); // 选项点击事件
             });
 
             // 点击选项以外的地方关闭选项列表  
-            document.addEventListener('click', function (e) {
-                e.stopPropagation(); // 阻止事件冒泡到外层元素
-                if (!customSelect.contains(e.target)) {
+            document.addEventListener('click', function (event) {
+                event.stopPropagation(); // 阻止事件冒泡到外层元素
+                if (!customSelect.contains(event.target)) {
                     customSelect.classList.remove('active');
                 }
             });
@@ -168,16 +278,34 @@
             // 更新已选项的显示  
             function updateSelectedDisplay() {
                 var selectedItems = [];
+                getDom();
+
+                // 搜索框里已选中项，并且不在当前选项列表里，要留存
+                document.querySelectorAll('.selected-options .selectedOptions-icon-cross').forEach(function (option) {
+                    var optionItem = { value: option.getAttribute('data-value'), text: option.textContent.trim() };
+
+                    // 当前选项列表中的选项
+                    var optionItemB = [];
+                    options.forEach(function (optionB) {
+                        optionItemB.push({ value: optionB.getAttribute('data-value'), text: optionB.textContent.trim() });
+                    });
+                    if (optionItemB.some(x => x == optionItem)) {
+                        selectedItems.push(optionItem);
+                    }
+                });
+
+                // 当前选项列表中的选中项
                 options.forEach(function (option) {
-                    if (option.classList.contains('selected')) {
-                        selectedItems.push({ value: option.getAttribute('data-value'), text: option.textContent.trim() });
+                    var optionItem = { value: option.getAttribute('data-value'), text: option.textContent.trim() };
+                    if (option.classList.contains('selected') && !selectedItems.some(x => x == optionItem)) {
+                        selectedItems.push(optionItem);
                     }
                 });
 
                 // 清空并重新填充已选项  
                 selectedOptions.innerHTML = '';
                 if (selectedItems.length === 0) {
-                    selectedOptions.appendChild(document.createTextNode('请选择...'));
+                    // selectedOptions.appendChild(document.createTextNode('请选择...'));
                 } else {
                     selectedItems.forEach(function (item) {
                         var span = document.createElement('span');
