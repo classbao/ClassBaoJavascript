@@ -843,7 +843,44 @@
             * x和y可以是任何的数值，即使是负数也一样。
             */
             // return Math.round(Math.random() * (maxValue - minValue)) + minValue;
-            return Math.trunc(Math.random() * (max - min + 1)) + min;
+            return Math.trunc(Math.random() * (maxValue - minValue + 1)) + minValue;
+        };
+        this.copyToClipboard = function (text) {
+            try {
+                navigator.clipboard.writeText(text);
+                console.log('文本已复制到剪贴板：'+text);
+                // 可以选择在这里通知用户
+                // alert('文本已成功复制到剪贴板：'+text);
+            } catch (e) {
+                console.error('无法复制文本: ', e);
+                // 处理错误，比如向用户显示错误信息
+                alert('复制失败，请检查浏览器权限设置');
+            }
+        };
+
+        this.copyContentToClipboard = function (content) {
+            try {
+                // 创建一个临时的输入框来存储内容
+                const input = document.createElement('input');
+                input.value = content;
+                // 将输入框添加到页面，并选中内容
+                document.body.appendChild(input);
+                input.select();
+                //copyText.setSelectionRange(0, 99999); /* 为移动设备设置 */
+
+                // 执行复制命令
+                document.execCommand('copy');
+                // 移除临时输入框
+                document.body.removeChild(input);
+
+                console.log('文本已复制到剪贴板：'+content);
+                // 可以选择在这里通知用户
+                // alert('文本已成功复制到剪贴板：'+content);
+            } catch (e) {
+                console.error('无法复制文本: ', e);
+                // 处理错误，比如向用户显示错误信息
+                alert('复制失败，请检查浏览器权限设置');
+            }
         };
 
         /*数组操作*/
