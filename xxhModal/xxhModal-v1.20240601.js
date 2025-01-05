@@ -166,10 +166,10 @@
 			this.init();
 			this.box.head.isEnabled = false;
 			this.box.content = "<br> " + msg + " <br><br>";
-			this.box.foot.btn[0].icon = "&radic;";
+			this.box.foot.btn[0].icon = "&#10003;";
 			this.box.foot.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
 			this.box.foot.btn[0].title = btnOkTitle;
-			this.box.foot.btn[1].icon = "&#10005;";
+			this.box.foot.btn[1].icon = "&#10007;";
 			this.box.foot.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
 			this.box.foot.btn[1].title = btnCancelTitle;
 			this.box.foot.btn.splice(2, this.box.foot.btn.length - 1); // 从索引2开始（第3个元素）移除多余按钮
@@ -210,7 +210,7 @@
 			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #565656;\">&#9888;</span> " + msg, "default");
 		},
 		PopupSuccess: function (msg) {
-			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #fff;\">&radic;</span> " + msg, "green");
+			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #fff;\">&#10003;</span> " + msg, "green");
 		},
 		PopupError: function (msg) {
 			this.Popup("<span class=\"icon\" style=\"vertical-align:sub; color: #f0f0f0;\">&#9938;</span> " + msg, "red");

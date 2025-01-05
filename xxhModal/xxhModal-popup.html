@@ -134,7 +134,7 @@
                 click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
               },
               {
-                icon: "&#10005;",
+                icon: "&#10007;",
                 title: "取消",
                 click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
               }
@@ -205,7 +205,7 @@
     <div class="foot">
       <div class="l btn btnL Ok"><span class="icon" style="color: #02cf02;">&#10003;</span>确定</div>
       <div class="l btn btnMiddle Ok"><span class="icon" style="color: #02cf02;">&#10004;</span>中间</div>
-      <div class="r btn btnR No"><span class="icon" style="color: orangered;">&#10005;</span>取消</div>
+      <div class="r btn btnR No" onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');"><span class="icon" style="color: orangered;">&#10007;</span>取消</div>
     </div>
     <!-- <div class="foot"><div class="l btn btnSingle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>单个按钮</div></div> -->
 
