@@ -267,10 +267,57 @@ var ClassBaoAnimation = {
             }
         }
     },
+    /* Drag事件（一般需要对HTML标签设置draggable="true"属性） */
+    OnDrag: {
+        /*判断设备是否支持ondrag事件*/
+        SupportDrag: ('ondrag' in window || 'ondrag' in document.documentElement || undefined !== document.body.ondrag),
+        /**
+         * 在拖动目标上触发事件 (源元素):
+         * ondragstart - 用户开始拖动元素时触发；
+         * ondrag - 元素正在拖动时触发；注意： 在拖动元素时，每隔 350 毫秒会触发 ondrag 事件。
+         * ondragend - 用户完成元素拖动后触发；
+         */
+        /* ondragstart - 用户开始拖动元素时触发 */
+        dragStart: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'dragstart', handler); }
+        },
+        /* ondrag - 元素正在拖动时触发 */
+        drag: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'drag', handler); }
+        },
+        /* ondragend - 用户完成元素拖动后触发 */
+        dragEnd: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'dragend', handler); }
+        },
+        /**
+         * 释放目标时触发的事件:
+         * ondragenter - 当被鼠标拖动的对象进入其容器范围内时触发此事件
+         * ondragover - 当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+         * ondragleave - 当被鼠标拖动的对象离开其容器范围内时触发此事件
+         * ondrop - 在一个拖动过程中，释放鼠标键时触发此事件
+         */
+        /* ondragenter - 当被鼠标拖动的对象进入其容器范围内时触发此事件 */
+        dragEnter: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'dragenter', handler); }
+        },
+        /* ondragover - 当某被拖动的对象在另一对象容器范围内拖动时触发此事件 */
+        dragOver: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'dragover', handler); }
+        },
+        /* ondragleave - 当被鼠标拖动的对象离开其容器范围内时触发此事件 */
+        dragLeave: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'dragleave', handler); }
+        },
+        /* ondrop - 在一个拖动过程中，释放鼠标键时触发此事件 */
+        drop: function (element, handler) {
+            if (!!element && !!ClassBaoAnimation.OnDrag.SupportDrag) { ClassBaoAnimation.EventUtil.addHandler(element, 'drop', handler); }
+        }
+    },
+
     /* Mouse事件（一般是电脑端、鼠标才有） */
     OnMouse: {
         /*判断设备是否支持onmousemove事件*/
-        SupportMouse: ('onmousemove' in window || 'onmousemove' in document.documentElement || undefined !== document.body.ontouchstart),
+        SupportMouse: ('onmousemove' in window || 'onmousemove' in document.documentElement || undefined !== document.body.onmousemove),
         /* 手指移动到屏幕/元素上触发（移入：进入对象时触发） */
         mouseOver: function (element, handler) {
             if (!!element && !!ClassBaoAnimation.OnMouse.SupportMouse) { ClassBaoAnimation.EventUtil.addHandler(element, 'mouseover', handler); }

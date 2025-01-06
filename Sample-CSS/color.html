@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>测试</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="测试">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+        *,
+        html,
+        body,
+        div,
+        span {
+            margin: 0 0;
+            padding: 0 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        div {
+            /* flex: 1; */
+            /* margin-right: 1rem; */
+            flex: 0 0 calc(33.33% - 10px);
+            /* 每行显示3个元素，减去间隔 */
+            margin-bottom: 10px;
+            /* 设置元素之间的垂直间隔为10px */
+
+            list-style-type: none;
+        }
+
+        div:last-child {
+            margin-right: 0;
+        }
+
+        span {
+            padding: 0.5rem 2rem;
+            display: list-item;
+        }
+
+        :root {
+            --dls-color-brand-10: #00225c;
+            --dls-color-brand-9: #003796;
+            --dls-color-brand-8: #0047c4;
+            --dls-color-brand-7: #0054e6;
+            --dls-color-brand-6: #1a6eff;
+            --dls-color-brand-5: #5e99ff;
+            --dls-color-brand-4: #95bcff;
+            --dls-color-brand-3: #bfd7ff;
+            --dls-color-brand-2: #dce9ff;
+            --dls-color-brand-1: #ebf2ff;
+            --dls-color-gray-10: #0a0b0d;
+            --dls-color-gray-9: #191b1e;
+            --dls-color-gray-8: #545b66;
+            --dls-color-gray-7: #848b99;
+            --dls-color-gray-6: #a8b0bf;
+            --dls-color-gray-5: #c5ccdb;
+            --dls-color-gray-4: #d3d9e6;
+            --dls-color-gray-3: #e2e6f0;
+            --dls-color-gray-2: #ebedf5;
+            --dls-color-gray-1: #f6f7fa;
+            --dls-color-success-10: #003d1a;
+            --dls-color-success-9: #00632a;
+            --dls-color-success-8: #008236;
+            --dls-color-success-7: #009940;
+            --dls-color-success-6: #0c5;
+            --dls-color-success-5: #4dff97;
+            --dls-color-success-4: #8bffbb;
+            --dls-color-success-3: #baffd7;
+            --dls-color-success-2: #daffe9;
+            --dls-color-success-1: #ebfff3;
+            --dls-color-error-10: #570400;
+            --dls-color-error-9: #8d0700;
+            --dls-color-error-8: #b80900;
+            --dls-color-error-7: #d9150b;
+            --dls-color-error-6: #ff2b20;
+            --dls-color-error-5: #ff6a63;
+            --dls-color-error-4: #ff9d98;
+            --dls-color-error-3: #ffc4c0;
+            --dls-color-error-2: #ffdedc;
+            --dls-color-error-1: #ffeceb;
+            --dls-color-info-10: #00225c;
+            --dls-color-info-9: #003796;
+            --dls-color-info-8: #0047c4;
+            --dls-color-info-7: #0054e6;
+            --dls-color-info-6: #1a6eff;
+            --dls-color-info-5: #5e99ff;
+            --dls-color-info-4: #95bcff;
+            --dls-color-info-3: #bfd7ff;
+            --dls-color-info-2: #dce9ff;
+            --dls-color-info-1: #ebf2ff;
+            --dls-color-warning-10: #612800;
+            --dls-color-warning-9: #9d4200;
+            --dls-color-warning-8: #ce5600;
+            --dls-color-warning-7: #f27318;
+            --dls-color-warning-6: #ff9448;
+            --dls-color-warning-5: #ffb37d;
+            --dls-color-warning-4: #ffcca8;
+            --dls-color-warning-3: #ffdfc9;
+            --dls-color-warning-2: #ffecdf;
+            --dls-color-warning-1: #fff3eb;
+            --dls-color-translucent-10: rgba(4, 4, 5, .95);
+            --dls-color-translucent-9: rgba(13, 15, 18, .95);
+            --dls-color-translucent-8: rgba(46, 52, 64, .9);
+            --dls-color-translucent-7: rgba(73, 86, 107, .8);
+            --dls-color-translucent-6: rgba(83, 101, 138, .5);
+            --dls-color-translucent-5: rgba(90, 119, 168, .3);
+            --dls-color-translucent-4: rgba(96, 134, 199, .2);
+            --dls-color-translucent-3: rgba(102, 146, 222, .15);
+            --dls-color-translucent-2: rgba(108, 156, 240, .1);
+            --dls-color-translucent-1: rgba(109, 159, 247, .07);
+        }
+
+        span.brand1 {
+            color: var(--dls-color-brand-1);
+            background-color: var(--dls-color-brand-7);
+            border-bottom: 1px solid var(--dls-color-brand-6);
+        }
+        span.brand1:hover,span.brand1:active,span.brand1:focus{
+            background-color: var(--dls-color-brand-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+
+        span.gray1 {
+            color: var(--dls-color-gray-1);
+            background-color: var(--dls-color-gray-7);
+            border-bottom: 1px solid var(--dls-color-gray-6);
+        }
+        span.gray1:hover,span.gray1:active,span.gray1:focus{
+            background-color: var(--dls-color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+
+        span.success1 {
+            color: var(--dls-color-success-1);
+            background-color: var(--dls-color-success-7);
+            border-bottom: 1px solid var(--dls-color-success-6);
+        }
+        span.success1:hover,span.success1:active,span.success1:focus{
+            background-color: var(--dls-color-success-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+        
+        span.error1 {
+            color: var(--dls-color-error-1);
+            background-color: var(--dls-color-error-7);
+            border-bottom: 1px solid var(--dls-color-error-6);
+        }
+        span.error1:hover,span.error1:active,span.error1:focus{
+            background-color: var(--dls-color-error-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+        
+        span.info1 {
+            color: var(--dls-color-info-1);
+            background-color: var(--dls-color-info-7);
+            border-bottom: 1px solid var(--dls-color-info-6);
+        }
+        span.info1:hover,span.info1:active,span.info1:focus{
+            background-color: var(--dls-color-info-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+        
+        span.warning1 {
+            color: var(--dls-color-warning-1);
+            background-color: var(--dls-color-warning-7);
+            border-bottom: 1px solid var(--dls-color-warning-6);
+        }
+        span.warning1:hover,span.warning1:active,span.warning1:focus{
+            background-color: var(--dls-color-warning-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+        
+        span.translucent1 {
+            color: var(--dls-color-translucent-10);
+            background-color: var(--dls-color-translucent-7);
+            border-bottom: 1px solid var(--dls-color-translucent-6);
+        }
+        span.translucent1:hover,span.translucent1:active,span.translucent1:focus{
+            background-color: var(--dls-color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- <script src="/Content/mobile/js/xxx.js"></script> -->
+    <!-- JS脚本 -->
+    <script>
+    </script>
+
+</head>
+
+<body>
+
+    <div>
+        <span class="brand1">测试</span>
+        <span class="brand1">测试</span>
+        <span class="brand1">测试</span>
+    </div>
+    <div>
+        <span class="gray1">测试</span>
+        <span class="gray1">测试</span>
+        <span class="gray1">测试</span>
+    </div>
+    <div>
+        <span class="success1">测试</span>
+        <span class="success1">测试</span>
+        <span class="success1">测试</span>
+    </div>
+    <div>
+        <span class="error1">测试</span>
+        <span class="error1">测试</span>
+        <span class="error1">测试</span>
+    </div>
+    <div>
+        <span class="info1">测试</span>
+        <span class="info1">测试</span>
+        <span class="info1">测试</span>
+    </div>
+    <div>
+        <span class="warning1">测试</span>
+        <span class="warning1">测试</span>
+        <span class="warning1">测试</span>
+    </div>
+    <div>
+        <span class="translucent1">测试</span>
+        <span class="translucent1">测试</span>
+        <span class="translucent1">测试</span>
+    </div>
+
+    <!-- JS脚本 -->
+    <script>
+
+    </script>
+
+
+
+</body>
+
+</html>
