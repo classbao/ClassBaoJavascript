@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ClassBaoJavascript测试页面</title>
     <meta name="author" content="xiongzaiqiren" />
@@ -37,15 +39,33 @@ console.log(urlParam);
         </pre>
 
         <table cellspacing="0" cellpadding="0" style="">
-            <thead><tr><th>项目</th><th>值</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>值</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td>FromUser</td><td id="FromUser"></td></tr>
-                <tr><td>Latitude</td><td id="Latitude"></td></tr>
-                <tr><td>Longitude</td><td id="Longitude"></td></tr>
-                <tr><td>Precision</td><td id="Precision"></td></tr>
+                <tr>
+                    <td>FromUser</td>
+                    <td id="FromUser"></td>
+                </tr>
+                <tr>
+                    <td>Latitude</td>
+                    <td id="Latitude"></td>
+                </tr>
+                <tr>
+                    <td>Longitude</td>
+                    <td id="Longitude"></td>
+                </tr>
+                <tr>
+                    <td>Precision</td>
+                    <td id="Precision"></td>
+                </tr>
             </tbody>
         </table>
-        <p>url参数名字：<input type="text" id="urlParamName" /><button onclick="GetValue();">点击获取参数值</button><textarea id="urlParamValue" disabled="disabled" rows="1"></textarea></p>
+        <p>url参数名字：<input type="text" id="urlParamName" /><button onclick="GetValue();">点击获取参数值</button><textarea
+                id="urlParamValue" disabled="disabled" rows="1"></textarea></p>
 
         <hr />
 
@@ -65,7 +85,7 @@ console.log(urlParam);
         CBJS.getById("Longitude").innerText = _Longitude;
         var _Precision = CBJS.getParamValue("Precision", str, "&");
         CBJS.getById("Precision").innerText = _Precision;
-        
+
         var urlParam = CBJS.getUrlParamValue("id");
         console.log("id", urlParam);
 
@@ -77,5 +97,35 @@ console.log(urlParam);
             console.log(urlParamName + "=" + v);
         };
     </script>
+
+
+
+    <!-- Link Click Event Example - Start -->
+    <a href="https://www.example.com" id="myLink">&#8810;  Click me! &#8811;</a>
+
+    <script>
+        // 获取链接元素  
+        var link = document.getElementById('myLink');
+
+        // 为链接元素添加点击事件监听器  
+        link.addEventListener('click', function (event) {
+            // 阻止链接的默认跳转行为  
+            event.preventDefault();
+
+            // 在这里执行你的处理事件代码  
+            console.log('Link clicked!');
+            if (confirm("Are you sure you want to redirect to the URL?")) {
+                // 处理完事件后，手动进行页面跳转  
+                window.location.href = this.href;
+            }
+            else {
+                console.log('Stay here.');
+            }
+
+        });  
+    </script>
+    <!-- Link Click Event Example - End -->
+
 </body>
+
 </html>

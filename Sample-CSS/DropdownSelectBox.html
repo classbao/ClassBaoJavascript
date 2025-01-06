@@ -204,16 +204,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', function (event) {
             event.stopPropagation(); // 阻止事件冒泡到外层元素
-            var customSelect ;
-            var optionsList ;
-            var selectedOptions = document.querySelector('.selected-options');
-            var options ;
+            var customSelect;
             var inputDom = document.querySelector('.custom-select input[type="text"]');
+            var optionsList;
+            var options; // 选项（下拉选项列表里的）
+            var selectedOptions = document.querySelector('.selected-options'); // 选中的选项（下拉选项列表里的）
+            var selectedOptionResult; // 已选择的选项结果（显示在选择框里的）
 
             function getDom() {
                 customSelect = document.querySelector('.custom-select');
                 optionsList = document.querySelector('.options-list');
                 options = document.querySelectorAll('.option');
+                selectedOptionResult = document.querySelectorAll('.custom-select .selected-options .selectedOptions-icon-cross');
             }
             getDom();
 
@@ -240,6 +242,7 @@
                 // 即时响应用户输入的场景，比如实时搜索
                 var kwArray = filterData(event.target.value);
                 optionsList.innerHTML = '';
+                getDom();
                 kwArray.forEach(function (item) {
                     var li = document.createElement('li');
                     li.setAttribute('class', 'option');
@@ -247,12 +250,20 @@
                     // li.textContent = item.text + ' ';
                     li.innerHTML = highlightKeywords(item.text + ' ', event.target.value); //包含关键词高亮红色显示
 
+                    // 搜索框里已选中项，并且不在当前选项列表里，要留存
+                    selectedOptionResult.forEach(function (option) {
+                        var optionItem = { value: option.getAttribute('data-value'), text: option.textContent.trim() };
+                        // 当前选项列表中的选项
+                        if (item.value == optionItem.value) {
+                            li.classList.toggle('selected', true);// 设置为选中状态
+                        }
+                    });
+
                     bindEventToOption(li);
                     optionsList.appendChild(li);
                 });
                 customSelect.classList.add('active');
                 getDom();
-                // ToDo  动态数据加载之后的选项选中之后添加到筛选框里！！！！！！！！！！！！！！！！！！！！！！！
 
             });
 
@@ -281,15 +292,14 @@
                 getDom();
 
                 // 搜索框里已选中项，并且不在当前选项列表里，要留存
-                document.querySelectorAll('.selected-options .selectedOptions-icon-cross').forEach(function (option) {
+                selectedOptionResult.forEach(function (option) {
                     var optionItem = { value: option.getAttribute('data-value'), text: option.textContent.trim() };
-
                     // 当前选项列表中的选项
                     var optionItemB = [];
                     options.forEach(function (optionB) {
                         optionItemB.push({ value: optionB.getAttribute('data-value'), text: optionB.textContent.trim() });
                     });
-                    if (optionItemB.some(x => x == optionItem)) {
+                    if (!optionItemB.some(x => x.value == optionItem.value)) {
                         selectedItems.push(optionItem);
                     }
                 });
@@ -297,7 +307,7 @@
                 // 当前选项列表中的选中项
                 options.forEach(function (option) {
                     var optionItem = { value: option.getAttribute('data-value'), text: option.textContent.trim() };
-                    if (option.classList.contains('selected') && !selectedItems.some(x => x == optionItem)) {
+                    if (option.classList.contains('selected') && !selectedItems.some(x => x.value == optionItem.value)) {
                         selectedItems.push(optionItem);
                     }
                 });
