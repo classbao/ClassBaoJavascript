@@ -35,6 +35,7 @@
         span {
             margin: 0 0;
             padding: 0 0;
+            font-family: "微软雅黑", "黑体", arial, serif;
         }
 
         body {
@@ -42,6 +43,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-between;
+            background-color: #f6f7fa;
         }
 
         div {
@@ -62,208 +64,3397 @@
         span {
             padding: 0.5rem 2rem;
             display: list-item;
+            font-weight: bold;
+        }
+
+        span:hover,
+        span:active,
+        span:focus {
+            /* box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2); */
+            transition: all 0.3s ease;
+            /* 过渡效果，使变化更平滑 */
+            cursor: pointer;
         }
 
         :root {
-            --dls-color-brand-10: #00225c;
-            --dls-color-brand-9: #003796;
-            --dls-color-brand-8: #0047c4;
-            --dls-color-brand-7: #0054e6;
-            --dls-color-brand-6: #1a6eff;
-            --dls-color-brand-5: #5e99ff;
-            --dls-color-brand-4: #95bcff;
-            --dls-color-brand-3: #bfd7ff;
-            --dls-color-brand-2: #dce9ff;
-            --dls-color-brand-1: #ebf2ff;
-            --dls-color-gray-10: #0a0b0d;
-            --dls-color-gray-9: #191b1e;
-            --dls-color-gray-8: #545b66;
-            --dls-color-gray-7: #848b99;
-            --dls-color-gray-6: #a8b0bf;
-            --dls-color-gray-5: #c5ccdb;
-            --dls-color-gray-4: #d3d9e6;
-            --dls-color-gray-3: #e2e6f0;
-            --dls-color-gray-2: #ebedf5;
-            --dls-color-gray-1: #f6f7fa;
-            --dls-color-success-10: #003d1a;
-            --dls-color-success-9: #00632a;
-            --dls-color-success-8: #008236;
-            --dls-color-success-7: #009940;
-            --dls-color-success-6: #0c5;
-            --dls-color-success-5: #4dff97;
-            --dls-color-success-4: #8bffbb;
-            --dls-color-success-3: #baffd7;
-            --dls-color-success-2: #daffe9;
-            --dls-color-success-1: #ebfff3;
-            --dls-color-error-10: #570400;
-            --dls-color-error-9: #8d0700;
-            --dls-color-error-8: #b80900;
-            --dls-color-error-7: #d9150b;
-            --dls-color-error-6: #ff2b20;
-            --dls-color-error-5: #ff6a63;
-            --dls-color-error-4: #ff9d98;
-            --dls-color-error-3: #ffc4c0;
-            --dls-color-error-2: #ffdedc;
-            --dls-color-error-1: #ffeceb;
-            --dls-color-info-10: #00225c;
-            --dls-color-info-9: #003796;
-            --dls-color-info-8: #0047c4;
-            --dls-color-info-7: #0054e6;
-            --dls-color-info-6: #1a6eff;
-            --dls-color-info-5: #5e99ff;
-            --dls-color-info-4: #95bcff;
-            --dls-color-info-3: #bfd7ff;
-            --dls-color-info-2: #dce9ff;
-            --dls-color-info-1: #ebf2ff;
-            --dls-color-warning-10: #612800;
-            --dls-color-warning-9: #9d4200;
-            --dls-color-warning-8: #ce5600;
-            --dls-color-warning-7: #f27318;
-            --dls-color-warning-6: #ff9448;
-            --dls-color-warning-5: #ffb37d;
-            --dls-color-warning-4: #ffcca8;
-            --dls-color-warning-3: #ffdfc9;
-            --dls-color-warning-2: #ffecdf;
-            --dls-color-warning-1: #fff3eb;
-            --dls-color-translucent-10: rgba(4, 4, 5, .95);
-            --dls-color-translucent-9: rgba(13, 15, 18, .95);
-            --dls-color-translucent-8: rgba(46, 52, 64, .9);
-            --dls-color-translucent-7: rgba(73, 86, 107, .8);
-            --dls-color-translucent-6: rgba(83, 101, 138, .5);
-            --dls-color-translucent-5: rgba(90, 119, 168, .3);
-            --dls-color-translucent-4: rgba(96, 134, 199, .2);
-            --dls-color-translucent-3: rgba(102, 146, 222, .15);
-            --dls-color-translucent-2: rgba(108, 156, 240, .1);
-            --dls-color-translucent-1: rgba(109, 159, 247, .07);
+            --color-grey-10: #000000;
+            --color-grey-9: #191919;
+            --color-grey-8: #333333;
+            --color-grey-7: #4c4c4c;
+            --color-grey-6: #666666;
+            --color-grey-5: #808080;
+            --color-grey-4: #999999;
+            --color-grey-3: #b3b3b3;
+            --color-grey-2: #cccccc;
+            --color-grey-1: #ffffff;
+            --color-gray-10: #0a0b0d;
+            --color-gray-9: #191b1e;
+            --color-gray-8: #545b66;
+            --color-gray-7: #848b99;
+            --color-gray-6: #a8b0bf;
+            --color-gray-5: #c5ccdb;
+            --color-gray-4: #d3d9e6;
+            --color-gray-3: #e2e6f0;
+            --color-gray-2: #ebedf5;
+            --color-gray-1: #f6f7fa;
+            --color-red-10: #570400;
+            --color-red-9: #8d0700;
+            --color-red-8: #b80900;
+            --color-red-7: #d9150b;
+            --color-red-6: #ff2b20;
+            --color-red-5: #ff6a63;
+            --color-red-4: #ff9d98;
+            --color-red-3: #ffc4c0;
+            --color-red-2: #ffdedc;
+            --color-red-1: #ffeceb;
+            --color-pink-10: #f00018;
+            --color-pink-9: #f2192f;
+            --color-pink-8: #f43246;
+            --color-pink-7: #f64c5d;
+            --color-pink-6: #f76673;
+            --color-pink-5: #f98088;
+            --color-pink-4: #fa9ba0;
+            --color-pink-3: #fbb6b1;
+            --color-pink-2: #fcd0cb;
+            --color-pink-1: #ffe4e1;
+            --color-rosered-10: #B03060;
+            --color-rosered-9: #C71585;
+            --color-rosered-8: #FF1493;
+            --color-rosered-7: #FF69B4;
+            --color-rosered-6: #FF69B4;
+            --color-rosered-5: #DB7093;
+            --color-rosered-4: #FFC0CB;
+            --color-rosered-3: #FFB6C1;
+            --color-rosered-2: #FFC0CB;
+            --color-rosered-1: #FFF0F5;
+            --color-magenta-10: #ff00ff;
+            --color-magenta-9: #ff19ff;
+            --color-magenta-8: #ff32ff;
+            --color-magenta-7: #ff4bff;
+            --color-magenta-6: #ff64ff;
+            --color-magenta-5: #ff7dff;
+            --color-magenta-4: #ff96ff;
+            --color-magenta-3: #ffafff;
+            --color-magenta-2: #ffc9ff;
+            --color-magenta-1: #ffe1ff;
+            --color-purple-10: #2e0060;
+            --color-purple-9: #40056b;
+            --color-purple-8: #531a77;
+            --color-purple-7: #663085;
+            --color-purple-6: #7a4994;
+            --color-purple-5: #9067a6;
+            --color-purple-4: #a986bb;
+            --color-purple-3: #c2a6d1;
+            --color-purple-2: #d9c6e6;
+            --color-purple-1: #f0e6fa;
+            --color-blue-10: #00225c;
+            --color-blue-9: #003796;
+            --color-blue-8: #0047c4;
+            --color-blue-7: #0054e6;
+            --color-blue-6: #1a6eff;
+            --color-blue-5: #5e99ff;
+            --color-blue-4: #95bcff;
+            --color-blue-3: #bfd7ff;
+            --color-blue-2: #dce9ff;
+            --color-blue-1: #ebf2ff;
+            --color-BKSX-10: #03050F;
+            --color-BKSX-9: #0F202D;
+            --color-BKSX-8: #1C2E4A;
+            --color-BKSX-7: #293A67;
+            --color-BKSX-6: #374785;
+            --color-BKSX-5: #5167AC;
+            --color-BKSX-4: #7587D4;
+            --color-BKSX-3: #A3B3E3;
+            --color-BKSX-2: #C6D2EC;
+            --color-BKSX-1: #E0E8F9;
+            --color-green-10: #003d1a;
+            --color-green-9: #00632a;
+            --color-green-8: #008236;
+            --color-green-7: #009940;
+            --color-green-6: #0c5;
+            --color-green-5: #4dff97;
+            --color-green-4: #8bffbb;
+            --color-green-3: #baffd7;
+            --color-green-2: #daffe9;
+            --color-green-1: #ebfff3;
+            --color-cyan-10: #006963;
+            --color-cyan-9: #00837d;
+            --color-cyan-8: #009c95;
+            --color-cyan-7: #00b9c3;
+            --color-cyan-6: #00d6e9;
+            --color-cyan-5: #00e5ff;
+            --color-cyan-4: #20f0ff;
+            --color-cyan-3: #4dfaff;
+            --color-cyan-2: #79ffff;
+            --color-cyan-1: #a6ffff;
+            --color-BlackishGreen-10: #002329;
+            --color-BlackishGreen-9: #133B43;
+            --color-BlackishGreen-8: #2C535E;
+            --color-BlackishGreen-7: #466D77;
+            --color-BlackishGreen-6: #608692;
+            --color-BlackishGreen-5: #7A9EA7;
+            --color-BlackishGreen-4: #96B3BB;
+            --color-BlackishGreen-3: #B3C9D0;
+            --color-BlackishGreen-2: #D1E1E4;
+            --color-BlackishGreen-1: #ECF0F1;
+            --color-yellow-10: #FF8C00;
+            --color-yellow-9: #FF9912;
+            --color-yellow-8: #FFA500;
+            --color-yellow-7: #FFB800;
+            --color-yellow-6: #FFB90F;
+            --color-yellow-5: #FFBF00;
+            --color-yellow-4: #FFC125;
+            --color-yellow-3: #FFD700;
+            --color-yellow-2: #FFD700;
+            --color-yellow-1: #FFEC8B;
+            --color-KingYellow-10: #8b7225;
+            --color-KingYellow-9: #a18739;
+            --color-KingYellow-8: #dac588;
+            --color-KingYellow-7: #e7c86a;
+            --color-KingYellow-6: #FFC107;
+            --color-KingYellow-5: #f0cc3e;
+            --color-KingYellow-4: #fde59c;
+            --color-KingYellow-3: #ffeeb9;
+            --color-KingYellow-2: #fff5d8;
+            --color-KingYellow-1: #fffaec;
+            --color-BrightYellow-10: #ffff00;
+            --color-BrightYellow-9: #ffff1a;
+            --color-BrightYellow-8: #ffff33;
+            --color-BrightYellow-7: #ffff4dff;
+            --color-BrightYellow-6: #ffff66;
+            --color-BrightYellow-5: #ffff80;
+            --color-BrightYellow-4: #ffff99;
+            --color-BrightYellow-3: #ffffb3;
+            --color-BrightYellow-2: #ffffcc;
+            --color-BrightYellow-1: #ffffe0;
+            --color-golden-10: #dda000;
+            --color-golden-9: #ffe200;
+            --color-golden-8: #ffe51a;
+            --color-golden-7: #ffe833;
+            --color-golden-6: #ffeb4d;
+            --color-golden-5: #ffee66;
+            --color-golden-4: #fff180;
+            --color-golden-3: #fff499;
+            --color-golden-2: #fff7b3;
+            --color-golden-1: #fffacc;
+            --color-orange-10: #612800;
+            --color-orange-9: #9d4200;
+            --color-orange-8: #ce5600;
+            --color-orange-7: #f27318;
+            --color-orange-6: #ff9448;
+            --color-orange-5: #ffb37d;
+            --color-orange-4: #ffcca8;
+            --color-orange-3: #ffdfc9;
+            --color-orange-2: #ffecdf;
+            --color-orange-1: #fff3eb;
+            --color-translucent-10: rgba(4, 4, 5, .95);
+            --color-translucent-9: rgba(13, 15, 18, .95);
+            --color-translucent-8: rgba(46, 52, 64, .9);
+            --color-translucent-7: rgba(73, 86, 107, .8);
+            --color-translucent-6: rgba(83, 101, 138, .5);
+            --color-translucent-5: rgba(90, 119, 168, .3);
+            --color-translucent-4: rgba(96, 134, 199, .2);
+            --color-translucent-3: rgba(102, 146, 222, .15);
+            --color-translucent-2: rgba(108, 156, 240, .1);
+            --color-translucent-1: rgba(109, 159, 247, .07);
         }
 
-        span.brand1 {
-            color: var(--dls-color-brand-1);
-            background-color: var(--dls-color-brand-7);
-            border-bottom: 1px solid var(--dls-color-brand-6);
-        }
-        span.brand1:hover,span.brand1:active,span.brand1:focus{
-            background-color: var(--dls-color-brand-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-
-        span.gray1 {
-            color: var(--dls-color-gray-1);
-            background-color: var(--dls-color-gray-7);
-            border-bottom: 1px solid var(--dls-color-gray-6);
-        }
-        span.gray1:hover,span.gray1:active,span.gray1:focus{
-            background-color: var(--dls-color-gray-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-
-        span.success1 {
-            color: var(--dls-color-success-1);
-            background-color: var(--dls-color-success-7);
-            border-bottom: 1px solid var(--dls-color-success-6);
-        }
-        span.success1:hover,span.success1:active,span.success1:focus{
-            background-color: var(--dls-color-success-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-        
-        span.error1 {
-            color: var(--dls-color-error-1);
-            background-color: var(--dls-color-error-7);
-            border-bottom: 1px solid var(--dls-color-error-6);
-        }
-        span.error1:hover,span.error1:active,span.error1:focus{
-            background-color: var(--dls-color-error-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-        
-        span.info1 {
-            color: var(--dls-color-info-1);
-            background-color: var(--dls-color-info-7);
-            border-bottom: 1px solid var(--dls-color-info-6);
-        }
-        span.info1:hover,span.info1:active,span.info1:focus{
-            background-color: var(--dls-color-info-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-        
-        span.warning1 {
-            color: var(--dls-color-warning-1);
-            background-color: var(--dls-color-warning-7);
-            border-bottom: 1px solid var(--dls-color-warning-6);
-        }
-        span.warning1:hover,span.warning1:active,span.warning1:focus{
-            background-color: var(--dls-color-warning-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
-        }
-        
-        span.translucent1 {
-            color: var(--dls-color-translucent-10);
-            background-color: var(--dls-color-translucent-7);
-            border-bottom: 1px solid var(--dls-color-translucent-6);
-        }
-        span.translucent1:hover,span.translucent1:active,span.translucent1:focus{
-            background-color: var(--dls-color-translucent-6);
-            box-shadow: inset 0 0 5px 3px rgb(255, 255, 255 , 0.2);
-            cursor: pointer;
+        :root {
+            --blue: #007bff;
+            --indigo: #6610f2;
+            --purple: #6f42c1;
+            --pink: #e83e8c;
+            --red: #dc3545;
+            --orange: #fd7e14;
+            --yellow: #ffc107;
+            --green: #28a745;
+            --teal: #20c997;
+            --cyan: #17a2b8;
+            --white: #fff;
+            --gray: #6c757d;
+            --gray-dark: #343a40;
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
     </style>
 
-    <!-- <script src="/Content/mobile/js/xxx.js"></script> -->
-    <!-- JS脚本 -->
-    <script>
-    </script>
+
 
 </head>
 
 <body>
 
+
+    <style>
+        span.blue {
+            background-color: var(--blue);
+            color: var(--light);
+        }
+
+        span.blue:hover,
+        span.blue:active,
+        span.blue:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+        }
+
+        span.indigo {
+            background-color: var(--indigo);
+            color: var(--light);
+        }
+
+        span.indigo:hover,
+        span.indigo:active,
+        span.indigo:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple {
+            background-color: var(--purple);
+            color: var(--light);
+        }
+
+        span.purple:hover,
+        span.purple:active,
+        span.purple:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink {
+            background-color: var(--pink);
+            color: var(--light);
+        }
+
+        span.pink:hover,
+        span.pink:active,
+        span.pink:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red {
+            background-color: var(--red);
+            color: var(--light);
+        }
+
+        span.red:hover,
+        span.red:active,
+        span.red:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange {
+            background-color: var(--orange);
+            color: var(--light);
+        }
+
+        span.orange:hover,
+        span.orange:active,
+        span.orange:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow {
+            background-color: var(--yellow);
+            color: var(--light);
+        }
+
+        span.yellow:hover,
+        span.yellow:active,
+        span.yellow:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green {
+            background-color: var(--green);
+            color: var(--light);
+        }
+
+        span.green:hover,
+        span.green:active,
+        span.green:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.teal {
+            background-color: var(--teal);
+            color: var(--light);
+        }
+
+        span.teal:hover,
+        span.teal:active,
+        span.teal:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan {
+            background-color: var(--cyan);
+            color: var(--light);
+        }
+
+        span.cyan:hover,
+        span.cyan:active,
+        span.cyan:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.white {
+            background-color: var(--white);
+            color: var(--gray);
+        }
+
+        span.white:hover,
+        span.white:active,
+        span.white:focus {
+            box-shadow: inset 0 0 5px 3px rgba(201, 201, 201, 0.2);
+
+        }
+
+        span.gray {
+            background-color: var(--gray);
+            color: var(--light);
+        }
+
+        span.gray:hover,
+        span.gray:active,
+        span.gray:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray-dark {
+            background-color: var(--gray-dark);
+            color: var(--light);
+        }
+
+        span.gray-dark:hover,
+        span.gray-dark:active,
+        span.gray-dark:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.primary {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        span.primary:hover,
+        span.primary:active,
+        span.primary:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.secondary {
+            background-color: var(--secondary);
+            color: var(--light);
+        }
+
+        span.secondary:hover,
+        span.secondary:active,
+        span.secondary:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.success {
+            background-color: var(--success);
+            color: var(--light);
+        }
+
+        span.success:hover,
+        span.success:active,
+        span.success:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.info {
+            background-color: var(--info);
+            color: var(--light);
+        }
+
+        span.info:hover,
+        span.info:active,
+        span.info:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.warning {
+            background-color: var(--warning);
+            color: var(--light);
+        }
+
+        span.warning:hover,
+        span.warning:active,
+        span.warning:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.danger {
+            background-color: var(--danger);
+            color: var(--light);
+        }
+
+        span.danger:hover,
+        span.danger:active,
+        span.danger:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.light {
+            background-color: var(--light);
+            color: var(--gray);
+        }
+
+        span.light:hover,
+        span.light:active,
+        span.light:focus {
+            box-shadow: inset 0 0 5px 3px rgba(201, 201, 201, 0.2);
+
+        }
+
+        span.dark {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+
+        span.dark:hover,
+        span.dark:active,
+        span.dark:focus {
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
     <div>
-        <span class="brand1">测试</span>
-        <span class="brand1">测试</span>
-        <span class="brand1">测试</span>
+        <span class="blue">blue</span>
     </div>
     <div>
-        <span class="gray1">测试</span>
-        <span class="gray1">测试</span>
-        <span class="gray1">测试</span>
+        <span class="indigo">indigo</span>
     </div>
     <div>
-        <span class="success1">测试</span>
-        <span class="success1">测试</span>
-        <span class="success1">测试</span>
-    </div>
-    <div>
-        <span class="error1">测试</span>
-        <span class="error1">测试</span>
-        <span class="error1">测试</span>
-    </div>
-    <div>
-        <span class="info1">测试</span>
-        <span class="info1">测试</span>
-        <span class="info1">测试</span>
-    </div>
-    <div>
-        <span class="warning1">测试</span>
-        <span class="warning1">测试</span>
-        <span class="warning1">测试</span>
-    </div>
-    <div>
-        <span class="translucent1">测试</span>
-        <span class="translucent1">测试</span>
-        <span class="translucent1">测试</span>
+        <span class="purple">purple</span>
     </div>
 
-    <!-- JS脚本 -->
-    <script>
+    <div>
+        <span class="pink">pink</span>
+    </div>
+    <div>
+        <span class="red">red</span>
+    </div>
+    <div>
+        <span class="orange">orange</span>
+    </div>
 
-    </script>
+    <div>
+        <span class="yellow">yellow</span>
+    </div>
+    <div>
+        <span class="green">green</span>
+    </div>
+    <div>
+        <span class="teal">teal</span>
+    </div>
+
+    <div>
+        <span class="cyan">cyan</span>
+    </div>
+    <div>
+        <span class="white">white</span>
+    </div>
+    <div>
+        <span class="gray">gray</span>
+    </div>
+
+    <div>
+        <span class="gray-dark">gray-dark</span>
+    </div>
+    <div>
+        <span class="primary">primary</span>
+    </div>
+    <div>
+        <span class="secondary">secondary</span>
+    </div>
+
+    <div>
+        <span class="success">success</span>
+    </div>
+    <div>
+        <span class="info">info</span>
+    </div>
+    <div>
+        <span class="warning">warning</span>
+    </div>
+
+    <div>
+        <span class="danger">danger</span>
+    </div>
+    <div>
+        <span class="light">light</span>
+    </div>
+    <div>
+        <span class="dark">dark</span>
+    </div>
+
+
+
+
+    <hr style="height: 1px;background-color: #ddd;width: 100%;margin: 8px 0;">
+
+
+    <!-- color-translucent -->
+    <style>
+        span.translucent10 {
+            background-color: var(--color-translucent-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent10:hover,
+        span.translucent10:active,
+        span.translucent10:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent9 {
+            background-color: var(--color-translucent-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent9:hover,
+        span.translucent9:active,
+        span.translucent9:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent8 {
+            background-color: var(--color-translucent-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent8:hover,
+        span.translucent8:active,
+        span.translucent8:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent7 {
+            background-color: var(--color-translucent-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent7:hover,
+        span.translucent7:active,
+        span.translucent7:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent6 {
+            background-color: var(--color-translucent-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent6:hover,
+        span.translucent6:active,
+        span.translucent6:focus {
+            background-color: var(--color-translucent-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent5 {
+            background-color: var(--color-translucent-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent5:hover,
+        span.translucent5:active,
+        span.translucent5:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent4 {
+            background-color: var(--color-translucent-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent4:hover,
+        span.translucent4:active,
+        span.translucent4:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent3 {
+            background-color: var(--color-translucent-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent3:hover,
+        span.translucent3:active,
+        span.translucent3:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent2 {
+            background-color: var(--color-translucent-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent2:hover,
+        span.translucent2:active,
+        span.translucent2:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.translucent1 {
+            background-color: var(--color-translucent-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.translucent1:hover,
+        span.translucent1:active,
+        span.translucent1:focus {
+            background-color: var(--color-translucent-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="translucent10">translucent10</span>
+        <span class="translucent9">translucent9</span>
+        <span class="translucent8">translucent8</span>
+        <span class="translucent7">translucent7</span>
+        <span class="translucent6">translucent6</span>
+        <span class="translucent5">translucent5</span>
+        <span class="translucent4">translucent4</span>
+        <span class="translucent3">translucent3</span>
+        <span class="translucent2">translucent2</span>
+        <span class="translucent1">translucent1</span>
+    </div>
+
+
+
+    <!-- color-grey -->
+    <style>
+        span.grey10 {
+            background-color: var(--color-grey-10);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey10:hover,
+        span.grey10:active,
+        span.grey10:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey9 {
+            background-color: var(--color-grey-9);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey9:hover,
+        span.grey9:active,
+        span.grey9:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey8 {
+            background-color: var(--color-grey-8);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey8:hover,
+        span.grey8:active,
+        span.grey8:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey7 {
+            background-color: var(--color-grey-7);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey7:hover,
+        span.grey7:active,
+        span.grey7:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey6 {
+            background-color: var(--color-grey-6);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey6:hover,
+        span.grey6:active,
+        span.grey6:focus {
+            background-color: var(--color-grey-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey5 {
+            background-color: var(--color-grey-5);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey5:hover,
+        span.grey5:active,
+        span.grey5:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey4 {
+            background-color: var(--color-grey-4);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey4:hover,
+        span.grey4:active,
+        span.grey4:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey3 {
+            background-color: var(--color-grey-3);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey3:hover,
+        span.grey3:active,
+        span.grey3:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey2 {
+            background-color: var(--color-grey-2);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey2:hover,
+        span.grey2:active,
+        span.grey2:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.grey1 {
+            background-color: var(--color-grey-1);
+            color: var(--color-grey-1);
+            border-bottom: 1px solid var(--color-grey-6);
+        }
+
+        span.grey1:hover,
+        span.grey1:active,
+        span.grey1:focus {
+            background-color: var(--color-grey-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="grey10">grey10</span>
+        <span class="grey9">grey9</span>
+        <span class="grey8">grey8</span>
+        <span class="grey7">grey7</span>
+        <span class="grey6">grey6</span>
+        <span class="grey5">grey5</span>
+        <span class="grey4">grey4</span>
+        <span class="grey3">grey3</span>
+        <span class="grey2">grey2</span>
+        <span class="grey1">grey1</span>
+    </div>
+
+
+    <!-- color-gray -->
+    <style>
+        span.gray10 {
+            background-color: var(--color-gray-10);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray10:hover,
+        span.gray10:active,
+        span.gray10:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray9 {
+            background-color: var(--color-gray-9);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray9:hover,
+        span.gray9:active,
+        span.gray9:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray8 {
+            background-color: var(--color-gray-8);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray8:hover,
+        span.gray8:active,
+        span.gray8:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray7 {
+            background-color: var(--color-gray-7);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray7:hover,
+        span.gray7:active,
+        span.gray7:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray6 {
+            background-color: var(--color-gray-6);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray6:hover,
+        span.gray6:active,
+        span.gray6:focus {
+            background-color: var(--color-gray-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray5 {
+            background-color: var(--color-gray-5);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray5:hover,
+        span.gray5:active,
+        span.gray5:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray4 {
+            background-color: var(--color-gray-4);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray4:hover,
+        span.gray4:active,
+        span.gray4:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray3 {
+            background-color: var(--color-gray-3);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray3:hover,
+        span.gray3:active,
+        span.gray3:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray2 {
+            background-color: var(--color-gray-2);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray2:hover,
+        span.gray2:active,
+        span.gray2:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.gray1 {
+            background-color: var(--color-gray-1);
+            color: var(--color-gray-1);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.gray1:hover,
+        span.gray1:active,
+        span.gray1:focus {
+            background-color: var(--color-gray-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="gray10">gray10</span>
+        <span class="gray9">gray9</span>
+        <span class="gray8">gray8</span>
+        <span class="gray7">gray7</span>
+        <span class="gray6">gray6</span>
+        <span class="gray5">gray5</span>
+        <span class="gray4">gray4</span>
+        <span class="gray3">gray3</span>
+        <span class="gray2">gray2</span>
+        <span class="gray1">gray1</span>
+    </div>
+
+
+    <!-- color-red -->
+    <style>
+        span.red10 {
+            background-color: var(--color-red-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red10:hover,
+        span.red10:active,
+        span.red10:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red9 {
+            background-color: var(--color-red-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red9:hover,
+        span.red9:active,
+        span.red9:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red8 {
+            background-color: var(--color-red-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red8:hover,
+        span.red8:active,
+        span.red8:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red7 {
+            background-color: var(--color-red-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red7:hover,
+        span.red7:active,
+        span.red7:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red6 {
+            background-color: var(--color-red-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red6:hover,
+        span.red6:active,
+        span.red6:focus {
+            background-color: var(--color-red-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red5 {
+            background-color: var(--color-red-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red5:hover,
+        span.red5:active,
+        span.red5:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red4 {
+            background-color: var(--color-red-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red4:hover,
+        span.red4:active,
+        span.red4:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red3 {
+            background-color: var(--color-red-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red3:hover,
+        span.red3:active,
+        span.red3:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red2 {
+            background-color: var(--color-red-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red2:hover,
+        span.red2:active,
+        span.red2:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.red1 {
+            background-color: var(--color-red-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.red1:hover,
+        span.red1:active,
+        span.red1:focus {
+            background-color: var(--color-red-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="red10">red10</span>
+        <span class="red9">red9</span>
+        <span class="red8">red8</span>
+        <span class="red7">red7</span>
+        <span class="red6">red6</span>
+        <span class="red5">red5</span>
+        <span class="red4">red4</span>
+        <span class="red3">red3</span>
+        <span class="red2">red2</span>
+        <span class="red1">red1</span>
+    </div>
+
+    <!-- color-pink -->
+    <style>
+        span.pink10 {
+            background-color: var(--color-pink-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink10:hover,
+        span.pink10:active,
+        span.pink10:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink9 {
+            background-color: var(--color-pink-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink9:hover,
+        span.pink9:active,
+        span.pink9:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink8 {
+            background-color: var(--color-pink-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink8:hover,
+        span.pink8:active,
+        span.pink8:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink7 {
+            background-color: var(--color-pink-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink7:hover,
+        span.pink7:active,
+        span.pink7:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink6 {
+            background-color: var(--color-pink-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink6:hover,
+        span.pink6:active,
+        span.pink6:focus {
+            background-color: var(--color-pink-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink5 {
+            background-color: var(--color-pink-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink5:hover,
+        span.pink5:active,
+        span.pink5:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink4 {
+            background-color: var(--color-pink-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink4:hover,
+        span.pink4:active,
+        span.pink4:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink3 {
+            background-color: var(--color-pink-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink3:hover,
+        span.pink3:active,
+        span.pink3:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink2 {
+            background-color: var(--color-pink-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink2:hover,
+        span.pink2:active,
+        span.pink2:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.pink1 {
+            background-color: var(--color-pink-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.pink1:hover,
+        span.pink1:active,
+        span.pink1:focus {
+            background-color: var(--color-pink-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="pink10">pink10</span>
+        <span class="pink9">pink9</span>
+        <span class="pink8">pink8</span>
+        <span class="pink7">pink7</span>
+        <span class="pink6">pink6</span>
+        <span class="pink5">pink5</span>
+        <span class="pink4">pink4</span>
+        <span class="pink3">pink3</span>
+        <span class="pink2">pink2</span>
+        <span class="pink1">pink1</span>
+    </div>
+
+
+    <!-- color-rosered -->
+    <style>
+        span.rosered10 {
+            background-color: var(--color-rosered-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered10:hover,
+        span.rosered10:active,
+        span.rosered10:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered9 {
+            background-color: var(--color-rosered-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered9:hover,
+        span.rosered9:active,
+        span.rosered9:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered8 {
+            background-color: var(--color-rosered-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered8:hover,
+        span.rosered8:active,
+        span.rosered8:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered7 {
+            background-color: var(--color-rosered-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered7:hover,
+        span.rosered7:active,
+        span.rosered7:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered6 {
+            background-color: var(--color-rosered-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered6:hover,
+        span.rosered6:active,
+        span.rosered6:focus {
+            background-color: var(--color-rosered-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered5 {
+            background-color: var(--color-rosered-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered5:hover,
+        span.rosered5:active,
+        span.rosered5:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered4 {
+            background-color: var(--color-rosered-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered4:hover,
+        span.rosered4:active,
+        span.rosered4:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered3 {
+            background-color: var(--color-rosered-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered3:hover,
+        span.rosered3:active,
+        span.rosered3:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered2 {
+            background-color: var(--color-rosered-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered2:hover,
+        span.rosered2:active,
+        span.rosered2:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.rosered1 {
+            background-color: var(--color-rosered-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.rosered1:hover,
+        span.rosered1:active,
+        span.rosered1:focus {
+            background-color: var(--color-rosered-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="rosered10">rosered10</span>
+        <span class="rosered9">rosered9</span>
+        <span class="rosered8">rosered8</span>
+        <span class="rosered7">rosered7</span>
+        <span class="rosered6">rosered6</span>
+        <span class="rosered5">rosered5</span>
+        <span class="rosered4">rosered4</span>
+        <span class="rosered3">rosered3</span>
+        <span class="rosered2">rosered2</span>
+        <span class="rosered1">rosered1</span>
+    </div>
+
+
+    <!-- color-magenta -->
+    <style>
+        span.magenta10 {
+            background-color: var(--color-magenta-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta10:hover,
+        span.magenta10:active,
+        span.magenta10:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta9 {
+            background-color: var(--color-magenta-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta9:hover,
+        span.magenta9:active,
+        span.magenta9:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta8 {
+            background-color: var(--color-magenta-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta8:hover,
+        span.magenta8:active,
+        span.magenta8:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta7 {
+            background-color: var(--color-magenta-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta7:hover,
+        span.magenta7:active,
+        span.magenta7:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta6 {
+            background-color: var(--color-magenta-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta6:hover,
+        span.magenta6:active,
+        span.magenta6:focus {
+            background-color: var(--color-magenta-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta5 {
+            background-color: var(--color-magenta-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta5:hover,
+        span.magenta5:active,
+        span.magenta5:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta4 {
+            background-color: var(--color-magenta-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta4:hover,
+        span.magenta4:active,
+        span.magenta4:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta3 {
+            background-color: var(--color-magenta-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta3:hover,
+        span.magenta3:active,
+        span.magenta3:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta2 {
+            background-color: var(--color-magenta-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta2:hover,
+        span.magenta2:active,
+        span.magenta2:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.magenta1 {
+            background-color: var(--color-magenta-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.magenta1:hover,
+        span.magenta1:active,
+        span.magenta1:focus {
+            background-color: var(--color-magenta-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="magenta10">magenta10</span>
+        <span class="magenta9">magenta9</span>
+        <span class="magenta8">magenta8</span>
+        <span class="magenta7">magenta7</span>
+        <span class="magenta6">magenta6</span>
+        <span class="magenta5">magenta5</span>
+        <span class="magenta4">magenta4</span>
+        <span class="magenta3">magenta3</span>
+        <span class="magenta2">magenta2</span>
+        <span class="magenta1">magenta1</span>
+    </div>
+
+
+    <!-- color-purple -->
+    <style>
+        span.purple10 {
+            background-color: var(--color-purple-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple10:hover,
+        span.purple10:active,
+        span.purple10:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple9 {
+            background-color: var(--color-purple-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple9:hover,
+        span.purple9:active,
+        span.purple9:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple8 {
+            background-color: var(--color-purple-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple8:hover,
+        span.purple8:active,
+        span.purple8:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple7 {
+            background-color: var(--color-purple-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple7:hover,
+        span.purple7:active,
+        span.purple7:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple6 {
+            background-color: var(--color-purple-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple6:hover,
+        span.purple6:active,
+        span.purple6:focus {
+            background-color: var(--color-purple-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple5 {
+            background-color: var(--color-purple-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple5:hover,
+        span.purple5:active,
+        span.purple5:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple4 {
+            background-color: var(--color-purple-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple4:hover,
+        span.purple4:active,
+        span.purple4:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple3 {
+            background-color: var(--color-purple-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple3:hover,
+        span.purple3:active,
+        span.purple3:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple2 {
+            background-color: var(--color-purple-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple2:hover,
+        span.purple2:active,
+        span.purple2:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.purple1 {
+            background-color: var(--color-purple-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.purple1:hover,
+        span.purple1:active,
+        span.purple1:focus {
+            background-color: var(--color-purple-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="purple10">purple10</span>
+        <span class="purple9">purple9</span>
+        <span class="purple8">purple8</span>
+        <span class="purple7">purple7</span>
+        <span class="purple6">purple6</span>
+        <span class="purple5">purple5</span>
+        <span class="purple4">purple4</span>
+        <span class="purple3">purple3</span>
+        <span class="purple2">purple2</span>
+        <span class="purple1">purple1</span>
+    </div>
+
+
+    <!-- color-blue -->
+    <style>
+        span.blue10 {
+            background-color: var(--color-blue-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue10:hover,
+        span.blue10:active,
+        span.blue10:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue9 {
+            background-color: var(--color-blue-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue9:hover,
+        span.blue9:active,
+        span.blue9:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue8 {
+            background-color: var(--color-blue-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue8:hover,
+        span.blue8:active,
+        span.blue8:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue7 {
+            background-color: var(--color-blue-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue7:hover,
+        span.blue7:active,
+        span.blue7:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue6 {
+            background-color: var(--color-blue-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue6:hover,
+        span.blue6:active,
+        span.blue6:focus {
+            background-color: var(--color-blue-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue5 {
+            background-color: var(--color-blue-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue5:hover,
+        span.blue5:active,
+        span.blue5:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue4 {
+            background-color: var(--color-blue-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue4:hover,
+        span.blue4:active,
+        span.blue4:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue3 {
+            background-color: var(--color-blue-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue3:hover,
+        span.blue3:active,
+        span.blue3:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue2 {
+            background-color: var(--color-blue-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue2:hover,
+        span.blue2:active,
+        span.blue2:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.blue1 {
+            background-color: var(--color-blue-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.blue1:hover,
+        span.blue1:active,
+        span.blue1:focus {
+            background-color: var(--color-blue-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="blue10">blue10</span>
+        <span class="blue9">blue9</span>
+        <span class="blue8">blue8</span>
+        <span class="blue7">blue7</span>
+        <span class="blue6">blue6</span>
+        <span class="blue5">blue5</span>
+        <span class="blue4">blue4</span>
+        <span class="blue3">blue3</span>
+        <span class="blue2">blue2</span>
+        <span class="blue1">blue1</span>
+    </div>
+
+
+    <!-- color-BKSX -->
+    <style>
+        span.BKSX10 {
+            background-color: var(--color-BKSX-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX10:hover,
+        span.BKSX10:active,
+        span.BKSX10:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX9 {
+            background-color: var(--color-BKSX-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX9:hover,
+        span.BKSX9:active,
+        span.BKSX9:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX8 {
+            background-color: var(--color-BKSX-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX8:hover,
+        span.BKSX8:active,
+        span.BKSX8:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX7 {
+            background-color: var(--color-BKSX-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX7:hover,
+        span.BKSX7:active,
+        span.BKSX7:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX6 {
+            background-color: var(--color-BKSX-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX6:hover,
+        span.BKSX6:active,
+        span.BKSX6:focus {
+            background-color: var(--color-BKSX-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX5 {
+            background-color: var(--color-BKSX-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX5:hover,
+        span.BKSX5:active,
+        span.BKSX5:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX4 {
+            background-color: var(--color-BKSX-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX4:hover,
+        span.BKSX4:active,
+        span.BKSX4:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX3 {
+            background-color: var(--color-BKSX-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX3:hover,
+        span.BKSX3:active,
+        span.BKSX3:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX2 {
+            background-color: var(--color-BKSX-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX2:hover,
+        span.BKSX2:active,
+        span.BKSX2:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BKSX1 {
+            background-color: var(--color-BKSX-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BKSX1:hover,
+        span.BKSX1:active,
+        span.BKSX1:focus {
+            background-color: var(--color-BKSX-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="BKSX10">BKSX10</span>
+        <span class="BKSX9">BKSX9</span>
+        <span class="BKSX8">BKSX8</span>
+        <span class="BKSX7">BKSX7</span>
+        <span class="BKSX6">BKSX6</span>
+        <span class="BKSX5">BKSX5</span>
+        <span class="BKSX4">BKSX4</span>
+        <span class="BKSX3">BKSX3</span>
+        <span class="BKSX2">BKSX2</span>
+        <span class="BKSX1">BKSX1</span>
+    </div>
+
+
+    <!-- color-green -->
+    <style>
+        span.green10 {
+            background-color: var(--color-green-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green10:hover,
+        span.green10:active,
+        span.green10:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green9 {
+            background-color: var(--color-green-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green9:hover,
+        span.green9:active,
+        span.green9:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green8 {
+            background-color: var(--color-green-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green8:hover,
+        span.green8:active,
+        span.green8:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green7 {
+            background-color: var(--color-green-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green7:hover,
+        span.green7:active,
+        span.green7:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green6 {
+            background-color: var(--color-green-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green6:hover,
+        span.green6:active,
+        span.green6:focus {
+            background-color: var(--color-green-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green5 {
+            background-color: var(--color-green-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green5:hover,
+        span.green5:active,
+        span.green5:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green4 {
+            background-color: var(--color-green-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green4:hover,
+        span.green4:active,
+        span.green4:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green3 {
+            background-color: var(--color-green-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green3:hover,
+        span.green3:active,
+        span.green3:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green2 {
+            background-color: var(--color-green-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green2:hover,
+        span.green2:active,
+        span.green2:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.green1 {
+            background-color: var(--color-green-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.green1:hover,
+        span.green1:active,
+        span.green1:focus {
+            background-color: var(--color-green-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="green10">green10</span>
+        <span class="green9">green9</span>
+        <span class="green8">green8</span>
+        <span class="green7">green7</span>
+        <span class="green6">green6</span>
+        <span class="green5">green5</span>
+        <span class="green4">green4</span>
+        <span class="green3">green3</span>
+        <span class="green2">green2</span>
+        <span class="green1">green1</span>
+    </div>
+
+
+    <!-- color-cyan -->
+    <style>
+        span.cyan10 {
+            background-color: var(--color-cyan-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan10:hover,
+        span.cyan10:active,
+        span.cyan10:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan9 {
+            background-color: var(--color-cyan-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan9:hover,
+        span.cyan9:active,
+        span.cyan9:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan8 {
+            background-color: var(--color-cyan-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan8:hover,
+        span.cyan8:active,
+        span.cyan8:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan7 {
+            background-color: var(--color-cyan-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan7:hover,
+        span.cyan7:active,
+        span.cyan7:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan6 {
+            background-color: var(--color-cyan-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan6:hover,
+        span.cyan6:active,
+        span.cyan6:focus {
+            background-color: var(--color-cyan-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan5 {
+            background-color: var(--color-cyan-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan5:hover,
+        span.cyan5:active,
+        span.cyan5:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan4 {
+            background-color: var(--color-cyan-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan4:hover,
+        span.cyan4:active,
+        span.cyan4:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan3 {
+            background-color: var(--color-cyan-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan3:hover,
+        span.cyan3:active,
+        span.cyan3:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan2 {
+            background-color: var(--color-cyan-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan2:hover,
+        span.cyan2:active,
+        span.cyan2:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.cyan1 {
+            background-color: var(--color-cyan-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.cyan1:hover,
+        span.cyan1:active,
+        span.cyan1:focus {
+            background-color: var(--color-cyan-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="cyan10">cyan10</span>
+        <span class="cyan9">cyan9</span>
+        <span class="cyan8">cyan8</span>
+        <span class="cyan7">cyan7</span>
+        <span class="cyan6">cyan6</span>
+        <span class="cyan5">cyan5</span>
+        <span class="cyan4">cyan4</span>
+        <span class="cyan3">cyan3</span>
+        <span class="cyan2">cyan2</span>
+        <span class="cyan1">cyan1</span>
+    </div>
+
+
+    <!-- color-BlackishGreen -->
+    <style>
+        span.BlackishGreen10 {
+            background-color: var(--color-BlackishGreen-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen10:hover,
+        span.BlackishGreen10:active,
+        span.BlackishGreen10:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen9 {
+            background-color: var(--color-BlackishGreen-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen9:hover,
+        span.BlackishGreen9:active,
+        span.BlackishGreen9:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen8 {
+            background-color: var(--color-BlackishGreen-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen8:hover,
+        span.BlackishGreen8:active,
+        span.BlackishGreen8:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen7 {
+            background-color: var(--color-BlackishGreen-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen7:hover,
+        span.BlackishGreen7:active,
+        span.BlackishGreen7:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen6 {
+            background-color: var(--color-BlackishGreen-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen6:hover,
+        span.BlackishGreen6:active,
+        span.BlackishGreen6:focus {
+            background-color: var(--color-BlackishGreen-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen5 {
+            background-color: var(--color-BlackishGreen-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen5:hover,
+        span.BlackishGreen5:active,
+        span.BlackishGreen5:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen4 {
+            background-color: var(--color-BlackishGreen-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen4:hover,
+        span.BlackishGreen4:active,
+        span.BlackishGreen4:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen3 {
+            background-color: var(--color-BlackishGreen-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen3:hover,
+        span.BlackishGreen3:active,
+        span.BlackishGreen3:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen2 {
+            background-color: var(--color-BlackishGreen-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen2:hover,
+        span.BlackishGreen2:active,
+        span.BlackishGreen2:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BlackishGreen1 {
+            background-color: var(--color-BlackishGreen-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BlackishGreen1:hover,
+        span.BlackishGreen1:active,
+        span.BlackishGreen1:focus {
+            background-color: var(--color-BlackishGreen-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="BlackishGreen10">BlackishGreen10</span>
+        <span class="BlackishGreen9">BlackishGreen9</span>
+        <span class="BlackishGreen8">BlackishGreen8</span>
+        <span class="BlackishGreen7">BlackishGreen7</span>
+        <span class="BlackishGreen6">BlackishGreen6</span>
+        <span class="BlackishGreen5">BlackishGreen5</span>
+        <span class="BlackishGreen4">BlackishGreen4</span>
+        <span class="BlackishGreen3">BlackishGreen3</span>
+        <span class="BlackishGreen2">BlackishGreen2</span>
+        <span class="BlackishGreen1">BlackishGreen1</span>
+    </div>
+
+
+    <!-- color-yellow -->
+    <style>
+        span.yellow10 {
+            background-color: var(--color-yellow-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow10:hover,
+        span.yellow10:active,
+        span.yellow10:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow9 {
+            background-color: var(--color-yellow-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow9:hover,
+        span.yellow9:active,
+        span.yellow9:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow8 {
+            background-color: var(--color-yellow-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow8:hover,
+        span.yellow8:active,
+        span.yellow8:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow7 {
+            background-color: var(--color-yellow-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow7:hover,
+        span.yellow7:active,
+        span.yellow7:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow6 {
+            background-color: var(--color-yellow-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow6:hover,
+        span.yellow6:active,
+        span.yellow6:focus {
+            background-color: var(--color-yellow-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow5 {
+            background-color: var(--color-yellow-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow5:hover,
+        span.yellow5:active,
+        span.yellow5:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow4 {
+            background-color: var(--color-yellow-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow4:hover,
+        span.yellow4:active,
+        span.yellow4:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow3 {
+            background-color: var(--color-yellow-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow3:hover,
+        span.yellow3:active,
+        span.yellow3:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow2 {
+            background-color: var(--color-yellow-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow2:hover,
+        span.yellow2:active,
+        span.yellow2:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.yellow1 {
+            background-color: var(--color-yellow-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.yellow1:hover,
+        span.yellow1:active,
+        span.yellow1:focus {
+            background-color: var(--color-yellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="yellow10">yellow10</span>
+        <span class="yellow9">yellow9</span>
+        <span class="yellow8">yellow8</span>
+        <span class="yellow7">yellow7</span>
+        <span class="yellow6">yellow6</span>
+        <span class="yellow5">yellow5</span>
+        <span class="yellow4">yellow4</span>
+        <span class="yellow3">yellow3</span>
+        <span class="yellow2">yellow2</span>
+        <span class="yellow1">yellow1</span>
+    </div>
+
+
+    <!-- color-KingYellow -->
+    <style>
+        span.KingYellow10 {
+            background-color: var(--color-KingYellow-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow10:hover,
+        span.KingYellow10:active,
+        span.KingYellow10:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow9 {
+            background-color: var(--color-KingYellow-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow9:hover,
+        span.KingYellow9:active,
+        span.KingYellow9:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow8 {
+            background-color: var(--color-KingYellow-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow8:hover,
+        span.KingYellow8:active,
+        span.KingYellow8:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow7 {
+            background-color: var(--color-KingYellow-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow7:hover,
+        span.KingYellow7:active,
+        span.KingYellow7:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow6 {
+            background-color: var(--color-KingYellow-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow6:hover,
+        span.KingYellow6:active,
+        span.KingYellow6:focus {
+            background-color: var(--color-KingYellow-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow5 {
+            background-color: var(--color-KingYellow-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow5:hover,
+        span.KingYellow5:active,
+        span.KingYellow5:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow4 {
+            background-color: var(--color-KingYellow-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow4:hover,
+        span.KingYellow4:active,
+        span.KingYellow4:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow3 {
+            background-color: var(--color-KingYellow-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow3:hover,
+        span.KingYellow3:active,
+        span.KingYellow3:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow2 {
+            background-color: var(--color-KingYellow-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow2:hover,
+        span.KingYellow2:active,
+        span.KingYellow2:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.KingYellow1 {
+            background-color: var(--color-KingYellow-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.KingYellow1:hover,
+        span.KingYellow1:active,
+        span.KingYellow1:focus {
+            background-color: var(--color-KingYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="KingYellow10">KingYellow10</span>
+        <span class="KingYellow9">KingYellow9</span>
+        <span class="KingYellow8">KingYellow8</span>
+        <span class="KingYellow7">KingYellow7</span>
+        <span class="KingYellow6">KingYellow6</span>
+        <span class="KingYellow5">KingYellow5</span>
+        <span class="KingYellow4">KingYellow4</span>
+        <span class="KingYellow3">KingYellow3</span>
+        <span class="KingYellow2">KingYellow2</span>
+        <span class="KingYellow1">KingYellow1</span>
+    </div>
+
+
+    <!-- color-BrightYellow -->
+    <style>
+        span.BrightYellow10 {
+            background-color: var(--color-BrightYellow-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow10:hover,
+        span.BrightYellow10:active,
+        span.BrightYellow10:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow9 {
+            background-color: var(--color-BrightYellow-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow9:hover,
+        span.BrightYellow9:active,
+        span.BrightYellow9:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow8 {
+            background-color: var(--color-BrightYellow-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow8:hover,
+        span.BrightYellow8:active,
+        span.BrightYellow8:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow7 {
+            background-color: var(--color-BrightYellow-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow7:hover,
+        span.BrightYellow7:active,
+        span.BrightYellow7:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow6 {
+            background-color: var(--color-BrightYellow-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow6:hover,
+        span.BrightYellow6:active,
+        span.BrightYellow6:focus {
+            background-color: var(--color-BrightYellow-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow5 {
+            background-color: var(--color-BrightYellow-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow5:hover,
+        span.BrightYellow5:active,
+        span.BrightYellow5:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow4 {
+            background-color: var(--color-BrightYellow-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow4:hover,
+        span.BrightYellow4:active,
+        span.BrightYellow4:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow3 {
+            background-color: var(--color-BrightYellow-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow3:hover,
+        span.BrightYellow3:active,
+        span.BrightYellow3:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow2 {
+            background-color: var(--color-BrightYellow-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow2:hover,
+        span.BrightYellow2:active,
+        span.BrightYellow2:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.BrightYellow1 {
+            background-color: var(--color-BrightYellow-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.BrightYellow1:hover,
+        span.BrightYellow1:active,
+        span.BrightYellow1:focus {
+            background-color: var(--color-BrightYellow-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="BrightYellow10">BrightYellow10</span>
+        <span class="BrightYellow9">BrightYellow9</span>
+        <span class="BrightYellow8">BrightYellow8</span>
+        <span class="BrightYellow7">BrightYellow7</span>
+        <span class="BrightYellow6">BrightYellow6</span>
+        <span class="BrightYellow5">BrightYellow5</span>
+        <span class="BrightYellow4">BrightYellow4</span>
+        <span class="BrightYellow3">BrightYellow3</span>
+        <span class="BrightYellow2">BrightYellow2</span>
+        <span class="BrightYellow1">BrightYellow1</span>
+    </div>
+
+
+    <!-- color-golden -->
+    <style>
+        span.golden10 {
+            background-color: var(--color-golden-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden10:hover,
+        span.golden10:active,
+        span.golden10:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden9 {
+            background-color: var(--color-golden-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden9:hover,
+        span.golden9:active,
+        span.golden9:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden8 {
+            background-color: var(--color-golden-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden8:hover,
+        span.golden8:active,
+        span.golden8:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden7 {
+            background-color: var(--color-golden-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden7:hover,
+        span.golden7:active,
+        span.golden7:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden6 {
+            background-color: var(--color-golden-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden6:hover,
+        span.golden6:active,
+        span.golden6:focus {
+            background-color: var(--color-golden-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden5 {
+            background-color: var(--color-golden-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden5:hover,
+        span.golden5:active,
+        span.golden5:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden4 {
+            background-color: var(--color-golden-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden4:hover,
+        span.golden4:active,
+        span.golden4:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden3 {
+            background-color: var(--color-golden-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden3:hover,
+        span.golden3:active,
+        span.golden3:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden2 {
+            background-color: var(--color-golden-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden2:hover,
+        span.golden2:active,
+        span.golden2:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.golden1 {
+            background-color: var(--color-golden-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.golden1:hover,
+        span.golden1:active,
+        span.golden1:focus {
+            background-color: var(--color-golden-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="golden10">golden10</span>
+        <span class="golden9">golden9</span>
+        <span class="golden8">golden8</span>
+        <span class="golden7">golden7</span>
+        <span class="golden6">golden6</span>
+        <span class="golden5">golden5</span>
+        <span class="golden4">golden4</span>
+        <span class="golden3">golden3</span>
+        <span class="golden2">golden2</span>
+        <span class="golden1">golden1</span>
+    </div>
+
+
+    <!-- color-orange -->
+    <style>
+        span.orange10 {
+            background-color: var(--color-orange-10);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange10:hover,
+        span.orange10:active,
+        span.orange10:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange9 {
+            background-color: var(--color-orange-9);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange9:hover,
+        span.orange9:active,
+        span.orange9:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange8 {
+            background-color: var(--color-orange-8);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange8:hover,
+        span.orange8:active,
+        span.orange8:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange7 {
+            background-color: var(--color-orange-7);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange7:hover,
+        span.orange7:active,
+        span.orange7:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange6 {
+            background-color: var(--color-orange-6);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange6:hover,
+        span.orange6:active,
+        span.orange6:focus {
+            background-color: var(--color-orange-4);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange5 {
+            background-color: var(--color-orange-5);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange5:hover,
+        span.orange5:active,
+        span.orange5:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange4 {
+            background-color: var(--color-orange-4);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange4:hover,
+        span.orange4:active,
+        span.orange4:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange3 {
+            background-color: var(--color-orange-3);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange3:hover,
+        span.orange3:active,
+        span.orange3:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange2 {
+            background-color: var(--color-orange-2);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange2:hover,
+        span.orange2:active,
+        span.orange2:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+
+        span.orange1 {
+            background-color: var(--color-orange-1);
+            color: var(--color-gray-3);
+            border-bottom: 1px solid var(--color-gray-6);
+        }
+
+        span.orange1:hover,
+        span.orange1:active,
+        span.orange1:focus {
+            background-color: var(--color-orange-6);
+            box-shadow: inset 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+        }
+    </style>
+
+    <div>
+        <span class="orange10">orange10</span>
+        <span class="orange9">orange9</span>
+        <span class="orange8">orange8</span>
+        <span class="orange7">orange7</span>
+        <span class="orange6">orange6</span>
+        <span class="orange5">orange5</span>
+        <span class="orange4">orange4</span>
+        <span class="orange3">orange3</span>
+        <span class="orange2">orange2</span>
+        <span class="orange1">orange1</span>
+    </div>
+
+
+
+
 
 
 
