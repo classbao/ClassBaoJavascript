@@ -23,6 +23,10 @@
 					title: "提示信息",
 					btnClose: true, // 是否显示关闭按钮
 				},
+				leftIcon: {
+					isEnabled: true,
+					icon: "!"
+				},
 				content: "",
 				foot: {
 					isEnabled: true,
@@ -63,6 +67,14 @@
 			// <div class="head"><span class="l title">系统信息</span><span class="r icon close">&times;</span></div>
 			var html_head = "<div class=\"head\"><span class=\"l title\">" + (this.box.head.title || "提示消息") + "</span>" + (this.box.head.btnClose ? "<span class=\"r icon close\" onclick=\"CBJS.xxhModal.remove('" + this.box.id + "');\">&times;</span>" : "") + "</div>";
 			return html_head;
+		},
+		buildLeftIcon: function () {
+			if (!this.box.leftIcon.isEnabled) {
+				return "";
+			}
+
+			var html_leftside="<div class=\"leftside\"><div class=\"leftside-icon\">" +this.box.leftIcon.icon+ "</div></div>";
+			return html_leftside;
 		},
 		buildFoot: function () {
 			if (!this.box.foot.isEnabled || !!!this.box.foot.btn) {
@@ -112,6 +124,7 @@
 
 			var html_modal = "";
 			html_modal += this.buildHead();
+			html_modal += this.buildLeftIcon();
 			html_modal += "<div class=\"content\">" + (this.box.content || "自定义内容") + "</div>";
 			html_modal += this.buildFoot();
 
@@ -187,6 +200,9 @@
 			this.box.className = !!className ? ("popup_" + className) : "";
 			this.box.maskIsEnabled = false;
 			this.box.head.isEnabled = false;
+
+			this.box.leftIcon.isEnabled = true;
+			this.box.leftIcon.icon="!";
 
 			this.box.content = " " + msg + " ";
 			this.box.content += "<!-- 动画结束后移除元素 -->";

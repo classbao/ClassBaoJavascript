@@ -30,6 +30,7 @@
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	background-color: #fff;
+	display: flex;
 }
 
 .xxhModal .icon {
@@ -149,13 +150,30 @@
 .xxhModal .No:hover,
 .xxhModal .No:active {}
 
+.xxhModal .leftside {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.xxhModal .leftside .leftside-icon {
+	height: 1rem;
+	width: 1rem;
+	line-height: 1rem;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+}
+
 /* 内容区域 */
 .xxhModal .content {
-    min-width: 10rem;
-    line-height: 1.5rem;
-    padding: 3px;
-    margin: 0;
-    text-align: center;
+	min-width: 10rem;
+	line-height: 1.5rem;
+	padding: 3px;
+	margin: 0;
+	text-align: center;
 }
 
 /* 弹窗动画 */
@@ -213,7 +231,7 @@
 .xxhModal.SlideUp-in-out {
 	visibility: visible;
 	opacity: 1;
-	animation: slideUp-in-out 3s forwards;
+	/* animation: slideUp-in-out 3s forwards; */
 	/* forwards是停在动画最后的的那个画面。即只演示一次。*/
 	/* infinite是动画播放次数为无限次。*/
 }
@@ -227,16 +245,20 @@
 }
 
 .xxhModal.red,
-.xxhModal.popup_red,.xxhModal.popup_red .content {
+.xxhModal.popup_red,
+.xxhModal.popup_red .leftside-icon,
+.xxhModal.popup_red .content {
 	background-color: #f56c6c;
 	border-color: red;
 	color: #f0f0f0;
 }
+
 .xxhModal.popup_red .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.red .title,.xxhModal.popup_red .title {
+.xxhModal.red .title,
+.xxhModal.popup_red .title {
 	color: #fff;
 }
 
@@ -246,16 +268,19 @@
 }
 
 .xxhModal.orange,
-.xxhModal.popup_orange,.xxhModal.popup_orange .content {
+.xxhModal.popup_orange,
+.xxhModal.popup_orange .content {
 	background-color: #fddfa7;
 	border-color: orange;
 	color: #303030;
 }
+
 .xxhModal.popup_orange .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.orange .title,.xxhModal.popup_orange .title {
+.xxhModal.orange .title,
+.xxhModal.popup_orange .title {
 	color: #565656;
 }
 
@@ -265,16 +290,19 @@
 }
 
 .xxhModal.yellow,
-.xxhModal.popup_yellow,.xxhModal.popup_yellow .content {
+.xxhModal.popup_yellow,
+.xxhModal.popup_yellow .content {
 	background-color: #e7e79b;
 	border-color: yellow;
 	color: #2c2c2c;
 }
+
 .xxhModal.popup_yellow .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.yellow .title,.xxhModal.popup_yellow .title {
+.xxhModal.yellow .title,
+.xxhModal.popup_yellow .title {
 	color: #565656;
 }
 
@@ -284,16 +312,19 @@
 }
 
 .xxhModal.green,
-.xxhModal.popup_green,.xxhModal.popup_green .content {
+.xxhModal.popup_green,
+.xxhModal.popup_green .content {
 	background-color: #3dbb3d;
 	border-color: green;
 	color: #fff;
 }
+
 .xxhModal.popup_green .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.green .title,.xxhModal.popup_green .title {
+.xxhModal.green .title,
+.xxhModal.popup_green .title {
 	color: #fff;
 }
 
@@ -303,16 +334,19 @@
 }
 
 .xxhModal.cyan,
-.xxhModal.popup_cyan,.xxhModal.popup_cyan .content {
+.xxhModal.popup_cyan,
+.xxhModal.popup_cyan .content {
 	background-color: #21c7c7;
 	border-color: cyan;
 	color: #fff;
 }
+
 .xxhModal.popup_cyan .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.cyan .title,.xxhModal.popup_cyan .title {
+.xxhModal.cyan .title,
+.xxhModal.popup_cyan .title {
 	color: #fff;
 }
 
@@ -322,16 +356,19 @@
 }
 
 .xxhModal.blue,
-.xxhModal.popup_blue,.xxhModal.popup_blue .content {
+.xxhModal.popup_blue,
+.xxhModal.popup_blue .content {
 	background-color: #00b7ee;
 	border-color: #65bbec;
 	color: #fff;
 }
+
 .xxhModal.popup_blue .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.blue .title,.xxhModal.popup_blue .title {
+.xxhModal.blue .title,
+.xxhModal.popup_blue .title {
 	color: #fff;
 }
 
@@ -341,16 +378,19 @@
 }
 
 .xxhModal.indigo,
-.xxhModal.popup_indigo,.xxhModal.popup_indigo .content {
+.xxhModal.popup_indigo,
+.xxhModal.popup_indigo .content {
 	background-color: #2596c9;
 	border-color: #03A9F4;
 	color: #fff;
 }
+
 .xxhModal.popup_indigo .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.indigo .title,.xxhModal.popup_indigo .title {
+.xxhModal.indigo .title,
+.xxhModal.popup_indigo .title {
 	color: #fff;
 }
 
@@ -360,16 +400,19 @@
 }
 
 .xxhModal.purple,
-.xxhModal.popup_purple,.xxhModal.popup_purple .content {
+.xxhModal.popup_purple,
+.xxhModal.popup_purple .content {
 	background-color: #af49af;
 	border-color: purple;
 	color: #fff;
 }
+
 .xxhModal.popup_purple .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.purple .title,.xxhModal.popup_purple .title {
+.xxhModal.purple .title,
+.xxhModal.popup_purple .title {
 	color: #fff;
 }
 
@@ -379,16 +422,19 @@
 }
 
 .xxhModal.black,
-.xxhModal.popup_black,.xxhModal.popup_black .content {
+.xxhModal.popup_black,
+.xxhModal.popup_black .content {
 	background-color: #4e4d4d;
 	border-color: black;
 	color: #fff;
 }
+
 .xxhModal.popup_black .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.black .title,.xxhModal.popup_black .title {
+.xxhModal.black .title,
+.xxhModal.popup_black .title {
 	color: #fff;
 }
 
@@ -398,16 +444,19 @@
 }
 
 .xxhModal.deepSpace,
-.xxhModal.popup_deepSpace,.xxhModal.popup_deepSpace .content {
+.xxhModal.popup_deepSpace,
+.xxhModal.popup_deepSpace .content {
 	background-color: #010d60;
 	border-color: black;
 	color: #fff;
 }
+
 .xxhModal.popup_deepSpace .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.deepSpace .title,.xxhModal.popup_deepSpace .title {
+.xxhModal.deepSpace .title,
+.xxhModal.popup_deepSpace .title {
 	color: #fff;
 }
 
@@ -417,16 +466,19 @@
 }
 
 .xxhModal.grey,
-.xxhModal.popup_grey,.xxhModal.popup_grey .content {
+.xxhModal.popup_grey,
+.xxhModal.popup_grey .content {
 	background-color: #cdcccc;
 	border-color: grey;
 	color: #040404;
 }
+
 .xxhModal.popup_grey .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.grey .title,.xxhModal.popup_grey .title {
+.xxhModal.grey .title,
+.xxhModal.popup_grey .title {
 	color: #040404;
 }
 
@@ -436,16 +488,19 @@
 }
 
 .xxhModal.brown,
-.xxhModal.popup_brown,.xxhModal.popup_brown .content {
+.xxhModal.popup_brown,
+.xxhModal.popup_brown .content {
 	background-color: #c36c6c;
 	border-color: brown;
 	color: #fff;
 }
+
 .xxhModal.popup_brown .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.brown .title,.xxhModal.popup_brown .title {
+.xxhModal.brown .title,
+.xxhModal.popup_brown .title {
 	color: #fff;
 }
 
@@ -455,16 +510,19 @@
 }
 
 .xxhModal.gold,
-.xxhModal.popup_gold,.xxhModal.popup_gold .content {
+.xxhModal.popup_gold,
+.xxhModal.popup_gold .content {
 	background-color: #cdad00;
 	border-color: gold;
 	color: #fff;
 }
+
 .xxhModal.popup_gold .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.gold .title,.xxhModal.popup_gold .title {
+.xxhModal.gold .title,
+.xxhModal.popup_gold .title {
 	color: #fff;
 }
 
@@ -475,16 +533,19 @@
 
 /* 其他色彩主题皮肤·自定义 */
 .xxhModal.other,
-.xxhModal.popup_other,.xxhModal.popup_other .content {
+.xxhModal.popup_other,
+.xxhModal.popup_other .content {
 	background-color: #fff;
 	border-color: #666;
 	color: #565656;
 }
+
 .xxhModal.popup_other .content {
-    margin: 3px;
+	margin: 3px;
 }
 
-.xxhModal.other .title,.xxhModal.popup_other .title {
+.xxhModal.other .title,
+.xxhModal.popup_other .title {
 	color: #565656;
 }
 
