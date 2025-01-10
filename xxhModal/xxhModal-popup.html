@@ -73,23 +73,17 @@
         console.log('button#slideUp-in-out addEventListener> click');
 
         // CBJS.xxhModal.Popup("测试气泡消息啊");
-        CBJS.xxhModal.Popup("测试Popup气泡消息啊", "red");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "orange");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "yellow");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "green");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "cyan");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "blue");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "indigo");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "purple");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "black");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "deepSpace");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "grey");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "brown");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "danger");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "primary");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "success");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "info");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "warning");
+        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "secondary");
         // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "gold");
         // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "other");
 
         // CBJS.xxhModal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
-        // CBJS.xxhModal.PopupSuccess("测试PopupSuccess气泡消息（用于成功信息）");
+        CBJS.xxhModal.PopupSuccess("测试PopupSuccess气泡消息（用于成功信息）");
         // CBJS.xxhModal.PopupError("测试PopupError气泡消息（用于异常信息）");
 
       });
@@ -97,8 +91,8 @@
       // 例如: 按钮点击触发 
       document.querySelector('button#slideUp-in-CustomOpenModel').addEventListener('click', function () {
         console.log('button#slideUp-in-CustomOpenModel addEventListener> click');
-        
-        CBJS.xxhModal.CustomOpen("#xxhModal-CustomOpenModel","#xxhMask-CustomOpenModel");
+
+        CBJS.xxhModal.CustomOpen("#xxhModal-CustomOpenModel", "#xxhMask-CustomOpenModel");
         // 也可以自定义弹出框
       });
 
@@ -107,11 +101,15 @@
         console.log('button#slideUp-all addEventListener> click');
         CBJS.xxhModal.Open({
           id: new Date().getTime(),
-          className: "blue",
+          className: "other",
           head: {
             isEnabled: true,
-            title: "友情提示",
+            title: "友情提示2",
             btnClose: true, // 是否显示关闭按钮
+          },
+          leftIcon: {
+            isEnabled: false,
+            icon: "!",
           },
           content: "<p>这是一个弹窗完整示例！<br>阿拉加斯加的企鹅想去北极看白熊，在冰天雪地走了十天十夜发现还没到</p>",
           foot: {
@@ -140,7 +138,8 @@
               }
             ]
           },
-          maskIsEnabled: true
+          maskIsEnabled: true,
+          DebugMode: false
         });
 
         // 也可以自定义弹出框
@@ -163,7 +162,9 @@
 
   <div id="xxhMask-CustomOpenModel" class="xxhMask" style="display:none;"></div>
   <div id="xxhModal-CustomOpenModel" class="xxhModal" style="display:none;">
-    <div class="head"><span class="l title">系统信息</span><span class="r icon close" onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');" >&times;</span></div>
+    <div class="head"><span class="l title">系统信息</span><span class="r icon close"
+        onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');">&times;</span>
+    </div>
     <div class="content">
       <p>
       <table style="width: 500px;">
@@ -205,7 +206,9 @@
     <div class="foot">
       <div class="l btn btnL Ok"><span class="icon" style="color: #02cf02;">&#10003;</span>确定</div>
       <div class="l btn btnMiddle Ok"><span class="icon" style="color: #02cf02;">&#10004;</span>中间</div>
-      <div class="r btn btnR No" onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');"><span class="icon" style="color: orangered;">&#10007;</span>取消</div>
+      <div class="r btn btnR No"
+        onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');"><span class="icon"
+          style="color: orangered;">&#10007;</span>取消</div>
     </div>
     <!-- <div class="foot"><div class="l btn btnSingle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>单个按钮</div></div> -->
 

@@ -30,7 +30,11 @@
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	background-color: #fff;
+
 	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .xxhModal .icon {
@@ -58,6 +62,7 @@
 	list-style: none;
 	min-height: 32px;
 	border-bottom: 1px solid #ccc;
+	border-radius: 9px 9px 0 0;
 }
 
 .xxhModal .title {
@@ -86,7 +91,9 @@
 
 .xxhModal .foot {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	justify-content: space-between;
 	min-height: 5px;
 }
 
@@ -153,17 +160,23 @@
 .xxhModal .leftside {
 	flex: 0 0 auto;
 	display: flex;
-	align-items: center;
+
+	flex-wrap: nowrap;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	padding: 0 0 0 5px;
 }
 
 .xxhModal .leftside .leftside-icon {
+	display: inline-block;
 	height: 1rem;
 	width: 1rem;
 	line-height: 1rem;
-	display: inline-block;
+	padding: 3px;
 	text-align: center;
 	vertical-align: middle;
+	border: 1px solid #ccc;
 	border-radius: 50%;
 }
 
@@ -231,325 +244,159 @@
 .xxhModal.SlideUp-in-out {
 	visibility: visible;
 	opacity: 1;
-	/* animation: slideUp-in-out 3s forwards; */
+	animation: slideUp-in-out 3s forwards;
 	/* forwards是停在动画最后的的那个画面。即只演示一次。*/
 	/* infinite是动画播放次数为无限次。*/
 }
 
 /* 色彩主题皮肤，参考：https://www.cnblogs.com/guyu-/p/13967772.html */
 .xxhModal.default,
-.xxhModal.popup_default {
-	background-color: #fff;
+.xxhModal.default .head,
+.xxhModal.popup_default .leftside-icon,
+.xxhModal.popup_default,
+.xxhModal.secondary,
+.xxhModal.secondary .head,
+.xxhModal.popup_secondary .leftside-icon,
+.xxhModal.popup_secondary {
+	background-color: rgba(255, 255, 255, 1);
 	border-color: #ccc;
 	color: #565656;
 }
 
-.xxhModal.red,
-.xxhModal.popup_red,
-.xxhModal.popup_red .leftside-icon,
-.xxhModal.popup_red .content {
-	background-color: #f56c6c;
-	border-color: red;
-	color: #f0f0f0;
+.xxhModal.default .title,
+.xxhModal.secondary .title {
+	color: #343a40;
 }
 
-.xxhModal.popup_red .content {
-	margin: 3px;
+.xxhModal.primary,
+.xxhModal.primary .head,
+.xxhModal.popup_primary .leftside-icon,
+.xxhModal.popup_primary {
+	background-color: rgba(0, 123, 255, 0.2);
+	border-color: #007bff;
+	color: #343a40;
 }
 
-.xxhModal.red .title,
-.xxhModal.popup_red .title {
-	color: #fff;
+.xxhModal.primary .title {
+	color: #343a40;
 }
 
-.xxhModal.red .content {
-	background-color: #fff;
-	color: #565656;
+.xxhModal.success,
+.xxhModal.success .head,
+.xxhModal.popup_success .leftside-icon,
+.xxhModal.popup_success {
+	background-color: rgba(40, 167, 69, 0.2);
+	border-color: #28a745;
+	color: #343a40;
 }
 
-.xxhModal.orange,
-.xxhModal.popup_orange,
-.xxhModal.popup_orange .content {
-	background-color: #fddfa7;
-	border-color: orange;
-	color: #303030;
+.xxhModal.success .title {
+	color: #343a40;
 }
 
-.xxhModal.popup_orange .content {
-	margin: 3px;
+.xxhModal.info,
+.xxhModal.info .head,
+.xxhModal.popup_info .leftside-icon,
+.xxhModal.popup_info {
+	background-color: rgba(23, 162, 184, 0.2);
+	border-color: #17a2b8;
+	color: #343a40;
 }
 
-.xxhModal.orange .title,
-.xxhModal.popup_orange .title {
-	color: #565656;
+.xxhModal.info .title {
+	color: #343a40;
 }
 
-.xxhModal.orange .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.yellow,
-.xxhModal.popup_yellow,
-.xxhModal.popup_yellow .content {
-	background-color: #e7e79b;
-	border-color: yellow;
+.xxhModal.warning,
+.xxhModal.warning .head,
+.xxhModal.popup_warning .leftside-icon,
+.xxhModal.popup_warning {
+	background-color: rgba(255, 193, 7, 0.2);
+	border-color: #ffc107;
 	color: #2c2c2c;
 }
 
-.xxhModal.popup_yellow .content {
-	margin: 3px;
-}
-
-.xxhModal.yellow .title,
-.xxhModal.popup_yellow .title {
+.xxhModal.warning .title {
 	color: #565656;
 }
 
-.xxhModal.yellow .content {
-	background-color: #fff;
-	color: #565656;
+.xxhModal.danger,
+.xxhModal.danger .head,
+.xxhModal.popup_danger .leftside-icon,
+.xxhModal.popup_danger {
+	background-color: rgba(220, 53, 69, 0.2);
+	border-color: #dc3545;
+	color: #2c2c2c;
 }
 
-.xxhModal.green,
-.xxhModal.popup_green,
-.xxhModal.popup_green .content {
-	background-color: #3dbb3d;
-	border-color: green;
-	color: #fff;
-}
-
-.xxhModal.popup_green .content {
-	margin: 3px;
-}
-
-.xxhModal.green .title,
-.xxhModal.popup_green .title {
-	color: #fff;
-}
-
-.xxhModal.green .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.cyan,
-.xxhModal.popup_cyan,
-.xxhModal.popup_cyan .content {
-	background-color: #21c7c7;
-	border-color: cyan;
-	color: #fff;
-}
-
-.xxhModal.popup_cyan .content {
-	margin: 3px;
-}
-
-.xxhModal.cyan .title,
-.xxhModal.popup_cyan .title {
-	color: #fff;
-}
-
-.xxhModal.cyan .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.blue,
-.xxhModal.popup_blue,
-.xxhModal.popup_blue .content {
-	background-color: #00b7ee;
-	border-color: #65bbec;
-	color: #fff;
-}
-
-.xxhModal.popup_blue .content {
-	margin: 3px;
-}
-
-.xxhModal.blue .title,
-.xxhModal.popup_blue .title {
-	color: #fff;
-}
-
-.xxhModal.blue .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.indigo,
-.xxhModal.popup_indigo,
-.xxhModal.popup_indigo .content {
-	background-color: #2596c9;
-	border-color: #03A9F4;
-	color: #fff;
-}
-
-.xxhModal.popup_indigo .content {
-	margin: 3px;
-}
-
-.xxhModal.indigo .title,
-.xxhModal.popup_indigo .title {
-	color: #fff;
-}
-
-.xxhModal.indigo .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.purple,
-.xxhModal.popup_purple,
-.xxhModal.popup_purple .content {
-	background-color: #af49af;
-	border-color: purple;
-	color: #fff;
-}
-
-.xxhModal.popup_purple .content {
-	margin: 3px;
-}
-
-.xxhModal.purple .title,
-.xxhModal.popup_purple .title {
-	color: #fff;
-}
-
-.xxhModal.purple .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.black,
-.xxhModal.popup_black,
-.xxhModal.popup_black .content {
-	background-color: #4e4d4d;
-	border-color: black;
-	color: #fff;
-}
-
-.xxhModal.popup_black .content {
-	margin: 3px;
-}
-
-.xxhModal.black .title,
-.xxhModal.popup_black .title {
-	color: #fff;
-}
-
-.xxhModal.black .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.deepSpace,
-.xxhModal.popup_deepSpace,
-.xxhModal.popup_deepSpace .content {
-	background-color: #010d60;
-	border-color: black;
-	color: #fff;
-}
-
-.xxhModal.popup_deepSpace .content {
-	margin: 3px;
-}
-
-.xxhModal.deepSpace .title,
-.xxhModal.popup_deepSpace .title {
-	color: #fff;
-}
-
-.xxhModal.deepSpace .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.grey,
-.xxhModal.popup_grey,
-.xxhModal.popup_grey .content {
-	background-color: #cdcccc;
-	border-color: grey;
-	color: #040404;
-}
-
-.xxhModal.popup_grey .content {
-	margin: 3px;
-}
-
-.xxhModal.grey .title,
-.xxhModal.popup_grey .title {
-	color: #040404;
-}
-
-.xxhModal.grey .content {
-	background-color: #fff;
-	color: #565656;
-}
-
-.xxhModal.brown,
-.xxhModal.popup_brown,
-.xxhModal.popup_brown .content {
-	background-color: #c36c6c;
-	border-color: brown;
-	color: #fff;
-}
-
-.xxhModal.popup_brown .content {
-	margin: 3px;
-}
-
-.xxhModal.brown .title,
-.xxhModal.popup_brown .title {
-	color: #fff;
-}
-
-.xxhModal.brown .content {
-	background-color: #fff;
+.xxhModal.danger .title {
 	color: #565656;
 }
 
 .xxhModal.gold,
-.xxhModal.popup_gold,
-.xxhModal.popup_gold .content {
-	background-color: #cdad00;
-	border-color: gold;
-	color: #fff;
+.xxhModal.gold .head,
+.xxhModal.popup_gold .leftside-icon,
+.xxhModal.popup_gold {
+	background-color: rgba(255, 215, 0, 0.2);
+	border-color: #ffd700;
+	color: #2c2c2c;
 }
 
-.xxhModal.popup_gold .content {
-	margin: 3px;
-}
-
-.xxhModal.gold .title,
-.xxhModal.popup_gold .title {
-	color: #fff;
-}
-
-.xxhModal.gold .content {
-	background-color: #fff;
+.xxhModal.gold .title {
 	color: #565656;
 }
 
 /* 其他色彩主题皮肤·自定义 */
 .xxhModal.other,
-.xxhModal.popup_other,
-.xxhModal.popup_other .content {
-	background-color: #fff;
-	border-color: #666;
+.xxhModal.other .head,
+.xxhModal.popup_other .leftside-icon,
+.xxhModal.popup_other {
+	background-color: rgba(96, 134, 146, 0.2);
+	border-color: #608692;
+	color: #2c2c2c;
+}
+
+.xxhModal.other .title {
 	color: #565656;
 }
 
+
+
+.xxhModal.default,
+.xxhModal.secondary,
+.xxhModal.primary,
+.xxhModal.success,
+.xxhModal.info,
+.xxhModal.warning,
+.xxhModal.danger,
+.xxhModal.gold,
+.xxhModal.other {
+	border-radius: 9px 9px 9px 9px;
+	background-color: #fff;
+	color: #565656;
+}
+
+.xxhModal.popup_default,
+.xxhModal.popup_secondary,
+.xxhModal.popup_primary,
+.xxhModal.popup_success,
+.xxhModal.popup_info,
+.xxhModal.popup_warning,
+.xxhModal.popup_danger,
+.xxhModal.popup_gold,
+.xxhModal.popup_other {
+	flex-direction: row;
+}
+
+.xxhModal.popup_default .content,
+.xxhModal.popup_secondary .content,
+.xxhModal.popup_primary .content,
+.xxhModal.popup_success .content,
+.xxhModal.popup_info .content,
+.xxhModal.popup_warning .content,
+.xxhModal.popup_danger .content,
+.xxhModal.popup_gold .content,
 .xxhModal.popup_other .content {
 	margin: 3px;
-}
-
-.xxhModal.other .title,
-.xxhModal.popup_other .title {
-	color: #565656;
-}
-
-.xxhModal.other .content {
-	background-color: #fff;
-	color: #565656;
+	padding: 3px;
 }
