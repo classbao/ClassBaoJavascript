@@ -29,47 +29,49 @@
   <!-- JS脚本 -->
   <script>
     window.onload = function () {
+      CBJS.xxhModal.DebugMode = 1;
       /*
           if(document.querySelector('#xxhModal1718717098780.xxhModal .close')){
-                  document.querySelector('.xxhModal .close').addEventListener('click', function () {
-                      console.log('.close addEventListener> click');
+                  CBJS.xxhModal.addEventListener(document.querySelector('.xxhModal .close'),'click', function (event) {
+                    console.log('.close addEventListener> click');
+                    console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText);
                       document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
                       document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'none';
-                  });
+                  },false);
           }
         	
           if(document.querySelector('#xxhModal1718717098780.xxhModal .No'))
           {
-                  document.querySelector('.xxhModal .No').addEventListener('click', function () {
-                      console.log('.close addEventListener> click');
+                  CBJS.xxhModal.addEventListener(document.querySelector('.xxhModal .No'),'click', function (event) {
+                    console.log('.close addEventListener> click');
+                    console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText);
                       document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
                       document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'none';
-                  });
+                  },false);
           }
       */
 
       // 某个条件满足时，添加弹窗
       // 例如: 按钮点击触发 
-      document.querySelector('button#SlideUp-in-Alert').addEventListener('click', function () {
+      CBJS.xxhModal.addEventListener(document.querySelector('button#SlideUp-in-Alert'), 'click', function (event) {
         console.log('button#SlideUp-in addEventListener> click');
         // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
         // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
 
         CBJS.xxhModal.Alert("测试Alert提醒消息", "知道了", myBtnCallback);
         // 也可以自定义弹出框
-      });
+      }, false);
 
-      document.querySelector('button#SlideUp-in').addEventListener('click', function () {
+      CBJS.xxhModal.addEventListener(document.querySelector('button#SlideUp-in'), 'click', function (event) {
         console.log('button#SlideUp-in addEventListener> click');
         // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
         // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
 
         CBJS.xxhModal.Confirm("测试Confirm提醒确认消息", "确定", myBtnCallback, "取消", myBtnCallback2);
         // 也可以自定义弹出框
-      });
+      }, false);
 
-
-      document.querySelector('button#slideUp-in-out').addEventListener('click', function () {
+      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-in-out'), 'click', function (event) {
         console.log('button#slideUp-in-out addEventListener> click');
 
         // CBJS.xxhModal.Popup("测试气泡消息啊");
@@ -82,23 +84,28 @@
         // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "gold");
         // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "other");
 
+        // CBJS.xxhModal.PopupDefault("测试Popup气泡消息（默认样式）");
+        // CBJS.xxhModal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
+        // CBJS.xxhModal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
         // CBJS.xxhModal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
-        CBJS.xxhModal.PopupSuccess("测试PopupSuccess气泡消息（用于成功信息）");
-        // CBJS.xxhModal.PopupError("测试PopupError气泡消息（用于异常信息）");
+        // CBJS.xxhModal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
+        // CBJS.xxhModal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
+        // CBJS.xxhModal.PopupGold("测试PopupGold气泡消息（一般信息2）");
+        CBJS.xxhModal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
 
-      });
+
+      }, false);
 
       // 例如: 按钮点击触发 
-      document.querySelector('button#slideUp-in-CustomOpenModel').addEventListener('click', function () {
-        console.log('button#slideUp-in-CustomOpenModel addEventListener> click');
+      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-in-CustomOpenModel'), 'click', function (event) {
+        console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-in-CustomOpenModel addEventListener> click');
 
         CBJS.xxhModal.CustomOpen("#xxhModal-CustomOpenModel", "#xxhMask-CustomOpenModel");
         // 也可以自定义弹出框
-      });
+      }, false);
 
-
-      document.querySelector('button#slideUp-all').addEventListener('click', function () {
-        console.log('button#slideUp-all addEventListener> click');
+      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-all'), 'click', function (event) {
+        console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-all addEventListener> click');
         CBJS.xxhModal.Open({
           id: new Date().getTime(),
           className: "other",
@@ -109,7 +116,7 @@
           },
           leftIcon: {
             isEnabled: false,
-            icon: "!",
+            icon: "i",
           },
           content: "<p>这是一个弹窗完整示例！<br>阿拉加斯加的企鹅想去北极看白熊，在冰天雪地走了十天十夜发现还没到</p>",
           foot: {
@@ -119,22 +126,22 @@
               {
                 icon: "&#10003;",
                 title: "确定",
-                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+                click: function (event) { console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText); },
               },
               {
                 icon: "&#10004;",
                 title: "中间按钮1",
-                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+                click: function (event) { console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText); },
               },
               {
                 icon: "&#9888;",
                 title: "中间按钮2",
-                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+                click: function (event) { console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText); },
               },
               {
                 icon: "&#10007;",
                 title: "取消",
-                click: function () { console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f")); },
+                click: function (event) { console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText); },
               }
             ]
           },
@@ -143,16 +150,16 @@
         });
 
         // 也可以自定义弹出框
-      });
+      }, false);
 
     }
 
 
-    function myBtnCallback() {
-      console.log('Custom callback function EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f"));
+    function myBtnCallback(event) {
+      console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText);
     }
-    function myBtnCallback2() {
-      console.log('Custom callback function 2 EventListener Triggered > ' + new Date().Format("yyyy/MM/dd HH:mm:ss.f"));
+    function myBtnCallback2(event) {
+      console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function 2 EventListener Triggered > ' + event.target.innerText);
     }
   </script>
 

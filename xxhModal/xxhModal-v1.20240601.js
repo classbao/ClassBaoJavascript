@@ -15,19 +15,26 @@
 	var xxhModal = {
 		// 调试模式在控制台输出日志
 		DebugMode: false,
+		buildID: function (id) {
+			function getTruncRandom(min, max) {
+				return Math.trunc(Math.random() * (max - min + 1)) + min;
+			}
+			var n = new Date().getTime() + '_' + getTruncRandom(10, 10000);
+			return !!id ? (id + '_' + n) : n;
+		},
 		box: {},
 		init: function () {
 			this.box = {
-				id: new Date().getTime(),
+				id: this.buildID(),
 				className: '',
 				head: {
 					isEnabled: true,
 					title: '提示信息',
-					btnClose: true, // 是否显示关闭按钮
+					btnClose: true // 是否显示关闭按钮
 				},
 				leftIcon: {
 					isEnabled: false,
-					icon: '!',
+					icon: 'i'
 				},
 				content: '',
 				foot: {
@@ -37,12 +44,12 @@
 						{
 							icon: '',
 							title: '确定',
-							click: function () { },
+							click: function (event) { }
 						},
 						{
 							icon: '',
 							title: '取消',
-							click: function () { },
+							click: function (event) { }
 						}
 					]
 				},
@@ -88,7 +95,7 @@
 			if (!!this.box.foot.btn && 1 == this.box.foot.btn.length) {
 				// 单个按钮
 				// <div class="foot"><div class="l btn btnSingle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>单个按钮</div></div>
-				html_foot += "<div class=\"l btn btnSingle Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[0].click();CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[0].icon ? ('<span class="icon" style="color: #02cf02;">' + this.box.foot.btn[0].icon + '</span>') : '') + (this.box.foot.btn[0].title || '确定') + '</div>';
+				html_foot += "<div class=\"l btn btnSingle Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[0].click(event);CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[0].icon ? ('<span class="icon" style="color: #02cf02;">' + this.box.foot.btn[0].icon + '</span>') : '') + (this.box.foot.btn[0].title || '确定') + '</div>';
 			}
 			else {
 				// 多个按钮
@@ -96,17 +103,17 @@
 					if (0 == i) {
 						// 第一个（最左边的）
 						// <div class="l btn btnL Ok"><span class="icon" style="color: #02cf02;">&radic;</span>确定</div>
-						html_foot += "<div class=\"l btn btnL Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click();CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: #02cf02;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '确定') + '</div>';
+						html_foot += "<div class=\"l btn btnL Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click(event);CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: #02cf02;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '确定') + '</div>';
 					}
 					else if (0 < i && i == this.box.foot.btn.length - 1) {
 						// 最后一个（最右边的）
 						// <div class="r btn btnR No"><span class="icon" style="color: orangered;">&#10005;</span>取消</div>
-						html_foot += "<div class=\"r btn btnR No\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click();CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: orangered;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '取消') + '</div>';
+						html_foot += "<div class=\"r btn btnR No\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click(event);CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: orangered;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '取消') + '</div>';
 					}
 					else {
 						// 中间的
 						// <div class="l btn btnMiddle Ok"><span class="icon" style="color: #565656;">&radic;</span>中间</div>
-						html_foot += "<div class=\"l btn btnMiddle Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click();CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: #565656;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '知道了') + '</div>';
+						html_foot += "<div class=\"l btn btnMiddle Ok\" onclick=\"CBJS.xxhModal.box.foot.btn[" + i + "].click(event);CBJS.xxhModal.remove('" + this.box.id + "');\">" + (this.box.foot.btn[i].icon ? ('<span class="icon" style="color: #565656;">' + this.box.foot.btn[i].icon + '</span>') : '') + (this.box.foot.btn[i].title || '知道了') + '</div>';
 					}
 				}
 			}
@@ -116,7 +123,7 @@
 			return html_foot;
 		},
 		openBase: function () {
-			this.box.id = this.box.id || new Date().getTime();
+			this.box.id = this.box.id || this.buildID();
 
 			var _modal = document.createElement('div');
 			_modal.id = 'xxhModal' + this.box.id;
@@ -177,7 +184,7 @@
 			this.box.head.isEnabled = false;
 			this.box.content = '<br> ' + msg + ' <br><br>';
 			this.box.foot.btn[0].icon = '';
-			this.box.foot.btn[0].click = function () { if (!!callback) { callback(); } }
+			this.box.foot.btn[0].click = function (event) { if (!!callback) { callback(event); } }
 			this.box.foot.btn[0].title = btnTitle;
 			this.box.foot.btn.splice(1, this.box.foot.btn.length - 1); // 从索引1开始（第2个元素）移除多余按钮
 			this.openBase();
@@ -196,10 +203,10 @@
 			this.box.head.isEnabled = false;
 			this.box.content = '<br> ' + msg + ' <br><br>';
 			this.box.foot.btn[0].icon = '&#10003;';
-			this.box.foot.btn[0].click = function () { if (!!callbackOk) { callbackOk(); } }
+			this.box.foot.btn[0].click = function (event) { if (!!callbackOk) { callbackOk(event); } }
 			this.box.foot.btn[0].title = btnOkTitle;
 			this.box.foot.btn[1].icon = '&#10007;';
-			this.box.foot.btn[1].click = function () { if (!!callbackCancel) { callbackCancel(); } }
+			this.box.foot.btn[1].click = function (event) { if (!!callbackCancel) { callbackCancel(event); } }
 			this.box.foot.btn[1].title = btnCancelTitle;
 			this.box.foot.btn.splice(2, this.box.foot.btn.length - 1); // 从索引2开始（第3个元素）移除多余按钮
 			this.openBase();
@@ -213,18 +220,19 @@
 				console.log('EventListener Triggered > CBJS.xxhModal.Confirm(); box.id=' + this.box.id);
 			}
 		},
-		Popup: function (msg, className) {
+		Popup: function (msg, className, icon) {
 			this.init();
 			this.box.className = !!className ? ('popup_' + className) : '';
 			this.box.maskIsEnabled = false;
 			this.box.head.isEnabled = false;
-
-			this.box.leftIcon.isEnabled = true;
-			this.box.leftIcon.icon = '!';
+			if (!!icon) {
+				this.box.leftIcon.icon = icon;
+				this.box.leftIcon.isEnabled = 1;
+			}
 
 			this.box.content = ' ' + msg + ' ';
 			this.box.content += '<!-- 动画结束后移除元素 -->';
-			this.box.content += "<script>document.querySelector('#xxhModal" + this.box.id + ".xxhModal').addEventListener('animationend', function() {CBJS.xxhModal.remove('" + this.box.id + "');});</script>";
+			this.box.content += "<script>CBJS.xxhModal.addEventListener(document.querySelector('#xxhModal" + this.box.id + ".xxhModal'),'animationend', function(event) {CBJS.xxhModal.remove('" + this.box.id + "');},false);</script>";
 
 			this.box.foot.isEnabled = false;
 			this.box.foot.btn = []; // 清空全部按钮
@@ -232,46 +240,49 @@
 			// CSS动画：滑入停留再滑出消失
 			//document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in-out');
-			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').addEventListener('animationend', function () {
+			CBJS.xxhModal.addEventListener(document.querySelector('#xxhModal' + this.box.id + '.xxhModal'), 'animationend', function (event) {
+				if (!!this.DebugMode) {
+					console.log(event.target.closest('.xxhModal').id + ' animationend EventListener Triggered > ' + event.target.innerText);
+				}
+
 				var _modal = document.getElementsByClassName('SlideUp-in-out');
 				document.body.removeChild(_modal[_modal.length - 1]);
-			}
-			);
+			}, false);
 
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.xxhModal.Popup(); box.id=' + this.box.id);
+				console.log('CBJS.xxhModal.Popup(); box.id=' + this.box.id);
 			}
 		},
 		PopupDefault: function (msg) {
-			this.Popup(msg, 'default');
+			this.Popup(msg, 'default', 'i');
 		},
 		PopupPrimary: function (msg) {
-			this.Popup(msg, 'primary');
+			this.Popup(msg, 'primary', 'i');
 		},
 		PopupInfo: function (msg) {
-			this.Popup(msg, 'info');
+			this.Popup(msg, 'info', '&#128226;');
 		},
 		PopupSuccess: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #fff;">&#10003;</span> ' + msg, 'success');
-			this.Popup(msg, 'success');
+			this.Popup(msg, 'success', '&#10004;');
 		},
 		PopupDanger: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #f0f0f0;">&#9938;</span> ' + msg, 'danger');
-			this.Popup(msg, 'danger');
+			this.Popup(msg, 'danger', '&#10008;');
 		},
 		PopupWarning: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #565656;">&#9888;</span> ' + msg, 'warning');
-			this.Popup(msg, 'warning');
+			this.Popup(msg, 'warning', '&#9888;');
 		},
 		PopupGold: function (msg) {
-			this.Popup(msg, 'gold');
+			this.Popup(msg, 'gold', '&#128293;');
 		},
 		PopupOther: function (msg) {
-			this.Popup(msg, 'other');
+			this.Popup(msg, 'other', '&#128161;');
 		},
 		close: function (id) {
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.xxhModal.close(); box.id=' + id);
+				console.log('EventListener Triggered > CBJS.xxhModal.close("' + id + '");');
 			}
 
 			var _modal = document.querySelector('#xxhModal' + id + '.xxhModal');
@@ -284,12 +295,12 @@
 			}
 
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.xxhModal.close(); box.id=' + id);
+				console.log('EventListener Triggered > CBJS.xxhModal.close("' + id + '");');
 			}
 		},
 		remove: function (id) {
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.xxhModal.remove(); box.id=' + id);
+				console.log('EventListener Triggered > CBJS.xxhModal.remove("' + id + '");');
 			}
 			var _modal = document.querySelector('#xxhModal' + id + '.xxhModal');
 			var _mask = document.querySelector('#xxhMask' + id + '.xxhMask');
@@ -309,10 +320,23 @@
 			}
 
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.xxhModal.remove(); box.id=' + id);
+				console.log('EventListener Triggered > CBJS.xxhModal.remove("' + id + '");');
+			}
+		},
+		/* 定义一个函数，用于添加事件监听器，现代浏览器还是旧版IE浏览器。 */
+		addEventListener: function (el, eventName, callback, useCapture) {
+			if (el.addEventListener) {
+				el.addEventListener(eventName, callback, useCapture);
+			} else if (el.attachEvent) {
+				el.attachEvent('on' + eventName, callback);
 			}
 		}
-
+		/*
+		 // 使用定义的函数来添加animationend事件的监听器，确保兼容不同浏览器
+		addEventListener(document.getElementById('myElement'), 'animationend', function(event) {
+		  console.log('动画结束', event);
+		}, false);
+		 */
 	}
 
 

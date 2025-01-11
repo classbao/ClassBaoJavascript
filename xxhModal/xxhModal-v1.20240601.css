@@ -6,13 +6,16 @@
 	z-index: 999;
 	height: 100%;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.15);
 	display: block;
 	background-color: #000;
+	background-color: rgba(0, 0, 0, 0.15);
 	filter: alpha(opacity=15);
-	-moz-opacity: 0.15;
-	-khtml-opacity: 0.15;
 	opacity: 0.15;
+	-o-opacity: 0.15;
+	-ms-opacity: 0.15;
+	-moz-opacity: 0.15;
+	-webkit-opacity: 0.15;
+	-khtml-opacity: 0.15;
 }
 
 /* 弹窗容器 */
@@ -21,14 +24,34 @@
 	top: 50%;
 	left: 50%;
 	z-index: 1000;
-	transform: translate(-50%, -50%);
-	-webkit-transform: translate(-50%, -50%);
 	visibility: hidden;
+	transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-khtml-transform: translate(-50%, -50%);
 	opacity: 0;
+	-o-opacity: 0;
+	-ms-opacity: 0;
+	-moz-opacity: 0;
+	-webkit-opacity: 0;
+	-khtml-opacity: 0;
 	transition: visibility 0s, opacity 0.5s linear;
+	-o-transition: visibility 0s, opacity 0.5s linear;
+	-ms-transition: visibility 0s, opacity 0.5s linear;
+	-moz-transition: visibility 0s, opacity 0.5s linear;
+	-webkit-transition: visibility 0s, opacity 0.5s linear;
+	-khtml-transition: visibility 0s, opacity 0.5s linear;
 
 	border: 1px solid #ccc;
 	border-radius: 10px;
+	-o-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+
 	background-color: #fff;
 
 	display: flex;
@@ -63,6 +86,11 @@
 	min-height: 32px;
 	border-bottom: 1px solid #ccc;
 	border-radius: 9px 9px 0 0;
+	-o-border-radius: 9px 9px 0 0;
+	-ms-border-radius: 9px 9px 0 0;
+	-moz-border-radius: 9px 9px 0 0;
+	-webkit-border-radius: 9px 9px 0 0;
+	-khtml-border-radius: 9px 9px 0 0;
 }
 
 .xxhModal .title {
@@ -82,6 +110,11 @@
 	/*max-height: 31.8px;*/
 	background-color: palevioletred;
 	border-radius: 0 9px 0 0;
+	-o-border-radius: 0 9px 0 0;
+	-ms-border-radius: 0 9px 0 0;
+	-moz-border-radius: 0 9px 0 0;
+	-webkit-border-radius: 0 9px 0 0;
+	-khtml-border-radius: 0 9px 0 0;
 }
 
 .xxhModal .close:hover,
@@ -100,6 +133,12 @@
 .xxhModal .btn {
 	flex: 1;
 	box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-khtml-box-sizing: border-box;
+
 	width: auto;
 	text-align: center;
 	cursor: pointer;
@@ -116,6 +155,12 @@
 
 .xxhModal .btnL {
 	border-radius: 0 0 0 9px;
+	-o-border-radius: 0 0 0 9px;
+	-ms-border-radius: 0 0 0 9px;
+	-moz-border-radius: 0 0 0 9px;
+	-webkit-border-radius: 0 0 0 9px;
+	-khtml-border-radius: 0 0 0 9px;
+
 	border: 1px solid #ccc;
 	border-left: none;
 	border-bottom: none;
@@ -129,6 +174,12 @@
 
 .xxhModal .btnR {
 	border-radius: 0 0 9px 0;
+	-o-border-radius: 0 0 9px 0;
+	-ms-border-radius: 0 0 9px 0;
+	-moz-border-radius: 0 0 9px 0;
+	-webkit-border-radius: 0 0 9px 0;
+	-khtml-border-radius: 0 0 9px 0;
+
 	border: 1px solid #ccc;
 	border-right: none;
 	border-bottom: none;
@@ -136,9 +187,15 @@
 }
 
 .xxhModal .btnSingle {
-	width: auto;
 	float: none;
+	width: auto;
 	border-radius: 0 0 9px 9px;
+	-o-border-radius: 0 0 9px 9px;
+	-ms-border-radius: 0 0 9px 9px;
+	-moz-border-radius: 0 0 9px 9px;
+	-webkit-border-radius: 0 0 9px 9px;
+	-khtml-border-radius: 0 0 9px 9px;
+
 	border-top: 1px solid #ccc;
 	border-right: none;
 	border-bottom: none;
@@ -160,24 +217,29 @@
 .xxhModal .leftside {
 	flex: 0 0 auto;
 	display: flex;
-
 	flex-wrap: nowrap;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 0 0 0 5px;
+	margin: 3px 0 3px 3px;
 }
 
 .xxhModal .leftside .leftside-icon {
 	display: inline-block;
-	height: 1rem;
-	width: 1rem;
-	line-height: 1rem;
+	height: 1.5rem;
+	width: 1.5rem;
+	line-height: 1.5rem;
 	padding: 3px;
 	text-align: center;
 	vertical-align: middle;
 	border: 1px solid #ccc;
 	border-radius: 50%;
+	-o-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-khtml-border-radius: 50%;
 }
 
 /* 内容区域 */
@@ -192,13 +254,21 @@
 /* 弹窗动画 */
 @keyframes slideUp {
 	from {
-		transform: translate(-50%, 50%);
-		-webkit-transform: translate(-50%, 50%);
+		transform: translate(-50%, 100%);
+		-o-transform: translate(-50%, 100%);
+		-ms-transform: translate(-50%, 100%);
+		-moz-transform: translate(-50%, 100%);
+		-webkit-transform: translate(-50%, 100%);
+		-khtml-transform: translate(-50%, 100%);
 	}
 
 	to {
 		transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
 		-webkit-transform: translate(-50%, -50%);
+		-khtml-transform: translate(-50%, -50%);
 	}
 }
 
@@ -206,37 +276,84 @@
 .xxhModal.SlideUp-in {
 	visibility: visible;
 	opacity: 1;
-	animation: slideUp 0.5s ease-out;
+	-o-opacity: 1;
+	-ms-opacity: 1;
+	-moz-opacity: 1;
+	-webkit-opacity: 1;
+	-khtml-opacity: 1;
+
+	animation: slideUp 1s ease-out;
+	-o-animation: slideUp 1s ease-out;
+	-ms-animation: slideUp 1s ease-out;
+	-moz-animation: slideUp 1s ease-out;
+	-webkit-animation: slideUp 1s ease-out;
+	-khtml-animation: slideUp 1s ease-out;
 }
 
 /* 滑入滑出动画 */
 @keyframes slideUp-in-out {
 	0% {
-		transform: translate(-50%, 50%);
-		-webkit-transform: translate(-50%, 100%);
 		visibility: hidden;
 		opacity: 0;
+		-o-opacity: 0;
+		-ms-opacity: 0;
+		-moz-opacity: 0;
+		-webkit-opacity: 0;
+		-khtml-opacity: 0;
+		transform: translate(-50%, 150%);
+		-o-transform: translate(-50%, 150%);
+		-ms-transform: translate(-50%, 150%);
+		-moz-transform: translate(-50%, 150%);
+		-webkit-transform: translate(-50%, 150%);
+		-khtml-transform: translate(-50%, 150%);
 	}
 
 	24% {
-		transform: translate(-50%, -50%);
-		-webkit-transform: translate(-50%, 0%);
 		visibility: visible;
 		opacity: 1;
+		-o-opacity: 1;
+		-ms-opacity: 1;
+		-moz-opacity: 1;
+		-webkit-opacity: 1;
+		-khtml-opacity: 1;
+		transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-khtml-transform: translate(-50%, -50%);
 	}
 
 	70% {
-		transform: translate(-50%, -50%);
-		-webkit-transform: translate(-50%, 0%);
 		visibility: visible;
 		opacity: 1;
+		-o-opacity: 1;
+		-ms-opacity: 1;
+		-moz-opacity: 1;
+		-webkit-opacity: 1;
+		-khtml-opacity: 1;
+		transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-khtml-transform: translate(-50%, -50%);
 	}
 
 	100% {
-		transform: translate(-50%, -100%);
-		-webkit-transform: translate(-50%, -100%);
 		visibility: hidden;
 		opacity: 0;
+		-o-opacity: 0;
+		-ms-opacity: 0;
+		-moz-opacity: 0;
+		-webkit-opacity: 0;
+		-khtml-opacity: 0;
+		transform: translate(-50%, -150%);
+		-o-transform: translate(-50%, -150%);
+		-ms-transform: translate(-50%, -150%);
+		-moz-transform: translate(-50%, -150%);
+		-webkit-transform: translate(-50%, -150%);
+		-khtml-transform: translate(-50%, -150%);
 	}
 }
 
@@ -244,7 +361,17 @@
 .xxhModal.SlideUp-in-out {
 	visibility: visible;
 	opacity: 1;
-	animation: slideUp-in-out 3s forwards;
+	-o-opacity: 1;
+	-ms-opacity: 1;
+	-moz-opacity: 1;
+	-webkit-opacity: 1;
+	-khtml-opacity: 1;
+	/* animation: slideUp-in-out 5s forwards;
+	-o-animation: slideUp-in-out 5s forwards;
+	-ms-animation: slideUp-in-out 5s forwards;
+	-moz-animation: slideUp-in-out 5s forwards;
+	-webkit-animation: slideUp-in-out 5s forwards;
+	-khtml-animation: slideUp-in-out 5s forwards; */
 	/* forwards是停在动画最后的的那个画面。即只演示一次。*/
 	/* infinite是动画播放次数为无限次。*/
 }
@@ -272,7 +399,7 @@
 .xxhModal.primary .head,
 .xxhModal.popup_primary .leftside-icon,
 .xxhModal.popup_primary {
-	background-color: rgba(0, 123, 255, 0.2);
+	background-color: rgb(119, 185, 255, 20%);
 	border-color: #007bff;
 	color: #343a40;
 }
@@ -285,9 +412,9 @@
 .xxhModal.success .head,
 .xxhModal.popup_success .leftside-icon,
 .xxhModal.popup_success {
-	background-color: rgba(40, 167, 69, 0.2);
-	border-color: #28a745;
-	color: #343a40;
+	background-color: rgb(122, 255, 152, 20%);
+    border-color: #28a745;
+    color: #403f4a;
 }
 
 .xxhModal.success .title {
@@ -298,7 +425,7 @@
 .xxhModal.info .head,
 .xxhModal.popup_info .leftside-icon,
 .xxhModal.popup_info {
-	background-color: rgba(23, 162, 184, 0.2);
+	background-color: rgb(133, 238, 255, 20%);
 	border-color: #17a2b8;
 	color: #343a40;
 }
@@ -311,7 +438,7 @@
 .xxhModal.warning .head,
 .xxhModal.popup_warning .leftside-icon,
 .xxhModal.popup_warning {
-	background-color: rgba(255, 193, 7, 0.2);
+	background-color: rgb(255, 225, 135, 20%);
 	border-color: #ffc107;
 	color: #2c2c2c;
 }
@@ -324,7 +451,7 @@
 .xxhModal.danger .head,
 .xxhModal.popup_danger .leftside-icon,
 .xxhModal.popup_danger {
-	background-color: rgba(220, 53, 69, 0.2);
+	background-color: rgb(255 182 189 / 20%);
 	border-color: #dc3545;
 	color: #2c2c2c;
 }
@@ -337,7 +464,7 @@
 .xxhModal.gold .head,
 .xxhModal.popup_gold .leftside-icon,
 .xxhModal.popup_gold {
-	background-color: rgba(255, 215, 0, 0.2);
+	background-color: rgb(255, 237, 138, 20%);
 	border-color: #ffd700;
 	color: #2c2c2c;
 }
@@ -351,7 +478,7 @@
 .xxhModal.other .head,
 .xxhModal.popup_other .leftside-icon,
 .xxhModal.popup_other {
-	background-color: rgba(96, 134, 146, 0.2);
+	background-color: rgb(183, 238, 255, 20%);
 	border-color: #608692;
 	color: #2c2c2c;
 }
@@ -372,6 +499,12 @@
 .xxhModal.gold,
 .xxhModal.other {
 	border-radius: 9px 9px 9px 9px;
+	-o-border-radius: 9px 9px 9px 9px;
+	-ms-border-radius: 9px 9px 9px 9px;
+	-moz-border-radius: 9px 9px 9px 9px;
+	-webkit-border-radius: 9px 9px 9px 9px;
+	-khtml-border-radius: 9px 9px 9px 9px;
+
 	background-color: #fff;
 	color: #565656;
 }

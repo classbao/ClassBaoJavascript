@@ -848,9 +848,9 @@
         this.copyToClipboard = function (text) {
             try {
                 navigator.clipboard.writeText(text);
-                console.log('文本已复制到剪贴板：'+text);
+                console.log('文本已复制到剪贴板');
                 // 可以选择在这里通知用户
-                // alert('文本已成功复制到剪贴板：'+text);
+                alert('文本已成功复制到剪贴板');
             } catch (e) {
                 console.error('无法复制文本: ', e);
                 // 处理错误，比如向用户显示错误信息
@@ -873,9 +873,9 @@
                 // 移除临时输入框
                 document.body.removeChild(input);
 
-                console.log('文本已复制到剪贴板：'+content);
+                console.log('文本已复制到剪贴板');
                 // 可以选择在这里通知用户
-                // alert('文本已成功复制到剪贴板：'+content);
+                alert('文本已成功复制到剪贴板');
             } catch (e) {
                 console.error('无法复制文本: ', e);
                 // 处理错误，比如向用户显示错误信息
@@ -1774,21 +1774,20 @@
         }
     };
     /**** window CSS 样式 ***/
-    /*
-    .mask{ position:fixed;top:0px; left:0px; z-index:999;height:100%; width:100%; background:rgba(0,0,0,0.15); display:block; background-color:#000; filter: alpha(opacity=25);-moz-opacity:0.25;-khtml-opacity:0.25;opacity:0.25;
-    .window{ position:fixed; z-index:1000;top:26%; left:5%; width:90%; background-color:#fff;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; text-align:center; padding:10px 0;}
-    @media screen and (max-width: 767px) {
-        .window {left:5%; width:90%;}
-    }
-    @media screen and (min-width: 768px) {
-        .window {left:30%; width:30%;}
-    }
-    .window h2{ color:#143157; font-size:18px; margin-top:10px}
-    .window p{ color:#5d5d5d;font-size:16px; padding:12px }
-    .window .btn,.window .btn_g{ color:#FFF; background-color:#00b7ee; font-size:16px; text-align:center; padding:4px 6px; margin:8px 2px; border:2px solid #00b7ee; -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; display:inline-block; width:150px; cursor:pointer;font-family: 'Microsoft YaHei';}
-    .window .btn_g{ background-color:#efefef; border-color:#efefef; color:#999999;}
-    */
-
+// .mask{position:fixed;top:0px;left:0px;z-index:999;display:block;height:100%;width:100%;background-color:#000;background-color:rgba(0,0,0,0.15); filter: alpha(opacity=25);opacity:0.25;-o-opacity:0.25;-ms-opacity:0.25;-moz-opacity:0.25;-webkit-opacity:0.25;-khtml-opacity:0.25;}
+// .window{position:fixed;top:26%; left:5%;z-index:1000; width:90%;text-align:center;padding:10px 0;background-color:#fff;border-radius:5px;-o-border-radius:5px;-ms-border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;}
+// /* 移动端CSS样式 */
+// @media screen and (max-width: 767px) {.window {left:5%; width:90%;}}
+// /* PC端CSS样式 */
+// @media screen and (min-width: 768px) {.window {left:30%; width:30%;}}
+// .window h2{color:#143157;font-size:18px;margin-top:10px}
+// .window p{color:#5d5d5d;font-size:16px;padding:12px;text-align: center;display: inline-flex}
+// .window .btn,.window .btn_g{display:inline-block;width:150px;text-align:center;font-size:16px;padding:4px 6px;margin:8px 2px;color:#FFF;background-color:#00b7ee;border:2px solid #00b7ee;border-radius:4px;-o-border-radius:4px;-ms-border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;transition: all 0.2s;-o-transition: all 0.2s;-ms-transition: all 0.2s;-moz-transition: all 0.2s;-webkit-transition: all 0.2s;-khtml-transition: all 0.2s;cursor:pointer;font-family: 'Microsoft YaHei';}
+// .window .btn_g{color:#999999;background-color:#efefef;border-color:#efefef;}
+// .window .btn:hover,.window .btn_g:hover,.window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {width: 150px;display: inline-block;font-size: 16px;padding: 4px 6px;margin: 8px 2px;border-radius: 4px;-o-border-radius: 4px;-ms-border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px;-khtml-border-radius: 4px;text-align: center;cursor: pointer;font-family: 'Microsoft YaHei';color: #FFF;background-color: #00c4ff;border: 2px solid #00c4ff;}
+// .window .btn_g:hover {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
+// .window .btn_g:active, .window .btn_g:focus {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
+// .window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-o-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-ms-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-khtml-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);}
     /*** 自定义弹出框提示·结束 ***/
 
 
