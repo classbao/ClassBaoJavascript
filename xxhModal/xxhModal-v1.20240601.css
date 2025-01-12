@@ -96,7 +96,7 @@
 .xxhModal .title {
 	line-height: 32px;
 	color: #666;
-	font-size: 20px;
+	font-size: 1.1rem;
 	padding-left: 3px;
 }
 
@@ -366,13 +366,13 @@
 	-moz-opacity: 1;
 	-webkit-opacity: 1;
 	-khtml-opacity: 1;
-	/* animation: slideUp-in-out 5s forwards;
+	animation: slideUp-in-out 5s forwards;
 	-o-animation: slideUp-in-out 5s forwards;
 	-ms-animation: slideUp-in-out 5s forwards;
 	-moz-animation: slideUp-in-out 5s forwards;
 	-webkit-animation: slideUp-in-out 5s forwards;
-	-khtml-animation: slideUp-in-out 5s forwards; */
-	/* forwards是停在动画最后的的那个画面。即只演示一次。*/
+	-khtml-animation: slideUp-in-out 5s forwards;
+	/* forwards是停在动画最后的的那个画面。即只演示一次。
 	/* infinite是动画播放次数为无限次。*/
 }
 
@@ -413,8 +413,8 @@
 .xxhModal.popup_success .leftside-icon,
 .xxhModal.popup_success {
 	background-color: rgb(122, 255, 152, 20%);
-    border-color: #28a745;
-    color: #403f4a;
+	border-color: #28a745;
+	color: #403f4a;
 }
 
 .xxhModal.success .title {
