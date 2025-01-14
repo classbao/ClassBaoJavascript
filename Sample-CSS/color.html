@@ -4453,8 +4453,37 @@
     </div>
 
 
-
-
+    <hr style="height: 1px;background-color: #ddd;width: 100%;margin: 8px 0;">
+<!-- CSS 呼吸灯效果·开始 -->
+<style>
+/* 定义一个渐变动画 */
+@keyframes breathing {
+  0% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  }
+}
+ 
+/* 应用渐变动画到元素 */
+.breathing-box {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  margin: 30px;
+  text-align: center;
+  vertical-align:middle;
+  border-radius: 8px;
+  background-color: #3498db;
+  animation: breathing 3s ease infinite; /* 2秒钟完成一次动画循环，无限循环 */
+}
+</style>
+<div class="breathing-box">呼吸灯效果</div>
+<!-- CSS 呼吸灯效果·结束 -->
 
 
 

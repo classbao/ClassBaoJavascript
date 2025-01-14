@@ -1299,23 +1299,27 @@
             "5": "\u4e94",
             "6": "\u516d"
         };
-        if (/(y+)/.test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        const reg_y = /(y+)/;
+        if (reg_y.test(fmt)) {
+            fmt = fmt.replace(reg_y.exec(fmt)[1], (this.getFullYear() + "").slice(4 - reg_y.exec(fmt)[1].length));
         }
-        if (/(E+)/.test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "\u661f\u671f" : "\u5468") : "") + week[this.getDay() + ""]);
+        const reg_E = /(E+)/;
+        if (reg_E.test(fmt)) {
+            fmt = fmt.replace(reg_E.exec(fmt)[1], ((reg_E.exec(fmt)[1].length > 1) ? (reg_E.exec(fmt)[1].length > 2 ? "\u661f\u671f" : "\u5468") : "") + week[this.getDay() + ""]);
         }
         for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            const reg_k = new RegExp("(" + k + ")");
+            if (reg_k.test(fmt)) {
+                const t = reg_k.exec(fmt)[1];
+                fmt = fmt.replace(t, (t.length == 1) ? (o[k]) : (("00" + o[k]).slice(("" + o[k]).length)));
             }
         }
         return fmt;
     }
     ClassBaoJavascript.prototype.DateFormat = function (date, format) {
-        if (!date) return '';
-        if (!format) format = 'yyyy/MM/dd HH:mm:ss';
-        if ("object" == typeof (date)) return date.Format(format);
+        if (!date) { return ''; }
+        if (!format) { format = 'yyyy/MM/dd HH:mm:ss'; }
+        if ("object" == typeof (date)) { return date.Format(format); }
         else { return (new Date(date)).Format(format); }
     }
 
@@ -1774,20 +1778,20 @@
         }
     };
     /**** window CSS 样式 ***/
-// .mask{position:fixed;top:0px;left:0px;z-index:999;display:block;height:100%;width:100%;background-color:#000;background-color:rgba(0,0,0,0.15); filter: alpha(opacity=25);opacity:0.25;-o-opacity:0.25;-ms-opacity:0.25;-moz-opacity:0.25;-webkit-opacity:0.25;-khtml-opacity:0.25;}
-// .window{position:fixed;top:26%; left:5%;z-index:1000; width:90%;text-align:center;padding:10px 0;background-color:#fff;border-radius:5px;-o-border-radius:5px;-ms-border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;}
-// /* 移动端CSS样式 */
-// @media screen and (max-width: 767px) {.window {left:5%; width:90%;}}
-// /* PC端CSS样式 */
-// @media screen and (min-width: 768px) {.window {left:30%; width:30%;}}
-// .window h2{color:#143157;font-size:18px;margin-top:10px}
-// .window p{color:#5d5d5d;font-size:16px;padding:12px;text-align: center;display: inline-flex}
-// .window .btn,.window .btn_g{display:inline-block;width:150px;text-align:center;font-size:16px;padding:4px 6px;margin:8px 2px;color:#FFF;background-color:#00b7ee;border:2px solid #00b7ee;border-radius:4px;-o-border-radius:4px;-ms-border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;transition: all 0.2s;-o-transition: all 0.2s;-ms-transition: all 0.2s;-moz-transition: all 0.2s;-webkit-transition: all 0.2s;-khtml-transition: all 0.2s;cursor:pointer;font-family: 'Microsoft YaHei';}
-// .window .btn_g{color:#999999;background-color:#efefef;border-color:#efefef;}
-// .window .btn:hover,.window .btn_g:hover,.window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {width: 150px;display: inline-block;font-size: 16px;padding: 4px 6px;margin: 8px 2px;border-radius: 4px;-o-border-radius: 4px;-ms-border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px;-khtml-border-radius: 4px;text-align: center;cursor: pointer;font-family: 'Microsoft YaHei';color: #FFF;background-color: #00c4ff;border: 2px solid #00c4ff;}
-// .window .btn_g:hover {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
-// .window .btn_g:active, .window .btn_g:focus {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
-// .window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-o-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-ms-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-khtml-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);}
+    // .mask{position:fixed;top:0px;left:0px;z-index:999;display:block;height:100%;width:100%;background-color:#000;background-color:rgba(0,0,0,0.15); filter: alpha(opacity=25);opacity:0.25;-o-opacity:0.25;-ms-opacity:0.25;-moz-opacity:0.25;-webkit-opacity:0.25;-khtml-opacity:0.25;}
+    // .window{position:fixed;top:26%; left:5%;z-index:1000; width:90%;text-align:center;padding:10px 0;background-color:#fff;border-radius:5px;-o-border-radius:5px;-ms-border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;}
+    // /* 移动端CSS样式 */
+    // @media screen and (max-width: 767px) {.window {left:5%; width:90%;}}
+    // /* PC端CSS样式 */
+    // @media screen and (min-width: 768px) {.window {left:30%; width:30%;}}
+    // .window h2{color:#143157;font-size:18px;margin-top:10px}
+    // .window p{color:#5d5d5d;font-size:16px;padding:12px;text-align: center;display: inline-flex}
+    // .window .btn,.window .btn_g{display:inline-block;width:150px;text-align:center;font-size:16px;padding:4px 6px;margin:8px 2px;color:#FFF;background-color:#00b7ee;border:2px solid #00b7ee;border-radius:4px;-o-border-radius:4px;-ms-border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;transition: all 0.2s;-o-transition: all 0.2s;-ms-transition: all 0.2s;-moz-transition: all 0.2s;-webkit-transition: all 0.2s;-khtml-transition: all 0.2s;cursor:pointer;font-family: 'Microsoft YaHei';}
+    // .window .btn_g{color:#999999;background-color:#efefef;border-color:#efefef;}
+    // .window .btn:hover,.window .btn_g:hover,.window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {width: 150px;display: inline-block;font-size: 16px;padding: 4px 6px;margin: 8px 2px;border-radius: 4px;-o-border-radius: 4px;-ms-border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px;-khtml-border-radius: 4px;text-align: center;cursor: pointer;font-family: 'Microsoft YaHei';color: #FFF;background-color: #00c4ff;border: 2px solid #00c4ff;}
+    // .window .btn_g:hover {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
+    // .window .btn_g:active, .window .btn_g:focus {color: #999999;background-color: #ebebeb;border: 2px solid #ebebeb;}
+    // .window .btn:active, .window .btn:focus,.window .btn_g:active, .window .btn_g:focus {box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-o-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-ms-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);-khtml-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);}
     /*** 自定义弹出框提示·结束 ***/
 
 
