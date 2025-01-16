@@ -8,15 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
 
-  <!-- <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"> -->
-  <!-- <link href="/favicon.ico" type="image/x-icon" rel="icon"> -->
-  <link href="xxhModal-v1.20240601.css" rel="stylesheet" type="text/css">
+  <link href="CBJS-modal-v1.20240601.css" rel="stylesheet" type="text/css">
 
-  <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
-
-  <title>CBJS模态框、弹出框、气泡消息 测试</title>
-  <meta name="keywords" content="测试 CBJS.xxhModal">
+  <title>CBJS.modal 模态框、弹出框、气泡消息 测试</title>
+  <meta name="keywords" content="测试 CBJS.modal">
   <meta name="Description"
     content="在这个例子中，弹窗默认是隐藏的，当触发某个事件（例如点击一个按钮）时，会给.popup添加.active类，这将会应用动画并显示弹窗。关闭按钮会移除.active类，隐藏弹窗。这个例子使用了CSS3的transform属性来实现位置变换，以及animation属性来应用动画。">
   <meta name="author" content="文学资料">
@@ -29,10 +24,10 @@
   <!-- JS脚本 -->
   <script>
     window.onload = function () {
-      CBJS.xxhModal.DebugMode = 1;
+      CBJS.modal.DebugMode = 1; // 开启Debug模式会输出过程日志（默认值0：不会输出日志）
       /*
           if(document.querySelector('#xxhModal1718717098780.xxhModal .close')){
-                  CBJS.xxhModal.addEventListener(document.querySelector('.xxhModal .close'),'click', function (event) {
+                  CBJS.modal.addEventListener(document.querySelector('.xxhModal .close'),'click', function (event) {
                     console.log('.close addEventListener> click');
                     console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText);
                       document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
@@ -42,7 +37,7 @@
         	
           if(document.querySelector('#xxhModal1718717098780.xxhModal .No'))
           {
-                  CBJS.xxhModal.addEventListener(document.querySelector('.xxhModal .No'),'click', function (event) {
+                  CBJS.modal.addEventListener(document.querySelector('.xxhModal .No'),'click', function (event) {
                     console.log('.close addEventListener> click');
                     console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText);
                       document.querySelector('#xxhModal1718717098780.xxhModal').classList.remove('SlideUp-in');
@@ -53,60 +48,60 @@
 
       // 某个条件满足时，添加弹窗
       // 例如: 按钮点击触发 
-      CBJS.xxhModal.addEventListener(document.querySelector('button#SlideUp-in-Alert'), 'click', function (event) {
+      CBJS.modal.addEventListener(document.querySelector('button#SlideUp-in-Alert'), 'click', function (event) {
         console.log('button#SlideUp-in addEventListener> click');
         // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
         // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
 
-        CBJS.xxhModal.Alert("测试Alert提醒消息", "知道了", myBtnCallback);
+        CBJS.modal.Alert("测试Alert提醒消息", "知道了", myBtnCallback);
         // 也可以自定义弹出框
       }, false);
 
-      CBJS.xxhModal.addEventListener(document.querySelector('button#SlideUp-in'), 'click', function (event) {
+      CBJS.modal.addEventListener(document.querySelector('button#SlideUp-in'), 'click', function (event) {
         console.log('button#SlideUp-in addEventListener> click');
         // document.querySelector('#xxhModal1718717098780.xxhModal').classList.add('SlideUp-in');
         // document.querySelector('#xxhMask1718717098780.xxhMask').style.display = 'block';
 
-        CBJS.xxhModal.Confirm("测试Confirm提醒确认消息", "确定", myBtnCallback, "取消", myBtnCallback2);
+        CBJS.modal.Confirm("测试Confirm提醒确认消息", "确定", myBtnCallback, "取消", myBtnCallback2);
         // 也可以自定义弹出框
       }, false);
 
-      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-in-out'), 'click', function (event) {
+      CBJS.modal.addEventListener(document.querySelector('button#slideUp-in-out'), 'click', function (event) {
         console.log('button#slideUp-in-out addEventListener> click');
 
-        // CBJS.xxhModal.Popup("测试气泡消息啊");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "danger");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "primary");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "success");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "info");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "warning");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "secondary");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "gold");
-        // CBJS.xxhModal.Popup("测试Popup气泡消息啊", "other");
+        // CBJS.modal.Popup("测试气泡消息啊");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "danger");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "primary");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "success");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "info");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "warning");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "secondary");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "gold");
+        // CBJS.modal.Popup("测试Popup气泡消息啊", "other");
 
-        // CBJS.xxhModal.PopupDefault("测试Popup气泡消息（默认样式）");
-        // CBJS.xxhModal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
-        // CBJS.xxhModal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
-        // CBJS.xxhModal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
-        // CBJS.xxhModal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
-        // CBJS.xxhModal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
-        // CBJS.xxhModal.PopupGold("测试PopupGold气泡消息（一般信息2）");
-        CBJS.xxhModal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
+        // CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式）");
+        // CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
+        // CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
+        // CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
+        // CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
+        // CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
+        // CBJS.modal.PopupGold("测试PopupGold气泡消息（一般信息2）");
+        CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
 
 
       }, false);
 
       // 例如: 按钮点击触发 
-      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-in-CustomOpenModel'), 'click', function (event) {
+      CBJS.modal.addEventListener(document.querySelector('button#slideUp-in-CustomOpenModel'), 'click', function (event) {
         console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-in-CustomOpenModel addEventListener> click');
 
-        CBJS.xxhModal.CustomOpen("#xxhModal-CustomOpenModel", "#xxhMask-CustomOpenModel");
+        CBJS.modal.CustomOpen("#xxhModal-CustomOpenModel", "#xxhMask-CustomOpenModel");
         // 也可以自定义弹出框
       }, false);
 
-      CBJS.xxhModal.addEventListener(document.querySelector('button#slideUp-all'), 'click', function (event) {
+      CBJS.modal.addEventListener(document.querySelector('button#slideUp-all'), 'click', function (event) {
         console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-all addEventListener> click');
-        CBJS.xxhModal.Open({
+        CBJS.modal.Open({
           id: new Date().getTime(),
           className: "other",
           head: {
@@ -170,7 +165,7 @@
   <div id="xxhMask-CustomOpenModel" class="xxhMask" style="display:none;"></div>
   <div id="xxhModal-CustomOpenModel" class="xxhModal" style="display:none;">
     <div class="head"><span class="l title">系统信息</span><span class="r icon close"
-        onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');">&times;</span>
+        onclick="CBJS.modal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');">&times;</span>
     </div>
     <div class="content">
       <p>
@@ -214,7 +209,7 @@
       <div class="l btn btnL Ok"><span class="icon" style="color: #02cf02;">&#10003;</span>确定</div>
       <div class="l btn btnMiddle Ok"><span class="icon" style="color: #02cf02;">&#10004;</span>中间</div>
       <div class="r btn btnR No"
-        onclick="CBJS.xxhModal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');"><span class="icon"
+        onclick="CBJS.modal.CustomClose('#xxhModal-CustomOpenModel','#xxhMask-CustomOpenModel');"><span class="icon"
           style="color: orangered;">&#10007;</span>取消</div>
     </div>
     <!-- <div class="foot"><div class="l btn btnSingle Ok"><span class="icon" style="color: #02cf02;">&radic;</span>单个按钮</div></div> -->
@@ -236,7 +231,50 @@
 
 
   <script src="../ClassBaoJavascript-1.1.0.js"></script>
-  <script src="xxhModal-v1.20240601.js"></script>
+  <script src="CBJS-modal-v1.20240601.js"></script>
+
+
+
+  <hr />
+  调用示例：
+  <code>
+    <pre style="background-color: #eee;padding: 5px 3px;border: 1px solid #ccc;white-space: pre-wrap;word-wrap: break-word;">
+&lt;!-- 引入模态框样式表文件 --&gt;
+&lt;link href="CBJS-modal-v1.20240601.css" rel="stylesheet" type="text/css"&gt;
+&lt;!-- 引入 ClassBaoJavascript文件 --&gt;
+&lt;script src="../ClassBaoJavascript-1.1.0.js"&gt;&lt;/script&gt;
+&lt;!-- 引入 模态框控件 JavaScript文件 --&gt;
+&lt;script src="CBJS-modal-v1.20240601.js"&gt;&lt;/script&gt;
+
+
+&lt;script&gt;
+  // 每种模态框都有不同的主题样式，以下是通过“Popup气泡消息”来演示如何使用不同主题。其他类型的模态框是类似的用法。
+
+  &lt;!-- 通过不通主题名称调用不同样式 --&gt;
+  CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式）");
+  CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
+  CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
+  CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
+  CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
+  CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
+  CBJS.modal.PopupGold("测试PopupGold气泡消息（一般信息2）");
+  CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
+
+  &lt;!-- 通过样式名称参数控制展示样式 --&gt;
+  CBJS.modal.Popup("测试气泡消息啊");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "danger");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "primary");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "success");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "info");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "warning");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "secondary");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "gold");
+  CBJS.modal.Popup("测试Popup气泡消息啊", "other");
+
+&lt;/script&gt;
+    </pre>
+  </code>
+
 </body>
 
 </html>
