@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <link href="datepicker-v1.20250113.css" rel="stylesheet" type="text/css">
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>测试</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="测试">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+
+    </style>
+
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <script src="datepicker-v1.20250113.js"></script>
+    <!-- JS脚本 -->
+    <script>
+    </script>
+
+</head>
+
+<body>
+    支持两种格式的日期时间输入控件。短日期时间格式的：
+    <input type="text" class="datepicker" id="t1">
+    长日期时间格式的：
+    <input type="text" class="datepicker" id="t2">
+
+    <!-- JS脚本 -->
+    <script>
+        // var monthDate = datepicker.getMonthDate(2019, 2);
+        // console.log(monthDate);
+        // CBJS.datepicker.init(document.querySelector('.ui-datepicker-wrapper'))
+        document.querySelector('#t1').value = '2008/08/20';
+        CBJS.datepicker.init('#t1', 'yyyy/MM/dd');
+        CBJS.datepicker.init('#t2', 'yyyy/MM/dd HH:mm:ss');
+    </script>
+
+    调用示例：
+    <code>
+<pre style="background-color: #eee;padding: 5px 3px;border: 1px solid #ccc;">
+&lt;!-- 引入 日期时间控件样式表文件 --&gt;
+&lt;link href="datepicker-v1.20250113.css" rel="stylesheet" type="text/css"&gt;
+&lt;!-- 引入 ClassBaoJavascript文件 --&gt;
+&lt;script src="../ClassBaoJavascript-1.1.0.js"&gt;&lt;/script&gt;
+&lt;!-- 引入 日期时间控件 JavaScript文件 --&gt;
+&lt;script src="datepicker-v1.20250113.js"&gt;&lt;/script&gt;
+
+
+支持两种格式的日期时间输入控件。短日期时间格式的：
+&lt;input type="text" class="datepicker"  id="t1"&gt;
+长日期时间格式的：
+&lt;input type="text" class="datepicker"  id="t2"&gt;
+
+&lt;script&gt;
+    document.querySelector('#t1').value = '2008/08/20';
+    CBJS.datepicker.init('#t1', 'yyyy/MM/dd');
+    CBJS.datepicker.init('#t2', 'yyyy/MM/dd HH:mm:ss');
+&lt;/script&gt;
+</pre>
+</code>
+
+</body>
+
+</html>
