@@ -348,4 +348,21 @@
 		window.CBJS.modal = window.xxhModal || xxhModal;
 	}
 
+	if (!!CBJS) {
+		CBJS.Open = function (box) { xxhModal.Open(box); }
+		CBJS.CustomOpen = function (ModalId, MaskId) { xxhModal.CustomOpen(ModalId, MaskId); }
+		CBJS.CustomClose = function (ModalId, MaskId) { xxhModal.CustomClose(ModalId, MaskId); }
+		CBJS.Alert = function (msg, btnTitle, callback) { xxhModal.Alert(msg, btnTitle, callback); }
+		CBJS.Confirm = function (msg, btnOkTitle, callbackOk, btnCancelTitle, callbackCancel) { xxhModal.Confirm(msg, btnOkTitle, callbackOk, btnCancelTitle, callbackCancel); }
+		CBJS.Popup = function (msg, className, icon) { xxhModal.Popup(msg, className, icon); }
+		CBJS.PopupDefault = function (msg) { xxhModal.PopupDefault(msg); }
+		CBJS.PopupPrimary = function (msg) { xxhModal.PopupPrimary(msg); }
+		CBJS.PopupInfo = function (msg) { xxhModal.PopupInfo(msg); }
+		CBJS.PopupSuccess = function (msg) { xxhModal.PopupSuccess(msg); }
+		CBJS.PopupDanger = function (msg) { xxhModal.PopupDanger(msg); }
+		CBJS.PopupWarning = function (msg) { xxhModal.PopupWarning(msg); }
+		CBJS.PopupGold = function (msg) { xxhModal.PopupGold(msg); }
+		CBJS.PopupOther = function (msg) { xxhModal.PopupOther(msg); }
+	}
+
 })(window);
