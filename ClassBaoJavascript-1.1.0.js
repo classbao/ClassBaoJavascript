@@ -1039,8 +1039,8 @@
         /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
         this.EventUtil = {
             /*添加事件处理程序*/
-            /*示例：CBJS.EventUtil.addHandler(document, "keydown", function (e) { if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; } } );*/
-            addHandler: function (element, type, handler) {
+            /*示例：CBJS.EventUtil.addEventListener(document, "keydown", function (e) { if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; } } );*/
+            addEventListener: function (element, type, handler) {
                 if (element.addEventListener) {
                     addEventListener(type, handler, false);
                 } else if (element.attachEvent) {
@@ -1050,7 +1050,7 @@
                 }
             },
             /*移除事件处理程序*/
-            removeHandler: function (element, type, handler) {
+            removeEventListener: function (element, type, handler) {
                 if (element.removeEventListener) {
                     removeEventListener(type, handler, false);
                 } else if (element.detachEvent) {
@@ -1108,6 +1108,11 @@
                 }
             }
         };
+        this.addEventListener = function (element, type, handler) { this.EventUtil.addEventListener(element, type, handler); }
+        this.removeEventListener = function (element, type, handler) { this.EventUtil.removeEventListener(element, type, handler); }
+        this.getEvent = function (event) { this.EventUtil.getEvent(event); }
+        this.getEvent = function () { this.EventUtil.getEvent(); }
+        this.getKeyCode = function (event) { this.EventUtil.getKeyCode(event); }
 
         /* HTML5的canvas相关插件 */
         this.canvas = {
@@ -1239,6 +1244,30 @@
                 return CBJ.canvas.genImage(strData);
             }
             ////////////////////////////////////////
+        };
+
+        // 使用方法：截取id为"target"的元素并保存为"screen.png"
+        // takeScreenshot(document.getElementById('target'), 'screen.png');
+        this.takeScreenshot = function (targetElement, filename) {
+            // 创建一个Canvas元素
+            var canvas = document.createElement('canvas');
+            canvas.width = targetElement.offsetWidth;
+            canvas.height = targetElement.offsetHeight;
+            var ctx = canvas.getContext('2d');
+
+            // 将目标元素绘制到Canvas上
+            var data = ctx.getImageData(0, 0, targetElement.offsetWidth, targetElement.offsetHeight);
+            canvas.width = data.width;
+            canvas.height = data.height;
+            ctx.putImageData(data, 0, 0);
+
+            // 将Canvas转换为图片并下载
+            var img = canvas.toDataURL('image/png');
+            var a = document.createElement('a');
+            a.href = img;
+            a.download = filename || 'screenshot.png';
+            a.click();
+            /* 在JavaScript中，没有直接的方式来进行屏幕截图并保存为图片。但是，你可以使用HTML5 Canvas配合一些浏览器API来实现截图功能。以下是一个简单的示例，演示如何将网页中的某个元素截图并保存为图片。 */
         };
 
     };
@@ -1691,7 +1720,7 @@
     */
     ClassBaoJavascript.prototype.FollowCursor = function (element) {
         try {
-            ClassBaoJavascript.AddEventHandler(document, "mousemove", function (e) {
+            ClassBaoJavascript.addEventListener(document, "mousemove", function (e) {
                 e = e || window.event;
                 ClassBaoJavascript.FollowCursorHandler(e, element);
             });
@@ -2290,6 +2319,19 @@ $("input,textarea,select").on('focus', function () {
     //alert("oldScrollTop=" + oldScrollTop);
 });
 // 移动端(ios)键盘收起页面空白问题·结束
+
+或者，可以通过监听输入框的focus和blur事件来控制滚动行为。例如：
+const input = document.getElementsByTagName('input');
+let interval;
+input.onfocus = () => {
+    interval = setInterval(() => {
+        input.scrollIntoViewIfNeeded(); // 当软键盘弹起时，可以使用Element.scrollIntoViewIfNeeded()方法将输入框滚动到可视区域。
+    }, 400);
+};
+input.onblur = () => {
+    clearInterval(interval);
+};
+
 ***/
 
 /*
@@ -2297,5 +2339,25 @@ $("input,textarea,select").on('focus', function () {
 $("#parentNode").on("input propertychange","#myNode",function(){
     console.info("原来这样才有用"+ $(this).attr("name"));
 });
+*/
+
+或者
+/*
+// 为输入框添加propertychange事件监听器
+function addPropertyChangeListener(inputElement, handlePropertyChange) {
+    inputElement.addEventListener('input', handlePropertyChange);
+    // 为了兼容IE8及以下，添加propertychange事件监听
+    inputElement.addEventListener('propertychange', handlePropertyChange);
+}
+ 
+// 事件处理函数
+function handlePropertyChange(event) {
+    var target = event.target || event.srcElement; // 兼容不同浏览器
+    console.log('值已改变：', target.value);
+}
+ 
+// 假设有一个ID为'myInput'的输入框
+var inputElement = document.getElementById('myInput');
+addPropertyChangeListener(inputElement, handlePropertyChange);
 */
 /***** Other End *****/
