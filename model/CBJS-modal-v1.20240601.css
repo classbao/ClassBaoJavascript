@@ -45,12 +45,12 @@
 	-khtml-transition: visibility 0s, opacity 0.5s linear;
 
 	border: 1px solid #ccc;
-	border-radius: 10px;
-	-o-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-khtml-border-radius: 10px;
+	border-radius: 10px !important;
+	-o-border-radius: 10px !important;
+	-ms-border-radius: 10px !important;
+	-moz-border-radius: 10px !important;
+	-webkit-border-radius: 10px !important;
+	-khtml-border-radius: 10px !important;
 
 	background-color: #fff;
 
@@ -85,12 +85,12 @@
 	list-style: none;
 	min-height: 32px;
 	border-bottom: 1px solid #ccc;
-	border-radius: 9px 9px 0 0;
-	-o-border-radius: 9px 9px 0 0;
-	-ms-border-radius: 9px 9px 0 0;
-	-moz-border-radius: 9px 9px 0 0;
-	-webkit-border-radius: 9px 9px 0 0;
-	-khtml-border-radius: 9px 9px 0 0;
+	border-radius: 9px 9px 0 0 !important;
+	-o-border-radius: 9px 9px 0 0 !important;
+	-ms-border-radius: 9px 9px 0 0 !important;
+	-moz-border-radius: 9px 9px 0 0 !important;
+	-webkit-border-radius: 9px 9px 0 0 !important;
+	-khtml-border-radius: 9px 9px 0 0 !important;
 }
 
 .xxhModal .title {
@@ -109,12 +109,12 @@
 	font-weight: bold;
 	/*max-height: 31.8px;*/
 	background-color: palevioletred;
-	border-radius: 0 9px 0 0;
-	-o-border-radius: 0 9px 0 0;
-	-ms-border-radius: 0 9px 0 0;
-	-moz-border-radius: 0 9px 0 0;
-	-webkit-border-radius: 0 9px 0 0;
-	-khtml-border-radius: 0 9px 0 0;
+	border-radius: 0 9px 0 0 !important;
+	-o-border-radius: 0 9px 0 0 !important;
+	-ms-border-radius: 0 9px 0 0 !important;
+	-moz-border-radius: 0 9px 0 0 !important;
+	-webkit-border-radius: 0 9px 0 0 !important;
+	-khtml-border-radius: 0 9px 0 0 !important;
 }
 
 .xxhModal .close:hover,
@@ -139,6 +139,8 @@
 	-webkit-box-sizing: border-box;
 	-khtml-box-sizing: border-box;
 
+    padding: 0 0;
+    margin: 0 0;
 	width: auto;
 	text-align: center;
 	cursor: pointer;
@@ -154,12 +156,12 @@
 }
 
 .xxhModal .btnL {
-	border-radius: 0 0 0 9px;
-	-o-border-radius: 0 0 0 9px;
-	-ms-border-radius: 0 0 0 9px;
-	-moz-border-radius: 0 0 0 9px;
-	-webkit-border-radius: 0 0 0 9px;
-	-khtml-border-radius: 0 0 0 9px;
+	border-radius: 0 0 0 9px !important;
+	-o-border-radius: 0 0 0 9px !important;
+	-ms-border-radius: 0 0 0 9px !important;
+	-moz-border-radius: 0 0 0 9px !important;
+	-webkit-border-radius: 0 0 0 9px !important;
+	-khtml-border-radius: 0 0 0 9px !important;
 
 	border: 1px solid #ccc;
 	border-left: none;
@@ -173,12 +175,12 @@
 }
 
 .xxhModal .btnR {
-	border-radius: 0 0 9px 0;
-	-o-border-radius: 0 0 9px 0;
-	-ms-border-radius: 0 0 9px 0;
-	-moz-border-radius: 0 0 9px 0;
-	-webkit-border-radius: 0 0 9px 0;
-	-khtml-border-radius: 0 0 9px 0;
+	border-radius: 0 0 9px 0 !important;
+	-o-border-radius: 0 0 9px 0 !important;
+	-ms-border-radius: 0 0 9px 0 !important;
+	-moz-border-radius: 0 0 9px 0 !important;
+	-webkit-border-radius: 0 0 9px 0 !important;
+	-khtml-border-radius: 0 0 9px 0 !important;
 
 	border: 1px solid #ccc;
 	border-right: none;
@@ -189,12 +191,12 @@
 .xxhModal .btnSingle {
 	float: none;
 	width: auto;
-	border-radius: 0 0 9px 9px;
-	-o-border-radius: 0 0 9px 9px;
-	-ms-border-radius: 0 0 9px 9px;
-	-moz-border-radius: 0 0 9px 9px;
-	-webkit-border-radius: 0 0 9px 9px;
-	-khtml-border-radius: 0 0 9px 9px;
+	border-radius: 0 0 9px 9px !important;
+	-o-border-radius: 0 0 9px 9px !important;
+	-ms-border-radius: 0 0 9px 9px !important;
+	-moz-border-radius: 0 0 9px 9px !important;
+	-webkit-border-radius: 0 0 9px 9px !important;
+	-khtml-border-radius: 0 0 9px 9px !important;
 
 	border-top: 1px solid #ccc;
 	border-right: none;
@@ -234,12 +236,12 @@
 	text-align: center;
 	vertical-align: middle;
 	border: 1px solid #ccc;
-	border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-khtml-border-radius: 50%;
+	border-radius: 50% !important;
+	-o-border-radius: 50% !important;
+	-ms-border-radius: 50% !important;
+	-moz-border-radius: 50% !important;
+	-webkit-border-radius: 50% !important;
+	-khtml-border-radius: 50% !important;
 }
 
 /* 内容区域 */
@@ -500,12 +502,12 @@
 .xxhModal.danger,
 .xxhModal.gold,
 .xxhModal.other {
-	border-radius: 9px 9px 9px 9px;
-	-o-border-radius: 9px 9px 9px 9px;
-	-ms-border-radius: 9px 9px 9px 9px;
-	-moz-border-radius: 9px 9px 9px 9px;
-	-webkit-border-radius: 9px 9px 9px 9px;
-	-khtml-border-radius: 9px 9px 9px 9px;
+	border-radius: 9px 9px 9px 9px !important;
+	-o-border-radius: 9px 9px 9px 9px !important;
+	-ms-border-radius: 9px 9px 9px 9px !important;
+	-moz-border-radius: 9px 9px 9px 9px !important;
+	-webkit-border-radius: 9px 9px 9px 9px !important;
+	-khtml-border-radius: 9px 9px 9px 9px !important;
 
 	background-color: #fff;
 	color: #565656;

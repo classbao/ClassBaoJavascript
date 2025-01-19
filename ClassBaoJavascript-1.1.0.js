@@ -1278,7 +1278,7 @@
     /*获得Unix Timestamp时间戳*/
     ClassBaoJavascript.prototype.UnixTimestamp = function (time) {
         if (!!time) {
-            if (typeof (time) == 'string') {
+            if (typeof (time) == 'string' || typeof (time) == 'number') {
                 return Math.round(new Date(time).getTime() / 1000);
             }
             else {
@@ -2341,7 +2341,7 @@ $("#parentNode").on("input propertychange","#myNode",function(){
 });
 */
 
-或者
+/* 或者 */
 /*
 // 为输入框添加propertychange事件监听器
 function addPropertyChangeListener(inputElement, handlePropertyChange) {
