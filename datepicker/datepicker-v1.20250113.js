@@ -10,6 +10,7 @@
         paramsDate: function (inputElement, targetFormat) {
             this.inputElement = inputElement; // 当前输入框
             this.targetFormat = targetFormat || 'yyyy/MM/dd HH:mm:ss'; // 目标日期时间格式
+            this.haveTime = (!!this.targetFormat && (this.targetFormat.toLocaleLowerCase().includes('hh:mm:ss'))); // 目标格式是否包含时分秒
             this.monthData = {}; // 绘制日历组件的数据源
             this.sureTime = { year: 0, month: 0, date: 0, hour: -1, minute: -1, second: -1 }; // 确定的选中的日期时间，或者初始化到某个时刻，或者是初始化到当前时刻。这里时分秒必需初始化小于0,后米面才好判断是否要构建时分秒控件
         },
@@ -163,7 +164,8 @@
                 '<select class="minute">' + buildTimeOptions(59) + '</select>' +
                 '<select class="second">' + buildTimeOptions(59) + '</select>';
         }
-        html += '<a href="javascript:void(0);" class="ui-datepicker-btn ui-datepicker-ok-btn">\u786e\u5b9a</a>' +
+        html += '<a href="javascript:void(0);" class="ui-datepicker-btn ui-datepicker-CleanUp-btn">\u6e05\u7a7a</a>' +
+            '<a href="javascript:void(0);" class="ui-datepicker-btn ui-datepicker-ok-btn">\u786e\u5b9a</a>' +
             '</div>';
         return html;
     };
@@ -251,7 +253,8 @@
         }
 
         if (0 > paramsDate.sureTime.hour || 0 > paramsDate.sureTime.minute || 0 > paramsDate.sureTime.second) {
-            if (!!$targetFormat && ($targetFormat.toLocaleLowerCase().includes('hh:mm:ss'))) {
+            if (paramsDate.haveTime) {
+                // if (!!$targetFormat && ($targetFormat.toLocaleLowerCase().includes('hh:mm:ss'))) {
                 // 将展示时分秒控件
                 paramsDate.sureTime.hour = 0;
                 paramsDate.sureTime.minute = 0;
@@ -321,42 +324,83 @@
                 $target.classList.add('active');
             }
 
-            if (!$target.classList.contains('ui-datepicker-ok-btn')) {
+
+            if (!!$target.classList.contains('ui-datepicker-CleanUp-btn')) {
+                // 点击“清空”的代码 
+                $input.value = '';
+                // 移除其他日期选中状态
+                document.querySelectorAll('.ui-datepicker-wrapper td').forEach(function (td) {
+                    if (td.classList.contains('active')) {
+                        td.classList.remove('active');
+                    }
+                });
+
+                paramsDate.sureTime.year = 0;
+                paramsDate.sureTime.month = 0;
+                paramsDate.sureTime.date = 0;
+                if (0 <= paramsDate.sureTime.hour || 0 <= paramsDate.sureTime.minute || 0 <= paramsDate.sureTime.second) {
+                    if (paramsDate.haveTime) {
+                        // if (!!$targetFormat && ($targetFormat.toLocaleLowerCase().includes('hh:mm:ss'))) {
+                        // 将展示时分秒控件
+                        paramsDate.sureTime.hour = 0;
+                        paramsDate.sureTime.minute = 0;
+                        paramsDate.sureTime.second = 0;
+                    }
+                    else {
+                        // 不展示时分秒控件
+                        paramsDate.sureTime.hour = -1;
+                        paramsDate.sureTime.minute = -1;
+                        paramsDate.sureTime.second = -1;
+                    }
+
+                    setSelectedByValue('.ui-datepicker-wrapper select.hour', -1);
+                    setSelectedByValue('.ui-datepicker-wrapper select.minute', -1);
+                    setSelectedByValue('.ui-datepicker-wrapper select.second', -1);
+                }
+                
+                $datepicker_wrapper.classList.remove('ui-datepicker-wrapper-show');
+                isOpen = false;
+
                 return true;
             }
-            // 以下是点击“确定”之后的代码 
-            var selected_date;
-            var selectedTd = document.querySelector('.ui-datepicker-wrapper td.active');
-            if (!!selectedTd) {
-                selected_date = selectedTd.dataset.date || 0;
-            }
 
-            if (3 === document.querySelectorAll('.ui-datepicker-wrapper select').length) {
-                var selectElementHour = document.querySelector('.ui-datepicker-wrapper select.hour');
-                paramsDate.sureTime.hour = selectElementHour.options[selectElementHour.selectedIndex].value || 0;
-
-                var selectElementMinute = document.querySelector('.ui-datepicker-wrapper select.minute');
-                paramsDate.sureTime.minute = selectElementMinute.options[selectElementMinute.selectedIndex].value || 0;
-
-                var selectElementSecond = document.querySelector('.ui-datepicker-wrapper select.second');
-                paramsDate.sureTime.second = selectElementSecond.options[selectElementSecond.selectedIndex].value || 0;
-            }
-
-            if (1 <= selected_date && selected_date <= 31) {
-                // 至少选中到天
-                let date;
-                if (0 <= paramsDate.sureTime.hour) {
-                    date = new Date(paramsDate.monthData.year, paramsDate.monthData.month - 1, selected_date, paramsDate.sureTime.hour, paramsDate.sureTime.minute, paramsDate.sureTime.second);
-                }
-                else {
-                    date = new Date(paramsDate.monthData.year, paramsDate.monthData.month - 1, selected_date);
+            if (!!$target.classList.contains('ui-datepicker-ok-btn')) {
+                // 以下是点击“确定”之后的代码 
+                var selected_date;
+                var selectedTd = document.querySelector('.ui-datepicker-wrapper td.active');
+                if (!!selectedTd) {
+                    selected_date = selectedTd.dataset.date || 0;
                 }
 
-                $input.value = dateFormat(date, $targetFormat);
-            }
+                if (3 === document.querySelectorAll('.ui-datepicker-wrapper select').length) {
+                    var selectElementHour = document.querySelector('.ui-datepicker-wrapper select.hour');
+                    paramsDate.sureTime.hour = selectElementHour.options[selectElementHour.selectedIndex].value || 0;
 
-            $datepicker_wrapper.classList.remove('ui-datepicker-wrapper-show');
-            isOpen = false;
+                    var selectElementMinute = document.querySelector('.ui-datepicker-wrapper select.minute');
+                    paramsDate.sureTime.minute = selectElementMinute.options[selectElementMinute.selectedIndex].value || 0;
+
+                    var selectElementSecond = document.querySelector('.ui-datepicker-wrapper select.second');
+                    paramsDate.sureTime.second = selectElementSecond.options[selectElementSecond.selectedIndex].value || 0;
+                }
+
+                if (1 <= selected_date && selected_date <= 31) {
+                    // 至少选中到天
+                    let date;
+                    if (0 <= paramsDate.sureTime.hour) {
+                        date = new Date(paramsDate.monthData.year, paramsDate.monthData.month - 1, selected_date, paramsDate.sureTime.hour, paramsDate.sureTime.minute, paramsDate.sureTime.second);
+                    }
+                    else {
+                        date = new Date(paramsDate.monthData.year, paramsDate.monthData.month - 1, selected_date);
+                    }
+
+                    $input.value = dateFormat(date, $targetFormat);
+                }
+
+                $datepicker_wrapper.classList.remove('ui-datepicker-wrapper-show');
+                isOpen = false;
+
+                return true;
+            }
 
         }, false);
 
@@ -386,6 +430,8 @@
         if (!!!select || !!!select.options) {
             return false;
         }
+        // 时分秒 都是单选，所以事先取消所有已选中项
+        select.selectedIndex = -1;
         for (var i = 0; i < select.options.length; i++) {
             if (parseInt(select.options[i].value) == value) {
                 select.options[i].selected = true;
