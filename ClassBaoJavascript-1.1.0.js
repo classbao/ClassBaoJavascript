@@ -771,6 +771,25 @@
         };
 
         /*Unicode（编码）转义(\uXXXX)的编码和解码*/
+        this.encoding2Unicode = function (text) {
+            if (!!!text || text.length < 1) return '';
+            let unicode = "";
+            for (let i = 0; i < text.length; i++) {
+                unicode += '\\u' + text.charCodeAt(i).toString(16);
+            }
+            return unicode;
+        };
+        // 示例：CBJS.encoding2Unicode('我是中国人；我爱中国！'); 输出：\\u6211\\u662f\\u4e2d\\u56fd\\u4eba\\uff1b\\u6211\\u7231\\u4e2d\\u56fd\\uff01
+        /*Unicode（解码）转义(\uXXXX)的编码和解码*/
+        this.decoding2Unicode = function (unicode) {
+            if (!!!unicode || unicode.length < 1) return '';
+            return unicode.replace(/\\(u[0-9a-fA-F]{4})/gm, function ($0, $1, $2) {
+                return $1 && String.fromCharCode($2);
+            });
+        };
+        // 示例：CBJS.decoding2Unicode('\u6211\u662f\u4e2d\u56fd\u4eba\uff1b\u6211\u7231\u4e2d\u56fd\uff01'); 输出：我是中国人；我爱中国！
+
+        /*Unicode（编码）转义(\uXXXX)的编码和解码*/
         this.encodingUnicode = function (text) {
             if (!!!text || text.length < 1) return '';
             return escape(text).replace(/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm, function ($0, $1, $2) {

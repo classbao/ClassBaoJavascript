@@ -1,11 +1,44 @@
-*, html, body, pre, code, p, div, canvas, a, input, button, textarea, hr, h1, h2, h3, table, tr, th, td {
+* {
+    margin: 0 0;
+    padding: 0 0;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    font-family: "微软雅黑", "黑体", "仿宋", arial, system-ui, sans-serif, serif, fangsong, math, cursive, 'Courier New', Courier, monospace;
+}
+
+*,
+html,
+body,
+pre,
+code,
+p,
+div,
+canvas,
+a,
+input,
+button,
+textarea,
+hr,
+h1,
+h2,
+h3,
+table,
+tr,
+th,
+td {
     margin: 0 auto;
     padding: 0;
     border: 0;
 }
+
 body {
     background-color: #efefef;
 }
+
 pre {
     border: 1px solid #03A9F4;
     background-color: #5f6c75;
@@ -13,6 +46,7 @@ pre {
     display: inline-block;
     padding: 0 0.5rem;
 }
+
 code {
     margin: 0 auto;
     padding: 0;
@@ -24,46 +58,130 @@ hr {
     margin: 8px 0;
 }
 
-a, a:link, a:visited {
+a,
+a:link,
+a:visited {
     text-decoration: none;
     color: #03A9F4;
 }
-    a:hover, a:active {
-        text-decoration: underline;
+
+a:hover,
+a:active {
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+}
+
+@supports not (text-underline-offset: 0.3rem) {
+
+    a:hover,
+    a:active {
         cursor: pointer;
+        text-decoration: underline;
+        /* 提供回退样式，例如手动设置下划线位置 */
+        text-decoration-thickness: 2px;
+        /* 控制下划线厚度 */
+        padding-bottom: 0.3rem;
+        /* 控制下划线位置 */
     }
-button{ cursor: pointer;}
+}
+
+input[readonly],
+input[disabled] {
+    cursor: not-allowed;
+}
+
+a,
+button,
+input[type=button],
+select,
+select option {
+    cursor: pointer;
+}
 
 .container table {
     border: 1px solid #d3d3d3;
     border-collapse: collapse;
 }
-    .container table th {
-        border: 1px solid #d3d3d3;
-        background-color: #03A9F4;
-        color: #fff;
-        line-height: 1.5rem;
-    }
-    .container table td {
-        border: 1px solid #d3d3d3;
-        line-height: 1.5rem;
-    }
-        .container table td:first-child {
-            background-color: #005379;
-            color: #fff;
-            text-align: right;
-            padding-right: 3px;
-        }
 
-input, textarea {
+.container table th {
+    border: 1px solid #d3d3d3;
+    background-color: #03A9F4;
+    color: #fff;
+    line-height: 1.5rem;
+}
+
+.container table td {
+    border: 1px solid #d3d3d3;
+    line-height: 1.5rem;
+}
+
+.container table td:first-child {
+    background-color: #005379;
+    color: #fff;
+    text-align: right;
+    padding-right: 3px;
+}
+
+input,
+textarea {
     border: 1px solid #d3d3d3;
     line-height: 1.3rem;
 }
+
 textarea {
     vertical-align: middle;
 }
+
 button {
     border: 1px solid #03A9F4;
     line-height: 1.3rem;
-    
+
 }
+
+
+/* 主框架·开始 */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* 允许子项换行 */
+    flex-direction: row;
+    /* 子项排列方式：行 */
+    justify-content: space-between;
+    /* 内部填充空隙，子项相邻没有空隙 */
+    align-items: center;
+    /* 垂直方向居中 */
+    margin: auto;
+    padding: 0 .5rem;
+}
+
+.flex-item {
+    flex: 1 1;
+    /* 子项将尽可能地扩展以填满容器 */
+    min-width: 24rem;
+    /* 最小宽度，确保每个子项至少有多少宽度 */
+}
+
+/* 针对PC端的媒体查询 */
+@media (min-width: 600px) {
+
+    /* 假设600px是PC端的阈值 */
+    .flex-item {
+        flex-basis: 100%;
+        /* 让子项宽度为100%，这样它们会在容器宽度不足时换行 */
+        margin: 5px 0;
+        /* 可选：为子项添加一些外边距 */
+    }
+}
+
+/* 针对移动端的媒体查询 */
+@media (max-width: 600px) {
+
+    /* 假设600px是移动端的阈值 */
+    .flex-item {
+        flex-basis: 100%;
+        /* 让子项宽度为100%，这样它们会在容器宽度不足时换行 */
+    }
+}
+
+/* 主框架·结束 */
