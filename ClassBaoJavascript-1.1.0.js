@@ -1275,7 +1275,7 @@
 
 
     /***** 常用实例方法扩展·日期与时间·开始 *****/
-    /*获得Unix Timestamp时间戳*/
+    /*获得Unix Timestamp时间戳（秒）*/
     ClassBaoJavascript.prototype.UnixTimestamp = function (time) {
         if (!!time) {
             if (typeof (time) == 'string' || typeof (time) == 'number') {
@@ -1287,16 +1287,39 @@
         }
         else
             return Math.round(new Date().getTime() / 1000);
-    }
-    /*获得Unix Timestamp时间戳转换得普通时间对象*/
+    };
+    /*获得Unix Timestamp时间戳（毫秒）*/
+    ClassBaoJavascript.prototype.UnixTimestampMilliseconds = function (time) {
+        if (!!time) {
+            if (typeof (time) == 'string' || typeof (time) == 'number') {
+                return Math.round(new Date(time).getTime());
+            }
+            else {
+                return Math.round(time.getTime());
+            }
+        }
+        else
+            return Math.round(new Date().getTime());
+    };
+
+    /*获得时间对象，来自Unix Timestamp时间戳（秒/毫秒都行）*/
     ClassBaoJavascript.prototype.GetDate = function (_UnixTimestamp) {
         if (!!_UnixTimestamp) {
-            if (/^[1-9]\d{12}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp));
-            else if (/^[1-9]\d{9}$/.test(_UnixTimestamp.toString())) return (new Date(_UnixTimestamp * 1000));
+            if (/^[1-9]\d{12,}$/.test(_UnixTimestamp.toString())) return (new Date(parseInt(_UnixTimestamp)));
+            else if (/^[1-9]\d{9}$/.test(_UnixTimestamp.toString())) return (new Date(parseInt(_UnixTimestamp) * 1000));
         }
         return null;
-    }
-    /*获得json时间"/Date(1507617025040)/"转换得普通时间对象*/
+    };
+
+    /*获得时间对象，来自Unix Timestamp时间戳（毫秒）*/
+    ClassBaoJavascript.prototype.GetDateFromMilliseconds = function (_UnixTimestamp) {
+        if (!!_UnixTimestamp) {
+            if (/^[1-9]\d{12,}$/.test(_UnixTimestamp.toString())) return (new Date(parseInt(_UnixTimestamp)));
+        }
+        return null;
+    };
+
+    /*获得时间对象，来自json时间"/Date(1507617025040)/"字符串*/
     ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
         if (!datetime) return null;
         if (typeof (datetime) == "string") {
@@ -1306,6 +1329,7 @@
         }
         else { return this.GetDateByJson(datetime.toString()); }
     };
+
     /*时间格式化扩展*/
     Date.prototype.Format = function (fmt) {
         if (!this || this.getFullYear() <= 1) return '';
@@ -1344,50 +1368,79 @@
             }
         }
         return fmt;
-    }
+    };
+    /* 任意可以转换为Date对象的参数（时间戳或时间字符串等），转换为目标格式 */
     ClassBaoJavascript.prototype.DateFormat = function (date, format) {
         if (!date) { return ''; }
         if (!format) { format = 'yyyy/MM/dd HH:mm:ss'; }
         if ("object" == typeof (date)) { return date.Format(format); }
-        else { return (new Date(date)).Format(format); }
-    }
-
-    /*在原有日期基础上增加days天数，默认增加1天*/
-    Date.prototype.addDate = function (date, days) {
-        if (!date) {
-            return false;
+        if ("number" == typeof (date)) {
+            if (1000000000000 > date) {
+                return (new Date(date * 1000)).Format(format); // 秒
+            }
+            else {
+                return (new Date(date)).Format(format); // 毫秒
+            }
         }
+        else { return (new Date(date)).Format(format); }
+    };
+
+    /*在原有日期基础上增加Milliseconds毫秒数，默认增加1毫秒*/
+    Date.prototype.addMilliseconds = function (milliseconds) {
+        if (!milliseconds || milliseconds == '') {
+            milliseconds = 1;
+        }
+        this.setMilliseconds(this.getMilliseconds() + parseFloat(milliseconds));
+        return this;
+    };
+    /*在原有日期基础上增加Seconds秒钟数，默认增加1秒钟*/
+    Date.prototype.addSeconds = function (seconds) {
+        if (!seconds || seconds == '') {
+            seconds = 1;
+        }
+        this.setSeconds(this.getSeconds() + parseFloat(seconds));
+        return this;
+    };
+    /*在原有日期基础上增加Minutes分钟数，默认增加1分钟*/
+    Date.prototype.addMinutes = function (minutes) {
+        if (!minutes || minutes == '') {
+            minutes = 1;
+        }
+        this.setMinutes(this.getMinutes() + parseFloat(minutes));
+        return this;
+    };
+    /*在原有日期基础上增加Hours小时数，默认增加1小时*/
+    Date.prototype.addHours = function (hours) {
+        if (!hours || hours == '') {
+            hours = 1;
+        }
+        this.setHours(this.getHours() + parseFloat(hours));
+        return this;
+    };
+    /*在原有日期基础上增加days天数，默认增加1天*/
+    Date.prototype.addDate = function (days) {
         if (!days || days == '') {
             days = 1;
         }
-        var date = new Date(date);
-        date.setDate(date.getDate() + days);
-        return date;
-    }
+        this.setDate(this.getDate() + parseFloat(days));
+        return this;
+    };
     /*在原有日期基础上增加months月数，默认增加1月*/
-    Date.prototype.addMonth = function (date, months) {
-        if (!date) {
-            return false;
-        }
+    Date.prototype.addMonth = function (months) {
         if (!months || months == '') {
             months = 1;
         }
-        var date = new Date(date);
-        date.setMonth(date.getMonth() + months);
-        return date;
-    }
+        this.setMonth(this.getMonth() + parseFloat(months));
+        return this;
+    };
     /*在原有日期基础上增加FullYears年数，默认增加1年*/
-    Date.prototype.addFullYear = function (date, FullYears) {
-        if (!date) {
-            return false;
-        }
+    Date.prototype.addFullYear = function (FullYears) {
         if (!FullYears || FullYears == '') {
             FullYears = 1;
         }
-        var date = new Date(date);
-        date.setFullYear(date.getFullYear() + FullYears);
-        return date;
-    }
+        this.setFullYear(this.getFullYear() + parseFloat(FullYears));
+        return this;
+    };
 
     /*短时间，形如 (13:04:06)*/
     ClassBaoJavascript.prototype.isTime = function (str) {
@@ -2285,6 +2338,25 @@ if (!window.requestAnimationFrame) {
         }
     );
 };
+///* 调用示例：
+//  let requestID;
+//
+//  function animate(time) {
+//      // 更新动画状态
+//      // ...
+//
+//      // 判断是否需要停止动画
+//      if (/* 需要停止的条件 */) {
+//          cancelAnimationFrame(requestID);
+//      } else {
+//          requestID = requestAnimationFrame(animate);
+//      }
+//  }
+//
+//  // 开始动画
+//  requestID = requestAnimationFrame(animate);
+//
+// */
 
 /***
 // 移动端(ios)键盘收起页面空白问题·开始

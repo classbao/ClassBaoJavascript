@@ -1,0 +1,371 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>UnixTimestamp 时间戳</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="测试">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+        * {
+            margin: 0 0;
+            padding: 0 0;
+            box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -khtml-box-sizing: border-box;
+            font-family: "微软雅黑", "黑体", arial, system-ui, sans-serif, serif, fangsong, math, cursive, 'Courier New', Courier, monospace;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* 允许子项换行 */
+            flex-direction: row;
+            /* 子项排列方式：行 */
+            justify-content: space-between;
+            /* 内部填充空隙，子项相邻没有空隙 */
+            align-items: center;
+            /* 垂直方向居中 */
+            margin: auto;
+            padding: 0 .5rem;
+        }
+
+        .flex-item {
+            flex: 1 1;
+            /* 子项将尽可能地扩展以填满容器 */
+            min-width: 24rem;
+            /* 最小宽度，确保每个子项至少有多少宽度 */
+        }
+
+        /* 针对PC端的媒体查询 */
+        @media (min-width: 600px) {
+
+            /* 假设600px是PC端的阈值 */
+            .flex-item {
+                flex-basis: 100%;
+                /* 让子项宽度为100%，这样它们会在容器宽度不足时换行 */
+                margin: 5px 0;
+                /* 可选：为子项添加一些外边距 */
+            }
+        }
+
+        /* 针对移动端的媒体查询 */
+        @media (max-width: 600px) {
+
+            /* 假设600px是移动端的阈值 */
+            .flex-item {
+                flex-basis: 100%;
+                /* 让子项宽度为100%，这样它们会在容器宽度不足时换行 */
+            }
+        }
+
+
+        .title {
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: #fff;
+            background-color: #00b7ee;
+            font-weight: bold;
+            line-height: 2rem;
+            border-radius: 0.8rem 0.8rem 0 0;
+            -o-border-radius: 0.8rem 0.8rem 0 0;
+            -ms-border-radius: 0.8rem 0.8rem 0 0;
+            -moz-border-radius: 0.8rem 0.8rem 0 0;
+            -webkit-border-radius: 0.8rem 0.8rem 0 0;
+            -khtml-border-radius: 0.8rem 0.8rem 0 0;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 1px solid #00b7ee;
+            border-top: none;
+        }
+
+        input[readonly],
+        input[disabled] {
+            cursor: not-allowed;
+        }
+
+        button,
+        input[type=button],
+        select,
+        select option {
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <!-- JS脚本 -->
+    <script>
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="flex-container title">
+        <div class="flex-item">现在本地时间、现在UNIX时间戳：</div>
+    </div>
+    <div class="flex-container" style="margin-bottom: 0.5rem;">
+        <div class="flex-item">现在时间：<input type="input" id="currentTime" value="" disabled="disabled"
+                style="min-width: 25rem;">
+        </div>
+    </div>
+    <div class="flex-container">
+        <div class="flex-item">现在时间UnixTimestamp(s)：<input type="input" id="currentUnixTimestampSeconds" value=""
+                disabled="disabled">
+        </div>
+        <div class="flex-item">现在时间UnixTimestamp(ms)：<input type="input" id="currentUnixTimestampMillisecond" value=""
+                disabled="disabled"></div>
+    </div>
+    <!-- JS脚本 -->
+    <script>
+        let requestID;
+        requestID = requestAnimationFrame(function animate() {
+            let date = new Date();
+            document.querySelector("#currentTime").value = date.toString('o');
+            document.querySelector("#currentUnixTimestampSeconds").value = Math.round(date / 1000);
+            document.querySelector("#currentUnixTimestampMillisecond").value = date.getTime();
+
+            requestID = requestAnimationFrame(animate);
+        });
+    </script>
+
+    <hr />
+
+    <div class="flex-container title">
+        <div class="flex-item">日期时间与UNIX时间戳之间互相转换：</div>
+    </div>
+    <div class="flex-container">
+        <div class="flex-item">日期时间：<input type="input" id="friendlyDateTime" value="" style="min-width: 25rem;"
+                placeholder="yyyy/MM/dd HH:mm:ss.fff">
+        </div>
+        <div class="flex-item"
+            style="background-color: #eee;border: 1px solid #ccc;text-align: center;padding: 0.5rem 0;">
+            <button onclick="toUnixTimestamp();" style="margin-bottom: 0.5rem;">日期时间 --> 时间戳</button><br />
+            <button onclick="toFriendlyDateTime();">日期时间 <-- 时间戳</button>
+        </div>
+        <div class="flex-item">UnixTimestamp(s)：<input type="input" id="UnixTimestampSeconds" value=""
+                placeholder="Unix时间戳(秒)">
+        </div>
+        <div class="flex-item">UnixTimestamp(ms)：<input type="input" id="UnixTimestampMillisecond" value=""
+                placeholder="Unix时间戳(毫秒)">
+        </div>
+    </div>
+    <!-- JS脚本 -->
+    <script>
+        function toUnixTimestamp() {
+            const _friendlyDateTime = document.querySelector("#UnixTimestampMillisecond").value;
+            let _UnixTimestampSeconds;
+            let _UnixTimestampMillisecond;
+            if (!_friendlyDateTime || 8 <= _friendlyDateTime.length) {
+                _UnixTimestampSeconds = CBJS.UnixTimestamp(_friendlyDateTime);
+                _UnixTimestampMillisecond = CBJS.UnixTimestampMilliseconds(_friendlyDateTime);
+            }
+            else {
+                alert('日期时间不正确！请重新输入');
+                return false;
+            }
+            document.querySelector("#UnixTimestampSeconds").value = _UnixTimestampSeconds;
+            document.querySelector("#UnixTimestampMillisecond").value = _UnixTimestampMillisecond;
+        };
+        function toFriendlyDateTime() {
+            const _UnixTimestampSeconds = document.querySelector("#UnixTimestampSeconds").value;
+            const _UnixTimestampMillisecond = document.querySelector("#UnixTimestampMillisecond").value;
+            let _friendlyDateTime;
+            if (!!_UnixTimestampSeconds && 10000000000 < _UnixTimestampSeconds) {
+                _friendlyDateTime = CBJS.GetDate(_UnixTimestampSeconds);
+            }
+            else if (!!_UnixTimestampMillisecond && 1000000000000 < _UnixTimestampMillisecond) {
+                _friendlyDateTime = CBJS.GetDate(_UnixTimestampMillisecond);
+            }
+            else {
+                alert('Unix时间戳不正确！请重新输入');
+                return false;
+            }
+            document.querySelector("#friendlyDateTime").value = _friendlyDateTime.toString('o');
+        };
+    </script>
+
+    <hr />
+
+    <div class="flex-container title">
+        <div class="flex-item">日期时间计算（往前退是+，往后推是-）：</div>
+    </div>
+    <div class="flex-container" style="margin-bottom: 0.5rem;">
+        <div class="flex-item">原时间（本地时间）：<input type="input" id="originalTime" value="" style="min-width: 25rem;"
+                placeholder="yyyy/MM/dd HH:mm:ss.fff">
+        </div>
+    </div>
+    <div class="flex-container" style="margin-bottom: 0.5rem;">
+        <div class="flex-item"
+            style="background-color: #eee;border: 1px solid #ccc;text-align: center;padding: 0.5rem 0;">转换到：
+            <select id="selectTimezone">
+                <option value="">- 时区 -</option>
+                <option value="0">中时区（零时区）‌：英国伦敦</option>
+                <option value="1">东一区‌：法国巴黎</option>
+                <option value="2">东二区‌：土耳其伊斯坦布尔</option>
+                <option value="3">东三区‌：俄罗斯莫斯科</option>
+                <option value="4">东四区‌：阿联酋阿布扎比</option>
+                <option value="5">东五区‌：印度新德里</option>
+                <option value="6">东六区‌：缅甸仰光</option>
+                <option value="7">东七区‌：泰国曼谷</option>
+                <option value="8">东八区‌：中国北京/上海</option>
+                <option value="9">东九区‌：日本东京</option>
+                <option value="10">东十区‌：澳大利亚墨尔本</option>
+                <option value="11">东十一区‌：所罗门群岛</option>
+                <option value="12">东十二区‌：新西兰惠灵顿</option>
+                <option value="-1">西一区‌：塞内加尔达喀尔</option>
+                <option value="-2">西二区‌：大西洋中部</option>
+                <option value="-3">西三区‌：巴西巴西利亚</option>
+                <option value="-4">西四区‌：智利圣地亚哥</option>
+                <option value="-5">西五区‌：美国纽约</option>
+                <option value="-6">西六区‌：美国芝加哥</option>
+                <option value="-7">西七区‌：美国菲尼克斯</option>
+                <option value="-8">西八区‌：加拿大温哥华</option>
+                <option value="-9">‌西九区‌：美国安克雷奇</option>
+                <option value="-10">西十区‌：美国檀香山</option>
+                <option value="-11">西十一十二区‌：均在太平洋‌</option>
+                <option value="-12">西十一十二区‌：均在太平洋‌</option>
+            </select>
+            <button onclick="convertTime();">点击转换</button>
+        </div>
+        <div class="flex-item">目标时间：<input type="input" id="targetTime" value="" readonly="readonly"
+                style="min-width: 25rem;" placeholder="yyyy/MM/dd HH:mm:ss.fff"></div>
+    </div>
+    <!-- JS脚本 -->
+    <script>
+        // 将时间转换到目标时区所在时间
+        function convertTimezoneToLocale(date, timezone) {
+            // 获取当前时间的时间戳(毫秒)
+            const currentTime = date.getTime();
+            // 获取本地时区与UTC时间的分钟差值。该方法返回的是一个数字，表示本地时区与UTC时间相差的分钟数，负值表示本地时区比UTC时间早，正值表示本地时区比UTC时间晚。
+            const localOffset = date.getTimezoneOffset();
+            // 获取目标时区与UTC时间的分钟差值
+            const targetOffset = timezone * 60;
+            // 计算目标时区相对于本地时区的分钟差值
+            const offsetDiff = targetOffset + localOffset;
+            // 根据调整后的时间戳创建新的Date对象
+            const targetTime = new Date(currentTime + offsetDiff * 60 * 1000);
+
+            return targetTime;
+        };
+
+        // 示例：将时区+8（北京时间）转换为本地时区
+        const targetTimezone = 8;
+        const localTime = convertTimezoneToLocale(new Date(), targetTimezone);
+        const localTimeStr = localTime.toLocaleDateString() + ' ' + localTime.toLocaleTimeString() + '.' + localTime.getMilliseconds();
+        console.log(localTimeStr);
+    </script>
+    <script>
+        function convertTime() {
+            const originalTime = document.querySelector("#originalTime").value;
+            if (!!!originalTime) {
+                alert('原时间不能为空、或格式错误！请重新输入。');
+                return false;
+            }
+            const _originalTime = new Date(originalTime);
+
+            const targetTimezone = document.querySelector("#selectTimezone option:checked").value;
+            if (!!!targetTimezone) {
+                alert('时区不能为空！请选择目标时区。');
+                return false;
+            }
+
+            const localTime = convertTimezoneToLocale(_originalTime, targetTimezone);
+            const localTimeStr = localTime.toLocaleDateString() + ' ' + localTime.toLocaleTimeString() + '.' + localTime.getMilliseconds();
+            console.log(localTimeStr);
+            document.querySelector("#targetTime").value = localTimeStr;
+        };
+    </script>
+
+    <div class="flex-container">
+        <div class="flex-item"
+            style="background-color: #eee;border: 1px solid #ccc;text-align: center;padding: 0.5rem 0;">时间计算：<input
+                type="number" id="TimeNum" value="" placeholder="+3是往后推，-3是往前退" style="min-width: 12rem;">计算模块：
+            <select id="selectTimeModule">
+                <option value="">- 时间模块 -</option>
+                <option value="y">年份</option>
+                <option value="M">月份</option>
+                <option value="d">日期</option>
+                <option value="h">小时</option>
+                <option value="m">分钟</option>
+                <option value="s">秒钟</option>
+                <option value="ms">毫秒</option>
+            </select>
+            <button onclick="calculateTime();">点击计算</button>
+        </div>
+        <div class="flex-item">结果时间：<input type="input" id="calculateTimeTarget" value="" readonly="readonly"
+                style="min-width: 25rem;" placeholder="yyyy/MM/dd HH:mm:ss.fff"></div>
+    </div>
+    <!-- JS脚本 -->
+    <script>
+        function calculateTime() {
+            const originalTime = document.querySelector("#originalTime").value;
+            if (!!!originalTime) {
+                alert('原时间不能为空、或格式错误！请重新输入。');
+                return false;
+            }
+            const _originalTime = new Date(originalTime);
+
+            const TimeNum = document.querySelector("#TimeNum").value;
+            if (!!!TimeNum) {
+                alert('时间计算量不能为空！请重新输入。');
+                return false;
+            }
+
+            const selectTimeModule = document.querySelector("#selectTimeModule option:checked").value;
+            if (!!!selectTimeModule) {
+                alert('计算模块不能为空！请选择时间计算模块。');
+                return false;
+            }
+
+            let calculateTimeTarget;
+            switch (selectTimeModule) {
+                case 'y': calculateTimeTarget = _originalTime.addFullYear(TimeNum); break;
+                case 'M': calculateTimeTarget = _originalTime.addMonth(TimeNum); break;
+                case 'd': calculateTimeTarget = _originalTime.addDate(TimeNum); break;
+                case 'h': calculateTimeTarget = _originalTime.addHours(TimeNum); break;
+                case 'm': calculateTimeTarget = _originalTime.addMinutes(TimeNum); break;
+                case 's': calculateTimeTarget = _originalTime.addSeconds(TimeNum); break;
+                case 'ms': calculateTimeTarget = _originalTime.addMilliseconds(TimeNum); break;
+                default: alert('计算模块错误！'); break;
+            }
+
+            document.querySelector("#calculateTimeTarget").value = calculateTimeTarget.toLocaleDateString() + ' ' + calculateTimeTarget.toLocaleTimeString() + '.' + calculateTimeTarget.getMilliseconds();
+        };
+    </script>
+
+    <hr />
+    <br />
+    <br />
+    <br />
+
+
+</body>
+
+</html>
