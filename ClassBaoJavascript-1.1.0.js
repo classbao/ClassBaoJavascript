@@ -531,7 +531,7 @@
             url = url || window.location.search
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = url.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
+            if (r != null) return decodeURIComponent(r[2]); return null;
         };
 
         /* Ajax 请求 */
@@ -635,7 +635,7 @@
                     path = path || "/";
                     var exp = new Date;
                     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-                    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=" + path + (domain ? ";domain=" + domain : "") + (isSecure ? ";secure" : "");
+                    document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + exp.toGMTString() + ";path=" + path + (domain ? ";domain=" + domain : "") + (isSecure ? ";secure" : "");
                     /*
                      document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/; domain=classbao.com; secure";
                     */
@@ -655,7 +655,7 @@
                     days = days || 7;
                     var exp = new Date;
                     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-                    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/";
+                    document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + exp.toGMTString() + "; path=/";
                     return true;
                 }
                 catch (e) {
@@ -1341,7 +1341,7 @@
     /*获得时间对象，来自json时间"/Date(1507617025040)/"字符串*/
     ClassBaoJavascript.prototype.GetDateByJson = function (datetime) {
         if (!datetime) return null;
-        if (typeof (datetime) == "string") {
+        if ("string" == typeof (datetime)) {
             /* "/Date(1507617025040)/" */
             if (datetime.indexOf("/Date(") >= 0) { return new Date(parseInt(datetime.replace("/Date(", '').replace(")/", ''), 10)); }
             else { return new Date(datetime.replace(/T/ig, ' ').replace(/Z/ig, '').replace(/\-/ig, '/')); };
@@ -1392,7 +1392,6 @@
     ClassBaoJavascript.prototype.DateFormat = function (date, format) {
         if (!date) { return ''; }
         if (!format) { format = 'yyyy/MM/dd HH:mm:ss'; }
-        if ("object" == typeof (date)) { return date.Format(format); }
         if ("number" == typeof (date)) {
             if (1000000000000 > date) {
                 return (new Date(date * 1000)).Format(format); // 秒
@@ -1401,6 +1400,15 @@
                 return (new Date(date)).Format(format); // 毫秒
             }
         }
+        if ("string" == typeof (date)) {
+            if (date.includes("/Date(")) {
+                return this.GetDateByJson(date).Format(format);
+            }
+            else {
+
+            }
+        }
+        if ("object" == typeof (date)) { return date.Format(format); }
         else { return (new Date(date)).Format(format); }
     };
 
