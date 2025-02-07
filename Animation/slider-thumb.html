@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>拖动滑块动画</title>
+    <meta name="keywords" content="完整的 HTML、CSS 和 JavaScript 代码">
+    <meta name="Description" content="完整的 HTML、CSS 和 JavaScript 代码。实现一个简单的拖动滑块动画，并可以根据需求进一步扩展功能。">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+        .slider-container {
+            position: relative;
+            width: 300px;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin: 50px auto;
+        }
+
+        .slider-track {
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            border-radius: 5px;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: left 0.1s ease;
+        }
+
+        pre {
+            background-color: #f1f1f1;
+            border: 1px solid #cfcfcf;
+            padding: 3px 2px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="slider-container">
+        <div class="slider-track"></div>
+        <div class="slider-thumb" id="slider-thumb"></div>
+    </div>
+
+    <pre><code></code></pre>
+
+    <!-- JS脚本 -->
+    <script>
+        const sliderThumb = document.getElementById('slider-thumb');
+        const sliderContainer = document.querySelector('.slider-container');
+
+        let isDragging = false;
+
+        function sliderThumbMove(clientX, e) {
+            const containerRect = sliderContainer.getBoundingClientRect();
+            let newLeft = clientX - containerRect.left;
+            newLeft = Math.max(0, Math.min(newLeft, containerRect.width));
+
+            document.querySelector('pre>code').innerHTML = 'e.type: ' + e.type + '<br>containerRect: ' + JSON.stringify(containerRect) + '<br>sliderThumbRect: ' + JSON.stringify(sliderThumb.getBoundingClientRect()) + '<br>clientX: ' + clientX + ', newLeft: ' + newLeft;
+
+            sliderThumb.style.left = `${newLeft}px`;
+        }
+
+        sliderThumb.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        function onMouseMove(e) {
+            if (!isDragging) return;
+
+            sliderThumbMove(e.clientX, e);
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        sliderThumb.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            document.addEventListener('touchmove', onTouchMove);
+            document.addEventListener('touchend', onTouchEnd);
+        });
+
+        function onTouchMove(e) {
+            if (!isDragging) return;
+
+            sliderThumbMove(e.touches[0].clientX, e);
+        }
+
+        function onTouchEnd() {
+            isDragging = false;
+            document.removeEventListener('touchmove', onTouchMove);
+            document.removeEventListener('touchend', onTouchEnd);
+        }
+    </script>
+
+</body>
+
+</html>
