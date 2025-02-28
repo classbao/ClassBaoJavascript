@@ -8,14 +8,14 @@
 	width: 100%;
 	display: block;
 	background-color: #000;
-	background-color: rgba(0, 0, 0, 0.15);
-	filter: alpha(opacity=15);
-	opacity: 0.15;
-	-o-opacity: 0.15;
-	-ms-opacity: 0.15;
-	-moz-opacity: 0.15;
-	-webkit-opacity: 0.15;
-	-khtml-opacity: 0.15;
+	background-color: rgba(0, 0, 0, 0.3);
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+	-o-opacity: 0.3;
+	-ms-opacity: 0.3;
+	-moz-opacity: 0.3;
+	-webkit-opacity: 0.3;
+	-khtml-opacity: 0.3;
 }
 
 /* 弹窗容器 */
