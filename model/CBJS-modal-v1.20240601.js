@@ -148,7 +148,7 @@
 				console.log('EventListener Triggered > CBJS.modal.openBase(); box.id=' + this.box.id);
 			}
 		},
-		Open: function (box) {
+		Open: function (box, callback) {
 			this.box = box; // 允许按照init() 自定义 box
 			this.openBase();
 			// CSS动画：滑入
@@ -160,8 +160,10 @@
 			if (!!this.DebugMode) {
 				console.log('EventListener Triggered > CBJS.modal.Open(); box.id=' + this.box.id);
 			}
+
+			if (!!callback) { callback(); }
 		},
-		CustomOpen: function (ModalId, MaskId) {
+		CustomOpen: function (ModalId, MaskId, callback) {
 			if (!!this.DebugMode) {
 				console.log('EventListener Triggered > CBJS.modal.CustomOpen(); ModalId=' + ModalId + '，MaskId=' + MaskId);
 			}
@@ -169,15 +171,19 @@
 			document.querySelector(MaskId).style.display = 'block';
 			document.querySelector(ModalId).style.display = '';
 			document.querySelector(ModalId).classList.add('SlideUp-in');
+
+			if (!!callback) { callback(); }
 		},
-		CustomClose: function (ModalId, MaskId) {
+		CustomClose: function (ModalId, MaskId, callback) {
 			if (!!this.DebugMode) {
-				console.log('EventListener Triggered > CBJS.modal.CustomOpen(); ModalId=' + ModalId + '，MaskId=' + MaskId);
+			    console.log('EventListener Triggered > CBJS.modal.CustomClose(); ModalId=' + ModalId + '，MaskId=' + MaskId);
 			}
 
 			document.querySelector(ModalId).style.display = 'none';
 			document.querySelector(ModalId).classList.remove('SlideUp-in');
 			document.querySelector(MaskId).style.display = 'none';
+
+			if (!!callback) { callback(); }
 		},
 		Alert: function (msg, btnTitle, callback) {
 			this.init();
