@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <link href="xxhMultiSelect-v1.20250420.css" rel="stylesheet" type="text/css">
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>带有多选和突出显示关键字的自定义下拉选择框</title>
+    <meta name="Description"
+        content="带有多选和突出显示关键字的自定义下拉选择框：Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords">
+    <meta name="author" content="熊仔其人">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+
+    </style>
+
+<script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <script src="xxhMultiSelect-v1.20250420.js"></script>
+
+</head>
+
+<body>
+    带有多选和突出显示关键字的自定义下拉选择框：
+    Custom Dropdown Select Box with Multiple Selection and Highlighting Keywords:
+    <hr />
+
+    <!--<label data-id="1">选中项1</label><label data-id="2">选中项2</label><label data-id="3">选中项3</label><label
+                    data-id="4">选中项4</label><label data-id="5">选中项5</label><label data-id="6">选中项6</label>-->
+
+    <!-- 自定义下拉选择框 html 开始 -->
+    <div class="xxh-multi-select-container">
+        <span class="input-group-addon-left">选择：</span>
+        <div class="input-wrapper">
+            <div class="multiSelectInput">
+            </div>
+            <div class="dropdown-options" data-selectedOptions="">
+                <!-- 选项将通过JavaScript动态添加 -->
+            </div>
+        </div>
+    </div>
+    <!-- 自定义下拉选择框 html 结束 -->
+
+
+    <!-- 自定义下拉选择框 JS脚本 开始 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.querySelector('.xxh-multi-select-container .multiSelectInput');
+            const dropdown = document.querySelector('.xxh-multi-select-container .dropdown-options');
+            const inputWrapper = document.querySelector('.xxh-multi-select-container .input-wrapper');
+
+            function addSearch() {
+                const searchInput = document.createElement('input');
+                searchInput.type = 'text';
+                searchInput.placeholder = '搜索...';
+                searchInput.className = 'search-input';
+                dropdown.insertBefore(searchInput, dropdown.firstChild);
+                searchInput.addEventListener('input', function (e) {
+                    const searchTerm = this.value.toLowerCase();
+                    // 根据搜索框输入值变化自动处理选择项
+                    const optionItems = dropdown.querySelectorAll('.option-item');
+                    optionItems.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+                    });
+                });
+            }
+
+            // 示例数据 - 可以替换为实际数据
+            const options = [
+                { id: 1, text: '选项1' },
+                { id: 2, text: '选项2' },
+                { id: 3, text: '选项3' },
+                { id: 4, text: '选项4' },
+                { id: 5, text: '选项5' },
+                { id: 6, text: '选项6' }
+            ];
+
+            // 存储选中的选项
+            let selectedOptions = [];
+            function initSelectedOptions() {
+                input.querySelectorAll('label').forEach(item => {
+                    const option = { id: item.dataset.id, text: item.textContent };
+                    const index = selectedOptions.findIndex(x => x.id == option.id);
+                    if (-1 === index) {
+                        // 未选中，添加到选中列表
+                        selectedOptions.push(option);
+                    } else {
+                        // 已选中，不重复添加
+                    }
+                });
+            }
+
+            // 初始化下拉选项
+            function initDropdown() {
+                dropdown.innerHTML = '';
+                initSelectedOptions();
+                options.forEach(option => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option-item';
+                    optionElement.textContent = option.text;
+                    optionElement.dataset.id = option.id;
+
+                    // 检查是否已选中
+                    if (selectedOptions.some(item => item.id == option.id)) {
+                        optionElement.classList.add('selected');
+                    }
+
+                    optionElement.addEventListener('click', function () {
+                        toggleOption(option);
+                    });
+
+                    dropdown.appendChild(optionElement);
+                });
+                addSearch();
+            }
+
+            // 切换选项选中状态
+            function toggleOption(option) {
+                const index = selectedOptions.findIndex(item => item.id == option.id);
+                if (-1 === index) {
+                    // 未选中，添加到选中列表
+                    selectedOptions.push(option);
+                } else {
+                    // 已选中，从列表中移除
+                    selectedOptions.splice(index, 1);
+                }
+                // 更新输入框显示
+                updateInputDisplay();
+                // 重新渲染下拉选项以更新选中状态
+                initDropdown();
+            }
+
+            // 更新输入框显示
+            function updateInputDisplay() {
+                if (0 === selectedOptions.length) {
+                    input.innerHTML = '请选择...';
+                } else {
+                    input.innerHTML = '';
+                    selectedOptions.forEach(item => {
+                        const optionElement = document.createElement('label');
+                        optionElement.className = '';
+                        optionElement.textContent = item.text;
+                        optionElement.dataset.id = item.id;
+                        input.append(optionElement);
+                        optionElement.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            const id = this.dataset.id;
+                            const index = selectedOptions.findIndex(item => item.id == id);
+                            selectedOptions.splice(index, 1);
+                            this.remove();
+
+                            const optionItems = dropdown.querySelectorAll('.option-item');
+                            optionItems.forEach(optionItem => {
+                                if (optionItem.dataset.id == id) {
+                                    optionItem.classList.remove('selected');
+                                }
+                            });
+
+                        });
+                    });
+                }
+            }
+
+            // 点击输入框显示/隐藏下拉菜单
+            inputWrapper.addEventListener('click', function (e) {
+                e.stopPropagation();
+                //可以Ajax异步加载默认的下拉选项
+                dropdown.classList.toggle('show');
+            });
+
+            // 点击页面其他位置关闭下拉菜单
+            document.addEventListener('click', function () {
+                dropdown.classList.remove('show');
+            });
+
+            // 阻止下拉菜单内部的点击事件冒泡
+            dropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // 初始化
+            initDropdown();
+
+            function getSelectedOptions(){
+                return selectedOptions;
+            }
+        });
+
+    </script>
+    <!-- 自定义下拉选择框 JS脚本 结束 -->
+
+</body>
+
+</html>
