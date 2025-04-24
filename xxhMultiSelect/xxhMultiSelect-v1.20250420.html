@@ -31,7 +31,7 @@
 
     </style>
 
-<script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
     <script src="xxhMultiSelect-v1.20250420.js"></script>
 
 </head>
@@ -45,13 +45,13 @@
                     data-id="4">选中项4</label><label data-id="5">选中项5</label><label data-id="6">选中项6</label>-->
 
     <!-- 自定义下拉选择框 html 开始 -->
-    <div class="xxh-multi-select-container">
+    <div class="xxh-multi-select-container" id="myCustomSelect">
         <span class="input-group-addon-left">选择：</span>
         <div class="input-wrapper">
-            <div class="multiSelectInput">
-            </div>
-            <div class="dropdown-options" data-selectedOptions="">
-                <!-- 选项将通过JavaScript动态添加 -->
+            <div class="multiSelectInput">请选择...</div>
+            <div class="dropdown-wrapper" data-selectedOptions="">
+                <div class="dropdown-input-wrapper"><input type="text" class="search-input" placeholder="搜索..."></div>
+                <div class="dropdown-options"><!-- 选项将通过JavaScript动态添加 --></div>
             </div>
         </div>
     </div>
@@ -65,143 +65,40 @@
             const dropdown = document.querySelector('.xxh-multi-select-container .dropdown-options');
             const inputWrapper = document.querySelector('.xxh-multi-select-container .input-wrapper');
 
-            function addSearch() {
-                const searchInput = document.createElement('input');
-                searchInput.type = 'text';
-                searchInput.placeholder = '搜索...';
-                searchInput.className = 'search-input';
-                dropdown.insertBefore(searchInput, dropdown.firstChild);
-                searchInput.addEventListener('input', function (e) {
-                    const searchTerm = this.value.toLowerCase();
-                    // 根据搜索框输入值变化自动处理选择项
-                    const optionItems = dropdown.querySelectorAll('.option-item');
-                    optionItems.forEach(item => {
-                        const text = item.textContent.toLowerCase();
-                        item.style.display = text.includes(searchTerm) ? 'block' : 'none';
-                    });
-                });
-            }
+            function myAjaxFun(searchWord) {
+                // 模拟Ajax异步查询选项，并绑定到下拉列表
+                const options = [
+                    { id: 1, text: '选项1A' },
+                    { id: 2, text: '选项2B' },
+                    { id: 3, text: '选项3C' },
+                    { id: 4, text: '选项4D' },
+                    { id: 5, text: '选项5E' },
+                    { id: 6, text: '选项6F' }
+                ];
 
-            // 示例数据 - 可以替换为实际数据
-            const options = [
-                { id: 1, text: '选项1' },
-                { id: 2, text: '选项2' },
-                { id: 3, text: '选项3' },
-                { id: 4, text: '选项4' },
-                { id: 5, text: '选项5' },
-                { id: 6, text: '选项6' }
-            ];
-
-            // 存储选中的选项
-            let selectedOptions = [];
-            function initSelectedOptions() {
-                input.querySelectorAll('label').forEach(item => {
-                    const option = { id: item.dataset.id, text: item.textContent };
-                    const index = selectedOptions.findIndex(x => x.id == option.id);
-                    if (-1 === index) {
-                        // 未选中，添加到选中列表
-                        selectedOptions.push(option);
-                    } else {
-                        // 已选中，不重复添加
-                    }
-                });
-            }
-
-            // 初始化下拉选项
-            function initDropdown() {
-                dropdown.innerHTML = '';
-                initSelectedOptions();
-                options.forEach(option => {
-                    const optionElement = document.createElement('div');
-                    optionElement.className = 'option-item';
-                    optionElement.textContent = option.text;
-                    optionElement.dataset.id = option.id;
-
-                    // 检查是否已选中
-                    if (selectedOptions.some(item => item.id == option.id)) {
-                        optionElement.classList.add('selected');
-                    }
-
-                    optionElement.addEventListener('click', function () {
-                        toggleOption(option);
-                    });
-
-                    dropdown.appendChild(optionElement);
-                });
-                addSearch();
-            }
-
-            // 切换选项选中状态
-            function toggleOption(option) {
-                const index = selectedOptions.findIndex(item => item.id == option.id);
-                if (-1 === index) {
-                    // 未选中，添加到选中列表
-                    selectedOptions.push(option);
-                } else {
-                    // 已选中，从列表中移除
-                    selectedOptions.splice(index, 1);
-                }
-                // 更新输入框显示
-                updateInputDisplay();
-                // 重新渲染下拉选项以更新选中状态
-                initDropdown();
-            }
-
-            // 更新输入框显示
-            function updateInputDisplay() {
-                if (0 === selectedOptions.length) {
-                    input.innerHTML = '请选择...';
-                } else {
-                    input.innerHTML = '';
-                    selectedOptions.forEach(item => {
-                        const optionElement = document.createElement('label');
-                        optionElement.className = '';
-                        optionElement.textContent = item.text;
-                        optionElement.dataset.id = item.id;
-                        input.append(optionElement);
-                        optionElement.addEventListener('click', function (e) {
-                            e.stopPropagation();
-                            const id = this.dataset.id;
-                            const index = selectedOptions.findIndex(item => item.id == id);
-                            selectedOptions.splice(index, 1);
-                            this.remove();
-
-                            const optionItems = dropdown.querySelectorAll('.option-item');
-                            optionItems.forEach(optionItem => {
-                                if (optionItem.dataset.id == id) {
-                                    optionItem.classList.remove('selected');
-                                }
-                            });
-
-                        });
+                let filterOptions = [];
+                if (!!searchWord) {
+                    filterOptions = options.filter(function (item) {
+                        const text = item.text;
+                        return text.includes(searchWord);
                     });
                 }
+                else {
+                    filterOptions = options;
+                }
+
+                // 根据搜索词筛选的Ajax异步查询选项结果，并绑定到下拉列表
+                CBJS.xxhMultiSelect.buildDropdown('#myCustomSelect', filterOptions);
             }
 
-            // 点击输入框显示/隐藏下拉菜单
-            inputWrapper.addEventListener('click', function (e) {
-                e.stopPropagation();
-                //可以Ajax异步加载默认的下拉选项
-                dropdown.classList.toggle('show');
-            });
-
-            // 点击页面其他位置关闭下拉菜单
-            document.addEventListener('click', function () {
-                dropdown.classList.remove('show');
-            });
-
-            // 阻止下拉菜单内部的点击事件冒泡
-            dropdown.addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-
-            // 初始化
-            initDropdown();
-
-            function getSelectedOptions(){
-                return selectedOptions;
-            }
+            // 页面结构加载完成后执行自定义下拉选择框的初始化
+            CBJS.xxhMultiSelect.init('#myCustomSelect', '', myAjaxFun);
         });
+
+
+        // 获取自定义下拉选择框的选中值
+        const mySelectedOptions = CBJS.xxhMultiSelect.getSelectedOptions('#myCustomSelect');
+        console.log(JSON.stringify(mySelectedOptions));
 
     </script>
     <!-- 自定义下拉选择框 JS脚本 结束 -->
