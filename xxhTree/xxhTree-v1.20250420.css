@@ -1,0 +1,111 @@
+/* 自定义树形菜单 CSS 开始 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.tree {
+    margin-top: 20px;
+}
+
+.tree-node {
+    margin-left: 20px;
+    padding: 5px 0;
+}
+
+.tree-node-content {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.tree-node-content:hover {
+    background-color: #f0f0f0;
+}
+
+.tree-node-checkbox {
+    margin-right: 10px;
+}
+
+.tree-node-label {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.tree-node-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.tree-node-actions button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 2px 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.tree-node-actions button:hover {
+    background-color: #e0e0e0;
+}
+
+.tree-node-children {
+    margin-left: 20px;
+    display: none;
+}
+
+.tree-node.expanded > .tree-node-children {
+    display: block;
+}
+
+.tree-node-toggle {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 5px;
+    user-select: none;
+}
+
+.tree-node-toggle::before {
+    content: "+";
+}
+
+.tree-node.expanded > .tree-node-content > .tree-node-toggle::before {
+    content: "-";
+}
+
+.tree-node.editing .tree-node-label {
+    display: none;
+}
+
+.tree-node-input {
+    display: none;
+    width: 200px;
+    padding: 3px;
+    margin-right: 10px;
+}
+
+.tree-node.editing .tree-node-input {
+    display: inline-block;
+}
+
+/* 自定义树形菜单 CSS 结束 */

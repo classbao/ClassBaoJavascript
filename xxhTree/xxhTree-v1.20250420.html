@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <link href="xxhTree-v1.20250420.css" rel="stylesheet" type="text/css">
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮</title>
+    <meta name="Description" content="纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮">
+    <meta name="author" content="熊仔其人">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+
+    </style>
+
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <script src="xxhTree-v1.20250420.js"></script>
+
+</head>
+
+<body>
+    纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮:
+    <hr />
+
+    <!-- 自定义树形菜单 html 开始 -->
+    <div class="container">
+        <h1>树形菜单</h1>
+        <div id="tree"></div>
+    </div>
+    <!-- 自定义树形菜单 html 结束 -->
+
+
+    <!-- 自定义树形菜单 JS脚本 开始 -->
+    <script>
+        // 示例数据s
+        const treeData = [
+            {
+                id: 1,
+                label: '菜单1',
+                checked: false,
+                children: [
+                    {
+                        id: 2,
+                        label: '子菜单1-1',
+                        checked: false,
+                        children: []
+                    },
+                    {
+                        id: 3,
+                        label: '子菜单1-2',
+                        checked: false,
+                        children: []
+                    }
+                ]
+            },
+            {
+                id: 4,
+                label: '菜单2',
+                checked: false,
+                children: []
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const treeContainer = document.getElementById('tree');
+
+            // 初始化树
+            CBJS.xxhTree.renderTree(treeData, treeContainer);
+        });
+
+    </script>
+    <!-- 自定义树形菜单 JS脚本 结束 -->
+
+</body>
+
+</html>
