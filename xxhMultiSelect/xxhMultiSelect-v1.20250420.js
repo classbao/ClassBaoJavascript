@@ -16,10 +16,24 @@
             // { id: 5, text: '选项5' },
             // { id: 6, text: '选项6' }
         ],
+        /* 关键词高亮显示，多个关键词请用空格分隔 */
+        highlightKeyword: function (text, keyword, color) {
+            if (!!!text) { return ''; }
+            if (!!!keyword) { return text; }
+            color = !!color ? color : 'red';
+
+            let highlightedText = text;
+            let keywords = keyword.split(' ').filter(Boolean); // 过滤掉空字符串，空格分隔的多个关键词都提取出来
+            keywords.forEach(kw => {
+                const regex = new RegExp(kw, 'gi'); // 'g' for global, 'i' for case insensitive
+                highlightedText = highlightedText.replace(regex, `<span style="color: ${color};">${kw}</span>`);
+            });
+            return highlightedText;
+        },
         xxhMultiSelectID: '',
         AsyncOptionsDataFunction: null,
         // 初始化下拉选项
-        buildDropdown: function (domID, data) {
+        buildDropdown: function (domID, data, keyword) {
             domID = domID || this.xxhMultiSelectID;
             if (!!data && Array.isArray(data)) {
                 this.options = data;
@@ -32,7 +46,8 @@
             this.options.forEach(option => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option-item';
-                optionElement.textContent = option.text;
+                // optionElement.textContent = option.text; // 搜索词不高亮显示
+                optionElement.innerHTML = !!keyword ? this.highlightKeyword(option.text, keyword) : option.text; // 匹配搜索词高亮显示
                 optionElement.dataset.id = option.id;
 
                 // 检查是否已选中

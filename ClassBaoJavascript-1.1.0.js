@@ -847,7 +847,22 @@
             }
             return _str;
         };
+        /* 关键词高亮显示，多个关键词请用空格分隔 */
+        this.highlightKeyword = function (text, keyword, color) {
+            if (!!!text) { return ''; }
+            if (!!!keyword) { return text; }
+            color = !!color ? color : 'red';
 
+            let highlightedText = text;
+            let keywords = keyword.split(' ').filter(Boolean); // 过滤掉空字符串，空格分隔的多个关键词都提取出来
+            keywords.forEach(kw => {
+                const regex = new RegExp(kw, 'gi'); // 'g' for global, 'i' for case insensitive
+                highlightedText = highlightedText.replace(regex, `<span style="color: ${color};">${kw}</span>`);
+            });
+            return highlightedText;
+            // const regex = new RegExp(keyword, 'gi'); // 'g' for global, 'i' for case-insensitive
+            // return text.replace(regex, `<span style="color: ${color}">${keyword}</span>`);
+        };
         /*移除URL末尾的空格、格式符号、“&”、“?”*/
         this.clearURLEnd = function (url) {
             if (!!!url || url.length < 1) return '';
@@ -2339,6 +2354,8 @@ String.prototype.TrimLRbyAnd = function () { return this.replace(/(^&*)|(&*$)/g,
 /*JS移除字符串首尾?问号*/
 String.prototype.TrimLRbyQuestion = function () { return this.replace(/(^\?*)|(\?*$)/g, ""); }
 
+/* 关键词高亮显示 */
+String.prototype.highlightKeyword = function (keyword, color) { return CBJS.highlightKeyword(this, keyword, color); }
 /*换行转义字符转换成HTML换行标签*/
 String.prototype.ReplaceNewlineToBr = function () { return this.replace(/(\\n\\r|\\r\\n|\\n|\\f|\\r)/g, "<br />"); }
 /*JS移除字符串首尾中文/英文逗号*/
