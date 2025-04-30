@@ -1,0 +1,619 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <link href="xxhTree-v1.20250428.css" rel="stylesheet" type="text/css">
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮</title>
+    <meta name="Description" content="纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮">
+    <meta name="author" content="熊仔其人">
+
+    <!-- CSS样式 -->
+    <style type="text/css">
+
+    </style>
+
+    <script src="../ClassBaoJavascript-1.1.0.js"></script>
+    <!-- <script src="xxhTree-v1.20250420.js"></script> -->
+
+</head>
+
+<body>
+    纯静态的树形菜单实现，使用原生HTML、CSS和JavaScript，包含勾选功能以及编辑、删除、添加子菜单按钮:
+    <hr />
+
+    <!-- 自定义树形菜单 html 开始 -->
+    <div class="container">
+        <h1>高级树形菜单</h1>
+        <button id="add-root" class="add-root-btn">添加根菜单</button>
+        <div id="tree" class="tree"></div>
+    </div>
+
+    <!-- 弹出层遮罩 -->
+    <div id="modal-overlay" class="modal-overlay"></div>
+
+    <!-- 编辑菜单弹出层 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>编辑菜单</h3>
+            <div class="form-group">
+                <label for="edit-name">菜单名称:</label>
+                <input type="text" id="edit-name" class="form-control">
+            </div>
+            <div class="modal-actions">
+                <button id="edit-cancel" class="btn btn-cancel">取消</button>
+                <button id="edit-save" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加子菜单弹出层 -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <h3>添加子菜单</h3>
+            <div class="form-group">
+                <label for="add-name">菜单名称:</label>
+                <input type="text" id="add-name" class="form-control">
+            </div>
+            <div class="modal-actions">
+                <button id="add-cancel" class="btn btn-cancel">取消</button>
+                <button id="add-save" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认弹出层 -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>确定要删除这个菜单及其所有子菜单吗？</p>
+            <div class="modal-actions">
+                <button id="delete-cancel" class="btn btn-cancel">取消</button>
+                <button id="delete-confirm" class="btn btn-danger">确认删除</button>
+            </div>
+        </div>
+    </div>
+    <!-- 自定义树形菜单 html 结束 -->
+
+
+    <!-- 自定义树形菜单 JS脚本 开始 -->
+    <script>
+        // 示例数据s
+        document.addEventListener('DOMContentLoaded', function () {
+            // 示例数据
+            let treeData = [
+                {
+                    id: 1,
+                    label: '菜单1',
+                    checked: false,
+                    children: [
+                        {
+                            id: 2,
+                            label: '子菜单1-1',
+                            checked: false,
+                            children: []
+                        },
+                        {
+                            id: 3,
+                            label: '子菜单1-2',
+                            checked: false,
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    label: '菜单2',
+                    checked: false,
+                    children: []
+                }
+            ];
+
+            const treeContainer = document.getElementById('tree');
+            const addRootBtn = document.getElementById('add-root');
+
+            // 弹出层元素
+            const modalOverlay = document.getElementById('modal-overlay');
+            const editModal = document.getElementById('edit-modal');
+            const addModal = document.getElementById('add-modal');
+            const deleteModal = document.getElementById('delete-modal');
+
+            // 编辑表单元素
+            const editNameInput = document.getElementById('edit-name');
+            const editSaveBtn = document.getElementById('edit-save');
+            const editCancelBtn = document.getElementById('edit-cancel');
+
+            // 添加表单元素
+            const addNameInput = document.getElementById('add-name');
+            const addSaveBtn = document.getElementById('add-save');
+            const addCancelBtn = document.getElementById('add-cancel');
+
+            // 删除确认元素
+            const deleteConfirmBtn = document.getElementById('delete-confirm');
+            const deleteCancelBtn = document.getElementById('delete-cancel');
+
+            // 当前操作的节点ID和元素
+            let currentNodeId = null;
+            let currentNodeElement = null;
+
+            // 拖拽相关变量
+            let dragSrcEl = null;
+            let dragStartIndex = null;
+            let dragParentId = null;
+
+            // 渲染树
+            function renderTree(data, parentElement) {
+                parentElement.innerHTML = '';
+                data.forEach((item, index) => {
+                    const nodeElement = createTreeNode(item, index);
+                    parentElement.appendChild(nodeElement);
+
+                    if (item.children && item.children.length > 0) {
+                        const childrenContainer = document.createElement('div');
+                        childrenContainer.className = 'tree-node-children';
+                        nodeElement.appendChild(childrenContainer);
+                        renderTree(item.children, childrenContainer);
+
+                        // 如果有子节点，添加展开/折叠功能
+                        const toggle = nodeElement.querySelector('.tree-node-toggle');
+                        toggle.style.visibility = 'visible';
+                    }
+                });
+            }
+
+            // 创建树节点
+            function createTreeNode(item, index) {
+                const nodeElement = document.createElement('div');
+                nodeElement.className = 'tree-node';
+                nodeElement.dataset.id = item.id;
+                nodeElement.dataset.index = index;
+
+                const nodeContent = document.createElement('div');
+                nodeContent.className = 'tree-node-content';
+                nodeContent.draggable = true;
+
+                // 拖拽事件
+                nodeContent.addEventListener('dragstart', handleDragStart);
+                nodeContent.addEventListener('dragover', handleDragOver);
+                nodeContent.addEventListener('dragleave', handleDragLeave);
+                nodeContent.addEventListener('drop', handleDrop);
+                nodeContent.addEventListener('dragend', handleDragEnd);
+
+                // 展开/折叠按钮
+                const toggle = document.createElement('span');
+                toggle.className = 'tree-node-toggle';
+                toggle.style.visibility = item.children && item.children.length > 0 ? 'visible' : 'hidden';
+                toggle.addEventListener('click', toggleExpand);
+
+                // 复选框
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'tree-node-checkbox';
+                checkbox.checked = item.checked;
+                checkbox.addEventListener('change', function () {
+                    item.checked = this.checked;
+                    updateChildrenCheckbox(nodeElement, this.checked);
+                    updateParentCheckbox(nodeElement);
+                });
+
+                // 标签
+                const label = document.createElement('span');
+                label.className = 'tree-node-label';
+                label.textContent = item.label;
+                label.addEventListener('click', function () {
+                    checkbox.checked = !checkbox.checked;
+                    item.checked = checkbox.checked;
+                    updateChildrenCheckbox(nodeElement, checkbox.checked);
+                    updateParentCheckbox(nodeElement);
+                });
+
+                // 操作按钮
+                const actions = document.createElement('div');
+                actions.className = 'tree-node-actions';
+
+                // 编辑按钮
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '编辑';
+                editBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showEditModal(item.id, nodeElement);
+                });
+
+                // 删除按钮
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '删除';
+                deleteBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showDeleteModal(item.id, nodeElement);
+                });
+
+                // 添加子菜单按钮
+                const addChildBtn = document.createElement('button');
+                addChildBtn.textContent = '添加子项';
+                addChildBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showAddModal(item.id, nodeElement);
+                });
+
+                // 组装节点
+                actions.appendChild(editBtn);
+                actions.appendChild(deleteBtn);
+                actions.appendChild(addChildBtn);
+
+                nodeContent.appendChild(toggle);
+                nodeContent.appendChild(checkbox);
+                nodeContent.appendChild(label);
+                nodeContent.appendChild(actions);
+
+                nodeElement.appendChild(nodeContent);
+                return nodeElement;
+            }
+
+            // 显示编辑模态框
+            function showEditModal(id, element) {
+                const item = findItem(treeData, id);
+                if (!item) return;
+
+                currentNodeId = id;
+                currentNodeElement = element;
+                editNameInput.value = item.label;
+
+                showModal(editModal);
+            }
+
+            // 显示添加模态框
+            function showAddModal(parentId, element) {
+                currentNodeId = parentId;
+                currentNodeElement = element;
+                addNameInput.value = '';
+
+                showModal(addModal);
+            }
+
+            // 显示删除确认模态框
+            function showDeleteModal(id, element) {
+                currentNodeId = id;
+                currentNodeElement = element;
+
+                showModal(deleteModal);
+            }
+
+            // 显示模态框通用函数
+            function showModal(modal) {
+                modalOverlay.style.display = 'block';
+                modal.style.display = 'block';
+            }
+
+            // 隐藏所有模态框
+            function hideAllModals() {
+                modalOverlay.style.display = 'none';
+                editModal.style.display = 'none';
+                addModal.style.display = 'none';
+                deleteModal.style.display = 'none';
+            }
+
+            // 保存编辑
+            function saveEdit() {
+                const item = findItem(treeData, currentNodeId);
+                if (!item) return;
+
+                const newName = editNameInput.value.trim();
+                if (!newName) return;
+
+                item.label = newName;
+                const label = currentNodeElement.querySelector('.tree-node-label');
+                label.textContent = newName;
+
+                hideAllModals();
+            }
+
+            // 添加子菜单
+            function addChild() {
+                const parentItem = findItem(treeData, currentNodeId);
+                if (!parentItem) return;
+
+                const newName = addNameInput.value.trim();
+                if (!newName) return;
+
+                const newId = generateId();
+                const newItem = {
+                    id: newId,
+                    label: newName,
+                    checked: false,
+                    children: []
+                };
+
+                if (!parentItem.children) {
+                    parentItem.children = [];
+                }
+
+                parentItem.children.push(newItem);
+
+                let childrenContainer = currentNodeElement.querySelector('.tree-node-children');
+                if (!childrenContainer) {
+                    childrenContainer = document.createElement('div');
+                    childrenContainer.className = 'tree-node-children';
+                    currentNodeElement.appendChild(childrenContainer);
+
+                    // 显示展开/折叠按钮
+                    const toggle = currentNodeElement.querySelector('.tree-node-toggle');
+                    toggle.style.visibility = 'visible';
+                }
+
+                // 展开父节点
+                currentNodeElement.classList.add('expanded');
+
+                // 重新渲染子树以保持数据同步
+                renderTree(parentItem.children, childrenContainer);
+
+                hideAllModals();
+            }
+
+            // 删除菜单
+            function deleteNode() {
+                const parentData = findParentData(treeData, currentNodeId);
+
+                if (parentData) {
+                    // 从父节点的children中删除
+                    const index = parentData.children.findIndex(child => child.id === currentNodeId);
+                    if (index !== -1) {
+                        parentData.children.splice(index, 1);
+
+                        // 从DOM中删除
+                        const parentElement = currentNodeElement.parentNode;
+                        parentElement.removeChild(currentNodeElement);
+                    }
+                } else {
+                    // 如果是顶级节点
+                    const index = treeData.findIndex(node => node.id === currentNodeId);
+                    if (index !== -1) {
+                        treeData.splice(index, 1);
+
+                        // 从DOM中删除
+                        treeContainer.removeChild(currentNodeElement);
+                    }
+                }
+
+                hideAllModals();
+            }
+
+            // 添加根菜单
+            function addRootNode() {
+                const newId = generateId();
+                const newItem = {
+                    id: newId,
+                    label: '新菜单',
+                    checked: false,
+                    children: []
+                };
+
+                treeData.push(newItem);
+
+                // 重新渲染整个树
+                renderTree(treeData, treeContainer);
+            }
+
+            // 展开/折叠节点
+            function toggleExpand(e) {
+                e.stopPropagation();
+                const nodeElement = this.closest('.tree-node');
+                nodeElement.classList.toggle('expanded');
+            }
+
+            // 更新子节点的复选框状态
+            function updateChildrenCheckbox(nodeElement, checked) {
+                const checkboxes = nodeElement.querySelectorAll('.tree-node-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = checked;
+                });
+
+                // 更新数据
+                const itemId = parseInt(nodeElement.dataset.id);
+                const item = findItem(treeData, itemId);
+                if (item) {
+                    setChildrenChecked(item, checked);
+                }
+            }
+
+            // 递归设置子节点的选中状态
+            function setChildrenChecked(item, checked) {
+                item.checked = checked;
+                if (item.children) {
+                    item.children.forEach(child => {
+                        setChildrenChecked(child, checked);
+                    });
+                }
+            }
+
+            // 更新父节点的复选框状态
+            function updateParentCheckbox(nodeElement) {
+                const parentNode = nodeElement.parentNode.closest('.tree-node');
+                if (!parentNode) return;
+
+                const parentCheckbox = parentNode.querySelector('.tree-node-checkbox');
+                const siblings = parentNode.querySelector('.tree-node-children').querySelectorAll('.tree-node-checkbox');
+
+                let allChecked = true;
+                let noneChecked = true;
+
+                siblings.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        noneChecked = false;
+                    } else {
+                        allChecked = false;
+                    }
+                });
+
+                if (allChecked) {
+                    parentCheckbox.checked = true;
+                    parentCheckbox.indeterminate = false;
+                } else if (noneChecked) {
+                    parentCheckbox.checked = false;
+                    parentCheckbox.indeterminate = false;
+                } else {
+                    parentCheckbox.checked = false;
+                    parentCheckbox.indeterminate = true;
+                }
+
+                // 更新数据
+                const parentId = parseInt(parentNode.dataset.id);
+                const parentItem = findItem(treeData, parentId);
+                if (parentItem) {
+                    parentItem.checked = parentCheckbox.checked;
+                }
+
+                // 递归更新上级节点
+                updateParentCheckbox(parentNode);
+            }
+
+            // 在树数据中查找项目
+            function findItem(data, id) {
+                for (const item of data) {
+                    if (item.id === id) return item;
+                    if (item.children) {
+                        const found = findItem(item.children, id);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            }
+
+            // 查找父级数据
+            function findParentData(data, id, parentData = null) {
+                for (const item of data) {
+                    if (item.id === id) return parentData;
+                    if (item.children) {
+                        const found = findParentData(item.children, id, item);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            }
+
+            // 生成唯一ID
+            function generateId() {
+                return Date.now();
+            }
+
+            // 拖拽相关函数
+            function handleDragStart(e) {
+                this.style.opacity = '0.5';
+
+                dragSrcEl = this.parentNode;
+                dragStartIndex = parseInt(this.parentNode.dataset.index);
+                dragParentId = this.parentNode.parentNode.classList.contains('tree') ?
+                    null : parseInt(this.parentNode.parentNode.parentNode.dataset.id);
+
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.innerHTML);
+            }
+
+            function handleDragOver(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+
+                e.dataTransfer.dropEffect = 'move';
+                return false;
+            }
+
+            function handleDragLeave(e) {
+                this.classList.remove('over');
+            }
+
+            function handleDrop(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+
+                if (dragSrcEl !== this.parentNode) {
+                    const dropParentId = this.parentNode.parentNode.classList.contains('tree') ?
+                        null : parseInt(this.parentNode.parentNode.parentNode.dataset.id);
+                    const dropIndex = parseInt(this.parentNode.dataset.index);
+
+                    // 移动节点
+                    moveNode(dragParentId, dragStartIndex, dropParentId, dropIndex);
+
+                    // 重新渲染树
+                    renderTree(treeData, treeContainer);
+                }
+
+                return false;
+            }
+
+            function handleDragEnd(e) {
+                this.style.opacity = '1';
+            }
+
+            // 移动节点
+            function moveNode(srcParentId, srcIndex, destParentId, destIndex) {
+                let sourceArray, destArray;
+
+                // 获取源数组
+                if (srcParentId === null) {
+                    sourceArray = treeData;
+                } else {
+                    const srcParent = findItem(treeData, srcParentId);
+                    sourceArray = srcParent.children;
+                }
+
+                // 获取目标数组
+                if (destParentId === null) {
+                    destArray = treeData;
+                } else {
+                    const destParent = findItem(treeData, destParentId);
+                    destArray = destParent.children;
+                }
+
+                // 如果是同一父节点下的移动
+                if (srcParentId === destParentId) {
+                    const [movedItem] = sourceArray.splice(srcIndex, 1);
+                    destArray.splice(destIndex, 0, movedItem);
+                } else {
+                    // 不同父节点下的移动
+                    const [movedItem] = sourceArray.splice(srcIndex, 1);
+                    destArray.splice(destIndex, 0, movedItem);
+                }
+            }
+
+            // 事件监听
+            addRootBtn.addEventListener('click', addRootNode);
+
+            editSaveBtn.addEventListener('click', saveEdit);
+            editCancelBtn.addEventListener('click', hideAllModals);
+
+            addSaveBtn.addEventListener('click', addChild);
+            addCancelBtn.addEventListener('click', hideAllModals);
+
+            deleteConfirmBtn.addEventListener('click', deleteNode);
+            deleteCancelBtn.addEventListener('click', hideAllModals);
+
+            modalOverlay.addEventListener('click', hideAllModals);
+
+            // 初始化树
+            renderTree(treeData, treeContainer);
+        });
+
+    </script>
+    <!-- 自定义树形菜单 JS脚本 结束 -->
+
+</body>
+
+</html>

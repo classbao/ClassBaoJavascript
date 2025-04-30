@@ -1,0 +1,219 @@
+/* 自定义树形菜单 CSS 开始 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.add-root-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.add-root-btn:hover {
+    background-color: #45a049;
+}
+
+.tree {
+    margin-top: 20px;
+}
+
+.tree-node {
+    margin-left: 20px;
+    padding: 5px 0;
+    position: relative;
+}
+
+.tree-node-content {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    cursor: move; /* 拖拽光标 */
+}
+
+.tree-node-content:hover {
+    background-color: #f0f0f0;
+}
+
+.tree-node-checkbox {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.tree-node-label {
+    flex-grow: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tree-node-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.tree-node-actions button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.tree-node-actions button:hover {
+    background-color: #e0e0e0;
+}
+
+.tree-node-children {
+    margin-left: 20px;
+    display: none;
+}
+
+.tree-node.expanded > .tree-node-children {
+    display: block;
+}
+
+.tree-node-toggle {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 5px;
+    user-select: none;
+}
+
+.tree-node-toggle::before {
+    content: "+";
+}
+
+.tree-node.expanded > .tree-node-content > .tree-node-toggle::before {
+    content: "-";
+}
+
+/* 拖拽样式 */
+.tree-node.dragging {
+    opacity: 0.5;
+}
+
+.tree-node-placeholder {
+    border: 2px dashed #aaa;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+    height: 40px;
+}
+
+/* 弹出层样式 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    display: none;
+    min-width: 300px;
+}
+
+.modal h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.btn-cancel:hover {
+    background-color: #ddd;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+/* 自定义树形菜单 CSS 结束 */
