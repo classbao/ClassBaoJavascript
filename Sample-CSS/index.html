@@ -6,7 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="MobileOptimized" content="240">
     <meta name="applicable-device" content="mobile">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no,email=no,adress=no">
 
 
@@ -25,10 +26,28 @@
     <!-- CSS样式 -->
     <style type="text/css">
         .star {
-    color: #40a9ff;
-    border-color: #40a9ff;
-    background: #fff;
-}
+            color: #40a9ff;
+            border-color: #40a9ff;
+            background: #fff;
+        }
+
+        .row-flex {
+            display: flex;
+            flex-wrap: wrap;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            align-content: flex-start;
+            box-sizing: border-box;
+            justify-content: space-between;
+        }
+
+        .row-col-flex {
+            align-items: flex-start;
+            align-content: flex-start;
+            box-sizing: border-box;
+            font-size: 1.5rem;
+            line-height: 3rem;
+        }
     </style>
 
 
@@ -43,42 +62,51 @@
 
 <body>
 
-    <button type="button" class="btn btn-default">单个按钮样式</button> &nbsp;&nbsp;&nbsp;&nbsp; <a href="JavaScript:viod();" class="btn btn-default" >单个按钮链接样式</a>
+    <button type="button" class="btn btn-default">单个按钮样式</button> &nbsp;&nbsp;&nbsp;&nbsp; <a href="JavaScript:viod();"
+        class="btn btn-default">单个按钮链接样式</a>
     <hr>
     <div style="max-width: 300px;">
-        <span class="input-search-group"><input type="text" placeholder="请输入关键词" class="input"><button type="button" class="btn btn-default"><span role="img" aria-label="search" class="anticon anticon-search"><svg viewBox="64 64 896 896" focusable="false" data-icon="search" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path></svg></span> 搜索</button></span>
+        <span class="input-search-group"><input type="text" placeholder="请输入关键词" class="input"><button type="button"
+                class="btn btn-default"><span role="img" aria-label="search" class="anticon anticon-search"><svg
+                        viewBox="64 64 896 896" focusable="false" data-icon="search" width="1em" height="1em"
+                        fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z">
+                        </path>
+                    </svg></span> 搜索</button></span>
     </div>
-    
+
     <style>
-    .ch-icon-user:before {
-        /* content: "\e6d6"; */
-        content: "\2764";
-        font-size: 2rem;
-        line-height: 2rem;
-        color: #fff;
+        .ch-icon-user:before {
+            /* content: "\e6d6"; */
+            content: "\2764";
+            font-size: 2rem;
+            line-height: 2rem;
+            color: #fff;
         }
 
-        .ch-icon-left-pointing::before{
-        /* content: "\e6d6"; */
-        content: "\276E";
-        color: #fff;
+        .ch-icon-left-pointing::before {
+            /* content: "\e6d6"; */
+            content: "\276E";
+            color: #fff;
         }
-        .ch-icon-right-pointing::before{
-        /* content: "\e6d6"; */
-        content: "\276F";
-        color: #fff;
+
+        .ch-icon-right-pointing::before {
+            /* content: "\e6d6"; */
+            content: "\276F";
+            color: #fff;
         }
-        
+
         .ch-icon {
-        display: inline-flex;
-        /* font-family: "ch-icon" !important; */
-        /* font-size: 16px; */
-        font-style: normal;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background-color: #40a9ff;
+            display: inline-flex;
+            /* font-family: "ch-icon" !important; */
+            /* font-size: 16px; */
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #40a9ff;
         }
-        </style>
+    </style>
     <i class="ch-icon ch-icon-user"></i>
     <i class="ch-icon ch-icon-left-pointing"></i>
     <i class="ch-icon ch-icon-right-pointing"></i>
@@ -86,16 +114,39 @@
 
     <div class="star">
         <!-- 空心五角星 -->
-        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1.5rem" height="1.5rem" fill="currentColor" aria-hidden="true"><path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3zM664.8 561.6l36.1 210.3L512 672.7 323.1 772l36.1-210.3-152.8-149L417.6 382 512 190.7 606.4 382l211.2 30.7-152.8 148.9z"></path></svg>
+        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1.5rem" height="1.5rem"
+            fill="currentColor" aria-hidden="true">
+            <path
+                d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3zM664.8 561.6l36.1 210.3L512 672.7 323.1 772l36.1-210.3-152.8-149L417.6 382 512 190.7 606.4 382l211.2 30.7-152.8 148.9z">
+            </path>
+        </svg>
         <!-- 实心五角星 -->
-        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1.5rem" height="1.5rem" fill="currentColor" aria-hidden="true"><path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path></svg>
+        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1.5rem" height="1.5rem"
+            fill="currentColor" aria-hidden="true">
+            <path
+                d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z">
+            </path>
+        </svg>
 
         <!-- 眼睛 -->
-        <svg viewBox="64 64 896 896" focusable="false" data-icon="eye" width="1.5rem" height="1.5rem" fill="currentColor" aria-hidden="true"><path d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"></path></svg>
+        <svg viewBox="64 64 896 896" focusable="false" data-icon="eye" width="1.5rem" height="1.5rem"
+            fill="currentColor" aria-hidden="true">
+            <path
+                d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z">
+            </path>
+        </svg>
         <!-- 闭合眼睛 -->
-        <svg viewBox="64 64 896 896" focusable="false" data-icon="eye-invisible" width="1.5rem" height="1.5rem" fill="currentColor" aria-hidden="true"><path d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z"></path><path d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z"></path></svg>
+        <svg viewBox="64 64 896 896" focusable="false" data-icon="eye-invisible" width="1.5rem" height="1.5rem"
+            fill="currentColor" aria-hidden="true">
+            <path
+                d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z">
+            </path>
+            <path
+                d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z">
+            </path>
+        </svg>
 
-        
+
 
 
 
@@ -128,46 +179,51 @@
         &#127987;
         &#127988;
         <br />
-        大拇指点赞：<span>&#128077;  &#128078;  &#x1F44D;  &#x1F44E;</span> <!-- 或者直接使用字符：👍 -->  
+        大拇指点赞：<span>&#128077; &#128078; &#x1F44D; &#x1F44E;</span> <!-- 或者直接使用字符：👍 -->
 
         钻石：<span> &#128142; </span>
         水：<span> &#128166; &#128167; </span>
         火：<span> &#128293; </span>
-        眼睛：<span style="font-size: xx-large;"> &#128065;  &#x1F440; &#x1F441; </span>、
+        眼睛：<span style="font-size: xx-large;"> &#128065; &#x1F440; &#x1F441; </span>、
         <style>
-        .eye-ban {
-            font-size: xx-large;
-            position: relative;
-        }
-        .eye-ban:before {
-            content: "\2571";
-            color: #40a9ff;
-            position: absolute;
-        }
+            .eye-ban {
+                font-size: xx-large;
+                position: relative;
+            }
+
+            .eye-ban:before {
+                content: "\2571";
+                color: #40a9ff;
+                position: absolute;
+            }
         </style>
         <span class="eye-ban">&#128065;</span>
-        
+
         18禁：<span> &#128286; </span>
         <br />
-        12生肖：<span>鼠 &#128000; &#128001; &#128045;、牛 &#128002; &#128003; &#128004; &#128046;、虎 &#128005; &#128006; &#128047;、兔 &#128007; &#128048;、龙 &#128009; &#128050;、蛇 &#128013;、马 &#128014; &#128052;、羊 &#128015; &#128016; &#128017;、猴 &#128018; &#128053;、鸡 &#128019; &#128020;、狗 &#128021; &#128054;、猪 &#128022; &#128023; &#128055;   </span>
+        12生肖：<span>鼠 &#128000; &#128001; &#128045;、牛 &#128002; &#128003; &#128004; &#128046;、虎 &#128005; &#128006;
+            &#128047;、兔 &#128007; &#128048;、龙 &#128009; &#128050;、蛇 &#128013;、马 &#128014; &#128052;、羊 &#128015;
+            &#128016; &#128017;、猴 &#128018; &#128053;、鸡 &#128019; &#128020;、狗 &#128021; &#128054;、猪 &#128022; &#128023;
+            &#128055; </span>
         <br />
-        心：<span> &#128147; &#128148; &#128149; &#128150; &#128151; &#128152; &#128153; &#128154; &#128155; &#128156; &#128157; &#128158; &#128420; </span>
+        心：<span> &#128147; &#128148; &#128149; &#128150; &#128151; &#128152; &#128153; &#128154; &#128155; &#128156;
+            &#128157; &#128158; &#128420; </span>
         <br />
         <span> 金牌：&#129351; 银牌：&#129352; 铜牌：&#129353; </span>
         <br />
         世界地图：<span style="font-size: 10rem;background-color: #f7f5f5;color: #40a9ff;">&#128506;</span>
-        
 
 
 
-        
+
+
     </div>
 
 
 
 
     <!-- Color Palette -->
-     <pre><code>
+    <pre><code>
         root {
             --blue: #007bff;
             --indigo: #6610f2;
@@ -195,129 +251,345 @@
 
 
 
-     <h3>Theme Colors</h3>
-     <div class="row" style="display: flex; flex-wrap: wrap; flex-flow: row wrap; align-items: flex-start;align-content: flex-start; box-sizing: border-box; justify-content: space-around;">
+    <h3>Theme Colors</h3>
+    <div class="row row-flex">
         <!-- Primary blue: #007bff; 蓝色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #007bff !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Primary blue</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#007bff</h4></div>
-            <div style="background-color: #007bff !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #007bff !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Primary blue</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#007bff
+                </h4>
+            </div>
+            <div
+                style="background-color: #007bff !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Secondary gray: #6c757d; 灰色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #6c757d !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Secondary gray</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#6c757d</h4></div>
-            <div style="background-color: #6c757d !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #6c757d !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Secondary gray</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#6c757d
+                </h4>
+            </div>
+            <div
+                style="background-color: #6c757d !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Info cyan: #17a2b8; 蓝绿色，青色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #17a2b8 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Info cyan</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#17a2b8</h4></div>
-            <div style="background-color: #17a2b8 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #17a2b8 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Info cyan</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#17a2b8
+                </h4>
+            </div>
+            <div
+                style="background-color: #17a2b8 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Success green: #28a745; 绿色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #28a745 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Success green</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#28a745</h4></div>
-            <div style="background-color: #28a745 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #28a745 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Success green</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#28a745
+                </h4>
+            </div>
+            <div
+                style="background-color: #28a745 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Warning yellow: #ffc107; 黄色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
-            <div style="background-color: #ffc107 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Warning yellow</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#ffc107</h4></div>
-            <div style="background-color: #ffc107 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled</h4></div>
+        <div class="col-md-2"
+            style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
+            <div
+                style="background-color: #ffc107 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Warning yellow</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#ffc107
+                </h4>
+            </div>
+            <div
+                style="background-color: #ffc107 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled
+                </h4>
+            </div>
         </div>
         <!-- Danger red: #dc3545; 红色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #dc3545 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Danger red</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#dc3545</h4></div>
-            <div style="background-color: #dc3545 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #dc3545 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Danger red</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#dc3545
+                </h4>
+            </div>
+            <div
+                style="background-color: #dc3545 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
 
-     </div>
+    </div>
 
-     <h3>Black/White Nuances</h3>
-     <div class="row" style="display: flex; flex-wrap: wrap; flex-flow: row wrap; align-items: flex-start;align-content: flex-start; box-sizing: border-box; justify-content: space-around;">
+    <h3>Black/White Nuances</h3>
+    <div class="row row-flex">
         <!-- Black : #000000; 黑色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #000000 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Black</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#000000</h4></div>
-            <div style="background-color: #000000 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #000000 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Black</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#000000
+                </h4>
+            </div>
+            <div
+                style="background-color: #000000 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Gray Dark: #343a40; 灰黑色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #343a40 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Gray Dark</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#343a40</h4></div>
-            <div style="background-color: #343a40 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #343a40 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Gray Dark</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#343a40
+                </h4>
+            </div>
+            <div
+                style="background-color: #343a40 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Gray: #adb5bd; 灰色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #adb5bd !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Gray</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#adb5bd</h4></div>
-            <div style="background-color: #adb5bd !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #adb5bd !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Gray</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#adb5bd
+                </h4>
+            </div>
+            <div
+                style="background-color: #adb5bd !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Light: #f8f9fa; 光亮 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
-            <div style="background-color: #f8f9fa !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Light</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#f8f9fa</h4></div>
-            <div style="background-color: #f8f9fa !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled</h4></div>
+        <div class="col-md-2"
+            style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
+            <div
+                style="background-color: #f8f9fa !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Light</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#f8f9fa
+                </h4>
+            </div>
+            <div
+                style="background-color: #f8f9fa !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled
+                </h4>
+            </div>
         </div>
 
-     </div>
+    </div>
 
-     <h3>Colors</h3>
-     <div class="row" style="display: flex; flex-wrap: wrap; flex-flow: row wrap; align-items: flex-start;align-content: flex-start; box-sizing: border-box; justify-content: space-around;">
+    <h3>Colors</h3>
+    <div class="row row-flex">
         <!-- Indigo : #000000; 靛蓝；靛青 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #6610f2 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Indigo</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#6610f2</h4></div>
-            <div style="background-color: #6610f2 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #6610f2 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Indigo</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#6610f2
+                </h4>
+            </div>
+            <div
+                style="background-color: #6610f2 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Lightblue : #3c8dbc; 亮蓝色/浅蓝色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #3c8dbc !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Lightblue</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#3c8dbc</h4></div>
-            <div style="background-color: #3c8dbc !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #3c8dbc !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Lightblue</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#3c8dbc
+                </h4>
+            </div>
+            <div
+                style="background-color: #3c8dbc !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Navy : #001f3f; 海军黑 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #001f3f !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Navy</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#001f3f</h4></div>
-            <div style="background-color: #001f3f !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #001f3f !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Navy</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#001f3f
+                </h4>
+            </div>
+            <div
+                style="background-color: #001f3f !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
 
         <!-- Purple: #605ca8; 皇权紫 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #605ca8 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Purple</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#605ca8</h4></div>
-            <div style="background-color: #605ca8 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #605ca8 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Purple</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#605ca8
+                </h4>
+            </div>
+            <div
+                style="background-color: #605ca8 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Fuchsia: #f012be; 紫红色/洋红色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #f012be !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Fuchsia</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#f012be</h4></div>
-            <div style="background-color: #f012be !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #f012be !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Fuchsia</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#f012be
+                </h4>
+            </div>
+            <div
+                style="background-color: #f012be !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Pink: #e83e8c; 粉红色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #e83e8c !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Pink</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#e83e8c</h4></div>
-            <div style="background-color: #e83e8c !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #e83e8c !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Pink</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#e83e8c
+                </h4>
+            </div>
+            <div
+                style="background-color: #e83e8c !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Maroon: #d81b60; 褐红色的 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #d81b60 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Maroon</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#d81b60</h4></div>
-            <div style="background-color: #d81b60 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #d81b60 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Maroon</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#d81b60
+                </h4>
+            </div>
+            <div
+                style="background-color: #d81b60 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
 
         <!-- Orange: #ff851b; 橙色/橘黄色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
-            <div style="background-color: #ff851b !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Orange</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#ff851b</h4></div>
-            <div style="background-color: #ff851b !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled</h4></div>
+        <div class="col-md-2"
+            style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
+            <div
+                style="background-color: #ff851b !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Orange</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#ff851b
+                </h4>
+            </div>
+            <div
+                style="background-color: #ff851b !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled
+                </h4>
+            </div>
         </div>
         <!-- Lime: #01ff70; 清橙色/亮绿色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
-            <div style="background-color: #01ff70 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Lime</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#01ff70</h4></div>
-            <div style="background-color: #01ff70 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled</h4></div>
+        <div class="col-md-2"
+            style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: #1f2d3d !important;">
+            <div
+                style="background-color: #01ff70 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Lime</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#01ff70
+                </h4>
+            </div>
+            <div
+                style="background-color: #01ff70 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: #1f2d3d !important;">Disabled
+                </h4>
+            </div>
         </div>
 
         <!-- Teal: #39cccc; 蓝绿色/青绿色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #39cccc !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Teal</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#39cccc</h4></div>
-            <div style="background-color: #39cccc !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #39cccc !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Teal</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#39cccc
+                </h4>
+            </div>
+            <div
+                style="background-color: #39cccc !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
         <!-- Olive: #3d9970; 橄榄绿/墨绿色/军绿色 -->
-        <div class="col-md-2" style="align-items: flex-start;align-content: flex-start;box-sizing: border-box; font-size: 1.5rem;line-height: 3rem; color: rgba(255, 255, 255, 1);">
-            <div style="background-color: #3d9970 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Olive</h4><h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#3d9970</h4></div>
-            <div style="background-color: #3d9970 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;"><h4 style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">Disabled</h4></div>
+        <div class="col-md-2 row-col-flex" style="color: rgba(255, 255, 255, 1);">
+            <div
+                style="background-color: #3d9970 !important; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: left;">Olive</h4>
+                <h4 style="display: inline;box-sizing: border-box;margin: 0 0; float: right;margin-left: 2rem;">#3d9970
+                </h4>
+            </div>
+            <div
+                style="background-color: #3d9970 !important; opacity: .65; align-items: flex-start;align-content: flex-start;box-sizing: border-box; padding:0 0.5rem;">
+                <h4
+                    style="box-sizing: border-box;margin: 0 0; cursor: not-allowed;color: rgba(255, 255, 255, 0.8) !important;">
+                    Disabled</h4>
+            </div>
         </div>
 
-     </div>
+    </div>
 
+    <hr />
+    <div class="row row-flex">
+        <a class="col-md-2 row-col-flex" href="button.html" target="_blank">按钮样式（10种主题色）</a>
+        <a class="col-md-2 row-col-flex" href="tag.html" target="_blank">标签tag样式（10种主题色）</a>
+        <a class="col-md-2 row-col-flex" href="tooltip.html" target="_blank">无障碍气泡样式（10种主题色）</a>
+    </div>
 
 
 
