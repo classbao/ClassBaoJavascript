@@ -281,7 +281,16 @@
 			this.Popup(msg, 'warning', '&#9888;');
 		},
 		PopupGold: function (msg) {
-			this.Popup(msg, 'gold', '&#128293;');
+			this.Popup(msg, 'gold', '&#9882;');
+		},
+		PopupCostly: function (msg) {
+			this.Popup(msg, 'costly', '&#9882;');
+		},
+		PopupGray: function (msg) {
+			this.Popup(msg, 'gray', 'i');
+		},
+		PopupBlack: function (msg) {
+			this.Popup(msg, 'black', '&#9872;');
 		},
 		PopupOther: function (msg) {
 			this.Popup(msg, 'other', '&#128161;');

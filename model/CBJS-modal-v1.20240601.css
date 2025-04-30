@@ -139,8 +139,8 @@
 	-webkit-box-sizing: border-box;
 	-khtml-box-sizing: border-box;
 
-    padding: 0 0;
-    margin: 0 0;
+	padding: 0 0;
+	margin: 0 0;
 	width: auto;
 	text-align: center;
 	cursor: pointer;
@@ -375,12 +375,12 @@
 	-moz-opacity: 1;
 	-webkit-opacity: 1;
 	-khtml-opacity: 1;
-	animation: slideUp-in-out 5s forwards;
+	/* animation: slideUp-in-out 5s forwards;
 	-o-animation: slideUp-in-out 5s forwards;
 	-ms-animation: slideUp-in-out 5s forwards;
 	-moz-animation: slideUp-in-out 5s forwards;
 	-webkit-animation: slideUp-in-out 5s forwards;
-	-khtml-animation: slideUp-in-out 5s forwards;
+	-khtml-animation: slideUp-in-out 5s forwards; */
 	/* forwards是停在动画最后的的那个画面。即只演示一次。
 	/* infinite是动画播放次数为无限次。*/
 }
@@ -395,67 +395,71 @@
 .xxhModal.popup_secondary .leftside-icon,
 .xxhModal.popup_secondary {
 	background-color: rgba(255, 255, 255, 1);
-	border-color: #ccc;
-	color: #2d2d2d;
+	border-color: #9B9B9B;
+	color: #333333;
 }
 
 .xxhModal.default .title,
 .xxhModal.secondary .title {
-	color: #343a40;
+	color: #333333;
 }
 
 .xxhModal.primary,
 .xxhModal.primary .head,
 .xxhModal.popup_primary .leftside-icon,
 .xxhModal.popup_primary {
-	background-color: rgba(205, 229, 255, 1);
-	border-color: #007bff;
-	color: #2d2d2d;
+	background-color: rgba(230, 240, 255, 1);
+	border-color: #B3D4FF;
+	color: #0052CC;
 }
 
 .xxhModal.primary .title {
-	color: #343a40;
+	/* color: #343a40; */
+	color: #0052CC;
 }
 
 .xxhModal.success,
 .xxhModal.success .head,
 .xxhModal.popup_success .leftside-icon,
 .xxhModal.popup_success {
-	background-color: rgba(223, 255, 230, 1);
-	border-color: #28a745;
-	color: #2d2d2d;
+	background-color: rgba(240, 255, 244, 1);
+	border-color: #A5D6A7;
+	color: #0A7221;
 }
 
 .xxhModal.success .title {
-	color: #343a40;
+	color: #0A7221;
 }
 
 .xxhModal.info,
 .xxhModal.info .head,
 .xxhModal.popup_info .leftside-icon,
 .xxhModal.popup_info {
-	background-color: rgba(218, 250, 255, 1);
-	border-color: #17a2b8;
-	color: #2d2d2d;
+	background-color: rgba(230, 249, 255, 1);
+	border-color: #00B4D8;
+	color: #007AA3;
 }
 
 .xxhModal.info .title {
-	color: #343a40;
+	color: #007AA3;
 }
 
 .xxhModal.warning,
 .xxhModal.warning .head,
 .xxhModal.popup_warning .leftside-icon,
 .xxhModal.popup_warning {
-	background-color: rgba(255, 245, 216, 1);
-	border-color: #ffc107;
-	color: #2c2c2c;
+	background-color: rgba(255, 245, 230, 1);
+	border-color: #FFB347;
+	color: #D35400;
 }
 
 .xxhModal.warning .title {
-	color: #565656;
+	color: #D35400;
 }
-.xxhModal.popup_warning .leftside-icon{color: #ffc107;}
+
+.xxhModal.popup_warning .leftside-icon {
+	color: #FFB347;
+}
 
 .xxhModal.danger,
 .xxhModal.danger .head,
@@ -469,19 +473,61 @@
 .xxhModal.danger .title {
 	color: #565656;
 }
-.xxhModal.popup_danger .leftside-icon{color: #dc3545;}
+
+.xxhModal.popup_danger .leftside-icon {
+	color: #dc3545;
+}
 
 .xxhModal.gold,
 .xxhModal.gold .head,
 .xxhModal.popup_gold .leftside-icon,
 .xxhModal.popup_gold {
-	background-color: rgba(255, 249, 217, 1);
-	border-color: #ffd700;
-	color: #2c2c2c;
+	background-color: rgba(255, 249, 230, 1);
+	border-color: #FFD700;
+	color: #B38F00;
 }
 
 .xxhModal.gold .title {
-	color: #565656;
+	color: #B38F00;
+}
+
+.xxhModal.costly,
+.xxhModal.costly .head,
+.xxhModal.popup_costly .leftside-icon,
+.xxhModal.popup_costly {
+	background-color: rgba(245, 230, 255, 1);
+	border-color: #BA55D3;
+	color: #6D00A3;
+}
+
+.xxhModal.gray .title {
+	color: #6D00A3;
+}
+
+.xxhModal.gray,
+.xxhModal.gray .head,
+.xxhModal.popup_gray .leftside-icon,
+.xxhModal.popup_gray {
+	background-color: #fafafa;
+	border-color: #EEEEEE;
+	color: #555555;
+}
+
+.xxhModal.gray .title {
+	color: #555555;
+}
+
+.xxhModal.black,
+.xxhModal.black .head,
+.xxhModal.popup_black .leftside-icon,
+.xxhModal.popup_black {
+	background-color: #333333;
+	border-color: #C1C1C1;
+	color: #FFFFFF;
+}
+
+.xxhModal.black .title {
+	color: #FFFFFF;
 }
 
 /* 其他色彩主题皮肤·自定义 */
@@ -508,6 +554,9 @@
 .xxhModal.warning,
 .xxhModal.danger,
 .xxhModal.gold,
+.xxhModal.costly,
+.xxhModal.gray,
+.xxhModal.black,
 .xxhModal.other {
 	border-radius: 9px 9px 9px 9px !important;
 	-o-border-radius: 9px 9px 9px 9px !important;
@@ -528,6 +577,9 @@
 .xxhModal.popup_warning,
 .xxhModal.popup_danger,
 .xxhModal.popup_gold,
+.xxhModal.popup_costly,
+.xxhModal.popup_gray,
+.xxhModal.popup_black,
 .xxhModal.popup_other {
 	flex-direction: row;
 }
@@ -540,6 +592,9 @@
 .xxhModal.popup_warning .content,
 .xxhModal.popup_danger .content,
 .xxhModal.popup_gold .content,
+.xxhModal.popup_costly .content,
+.xxhModal.popup_gray .content,
+.xxhModal.popup_black .content,
 .xxhModal.popup_other .content {
 	margin: 3px;
 	padding: 3px;

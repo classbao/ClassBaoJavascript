@@ -246,7 +246,6 @@
 &lt;!-- 引入 模态框控件 JavaScript文件 --&gt;
 &lt;script src="CBJS-modal-v1.20240601.js"&gt;&lt;/script&gt;
 
-
 1，通过 CBJS 简单调用：<span style="color:#fd02ff;">CBJS.PopupPrimary("测试PopupPrimary气泡消息");</span>
 2，通过 CBJS.modal 调用：<span style="color:#00cbcb;">CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息");</span>
 
@@ -259,25 +258,31 @@ CBJS.modal.Popup -> xxhModal.Popup（封闭包里面的对象）
   // 每种模态框都有不同的主题样式，以下是通过“Popup气泡消息”来演示如何使用不同主题。其他类型的模态框是类似的用法。
 
   &lt;!-- 通过不通主题名称调用不同样式 --&gt;
-  CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式）");
-  CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
-  CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
-  CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
-  CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
-  CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
-  CBJS.modal.PopupGold("测试PopupGold气泡消息（一般信息2）");
-  CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
+  CBJS.modal.PopupDefault("气泡消息（默认样式）");
+  CBJS.modal.PopupPrimary("气泡消息（常用样式）");
+  CBJS.modal.PopupSuccess("气泡消息（成功通知）");
+  CBJS.modal.PopupInfo("气泡消息（一般信息）");
+  CBJS.modal.PopupWarning("气泡消息（警告提醒）");
+  CBJS.modal.PopupDanger("气泡消息（异常提醒）");
+  CBJS.modal.PopupGold("气泡消息（注意提示）");
+  CBJS.modal.PopupCostly("气泡消息（高级提示）");
+  CBJS.modal.PopupGray("气泡消息（辅助提示）");
+  CBJS.modal.PopupBlack("气泡消息（禁用提示）");
+  CBJS.modal.PopupOther("气泡消息（其他自定义信息）");
 
   &lt;!-- 通过样式名称参数控制展示样式 --&gt;
   CBJS.modal.Popup("测试气泡消息啊");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "danger");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "primary");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "success");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "info");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "warning");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "secondary");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "gold");
-  CBJS.modal.Popup("测试Popup气泡消息啊", "other");
+  CBJS.modal.Popup("测试Popup气泡（经典红）", "danger");
+  CBJS.modal.Popup("测试Popup气泡（行政蓝）", "primary");
+  CBJS.modal.Popup("测试Popup气泡（生机绿）", "success");
+  CBJS.modal.Popup("测试Popup气泡（元气青）", "info");
+  CBJS.modal.Popup("测试Popup气泡（活力橙）", "warning");
+  CBJS.modal.Popup("测试Popup气泡（轻奢灰）", "secondary");
+  CBJS.modal.Popup("测试Popup气泡（土豪金）", "gold");
+  CBJS.modal.Popup("测试Popup气泡（华贵紫）", "costly");
+  CBJS.modal.Popup("测试Popup气泡（极简灰）", "gray");
+  CBJS.modal.Popup("测试Popup气泡（典雅黑）", "black");
+  CBJS.modal.Popup("测试Popup气泡消息", "other");
 
 &lt;/script&gt;
     </pre>
