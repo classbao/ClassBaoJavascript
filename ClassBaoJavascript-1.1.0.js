@@ -2344,11 +2344,11 @@
 
 /***** String对象常用方法扩展 *****/
 /*JS移除字符串首尾空格*/
-String.prototype.Trim = function () { return this.replace(/(^s*)|(s*$)/g, ""); }
+String.prototype.Trim = function () { return this.replace(/(^\s*)|(\s*$)/g, ""); }
 /*JS移除字符串左边空格*/
-String.prototype.LTrim = function () { return this.replace(/(^s*)/g, ""); }
+String.prototype.LTrim = function () { return this.replace(/(^\s*)/g, ""); }
 /*JS移除字符串右边空格*/
-String.prototype.RTrim = function () { return this.replace(/(s*$)/g, ""); }
+String.prototype.RTrim = function () { return this.replace(/(\s*$)/g, ""); }
 /*JS移除字符串首尾&符号*/
 String.prototype.TrimLRbyAnd = function () { return this.replace(/(^&*)|(&*$)/g, ""); }
 /*JS移除字符串首尾?问号*/
