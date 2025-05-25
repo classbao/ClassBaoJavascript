@@ -151,6 +151,11 @@
 		Open: function (box, callback) {
 			this.box = box; // 允许按照init() 自定义 box
 			this.openBase();
+
+		    // 避免内容太高太宽超出屏幕
+			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxHeight = (Math.min(window.innerHeight, document.documentElement.clientHeight) * 0.8) + "px";
+			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxWidth = (Math.min(window.innerWidth, document.documentElement.clientWidth) * 0.8) + "px";
+
 			// CSS动画：滑入
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
 			if (!!this.box.maskIsEnabled) {
@@ -168,6 +173,11 @@
 				console.log('EventListener Triggered > CBJS.modal.CustomOpen(); ModalId=' + ModalId + '，MaskId=' + MaskId);
 			}
 
+		    // 避免内容太高太宽超出屏幕
+			document.querySelector(ModalId + ' .content').style.maxHeight = (Math.min(window.innerHeight, document.documentElement.clientHeight) * 0.8) + "px";
+			document.querySelector(ModalId + ' .content').style.maxWidth = (Math.min(window.innerWidth, document.documentElement.clientWidth) * 0.8) + "px";
+
+		    // 显示出来
 			document.querySelector(MaskId).style.display = 'block';
 			document.querySelector(ModalId).style.display = '';
 			document.querySelector(ModalId).classList.add('SlideUp-in');

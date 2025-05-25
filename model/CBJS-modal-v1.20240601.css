@@ -259,6 +259,7 @@
 	padding: 9px;
 	margin: 0;
 	text-align: center;
+	overflow: auto;
 }
 
 /* 弹窗动画 */
