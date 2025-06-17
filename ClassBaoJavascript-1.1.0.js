@@ -329,6 +329,163 @@
             return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
         };
 
+        /* 判断设备类型 */
+        this.getDeviceType = function () {
+            const width = window.innerWidth;
+            // const userAgent = navigator.userAgent;
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+            if (width < 768 || (isTouchDevice && width < 992)) {
+                return 'mobile'; // 这是移动设备
+            } else if (width >= 992 && !isTouchDevice) {
+                return 'desktop'; // 这是桌面设备
+            } else {
+                return 'tablet'; // 可能是平板设备
+            }
+        };
+        /*
+        // 使用示例
+        const deviceType = getDeviceType();
+        console.log(`当前设备类型: ${deviceType}`);
+        */
+
+        /* 判断设备网络类型 */
+        this.Network = {
+            /* 使用 Navigator.connection API (推荐) 现代浏览器提供了 Network Information API，可以获取详细的网络信息： */
+            getNetworkType: function () {
+                // 检查浏览器是否支持
+                if (!navigator.connection) {
+                    return 'unknown';
+                }
+                if (!navigator.onLine) return '无网络';
+
+                const connection = navigator.connection;
+
+                // 可能的类型值
+                const types = {
+                    'slow-2g': '2G',
+                    '2g': '2G',
+                    '3g': '3G',
+                    '4g': '4G',
+                    '5g': '5G',
+                    'wifi': 'WiFi',
+                    'ethernet': '有线网络',
+                    'cellular': '蜂窝网络',
+                    'none': '无网络'
+                };
+
+                // 从effectiveType获取网络类型
+                if (connection.effectiveType) {
+                    return types[connection.effectiveType] || connection.effectiveType;
+                }
+
+                // 从type属性获取
+                if (connection.type) {
+                    return types[connection.type] || connection.type;
+                }
+
+                return 'unknown';
+            },
+
+            /*
+            // 使用示例
+            console.log('当前网络类型:', getNetworkType());
+            
+            // 监听网络变化
+            navigator.connection.addEventListener('change', () => {
+              console.log('网络类型变化:', getNetworkType());
+            });
+            */
+
+            /*
+            // 监听在线/离线状态
+            window.addEventListener('online', () => {
+                console.log('网络已连接');
+                getNetworkType().then(type => console.log('当前网络:', type));
+            });
+            
+            window.addEventListener('offline', () => {
+                console.log('网络已断开');
+            });
+            
+            // 监听connection变化
+            if (navigator.connection) {
+                navigator.connection.addEventListener('change', () => {
+                console.log('网络类型变化:', getNetworkType());
+                });
+            }
+            */
+
+
+            /* 通过网速估算判断网络类型：如果浏览器不支持 Network Information API，可以通过下载速度估算： */
+            estimateNetworkType: async function () {
+                const testUrl = 'https://httpbin.org/stream-bytes/1024'; // 1KB测试文件
+                const startTime = performance.now();
+
+                try {
+                    const response = await fetch(testUrl);
+                    await response.arrayBuffer();
+                    const duration = (performance.now() - startTime) / 1000; // 秒
+                    const speed = 8 / duration; // 转换为Mbps (1KB = 8Kb)
+
+                    if (speed > 10) return 'WiFi/有线网络';
+                    if (speed > 5) return '4G';
+                    if (speed > 1) return '3G';
+                    return '2G/慢速网络';
+                } catch {
+                    return '无网络';
+                }
+            },
+
+            /*
+            // 使用示例
+            estimateNetworkType().then(type => {
+              console.log('估算网络类型:', type);
+            });
+            */
+
+            /* 最佳实践建议 */
+            // 综合方案
+            detectNetwork: async function () {
+                try {
+                    // 优先使用标准API
+                    if (navigator.connection?.effectiveType) {
+                        return {
+                            type: getNetworkType(),
+                            downlink: navigator.connection.downlink, // Mbps
+                            rtt: navigator.connection.rtt, // 往返延迟(ms)
+                            saveData: navigator.connection.saveData // 省流模式
+                        };
+                    }
+
+                    // 备用方案
+                    return {
+                        type: await estimateNetworkType(),
+                        downlink: 'unknown',
+                        rtt: 'unknown'
+                    };
+                } catch (error) {
+                    return {
+                        type: 'unknown',
+                        error: error.message
+                    };
+                }
+            }
+
+            /*
+            // 使用示例
+            detectNetwork().then(info => {
+              console.log('网络信息:', info);
+              if (info.type === '2G' || info.type === '3G') {
+                // 慢速网络优化逻辑
+                loadLiteVersion();
+              }
+            });
+            */
+
+        };
+
+
         /*检测是否支持Html5元素Canvas*/
         this.supportCanvas = function () {
             return !!document.createElement("canvas").getContext;
@@ -372,17 +529,45 @@
                 return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
             }
         };
-        /*转换成Boolean*/
-        this.ToBoolean = function (obj) {
-            if (!obj) return false;
-            if ("boolean" == typeof obj) return obj;
-            if ("string" == typeof obj) {
-                var _s = obj.toLowerCase();
-                if ("true" == _s || "1" == _s) return true;
-                if ("false" == _s || "0" == _s) return false;
-            }
-            return Boolean(obj);
+
+        this.isEmptyArray = function (value) {
+            return Array.isArray(value) && value.length === 0;
         };
+        this.isEmptyObject = function (value) {
+            return value !== null &&
+                typeof value === 'object' &&
+                !Array.isArray(value) &&
+                Object.keys(value).length === 0;
+        };
+        this.isNullOrUndefined = function (value) {
+            return value === null || value === undefined;
+        };
+        this.isString = function (value) {
+            return typeof value === 'string' || value instanceof String;
+        };
+        this.isNullOrWhiteSpace = function (value) {
+            return (
+                value === null ||          // 检查null
+                value === undefined ||     // 检查undefined
+                (typeof value === 'string' && value.trim().length === 0) ||  // 检查空字符串或全空格
+                (typeof value === 'object' && value.toString().trim().length === 0)  // 处理String对象
+            );
+        };
+
+        /*转换成Boolean*/
+        this.toBoolean = function (value, defaultValue = false) {
+            if (0 === value || -0 === value || 0n === value) { return defaultValue; }
+            else if (Array.isArray(value) && value.length === 0) { return defaultValue; } // 判断空数组 []
+            else if (value !== null && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) { return defaultValue; } // 判断空对象 {}
+            else if (isNaN(value) || Number.isNaN(value)) { return defaultValue; } // 判断是NaN
+            else if (typeof value === 'string' || value instanceof String) {
+                let _s = value.toLowerCase().trim();
+                return ('false' == _s || '0' == _s || '' == _s) ? false : true;
+            }
+
+            return (undefined !== value && null !== value) ? !!value : defaultValue;
+        };
+
 
         /*创建元素*/
         this.createElement = function (type) { return document.createElement(type); };
@@ -2370,7 +2555,17 @@ function StringBuilder() { this.strings = new Array; };
 StringBuilder.prototype.append = function (str) { this.strings.push(str); };
 StringBuilder.prototype.toString = function () { return this.strings.join(''); };
 
+/***** Object对象常用方法扩展 *****/
+Object.prototype.isEmptyArray = function () { return CBJS.isEmptyArray(this); }
+Object.prototype.isEmptyObject = function () { return CBJS.isEmptyObject(this); }
+Object.prototype.isNullOrUndefined = function () { return CBJS.isNullOrUndefined(this); }
+Object.prototype.isString = function () { return CBJS.isString(this); }
+Object.prototype.isNullOrWhiteSpace = function () { return CBJS.isNullOrWhiteSpace(this); }
+Object.prototype.toBoolean = function (defaultValue = false) { return CBJS.toBoolean(this, defaultValue); }
 
+/***** Window对象常用方法扩展 *****/
+Window.prototype.getDeviceType = function () { return CBJS.getDeviceType(this); }
+Window.prototype.Network = CBJS.Network;
 
 /***** Other Start *****/
 
