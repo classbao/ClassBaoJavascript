@@ -2551,17 +2551,78 @@ String.prototype.LRTrimSemicolon = function () { return this.replace(/(^(;|；|\
 String.prototype.TextSearch = function (searchWords, HandleFunction) { return CBJS.TextSearch(this, searchWords, HandleFunction); }
 
 /* JS StringBuilder 用法 */
-function StringBuilder() { this.strings = new Array; };
-StringBuilder.prototype.append = function (str) { this.strings.push(str); };
-StringBuilder.prototype.toString = function () { return this.strings.join(''); };
+function StringBuilder() {
+    this.buffer = [];
+    this.currentChunk = '';
+    this.chunkSize = 8192; // 8KB分块
+};
+StringBuilder.prototype.append = function (str) {
+    if (str == null) return this;
+
+    str = String(str);
+    this.currentChunk += str;
+
+    if (this.currentChunk.length > this.chunkSize) {
+        this.buffer.push(this.currentChunk);
+        this.currentChunk = '';
+    }
+    return this;
+};
+StringBuilder.prototype.toString = function () {
+    if (this.currentChunk) {
+        this.buffer.push(this.currentChunk);
+        this.currentChunk = '';
+    }
+    return this.buffer.join('');
+};
 
 /***** Object对象常用方法扩展 *****/
-Object.prototype.isEmptyArray = function () { return CBJS.isEmptyArray(this); }
-Object.prototype.isEmptyObject = function () { return CBJS.isEmptyObject(this); }
-Object.prototype.isNullOrUndefined = function () { return CBJS.isNullOrUndefined(this); }
-Object.prototype.isString = function () { return CBJS.isString(this); }
-Object.prototype.isNullOrWhiteSpace = function () { return CBJS.isNullOrWhiteSpace(this); }
-Object.prototype.toBoolean = function (defaultValue = false) { return CBJS.toBoolean(this, defaultValue); }
+// 注意：下面这段与jQuery有冲突！
+// Object.prototype.isEmptyArray = function () { return CBJS.isEmptyArray(this); }
+// Object.prototype.isEmptyObject = function () { return CBJS.isEmptyObject(this); }
+// Object.prototype.isNullOrUndefined = function () { return CBJS.isNullOrUndefined(this); }
+// Object.prototype.isString = function () { return CBJS.isString(this); }
+// Object.prototype.isNullOrWhiteSpace = function () { return CBJS.isNullOrWhiteSpace(this); }
+// Object.prototype.toBoolean = function (defaultValue = false) { return CBJS.toBoolean(this, defaultValue); }
+// 注意：扩展原生对象的原型通常不被推荐，因为它可能导致与其他库的冲突或意外的行为。
+
+// 更安全的原型扩展方式
+Object.defineProperty(Array.prototype, 'isEmptyArray', {
+    value: function () {
+        return CBJS.isEmptyArray(this);
+    },
+    enumerable: false // 使其不可枚举
+});
+Object.defineProperty(Object.prototype, 'isEmptyObject', {
+    value: function () {
+        return CBJS.isEmptyObject(this);
+    },
+    enumerable: false // 使其不可枚举
+});
+Object.defineProperty(Object.prototype, 'isNullOrUndefined', {
+    value: function () {
+        return CBJS.isNullOrUndefined(this);
+    },
+    enumerable: false // 使其不可枚举
+});
+Object.defineProperty(Object.prototype, 'isString', {
+    value: function () {
+        return CBJS.isString(this);
+    },
+    enumerable: false // 使其不可枚举
+});
+Object.defineProperty(Object.prototype, 'isNullOrWhiteSpace', {
+    value: function () {
+        return CBJS.isNullOrWhiteSpace(this);
+    },
+    enumerable: false // 使其不可枚举
+});
+Object.defineProperty(Object.prototype, 'toBoolean', {
+    value: function (defaultValue = false) {
+        return CBJS.toBoolean(this, defaultValue);
+    },
+    enumerable: false // 使其不可枚举
+});
 
 /***** Window对象常用方法扩展 *****/
 Window.prototype.getDeviceType = function () { return CBJS.getDeviceType(this); }
@@ -2574,31 +2635,44 @@ if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = (
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
-        window.msRquestAniamtionFrame ||
         window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
         function (callback) {
-            return setTimeout(callback, Math.floor(1000 / 60))
+            return setTimeout(callback, Math.floor(1000 / 60));
+        }
+    );
+};
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = (
+        window.webkitCancelAnimationFrame ||
+        window.mozCancelAnimationFrame ||
+        window.oCancelAnimationFrame ||
+        window.msCancelAnimationFrame ||
+        function (id) {
+            return clearTimeout(id);
         }
     );
 };
 ///* 调用示例：
-//  let requestID;
-//
-//  function animate(time) {
-//      // 更新动画状态
-//      // ...
-//
-//      // 判断是否需要停止动画
-//      if (/* 需要停止的条件 */) {
-//          cancelAnimationFrame(requestID);
-//      } else {
-//          requestID = requestAnimationFrame(animate);
-//      }
-//  }
-//
-//  // 开始动画
-//  requestID = requestAnimationFrame(animate);
-//
+// let animationId;
+// function animate(time) {
+//     console.log('Animating...');
+//     // TODO：动画逻辑，更新动画状态 ... 
+
+//     // 判断是否需要停止动画
+//     if (/* 需要停止的条件 */) {
+//         cancelAnimationFrame(animationId);
+//     } else {
+//         // 继续循环
+//         animationId = requestAnimationFrame(animate);
+//     }
+// }
+
+// // 开始动画
+// animationId = requestAnimationFrame(animate);
+
+// // 停止动画（示例）
+// cancelAnimationFrame(animationId);
 // */
 
 /***
