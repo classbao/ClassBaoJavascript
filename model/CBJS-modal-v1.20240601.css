@@ -80,19 +80,19 @@
 	float: right;
 }
 
-    .xxhModal .head {
-        display: list-item;
-        list-style: none;
-        min-height: 32px;
-        padding-left: 9px;
-        border-bottom: 1px solid #ccc;
-        border-radius: 9px 9px 0 0 !important;
-        -o-border-radius: 9px 9px 0 0 !important;
-        -ms-border-radius: 9px 9px 0 0 !important;
-        -moz-border-radius: 9px 9px 0 0 !important;
-        -webkit-border-radius: 9px 9px 0 0 !important;
-        -khtml-border-radius: 9px 9px 0 0 !important;
-    }
+.xxhModal .head {
+	display: list-item;
+	list-style: none;
+	min-height: 32px;
+	padding-left: 9px;
+	border-bottom: 1px solid #ccc;
+	border-radius: 9px 9px 0 0 !important;
+	-o-border-radius: 9px 9px 0 0 !important;
+	-ms-border-radius: 9px 9px 0 0 !important;
+	-moz-border-radius: 9px 9px 0 0 !important;
+	-webkit-border-radius: 9px 9px 0 0 !important;
+	-khtml-border-radius: 9px 9px 0 0 !important;
+}
 
 .xxhModal .title {
 	line-height: 32px;
@@ -243,13 +243,30 @@
 	/* padding: 3px; */
 	text-align: center;
 	vertical-align: middle;
-	border: 1px solid #ccc;
+}
+
+.xxhModal .leftside .leftside-icon:not(:has(> svg)) {
+	/* 内部不包含svg图标时，应用下面的样式 */
+	border: 1px solid;
 	border-radius: 50% !important;
 	-o-border-radius: 50% !important;
 	-ms-border-radius: 50% !important;
 	-moz-border-radius: 50% !important;
 	-webkit-border-radius: 50% !important;
 	-khtml-border-radius: 50% !important;
+}
+
+.xxhModal .leftside .leftside-icon svg {
+	fill: none;
+	stroke: none;
+}
+.xxhModal .leftside .leftside-icon svg circle {
+	fill: none;
+	stroke: currentColor;
+}
+.xxhModal .leftside .leftside-icon svg path {
+	fill: currentColor;
+	stroke: currentColor;
 }
 
 /* 内容区域 */
@@ -377,7 +394,7 @@
 	-moz-opacity: 1;
 	-webkit-opacity: 1;
 	-khtml-opacity: 1;
-	 animation: slideUp-in-out 5s forwards;
+	animation: slideUp-in-out 5s forwards;
 	-o-animation: slideUp-in-out 5s forwards;
 	-ms-animation: slideUp-in-out 5s forwards;
 	-moz-animation: slideUp-in-out 5s forwards;
@@ -401,10 +418,16 @@
 	color: #333333;
 }
 
+.xxhModal.popup_default .leftside-icon,
+.xxhModal.popup_secondary .leftside-icon {
+	color: #9B9B9B;
+}
+
 .xxhModal.default .title,
 .xxhModal.secondary .title {
 	color: #333333;
 }
+
 
 .xxhModal.primary,
 .xxhModal.primary .head,
@@ -412,6 +435,10 @@
 .xxhModal.popup_primary {
 	background-color: rgba(230, 240, 255, 1);
 	border-color: #B3D4FF;
+	color: #0052CC;
+}
+
+.xxhModal.popup_primary .leftside-icon {
 	color: #0052CC;
 }
 
@@ -429,6 +456,10 @@
 	color: #0A7221;
 }
 
+.xxhModal.popup_success .leftside-icon {
+	color: #0A7221;
+}
+
 .xxhModal.success .title {
 	color: #0A7221;
 }
@@ -440,6 +471,10 @@
 	background-color: rgba(230, 249, 255, 1);
 	border-color: #00B4D8;
 	color: #007AA3;
+}
+
+.xxhModal.popup_info .leftside-icon {
+	color: #00B4D8;
 }
 
 .xxhModal.info .title {
@@ -455,13 +490,14 @@
 	color: #D35400;
 }
 
+.xxhModal.popup_warning .leftside-icon {
+	color: #FFB347;
+}
+
 .xxhModal.warning .title {
 	color: #D35400;
 }
 
-.xxhModal.popup_warning .leftside-icon {
-	color: #FFB347;
-}
 
 .xxhModal.danger,
 .xxhModal.danger .head,
@@ -472,13 +508,14 @@
 	color: #2c2c2c;
 }
 
+.xxhModal.popup_danger .leftside-icon {
+	color: #dc3545;
+}
+
 .xxhModal.danger .title {
 	color: #565656;
 }
 
-.xxhModal.popup_danger .leftside-icon {
-	color: #dc3545;
-}
 
 .xxhModal.gold,
 .xxhModal.gold .head,
@@ -487,6 +524,10 @@
 	background-color: rgba(255, 249, 230, 1);
 	border-color: #FFD700;
 	color: #B38F00;
+}
+
+.xxhModal.popup_gold .leftside-icon {
+	color: #FFD700;
 }
 
 .xxhModal.gold .title {
@@ -502,6 +543,10 @@
 	color: #6D00A3;
 }
 
+.xxhModal.popup_costly .leftside-icon {
+	color: #BA55D3;
+}
+
 .xxhModal.gray .title {
 	color: #6D00A3;
 }
@@ -512,6 +557,10 @@
 .xxhModal.popup_gray {
 	background-color: #fafafa;
 	border-color: #EEEEEE;
+	color: #555555;
+}
+
+.xxhModal.popup_gray .leftside-icon {
 	color: #555555;
 }
 
@@ -528,6 +577,10 @@
 	color: #FFFFFF;
 }
 
+.xxhModal.popup_black .leftside-icon {
+	color: #C1C1C1;
+}
+
 .xxhModal.black .title {
 	color: #FFFFFF;
 }
@@ -540,6 +593,10 @@
 	background-color: rgba(222, 247, 255, 1);
 	border-color: #608692;
 	color: #2c2c2c;
+}
+
+.xxhModal.popup_other .leftside-icon {
+	color: #608692;
 }
 
 .xxhModal.other .title {

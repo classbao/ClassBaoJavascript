@@ -69,7 +69,7 @@
 			return mask;
 		},
 		buildHead: function () {
-			if (!this.box.head.isEnabled) {
+			if (!!!this.box.head || !this.box.head.isEnabled) {
 				return '';
 			}
 
@@ -78,7 +78,7 @@
 			return html_head;
 		},
 		buildLeftIcon: function () {
-			if (!this.box.leftIcon.isEnabled) {
+			if (!!!this.box.leftIcon || !this.box.leftIcon.isEnabled) {
 				return '';
 			}
 
@@ -86,7 +86,7 @@
 			return html_leftside;
 		},
 		buildFoot: function () {
-			if (!this.box.foot.isEnabled || !!!this.box.foot.btn) {
+			if (!!!this.box.foot || !this.box.foot.isEnabled || !!!this.box.foot.btn) {
 				return '';
 			}
 
@@ -152,7 +152,7 @@
 			this.box = box; // 允许按照init() 自定义 box
 			this.openBase();
 
-		    // 避免内容太高太宽超出屏幕
+			// 避免内容太高太宽超出屏幕
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxHeight = (Math.min(window.innerHeight, document.documentElement.clientHeight) * 0.8) + "px";
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxWidth = (Math.min(window.innerWidth, document.documentElement.clientWidth) * 0.8) + "px";
 
@@ -173,11 +173,11 @@
 				console.log('EventListener Triggered > CBJS.modal.CustomOpen(); ModalId=' + ModalId + '，MaskId=' + MaskId);
 			}
 
-		    // 避免内容太高太宽超出屏幕
+			// 避免内容太高太宽超出屏幕
 			document.querySelector(ModalId + ' .content').style.maxHeight = (Math.min(window.innerHeight, document.documentElement.clientHeight) * 0.8) + "px";
 			document.querySelector(ModalId + ' .content').style.maxWidth = (Math.min(window.innerWidth, document.documentElement.clientWidth) * 0.8) + "px";
 
-		    // 显示出来
+			// 显示出来
 			document.querySelector(MaskId).style.display = 'block';
 			document.querySelector(ModalId).style.display = '';
 			document.querySelector(ModalId).classList.add('SlideUp-in');
@@ -186,7 +186,7 @@
 		},
 		CustomClose: function (ModalId, MaskId, callback) {
 			if (!!this.DebugMode) {
-			    console.log('EventListener Triggered > CBJS.modal.CustomClose(); ModalId=' + ModalId + '，MaskId=' + MaskId);
+				console.log('EventListener Triggered > CBJS.modal.CustomClose(); ModalId=' + ModalId + '，MaskId=' + MaskId);
 			}
 
 			document.querySelector(ModalId).style.display = 'none';
@@ -270,25 +270,34 @@
 			}
 		},
 		PopupDefault: function (msg) {
-			this.Popup(msg, 'default', 'i');
+			// this.Popup(msg, 'default', 'i');
+			this.Popup(msg, 'default', '&#128172;');
 		},
 		PopupPrimary: function (msg) {
-			this.Popup(msg, 'primary', 'i');
+			// this.Popup(msg, 'primary', 'i');
+			this.Popup(msg, 'primary', '&#128276;');
 		},
 		PopupInfo: function (msg) {
-			this.Popup(msg, 'info', '&#128226;');
+			// this.Popup(msg, 'info', '&#128226;');
+			this.Popup(msg, 'info', '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="12" fill="none" stroke="currentColor" stroke-width="1"/><path d="M13 18V13M13 9H13.01" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>');
+		},
+		PopupNotice: function (msg) {
+			this.Popup(msg, 'default', '&#128161;');
 		},
 		PopupSuccess: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #fff;">&#10003;</span> ' + msg, 'success');
 			this.Popup(msg, 'success', '&#10004;');
+			// this.Popup(msg, 'success', '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="12" fill="none" stroke="currentColor" stroke-width="1"/><path d="M8 14L11 17L18 10" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
 		},
 		PopupDanger: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #f0f0f0;">&#9938;</span> ' + msg, 'danger');
 			this.Popup(msg, 'danger', '&#10008;');
+			// this.Popup(msg, 'danger', '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="12" fill="none" stroke="currentColor" stroke-width="1"/><path d="M8 8L18 18M8 18L18 8" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>');
 		},
 		PopupWarning: function (msg) {
 			// this.Popup('<span class="icon" style="vertical-align:sub; color: #565656;">&#9888;</span> ' + msg, 'warning');
-			this.Popup(msg, 'warning', '&#9888;');
+			// this.Popup(msg, 'warning', '&#9888;');
+			this.Popup(msg, 'warning', '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg"><!-- 三角形边框 (使用polygon) --><polygon points="13,5 21,21 5,21" stroke="#FAAD14" stroke-width="1.5" stroke-linejoin="round" fill="none" stroke="currentColor"/><!-- 感叹号 (使用path) --><path d="M13 10V14M13 17H13.01" stroke="#FAAD14" stroke-width="2" stroke-linecap="round" fill="currentColor" stroke="currentColor"/></svg>');
 		},
 		PopupGold: function (msg) {
 			this.Popup(msg, 'gold', '&#9882;');
@@ -297,13 +306,20 @@
 			this.Popup(msg, 'costly', '&#9882;');
 		},
 		PopupGray: function (msg) {
-			this.Popup(msg, 'gray', 'i');
+			this.Popup(msg, 'gray', '&#9872;');
 		},
 		PopupBlack: function (msg) {
-			this.Popup(msg, 'black', '&#9872;');
+			this.Popup(msg, 'black', '&#127987;');
+		},
+		PopupV: function (msg) {
+			this.Popup(msg, 'costly', 'V');
+		},
+		PopupVIP: function (msg) {
+			this.Popup(msg, 'costly', 'VIP');
 		},
 		PopupOther: function (msg) {
-			this.Popup(msg, 'other', '&#128161;');
+			// this.Popup(msg, 'other', '&#128161;');
+			this.Popup(msg, 'other', '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="13" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="13" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1"/><path d="M8 13H18M13 8V18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>');
 		},
 		close: function (id) {
 			if (!!this.DebugMode) {
@@ -383,10 +399,16 @@
 		CBJS.PopupDefault = function (msg) { xxhModal.PopupDefault(msg); }
 		CBJS.PopupPrimary = function (msg) { xxhModal.PopupPrimary(msg); }
 		CBJS.PopupInfo = function (msg) { xxhModal.PopupInfo(msg); }
+		CBJS.PopupNotice = function (msg) { xxhModal.PopupNotice(msg); }
 		CBJS.PopupSuccess = function (msg) { xxhModal.PopupSuccess(msg); }
 		CBJS.PopupDanger = function (msg) { xxhModal.PopupDanger(msg); }
 		CBJS.PopupWarning = function (msg) { xxhModal.PopupWarning(msg); }
 		CBJS.PopupGold = function (msg) { xxhModal.PopupGold(msg); }
+		CBJS.PopupCostly = function (msg) { xxhModal.PopupCostly(msg); }
+		CBJS.PopupGray = function (msg) { xxhModal.PopupGray(msg); }
+		CBJS.PopupBlack = function (msg) { xxhModal.PopupBlack(msg); }
+		CBJS.PopupV = function (msg) { xxhModal.PopupV(msg); }
+		CBJS.PopupVIP = function (msg) { xxhModal.PopupVIP(msg); }
 		CBJS.PopupOther = function (msg) { xxhModal.PopupOther(msg); }
 	}
 

@@ -79,14 +79,20 @@
         // CBJS.modal.Popup("测试Popup气泡消息啊", "gold");
         // CBJS.modal.Popup("测试Popup气泡消息啊", "other");
 
-        // CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式）");
-        // CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
-        // CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知）");
-        // CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息）");
-        // CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒）");
-        // CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒）");
-        // CBJS.modal.PopupGold("测试PopupGold气泡消息（一般信息2）");
-        CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息）");
+        // CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式：纸飞机）");
+        // CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式：信息泡泡）");
+        // CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知：对钩）");
+        // CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息：倒i字形）");
+        // CBJS.modal.PopupNotice("测试PopupNotice气泡消息（通知公告：喇叭）");
+        // CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒：三角叹号）");
+        // CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒：叉形）");
+        // CBJS.modal.PopupGold("测试PopupGold气泡消息（重要信息：金元宝）");
+        // CBJS.modal.PopupCostly("测试PopupCostly气泡消息（重要信息：钻石）");
+        // CBJS.modal.PopupGray("测试PopupGray气泡消息（特殊信息：旗帜）");
+        // CBJS.modal.PopupBlack("测试PopupBlack气泡消息（特殊信息：海盗旗）");
+        // CBJS.modal.PopupV("测试PopupV气泡消息（V字形）");
+        // CBJS.modal.PopupVIP("测试PopupVIP气泡消息（尊贵的VIP）");
+        CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息：箭靶）");
 
 
       }, false);
@@ -96,6 +102,24 @@
         console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-in-CustomOpenModel addEventListener> click');
 
         CBJS.modal.CustomOpen("#xxhModal-CustomOpenModel", "#xxhMask-CustomOpenModel");
+        // 也可以自定义弹出框
+      }, false);
+
+      CBJS.modal.addEventListener(document.querySelector('button#slideUp-BasicSimplicityOpen'), 'click', function (event) {
+        console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > button#slideUp-BasicSimplicityOpen addEventListener> click');
+        CBJS.modal.Open({
+          id: new Date().getTime(),
+          className: "primary",
+          head: {
+            isEnabled: true,
+            title: "",
+            btnClose: true, // 是否显示关闭按钮
+          },
+          content: "<p>这是一个弹窗完整示例！<br>阿拉加斯加的企鹅想去北极看白熊，在冰天雪地走了十天十夜发现还没到</p>",
+          maskIsEnabled: true,
+          DebugMode: false
+        });
+
         // 也可以自定义弹出框
       }, false);
 
@@ -221,8 +245,9 @@
   <button id="SlideUp-in-Alert">滑入Alert</button>
   <button id="SlideUp-in">滑入Confirm</button>
   <button id="slideUp-in-out">滑入滑出Popup</button>
+  <button id="slideUp-BasicSimplicityOpen">弹出完整弹窗Open（极简风）</button>
   <button id="slideUp-all">弹出完整弹窗Open</button>
-  <button id="slideUp-in-CustomOpenModel">弹出模态框</button>
+  <button id="slideUp-in-CustomOpenModel">弹出自定义模态框CustomOpen</button>
 
   <!-- JS脚本 -->
   <script>
@@ -258,17 +283,20 @@ CBJS.modal.Popup -> xxhModal.Popup（封闭包里面的对象）
   // 每种模态框都有不同的主题样式，以下是通过“Popup气泡消息”来演示如何使用不同主题。其他类型的模态框是类似的用法。
 
   &lt;!-- 通过不通主题名称调用不同样式 --&gt;
-  CBJS.modal.PopupDefault("气泡消息（默认样式）");
-  CBJS.modal.PopupPrimary("气泡消息（常用样式）");
-  CBJS.modal.PopupSuccess("气泡消息（成功通知）");
-  CBJS.modal.PopupInfo("气泡消息（一般信息）");
-  CBJS.modal.PopupWarning("气泡消息（警告提醒）");
-  CBJS.modal.PopupDanger("气泡消息（异常提醒）");
-  CBJS.modal.PopupGold("气泡消息（注意提示）");
-  CBJS.modal.PopupCostly("气泡消息（高级提示）");
-  CBJS.modal.PopupGray("气泡消息（辅助提示）");
-  CBJS.modal.PopupBlack("气泡消息（禁用提示）");
-  CBJS.modal.PopupOther("气泡消息（其他自定义信息）");
+  CBJS.modal.PopupDefault("测试Popup气泡消息（默认样式）");
+  CBJS.modal.PopupPrimary("测试PopupPrimary气泡消息（常用样式）");
+  CBJS.modal.PopupSuccess("测试PopupSuccess气泡消息（成功通知：对钩）");
+  CBJS.modal.PopupInfo("测试PopupInfo气泡消息（一般信息：i字形）");
+  CBJS.modal.PopupNotice("测试PopupNotice气泡消息（通知公告）");
+  CBJS.modal.PopupWarning("测试PopupWarning气泡消息（警告提醒：三角形叹号）");
+  CBJS.modal.PopupDanger("测试PopupDanger气泡消息（异常提醒：叉形）");
+  CBJS.modal.PopupGold("测试PopupGold气泡消息（重要信息：金权杖）");
+  CBJS.modal.PopupCostly("测试PopupCostly气泡消息（重要信息：紫权杖）");
+  CBJS.modal.PopupGray("测试PopupGray气泡消息（特殊信息：旗帜）");
+  CBJS.modal.PopupBlack("测试PopupBlack气泡消息（特殊信息：海盗旗）");
+  CBJS.modal.PopupV("测试PopupV气泡消息（V字形）");
+  CBJS.modal.PopupVIP("测试PopupVIP气泡消息（尊贵的VIP）");
+  CBJS.modal.PopupOther("测试PopupOther气泡消息（其他自定义信息：箭靶）");
 
   &lt;!-- 通过样式名称参数控制展示样式 --&gt;
   CBJS.modal.Popup("测试气泡消息啊");
