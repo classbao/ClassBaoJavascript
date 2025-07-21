@@ -148,6 +148,31 @@
 				console.log('EventListener Triggered > CBJS.modal.openBase(); box.id=' + this.box.id);
 			}
 		},
+		Loading: function () {
+			this.init();
+			this.box.className = '';
+			this.box.maskIsEnabled = true;
+			this.box.head.isEnabled = false;
+			this.box.leftIcon.isEnabled = false;
+
+			let img = '<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPgogIDxjaXJjbGUgY3g9IjE2IiBjeT0iNTAiIHI9IjEwIiBmaWxsPSIjMDAwIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGZyb209IjEiIHRvPSIwLjIiIGR1cj0iMXMiIGJlZ2luPSIwIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogIDwvY2lyY2xlPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEwIiBmaWxsPSIjMDAwIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGZyb209IjEiIHRvPSIwLjIiIGR1cj0iMXMiIGJlZ2luPSIwLjIiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9jaXJjbGU+CiAgPGNpcmNsZSBjeD0iODQiIGN5PSI1MCIgcj0iMTAiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgZnJvbT0iMSIgdG89IjAuMiIgZHVyPSIxcyIgYmVnaW49IjAuNCIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L2NpcmNsZT4KPC9zdmc+" title="Loading..." alt="Loading...">';
+			this.box.content = ' ' + img + ' ';
+
+			this.box.foot.isEnabled = false;
+			this.box.foot.btn = []; // 清空全部按钮
+			this.openBase();
+
+			// CSS动画：滑入
+			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
+			if (!!this.box.maskIsEnabled) {
+				document.querySelector('#xxhMask' + this.box.id + '.xxhMask').style.display = 'block';
+			}
+
+			if (!!this.DebugMode) {
+				console.log('CBJS.modal.Loading(); box.id=' + this.box.id);
+			}
+			return this.box.id;
+		},
 		Open: function (box, callback) {
 			this.box = box; // 允许按照init() 自定义 box
 			this.openBase();
@@ -390,6 +415,7 @@
 	}
 
 	if (!!CBJS) {
+		CBJS.Loading = function () { return xxhModal.Loading(); }
 		CBJS.Open = function (box) { xxhModal.Open(box); }
 		CBJS.CustomOpen = function (ModalId, MaskId) { xxhModal.CustomOpen(ModalId, MaskId); }
 		CBJS.CustomClose = function (ModalId, MaskId) { xxhModal.CustomClose(ModalId, MaskId); }

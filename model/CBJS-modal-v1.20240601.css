@@ -99,6 +99,13 @@
 	color: #666;
 	font-size: 1.1rem;
 	padding-left: 3px;
+	filter: alpha(opacity=70);
+	opacity: 0.7;
+	-o-opacity: 0.7;
+	-ms-opacity: 0.7;
+	-moz-opacity: 0.7;
+	-webkit-opacity: 0.7;
+	-khtml-opacity: 0.7;
 }
 
 /* 关闭按钮 */
@@ -260,10 +267,12 @@
 	fill: none;
 	stroke: none;
 }
+
 .xxhModal .leftside .leftside-icon svg circle {
 	fill: none;
 	stroke: currentColor;
 }
+
 .xxhModal .leftside .leftside-icon svg path {
 	fill: currentColor;
 	stroke: currentColor;
@@ -282,6 +291,13 @@
 /* 弹窗动画 */
 @keyframes slideUp {
 	from {
+		visibility: hidden;
+		opacity: 0;
+		-o-opacity: 0;
+		-ms-opacity: 0;
+		-moz-opacity: 0;
+		-webkit-opacity: 0;
+		-khtml-opacity: 0;
 		transform: translate(-50%, 100%);
 		-o-transform: translate(-50%, 100%);
 		-ms-transform: translate(-50%, 100%);
@@ -291,6 +307,13 @@
 	}
 
 	to {
+		visibility: visible;
+		opacity: 1;
+		-o-opacity: 1;
+		-ms-opacity: 1;
+		-moz-opacity: 1;
+		-webkit-opacity: 1;
+		-khtml-opacity: 1;
 		transform: translate(-50%, -50%);
 		-o-transform: translate(-50%, -50%);
 		-ms-transform: translate(-50%, -50%);
@@ -399,7 +422,7 @@
 	-ms-animation: slideUp-in-out 5s forwards;
 	-moz-animation: slideUp-in-out 5s forwards;
 	-webkit-animation: slideUp-in-out 5s forwards;
-	-khtml-animation: slideUp-in-out 5s forwards; 
+	-khtml-animation: slideUp-in-out 5s forwards;
 	/* forwards是停在动画最后的的那个画面。即只演示一次。
 	/* infinite是动画播放次数为无限次。*/
 }

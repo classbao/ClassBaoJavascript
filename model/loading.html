@@ -1,0 +1,209 @@
+﻿<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="MobileOptimized" content="240">
+  <meta name="applicable-device" content="mobile">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+  <link href="CBJS-modal-v1.20240601.css" rel="stylesheet" type="text/css">
+
+  <title>CBJS.modal 加载中</title>
+  <meta name="keywords" content="测试 CBJS.modal">
+  <meta name="Description" content="加载中……动画。">
+  <meta name="author" content="文学资料">
+
+  <!-- CSS样式 -->
+  <style type="text/css">
+
+  </style>
+
+  <!-- JS脚本 -->
+  <script>
+    window.onload = function () {
+      CBJS.modal.DebugMode = 1; // 开启Debug模式会输出过程日志（默认值0：不会输出日志）
+
+      var loadingId = CBJS.Loading();
+      // 10秒后执行一次
+      setTimeout(function () {
+        console.log("这段代码将在10秒后执行");
+        // 这里放你要执行的代码
+        CBJS.modal.remove(loadingId);
+      }, 10000); // 10000毫秒 = 10秒
+
+
+      CBJS.modal.Open({
+          id: new Date().getTime(),
+          className: "primary",
+          head: {
+            isEnabled: true,
+            title: "扫码支付",
+            btnClose: true, // 是否显示关闭按钮
+          },
+          content: '<div style="display: flex;flex-wrap: wrap;flex-direction: row;justify-content: space-between;"><div style="background-color: #09BB07;color: #fff;flex: 0 0 auto;padding: 10px;border-radius: 10px;"><img src="QrCode-test20250720.png" alt="Loading..."><p>微信支付</p></div><div style="background-color: #1677FF;color: #fff;flex: 0 0 auto;padding: 10px;border-radius: 10px;"><img src="QrCode-test20250720.png" alt="Loading..."><p>支付宝支付</p></div></div><div>已安全加密，截图、长按保存等将使它失效</div>',
+          foot: {
+            isEnabled: true,
+            // 按钮项，顺序是从左到右
+            btn: [
+              {
+                icon: "",
+                title: "支付完了，点击阅读",
+                click: function (event) { console.log(new Date().Format("yyyy/MM/dd HH:mm:ss.f") + ' > ' + event.target.closest('.xxhModal').id + ' Custom callback function EventListener Triggered > ' + event.target.innerText); },
+              }
+            ]
+          },
+          maskIsEnabled: true,
+          DebugMode: true
+        });
+
+    }
+
+  </script>
+
+</head>
+
+<body>
+  在网页中展示一个Base64编码的加载中（转圈圈）动画图片，可以通过以下方式实现：
+  <h3>1. 使用内置的Base64编码加载动画</h3>
+  这里提供一个简单的旋转圆圈动画的Base64编码（SVG格式）：
+  <img
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjQwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IjE2MCAxMDAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSI+CiAgICA8YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgZnJvbT0iMCA1MCA1MCIgdG89IjM2MCA1MCA1MCIgZHVyPSIxcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L2NpcmNsZT4KPC9zdmc+"
+    alt="Loading...">
+  <br>
+  这里提供一个简单的旋转圆圈动画的Base64编码（gif格式）：
+  <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==" alt="Loading GIF">
+
+  <br>
+  <h3>2. 使用CSS+Base64实现更复杂加载动画</h3>
+  如果你想使用CSS动画配合Base64图片：
+  <div class="spinner">
+    <img
+      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgc3Ryb2tlPSIjMDA3Y2IiIHN0cm9rZS13aWR0aD0iMTAiIGZpbGw9Im5vbmUiPgogICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgNTAgNTAiIHRvPSIzNjAgNTAgNTAiIGR1cj0iMXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9jaXJjbGU+Cjwvc3ZnPg==">
+  </div>
+
+  <style>
+    .spinner {
+      display: inline-block;
+      animation: spin 10s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <br>
+
+  <h3>3. 多种预加载动画Base64编码选择</h3>
+  圆圈点状加载动画:
+  <img
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPgogIDxjaXJjbGUgY3g9IjE2IiBjeT0iNTAiIHI9IjEwIiBmaWxsPSIjMDAwIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGZyb209IjEiIHRvPSIwLjIiIGR1cj0iMXMiIGJlZ2luPSIwIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogIDwvY2lyY2xlPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEwIiBmaWxsPSIjMDAwIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGZyb209IjEiIHRvPSIwLjIiIGR1cj0iMXMiIGJlZ2luPSIwLjIiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9jaXJjbGU+CiAgPGNpcmNsZSBjeD0iODQiIGN5PSI1MCIgcj0iMTAiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgZnJvbT0iMSIgdG89IjAuMiIgZHVyPSIxcyIgYmVnaW49IjAuNCIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L2NpcmNsZT4KPC9zdmc+"
+    title="Loading..." alt="Loading...">
+  <br>
+  条形加载动画:
+  <img
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiIGZpbGw9IiNlZWUiLz4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAiIGhlaWdodD0iMjAiIGZpbGw9IiMwMDciPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIxMDAiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9yZWN0Pgo8L3N2Zz4="
+    alt="Loading...">
+
+  <br>
+
+  <h3>4. 在JavaScript动态显示加载动画</h3>
+  <script>
+    function showLoading() {
+      const loader = document.createElement('div');
+      loader.innerHTML = `
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICAgIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjQwIiBzdHJva2U9IiMwMDdjYiIgc3Ryb2tlLXdpZHRoPSIxMCIgZmlsbD0ibm9uZSI+CiAgICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBmcm9tPSIwIDUwIDUwIiB0bz0iMzYwIDUwIDUwIiBkdXI9IjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPC9jaXJjbGU+CiAgPC9zdmc+" 
+    style="width:40px;height:40px;display:block;margin:0 auto;">
+    <p style="text-align:center;">加载中...</p>
+  `;
+      loader.style.position = 'fixed';
+      loader.style.top = '50%';
+      loader.style.left = '50%';
+      loader.style.transform = 'translate(-50%, -50%)';
+      loader.id = 'page-loader';
+      document.body.appendChild(loader);
+    }
+
+    function hideLoading() {
+      const loader = document.getElementById('page-loader');
+      if (loader) loader.remove();
+    }
+  </script>
+
+
+  <br>
+
+  <h3>5. 响应式加载动画方案</h3>
+  <div class="loader-container">
+    <div class="loader">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#007cb3" stroke-width="10" stroke-dasharray="160 100"
+          stroke-linecap="round">
+          <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s"
+            repeatCount="indefinite" />
+        </circle>
+      </svg>
+    </div>
+  </div>
+
+  <style>
+    .loader-container {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    .loader circle {
+      animation: color-change 2s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes color-change {
+
+      0%,
+      100% {
+        stroke: #007cb3;
+      }
+
+      50% {
+        stroke: #00b386;
+      }
+    }
+  </style>
+  这些Base64编码的加载动画都是纯矢量图形，体积小（通常小于1KB），无需额外HTTP请求，适合作为内联资源直接嵌入HTML中。
+
+
+  <!-- JS脚本 -->
+  <script>
+
+  </script>
+
+
+  <script src="../ClassBaoJavascript-1.1.0.js"></script>
+  <script src="CBJS-modal-v1.20240601.js"></script>
+
+</body>
+
+</html>

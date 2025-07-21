@@ -601,18 +601,18 @@
         this.Window = {
             /*跳转到链接*/
             goToLocation: function (url) {
-                if (url) { window.location = url; }
+                if (!!url && null != url && undefined !== url) { window.location = url; }
             },
             /*从最顶层窗口跳转链接*/
             TopLocation: function (url) {
-                if (url) {
+                if (!!url && null != url && undefined !== url) {
                     if (window.top != window.self) { window.top.location = url; }
                     else { window.location = url; }
                 }
             },
             /*从父窗口窗口跳转链接。注：如果窗口本身是顶层窗口，parent属性返回的是对自身的引用。在框架网页中，一般父窗口就是顶层窗口，但如果框架中还有框架，父窗口和顶层窗口就不一定相同了。*/
             ParentLocation: function (url) {
-                if (url) {
+                if (!!url && null != url && undefined !== url) {
                     if (window.parent != window.self) { window.parent.location = url; }
                     else { window.location = url; }
                 }
@@ -745,7 +745,7 @@
                     }
                 }
                 if (!xmlhttp) {
-                    alert('您的浏览器不支持AJAX');
+                    alert('你的浏览器不支持AJAX');
                     return false;
                 }
                 return xmlhttp;
@@ -1232,7 +1232,7 @@
                 if (!/^\d{17}(\d|x)$/i.test(cardID)) return false;
 
                 var _cardID = cardID.replace(/x$/i, "a");
-                //if (aCity[parseInt(_cardID.substr(0, 2))] == null) return "您的身份证地区非法";
+                //if (aCity[parseInt(_cardID.substr(0, 2))] == null) return "你的身份证地区非法";
                 var sBirthday = _cardID.substr(6, 4) + "-" + Number(_cardID.substr(10, 2)) + "-" + Number(_cardID.substr(12, 2));
                 var d = new Date(sBirthday.replace(/-/g, "/"));
                 if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return false;
@@ -1246,7 +1246,7 @@
 
         /* 调用示例：
             document.onkeydown = function (e) {
-                if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; }
+                if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '你按下了回车键'); return true; }
             }
         */
         /*获取键盘按键代码（event是按键事件）兼容IE，FireFox，Chrome，Opera等*/
@@ -1258,7 +1258,7 @@
         /*可跨浏览器的事件处理程序，构造EventUtil对象，为其添加可兼容各浏览器的事件处理方法*/
         this.EventUtil = {
             /*添加事件处理程序*/
-            /*示例：CBJS.EventUtil.addEventListener(document, "keydown", function (e) { if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '您按下了回车键'); return true; } } );*/
+            /*示例：CBJS.EventUtil.addEventListener(document, "keydown", function (e) { if (CBJS.GetKeyCode(e) == 13) { CBJS.LabelAlert(null, '你按下了回车键'); return true; } } );*/
             addEventListener: function (element, type, handler) {
                 if (element.addEventListener) {
                     addEventListener(type, handler, false);
