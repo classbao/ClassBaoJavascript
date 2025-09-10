@@ -286,7 +286,13 @@
             var height = $input.offsetHeight;
 
             $datepicker_wrapper.style.top = top + height + 2 + 'px';
-            $datepicker_wrapper.style.left = left + 'px';
+
+            if (window.innerWidth - left <= 240) { // 避免输入框比较短的时候弹出日期控件超出右边显示区域的问题。
+                $datepicker_wrapper.style.left = ($input.offsetLeft + $input.offsetWidth - 240) + 'px';
+            }
+            else {
+                $datepicker_wrapper.style.left = left + 'px';
+            }
 
             isOpen = true;
         }
@@ -357,7 +363,7 @@
                     setSelectedByValue('.ui-datepicker-wrapper select.minute', -1);
                     setSelectedByValue('.ui-datepicker-wrapper select.second', -1);
                 }
-                
+
                 $datepicker_wrapper.classList.remove('ui-datepicker-wrapper-show');
                 isOpen = false;
 
