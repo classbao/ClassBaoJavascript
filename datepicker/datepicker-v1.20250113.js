@@ -9,6 +9,7 @@
     var datepicker = {
         paramsDate: function (inputElement, targetFormat) {
             this.inputElement = inputElement; // 当前输入框
+            this.zIndex = 0;
             this.targetFormat = targetFormat || 'yyyy/MM/dd HH:mm:ss'; // 目标日期时间格式
             this.haveTime = (!!this.targetFormat && (this.targetFormat.toLocaleLowerCase().includes('hh:mm:ss'))); // 目标格式是否包含时分秒
             this.monthData = {}; // 绘制日历组件的数据源
@@ -280,6 +281,7 @@
             isOpen = false;
         } else {
             $datepicker_wrapper.classList.add('ui-datepicker-wrapper-show');
+            $datepicker_wrapper.style.zIndex = paramsDate.zIndex;
 
             var left = $input.offsetLeft;
             var top = $input.offsetTop;
@@ -426,6 +428,7 @@
     datepicker.init = function (input, targetFormat) {
         this.addEventListener(document.querySelector(input), 'click', function (e) {
             let $paramsDate = new datepicker.paramsDate(e.target, targetFormat);
+            $paramsDate.zIndex = displayZIndexInfo(e.target);
             datepicker.main($paramsDate);
         });
     };
@@ -491,5 +494,73 @@
         else { return (new Date(date)).Format(format); }
     };
     /* 日期时间格式化·结束 */
+
+    /*遍历所有父级 div 的 z-index·开始*/
+    function analyzeZIndexHierarchy(element) {
+        const hierarchy = {
+            self: {
+                element: element,
+                zIndex: window.getComputedStyle(element).zIndex,
+                tagName: element.tagName,
+                id: element.id || '无ID'
+            },
+            parents: []
+        };
+
+        let currentParent = element.parentElement;
+        let level = 1;
+
+        while (currentParent) {
+            if (currentParent.tagName === 'DIV') {
+                hierarchy.parents.push({
+                    level: level,
+                    element: currentParent,
+                    zIndex: window.getComputedStyle(currentParent).zIndex,
+                    tagName: currentParent.tagName,
+                    id: currentParent.id || '无ID',
+                    className: currentParent.className || '无类名'
+                });
+                level++;
+            }
+            currentParent = currentParent.parentElement;
+        }
+
+        return hierarchy;
+    };
+    function displayZIndexInfo(element) {
+        let _zIndex = 0;
+        const info = analyzeZIndexHierarchy(element);
+
+        //console.log('=== z-index 层级信息 ===');
+        //console.log(`当前元素: ${info.self.tagName}#${info.self.id}, z-index: ${info.self.zIndex}`);
+        _zIndex = ('auto' != info.self.zIndex && !isNaN(info.self.zIndex)) ?parseInt( info.self.zIndex) : 0;
+        //console.log('父级元素:');
+
+        if (info.parents.length === 0) {
+            //console.log('  无父级 div 元素');
+        } else {
+            info.parents.forEach(parent => {
+                //console.log(`  L${parent.level}: ${parent.tagName}#${parent.id}, z-index: ${parent.zIndex}`);
+                let _parent_zIndex = ('auto' != parent.zIndex && !isNaN(parent.zIndex)) ? parseInt(parent.zIndex) : 0;
+                if (_zIndex < _parent_zIndex) {
+                    _zIndex = _parent_zIndex;
+                }
+            });
+        }
+
+        return _zIndex;
+    };
+
+    //// 使用示例
+    //const div = document.getElementById('myDiv');
+    //const zIndexHierarchy = analyzeZIndexHierarchy(div);
+    //console.log('z-index 层级分析:', zIndexHierarchy);
+
+    //// 输出格式化的结果
+    //zIndexHierarchy.parents.forEach(parent => {
+    //    console.log(`第${parent.level}层父级 - ID: ${parent.id}, z-index: ${parent.zIndex}`);
+    //});
+
+    /*遍历所有父级 div 的 z-index·结束*/
 
 })();
