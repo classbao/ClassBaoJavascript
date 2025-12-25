@@ -1,0 +1,539 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+    <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+
+    <!-- <link href="/Content/mobile/css/style.css?=202308082222" rel="stylesheet" type="text/css"> -->
+
+    <!-- 自动加载适应移动端的css -->
+    <!-- <link href="mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width: 1080px)"> -->
+
+    <meta name="theme-color" content="#3c80d4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#9cc8ff" media="(prefers-color-scheme: dark)">
+
+    <title>金色系按钮示例</title>
+    <meta name="keywords" content="测试">
+    <meta name="Description" content="测试">
+    <meta name="author" content="文学资料">
+
+    <!-- CSS样式 -->
+    <style>
+        :root {
+            /* 帝王明黄色 - 象征皇权、尊贵 */
+            --imperial-yellow: #ffd700;
+            /* 纯金色 */
+            --imperial-yellow-dark: #ffcc00;
+            /* 深一点的金色 */
+            --imperial-yellow-light: #ffe066;
+            /* 浅金色 */
+            /* 土豪金 - 更偏向金属质感 */
+            --rich-gold: linear-gradient(135deg, #ffd700, #ffcc00, #e6b800);
+            --rich-gold-metallic: radial-gradient(circle, #ffdb58, #ffcc00 70%);
+            /* 黑金色 - 黑色背景+金色元素 */
+            --black-gold-bg: #0a0a0a;
+            --black-gold-accent: #ffd700;
+            --black-gold-gradient: linear-gradient(45deg, #0a0a0a 30%, #1a1a1a, #2a2a2a);
+        }
+    </style>
+
+    <style>
+        /* 帝王明黄按钮 */
+        .imperial-btn {
+            background: var(--imperial-yellow);
+            border: none;
+            padding: 12px 28px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .imperial-btn:hover {
+            background: var(--imperial-yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .imperial-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* 光晕效果 */
+        .imperial-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transition: left 0.5s;
+        }
+
+        .imperial-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 土豪金按钮（金属质感） */
+        .rich-gold-btn {
+            background: var(--rich-gold);
+            border: 2px solid #ffcc00;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow:
+                0 5px 15px rgba(230, 184, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+
+        /* 3D立体效果 */
+        .rich-gold-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.2) 0%,
+                    rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .rich-gold-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 8px 25px rgba(230, 184, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #ffcc00, #ffd700, #e6b800);
+        }
+
+        .rich-gold-btn:active {
+            transform: translateY(1px);
+        }
+
+
+        /* 黑金按钮 */
+        .black-gold-btn {
+            background: var(--black-gold-gradient);
+            border: 2px solid var(--black-gold-accent);
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--black-gold-accent);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+        }
+
+        /* 发光边框效果 */
+        .black-gold-btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                    #ffd700,
+                    #ffed4e,
+                    #ffd700,
+                    #ffcc00,
+                    #ffd700);
+            z-index: -1;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .black-gold-btn:hover::before {
+            opacity: 1;
+            animation: borderGlow 2s linear infinite;
+        }
+
+        .black-gold-btn:hover {
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a, #1a1a1a);
+            color: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        @keyframes borderGlow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        /* 内发光文字效果 */
+        .black-gold-btn span {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* 3.高级动态效果 */
+        /* 3.1粒子效果按钮 */
+        .particle-btn {
+            background: var(--imperial-yellow);
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .particle-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: white;
+            opacity: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .particle-btn:active::after {
+            animation: particleBurst 0.6s ease-out;
+        }
+
+        @keyframes particleBurst {
+            0% {
+                width: 5px;
+                height: 5px;
+                opacity: 1;
+                box-shadow:
+                    0 0 0 0 rgba(255, 255, 255, 0.8),
+                    0 0 0 0 rgba(255, 255, 255, 0.6);
+            }
+
+            100% {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+                box-shadow:
+                    0 0 0 20px rgba(255, 255, 255, 0),
+                    0 0 0 40px rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* 3.2流光溢彩效果 */
+        .shimmer-btn {
+            background: linear-gradient(90deg,
+                    #ffd700 0%,
+                    #ffed4e 25%,
+                    #ffd700 50%,
+                    #ffed4e 75%,
+                    #ffd700 100%);
+            background-size: 200% auto;
+            border: none;
+            padding: 14px 32px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            border-radius: 8px;
+            cursor: pointer;
+            animation: shimmer 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% center;
+            }
+
+            100% {
+                background-position: -200% center;
+            }
+        }
+
+        .shimmer-btn:hover {
+            animation: shimmer 1s linear infinite;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+
+        /* 这里放入上面的CSS代码 */
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            padding: 40px;
+            background: #f5f5f5;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .button-group h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="button-container">
+        <div class="button-group">
+            <h3>帝王明黄</h3>
+            <button class="imperial-btn">尊贵之选</button>
+        </div>
+
+        <div class="button-group">
+            <h3>土豪金</h3>
+            <button class="rich-gold-btn">财富象征</button>
+        </div>
+
+        <div class="button-group">
+            <h3>黑金风格</h3>
+            <button class="black-gold-btn">
+                <span>神秘奢华</span>
+            </button>
+        </div>
+
+        <div class="button-group">
+            <h3>粒子效果</h3>
+            <button class="particle-btn">粒子效果</button>
+        </div>
+
+        <div class="button-group">
+            <h3>流光效果</h3>
+            <button class="shimmer-btn">流光溢彩</button>
+        </div>
+    </div>
+
+
+    <style>
+        /* 颜色变量定义（推荐使用CSS变量，方便全局复用和修改） */
+        :root {
+            /* 帝王明黄色：明亮饱满，偏黄调，彰显大气 */
+            --imperial-yellow2: #FFD700;
+            /* 十六进制（最常用），也可写作 rgb(255, 215, 0) */
+            --imperial-yellow2-light: #FFDF33;
+            /* 明黄色浅色调（hover备用） */
+            --imperial-yellow2-dark: #E6C200;
+            /* 明黄色深色调（active备用） */
+
+            /* 土豪金颜色：偏金红调，更具金属质感，显奢华 */
+            --tuhao-gold2: #F7D358;
+            /* 十六进制，也可写作 rgb(247, 211, 88) */
+            --tuhao-gold2-light: #F9E084;
+            /* 土豪金浅色调 */
+            --tuhao-gold2-dark: #D9B946;
+            /* 土豪金深色调 */
+
+            /* 黑金色：黑金搭配（背景黑/近黑，文字/边框金），高级感拉满 */
+            --black-gold2-bg: #141414;
+            /* 深黑背景（避免纯黑#000000，视觉更柔和） */
+            --black-gold2-text: #FFC107;
+            /* 黑金搭配的金色（偏亮，对比更鲜明） */
+            --black-gold2-border: #FFB300;
+            /* 黑金边框色 */
+            --black-gold2-bg-hover: #1F1F1F;
+            /* 黑金色背景hover色调 */
+        }
+
+        /* 帝王明黄色按钮 */
+        .imperial-yellow2-btn {
+            /* 基础样式 */
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            /* 圆角，可调整为0实现直角按钮 */
+            background-color: var(--imperial-yellow2);
+            color: #333;
+            /* 深色文字，保证可读性 */
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* 过渡动画，让动态效果更平滑 */
+            box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+            /* 金色阴影，增强立体感 */
+            margin: 10px;
+        }
+
+        /* 悬浮效果（hover）：浅色调+轻微放大+阴影加深 */
+        .imperial-yellow2-btn:hover {
+            background-color: var(--imperial-yellow2-light);
+            transform: scale(1.05);
+            /* 轻微放大，提升交互感知 */
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* 点击效果（active）：深色调+轻微缩小+阴影内收 */
+        .imperial-yellow2-btn:active {
+            background-color: var(--imperial-yellow2-dark);
+            transform: scale(0.98);
+            box-shadow: 0 1px 2px rgba(255, 215, 0, 0.2);
+        }
+
+        /* 土豪金按钮（带金属渐变质感） */
+        .tuhao-gold2-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--tuhao-gold2-light), var(--tuhao-gold2), var(--tuhao-gold2-dark));
+            /* 渐变背景，增强土豪金金属质感 */
+            color: #222;
+            /* 深灰色文字，提升可读性 */
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(247, 211, 88, 0.4);
+            margin: 10px;
+        }
+
+        /* 悬浮效果：渐变偏移+放大+阴影加深 */
+        .tuhao-gold2-btn:hover {
+            background: linear-gradient(135deg, var(--tuhao-gold2), var(--tuhao-gold2-dark), var(--tuhao-gold2));
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(247, 211, 88, 0.5);
+        }
+
+        /* 点击效果：渐变反向+缩小+阴影内收 */
+        .tuhao-gold2-btn:active {
+            background: linear-gradient(135deg, var(--tuhao-gold2-dark), var(--tuhao-gold2), var(--tuhao-gold2-light));
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(247, 211, 88, 0.3);
+        }
+
+        /* 黑金色填充按钮 */
+        .black-gold2-fill-btn {
+            /* 基础样式 */
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--black-gold2-bg);
+            color: var(--black-gold2-text);
+            /* 金色文字 */
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--black-gold2-border);
+            /* 金色边框，增强黑金对比 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        /* 悬浮效果：背景变浅+文字提亮+边框发光 */
+        .black-gold2-fill-btn:hover {
+            background-color: var(--black-gold2-bg-hover);
+            color: #FFD700;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+            /* 金色发光效果，提升高级感 */
+            transform: scale(1.05);
+        }
+
+        /* 点击效果：背景加深+缩小+发光减弱 */
+        .black-gold2-fill-btn:active {
+            background-color: #0A0A0A;
+            transform: scale(0.98);
+            box-shadow: 0 0 5px rgba(255, 193, 7, 0.3);
+        }
+
+        /* 黑金色边框按钮（镂空风格，更简约高级） */
+        .black-gold2-border-btn {
+            padding: 12px 32px;
+            border: 2px solid var(--black-gold2-border);
+            border-radius: 8px;
+            background-color: transparent;
+            /* 透明背景 */
+            color: var(--black-gold2-text);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        /* 悬浮效果：填充黑金背景+文字提亮 */
+        .black-gold2-border-btn:hover {
+            background-color: var(--black-gold2-bg);
+            color: #FFD700;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 点击效果：背景加深+缩小 */
+        .black-gold2-border-btn:active {
+            background-color: #0A0A0A;
+            transform: scale(0.98);
+            box-shadow: 0 0 5px rgba(255, 193, 7, 0.2);
+        }
+    </style>
+
+    <div class="button-container">
+        <div class="button-group">
+            <h3>帝王明黄色按钮</h3>
+            <button class="imperial-yellow2-btn">帝王明黄按钮</button>
+        </div>
+
+        <div class="button-group">
+            <h3>土豪金按钮</h3>
+            <button class="tuhao-gold2-btn">土豪金按钮</button>
+        </div>
+
+        <div class="button-group">
+            <h3>黑金色按钮</h3>
+            <button class="black-gold2-fill-btn">黑金填充按钮</button>
+            <button class="black-gold2-border-btn">黑金边框按钮</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
