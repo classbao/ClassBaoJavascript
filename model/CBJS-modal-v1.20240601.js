@@ -226,7 +226,7 @@
 			this.box.content = '<br> ' + msg + ' <br><br>';
 			this.box.foot.btn[0].icon = '';
 			this.box.foot.btn[0].click = function (event) { if (!!callback) { callback(event); } }
-			this.box.foot.btn[0].title = btnTitle;
+			this.box.foot.btn[0].title = btnTitle || '知道了';
 			this.box.foot.btn.splice(1, this.box.foot.btn.length - 1); // 从索引1开始（第2个元素）移除多余按钮
 			this.openBase();
 			// CSS动画：滑入
