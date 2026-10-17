@@ -178,8 +178,14 @@
 			this.openBase();
 
 			// 避免内容太高太宽超出屏幕
-			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxHeight = (Math.min(window.innerHeight, document.documentElement.clientHeight) * 0.8) + "px";
-			document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content').style.maxWidth = (Math.min(window.innerWidth, document.documentElement.clientWidth) * 0.8) + "px";
+			const $content = document.querySelector('#xxhModal' + this.box.id + '.xxhModal .content');
+			if ($content) {
+			    const winH = Math.min(window.innerHeight, document.documentElement.clientHeight);
+			    const winW = Math.min(window.innerWidth, document.documentElement.clientWidth);
+			    $content.style.height = (winH * 0.8) + "px";
+			    $content.style.width = (winW * 0.8) + "px";
+			    $content.style.overflow = "auto";
+			}
 
 			// CSS动画：滑入
 			document.querySelector('#xxhModal' + this.box.id + '.xxhModal').classList.add('SlideUp-in');
